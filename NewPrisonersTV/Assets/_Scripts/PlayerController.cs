@@ -1,27 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;                                                                     // Rigidbody components
 
-    public Transform groundCheck;                                                               // Player ground collider
-    public LayerMask groundMask;                                                                // Ground mask
-
+    [BoxGroup("Ground")] public Transform groundCheck;                                          // Player ground collider
+    [BoxGroup("Ground")] public LayerMask groundMask;                                           // Ground mask
+    [BoxGroup("Ground")] public float checkRadius;                                              // Ground collider radius
     private bool isGrounded;                                                                    // Is the Player on ground?                                                                        
-    public float checkRadius;                                                                   // Ground collider radius
 
     private float moveInput;                                                                    // Player movements input
 
-    public float speed;                                                                         // Player speed
-    public float jump;                                                                          // Player jump value
-    public float gravity;                                                                       // Player gravity value
+    [BoxGroup("Controls")] public float speed;                                                  // Player speed
+    [BoxGroup("Controls")] public float jump;                                                   // Player jump value
+    [BoxGroup("Controls")] public float gravity;                                                // Player gravity value
+    [BoxGroup("Controls")] public int extraJumpValue;                                           // How many double jumps
+    private int extraJumps;                                                                     // Double jump
 
     [HideInInspector] public bool facingRight;                                                  // Player flip facing
-
-    private int extraJumps;                                                                     // Double jump
-    public int extraJumpValue;                                                                  // How many double jumps
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();

@@ -933,8 +933,8 @@ MonoBehaviour:
   speed: 15
   jump: 30
   gravity: 12
-  facingRight: 0
   extraJumpValue: 1
+  facingRight: 0
 --- !u!50 &1905598045
 Rigidbody2D:
   serializedVersion: 4
