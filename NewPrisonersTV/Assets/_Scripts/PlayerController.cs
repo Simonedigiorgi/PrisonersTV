@@ -4,41 +4,48 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rb;                                                                     // Rigidbody components
 
-    public float speed;
-    public float jump;
-    public float gravity;
+    public Transform groundCheck;                                                               // Player ground collider
+    public LayerMask groundMask;                                                                // Ground mask
 
-    private bool isGrounded;
-    public Transform groundCheck;
-    public float checkRadius;
-    public LayerMask whatIsGround;
+    private bool isGrounded;                                                                    // Is the Player on ground?                                                                        
+    public float checkRadius;                                                                   // Ground collider radius
 
-    private bool facingRight = true;
+    private float moveInput;                                                                    // Player movements input
 
-    private int extraJumps;
-    public int extraJumpValue;
+    public float speed;                                                                         // Player speed
+    public float jump;                                                                          // Player jump value
+    public float gravity;                                                                       // Player gravity value
+
+    [HideInInspector] public bool facingRight;                                                  // Player flip facing
+
+    private int extraJumps;                                                                     // Double jump
+    public int extraJumpValue;                                                                  // How many double jumps
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-	}
+    }
 	
 	void FixedUpdate () {
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
+        // Move inputs
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        if(facingRight == false && moveInput > 0)
+        // Flip the player face direction
+        if(facingRight == false && moveInput < 0)
             Flip();
-        else if(facingRight && moveInput < 0)
+        else if(facingRight && moveInput > 0)
             Flip();
     }
 
     private void Update()
     {
+        // Check groundmask
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundMask);
+
+        // Jump && Double Jump
         if (isGrounded)
             extraJumps = extraJumpValue;
 
@@ -53,6 +60,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Flip the player face method
     public void Flip()
     {
         facingRight = !facingRight;
