@@ -4,51 +4,60 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    private CharacterController controller;
-    private Vector2 direction;
+    private Rigidbody2D rb;
 
     public float speed;
     public float jump;
     public float gravity;
 
-    private bool isDoubleJump;
+    private bool isGrounded;
+    public Transform groundCheck;
+    public float checkRadius;
+    public LayerMask whatIsGround;
+
+    private bool facingRight = true;
+
+    private int extraJumps;
+    public int extraJumpValue;
 
 	void Start () {
-        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody2D>();
 	}
 	
-	void Update () {
+	void FixedUpdate () {
 
-        float yStore = direction.y;
-        direction = (transform.right * Input.GetAxis("Horizontal"));
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
-        // This normalize the speed if you press two directions at the same time
-        direction = direction.normalized * speed;
-        direction.y = yStore;
+        float moveInput = Input.GetAxis("Horizontal");
+        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
-        #region Jump && Double Jump
-        if (controller.isGrounded)
+        if(facingRight == false && moveInput > 0)
+            Flip();
+        else if(facingRight && moveInput < 0)
+            Flip();
+    }
+
+    private void Update()
+    {
+        if (isGrounded)
+            extraJumps = extraJumpValue;
+
+        if (Input.GetButtonDown("Fire1") && extraJumps > 0)
         {
-            direction.y = 0f;
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                direction.y = jump;
-                isDoubleJump = true;
-            }
+            rb.velocity = Vector2.up * jump;
+            extraJumps--;
         }
-        else if (isDoubleJump && controller.isGrounded == false)
+        else if(Input.GetButtonDown("Fire1") && extraJumps == 0 && isGrounded)
         {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                direction.y = jump;
-                isDoubleJump = false;
-            }
+            rb.velocity = Vector2.up * jump;
         }
-        #endregion
+    }
 
-        // To change the Psysics Gravity go to Edit/Project Settings/Physics
-        direction.y = direction.y + (Physics.gravity.y * gravity * Time.deltaTime);
-        controller.Move(direction * Time.deltaTime);
+    public void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scaler = transform.localScale;
+        scaler.x *= -1;
+        transform.localScale = scaler;
     }
 }
