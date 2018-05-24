@@ -6,6 +6,7 @@ using Sirenix.OdinInspector;
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;                                                                     // Rigidbody components
+    private Animator anim;
 
     [BoxGroup("Ground")] public Transform groundCheck;                                          // Player ground collider
     [BoxGroup("Ground")] public LayerMask groundMask;                                           // Ground mask
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponentInChildren<Animator>();
     }
 	
 	void FixedUpdate () {
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour {
         // Move inputs
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        anim.SetFloat("Speed", Mathf.Abs(moveInput));
 
         // Flip the player face direction
         if (facingRight == false && moveInput < 0)
@@ -57,6 +61,8 @@ public class PlayerController : MonoBehaviour {
         {
             rb.velocity = Vector2.up * jump;
         }
+
+        anim.SetBool("Grounded", isGrounded);
     }
 
     // Flip the player face method
