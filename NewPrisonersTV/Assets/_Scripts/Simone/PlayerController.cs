@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
+        // Set Run animation
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
 
         // Flip the player face direction
@@ -62,7 +63,9 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = Vector2.up * jump;
         }
 
+        // Swich between ground bool (Jump)
         anim.SetBool("Grounded", isGrounded);
+            
     }
 
     // Flip the player face method
