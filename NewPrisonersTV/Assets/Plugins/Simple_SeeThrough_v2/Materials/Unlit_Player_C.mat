@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Unlit_Player_C
   m_Shader: {fileID: 4800000, guid: 5ca0210aa488a1644b47791b20051941, type: 3}
-  m_ShaderKeywords: ISCUTOUT
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA ISCUTOUT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0

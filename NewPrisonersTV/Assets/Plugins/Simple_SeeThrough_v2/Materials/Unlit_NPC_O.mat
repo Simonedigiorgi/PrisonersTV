@@ -30,7 +30,7 @@ Material:
     - <noninit>: 1
     - _CullMode: 2
     - _Cutoff: 0.5
-    - _ZTest: 2
+    - _ZTest: 8
     - _isCutout: 0
     m_Colors:
     - <noninit>: {r: 0, g: 1, b: 0.25517222, a: 1}
