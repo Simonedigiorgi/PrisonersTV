@@ -1289,6 +1289,7 @@ MonoBehaviour:
   jump: 30
   gravity: 12
   extraJumpValue: 1
+  joypadDeathZone: 0.2
   facingRight: 0
 --- !u!50 &1905598045
 Rigidbody2D:
