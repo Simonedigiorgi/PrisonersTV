@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Controls")] public float jump;                                                   // Player jump value
     [BoxGroup("Controls")] public float gravity;                                                // Player gravity value
     [BoxGroup("Controls")] public int extraJumpValue;                                           // How many double jumps
+    [BoxGroup("Controls")] public float joypadDeathZone;                                        // Movement death zone
+
     private int extraJumps;                                                                     // Double jump
 
     [HideInInspector] public bool facingRight;                                                  // Player flip facing
@@ -32,7 +34,13 @@ public class PlayerController : MonoBehaviour {
 
         // Move inputs
         float moveInput = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
+
+        if(moveInput >= joypadDeathZone)                                                        // Move right if "x" axis is over 0.2
+            rb.velocity = new Vector2(speed, rb.velocity.y);
+        else if(moveInput <= -joypadDeathZone)                                                  // Move lefet if "x" axis is lover -0.2
+            rb.velocity = new Vector2(-speed, rb.velocity.y);
+        else                                                                                    // Stop the player 
+            rb.velocity = new Vector2(0, rb.velocity.y);                                        
 
         // Set Run animation
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
@@ -72,8 +80,17 @@ public class PlayerController : MonoBehaviour {
     public void Flip()
     {
         facingRight = !facingRight;
-        Vector3 scaler = transform.localScale;
-        scaler.x *= -1;
-        transform.localScale = scaler;
+        Vector3 rotation = transform.localEulerAngles;
+
+        if (facingRight)
+        {
+            rotation.y = 180;
+        }
+        else
+        {
+            rotation.y = 0;
+        }
+
+        transform.localEulerAngles = rotation;
     }
 }

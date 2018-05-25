@@ -13,13 +13,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Grounded
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -141,7 +141,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102574157133567510}
   m_Solo: 0
@@ -186,7 +186,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
-    m_EventTreshold: 0.1
+    m_EventTreshold: 0.2
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102840800240242704}
   m_Solo: 0
@@ -221,13 +221,11 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: f55cf8a19089c824399be615e1b41cb5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102666974560737420
 AnimatorState:
   serializedVersion: 5
@@ -247,13 +245,11 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: aaa8238e907a2de4d9d306b91f6460c8, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &1102840800240242704
 AnimatorState:
   serializedVersion: 5
@@ -274,13 +270,11 @@ AnimatorState:
   m_SpeedParameterActive: 0
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 6ed02c17907551b46ad7738f0239e72c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1107 &1107993414268292724
 AnimatorStateMachine:
   serializedVersion: 5
