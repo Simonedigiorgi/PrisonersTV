@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;                                                                     // Rigidbody components
     private Animator anim;
 
-    public Transform gun;
     [BoxGroup("Ground")] public Transform groundCheck;                                          // Player ground collider
     [BoxGroup("Ground")] public LayerMask groundMask;                                           // Ground mask
     [BoxGroup("Ground")] public float checkRadius;                                              // Ground collider radius
@@ -31,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 	
 	void FixedUpdate () {
 
+        #region Movements
         // Move inputs
         float moveInput = Input.GetAxis("Horizontal");
 
@@ -50,16 +50,12 @@ public class PlayerController : MonoBehaviour {
             Flip();
         else if (facingRight && moveInput > 0)
             Flip();
-
-        // Rotate the weapon when equipped
-        if (facingRight && FindObjectOfType<Weapons>().isGrabbed)
-            gun.transform.localEulerAngles = new Vector3(0, 0, 180);                                  
-        else if(!facingRight && FindObjectOfType<Weapons>().isGrabbed)
-            gun.transform.localEulerAngles = new Vector3(180, 0, 180);
+        #endregion
     }
 
     private void Update()
     {
+        #region Jump
         // Check groundmask
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundMask);
 
@@ -76,7 +72,8 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = Vector2.up * jump;
 
         // Swich between ground bool (Jump)
-        anim.SetBool("Grounded", isGrounded);         
+        anim.SetBool("Grounded", isGrounded);
+        #endregion
     }
 
     // Flip the player face method
