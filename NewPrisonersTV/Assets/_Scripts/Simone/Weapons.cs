@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapons : MonoBehaviour {
 
-    public Weapon stats;
+    public WeaponStats stats;
 
     private BoxCollider2D coll;
     private GameObject hand;
