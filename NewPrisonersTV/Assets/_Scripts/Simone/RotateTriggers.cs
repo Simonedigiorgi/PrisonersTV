@@ -15,7 +15,7 @@ public class RotateTriggers : MonoBehaviour
         JoyRotation();
     }
 
-    // Rotate the Joystick on 360°
+    // Rotate the Joystick of 360°
     public void JoyRotation()
     {
         Vector3 joyPosition = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);

@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviour {
             Flip();
         else if (facingRight && moveInput > 0)
             Flip();
+
+        // Rotate the weapon when equipped
+        if (facingRight && FindObjectOfType<Weapons>().isGrabbed)
+            gun.transform.localEulerAngles = new Vector3(0, 0, 180);                                  
+        else if(!facingRight && FindObjectOfType<Weapons>().isGrabbed)
+            gun.transform.localEulerAngles = new Vector3(180, 0, 180);
     }
 
     private void Update()
@@ -80,21 +86,9 @@ public class PlayerController : MonoBehaviour {
         Vector3 rotation = transform.localEulerAngles;
 
         if (facingRight)
-        {
-            // Rotate the player
-            rotation.y = 180;
-
-            // Rotate the weapon
-            gun.transform.localEulerAngles = new Vector3(180, 0, 0);
-        }
+            rotation.y = 180;                                                                       // Rotate the player
         else
-        {
-            // Rotate the player
-            rotation.y = 0;
-
-            // Rotate the weapon
-            gun.transform.localEulerAngles = new Vector3(0, 0, 0);
-        }
+            rotation.y = 0;                                                                         // Rotate the player
 
         transform.localEulerAngles = rotation;
     }
