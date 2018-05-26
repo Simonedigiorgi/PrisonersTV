@@ -35,7 +35,7 @@ public class Weapons : MonoBehaviour {
     // Get the weapon and destroy the previously when get another
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") && !isGrabbed)
+        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
         {
             if (hand.transform.childCount <= 1)
             {
