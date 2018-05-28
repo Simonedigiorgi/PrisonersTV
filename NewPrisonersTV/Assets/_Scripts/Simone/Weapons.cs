@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class Weapons : MonoBehaviour {
 
-    public WeaponStats stats;
-
     private BoxCollider2D coll;
     private GameObject hand;
-
     private Transform spawnPoint;
 
-    public GameObject bullet;
+    [BoxGroup("Weapon bullet")] public GameObject bullet;
+
+    [BoxGroup("Controls")] public float fireRate;
+    [BoxGroup("Controls")] public bool autoFire;
+
+    private float lastShot = 0.0f;
 
     [HideInInspector] public bool isGrabbed;
 
@@ -25,6 +28,7 @@ public class Weapons : MonoBehaviour {
 
     void Update () {
 
+        // Weapon position = player's hand position
         if (isGrabbed)
         {
             transform.position = hand.transform.position;
@@ -39,10 +43,12 @@ public class Weapons : MonoBehaviour {
             transform.localEulerAngles = new Vector3(0, 0, 0);
 
         // Shoot
-        if (Input.GetButtonDown("Fire2") && isGrabbed)
-        {
-            Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
-        }
+        if (!autoFire)
+            if (Input.GetButtonDown("Fire2") && isGrabbed)
+                Shoot();
+        else
+            if (Input.GetButtonDown("Fire2") && isGrabbed)
+                Shoot();
     }
 
     // Get the weapon and destroy the previously when get another
@@ -59,6 +65,15 @@ public class Weapons : MonoBehaviour {
                     Destroy(first.gameObject);
                 }
             }
+        }
+    }
+
+    void Shoot()
+    {
+        if (Time.time > fireRate + lastShot)
+        {
+            Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            lastShot = Time.time;
         }
     }
 }
