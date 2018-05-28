@@ -18,14 +18,15 @@ public class Weapon : MonoBehaviour {
     [BoxGroup("Controls")] public bool autoFire;                                                                // Has autofire                                                                    
 
     [BoxGroup("Sounds")] public AudioClip shootSound;                                                           // Shoot sound
-    [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;
+    [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;                                            // Shoot volume
+
     [BoxGroup("Sounds")] public AudioClip grabSound;                                                            // Grab sound
-    [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float grabVolume;
+    [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float grabVolume;                                             // Grab volume
 
-    private float lastShot = 0.0f;
+    [HideInInspector] public bool canShoot;                                                                     // Can the weapon shoot?
+    [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
 
-    [HideInInspector] public bool canShoot;
-    [HideInInspector] public bool isGrabbed;                                                                    // Grab the weapon
+    private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     private void Start()
     {
@@ -55,11 +56,11 @@ public class Weapon : MonoBehaviour {
 
         // Single shoot
         if (!autoFire)
-            if (Input.GetButtonDown("Fire2") && isGrabbed)
+            if (Input.GetButtonDown("Button X") && isGrabbed)
                 Shoot();
         // Autofire
         if (autoFire)
-            if (Input.GetButton("Fire2") && isGrabbed)
+            if (Input.GetButton("Button X") && isGrabbed)
                 Shoot();
     }
 
@@ -68,6 +69,7 @@ public class Weapon : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
         {
+            // Grab sound
             source.PlayOneShot(grabSound, grabVolume);
 
             if (hand.transform.childCount <= 1)
@@ -87,12 +89,11 @@ public class Weapon : MonoBehaviour {
     {
         if (Time.time > fireRate + lastShot)
         {
+            // Shoot sound
             source.PlayOneShot(shootSound, shootVolume);
 
             Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
             lastShot = Time.time;
-
-
         }
     }
 }

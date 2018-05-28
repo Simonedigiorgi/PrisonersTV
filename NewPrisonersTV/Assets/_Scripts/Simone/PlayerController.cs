@@ -103,12 +103,12 @@ public class PlayerController : MonoBehaviour {
         if (isGrounded)
             extraJumps = extraJumpValue;
 
-        if (Input.GetButtonDown("Fire1") && extraJumps > 0)
+        if (Input.GetButtonDown("Button A") && extraJumps > 0)
         {
             extraJumps--;
             rb.velocity = Vector2.up * jump;
         }
-        else if (Input.GetButtonDown("Fire1") && extraJumps == 0 && isGrounded)
+        else if (Input.GetButtonDown("Button A") && extraJumps == 0 && isGrounded)
             rb.velocity = Vector2.up * jump;
     }
 }
