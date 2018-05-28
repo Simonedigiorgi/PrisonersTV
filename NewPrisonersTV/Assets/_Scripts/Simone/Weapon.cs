@@ -6,25 +6,25 @@ using Sirenix.OdinInspector;
 
 public class Weapon : MonoBehaviour {
 
-    private AudioSource source;
+    private AudioSource source;                                                                                 // Get the Audiosource component
 
-    private BoxCollider2D coll;
-    private GameObject hand;
-    private Transform spawnPoint;
+    private BoxCollider2D coll;                                                                                 // Weapon collider
+    private GameObject hand;                                                                                    // Get the Player hand (need to work on this to make Player 2)                                                                                        
+    private Transform spawnPoint;                                                                               // Where the bullet is istantiate
 
-    [BoxGroup("Weapon bullet")] public GameObject bullet;
+    [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
 
-    [BoxGroup("Controls")] public float fireRate;
-    [BoxGroup("Controls")] public bool autoFire;
+    [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
+    [BoxGroup("Controls")] public bool autoFire;                                                                // Has autofire                                                                    
 
-    [BoxGroup("Sounds")] public AudioClip shootSound;
+    [BoxGroup("Sounds")] public AudioClip shootSound;                                                           // Shoot sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;
-    [BoxGroup("Sounds")] public AudioClip grabSound;
+    [BoxGroup("Sounds")] public AudioClip grabSound;                                                            // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float grabVolume;
 
     private float lastShot = 0.0f;
 
-    [HideInInspector] public bool isGrabbed;
+    [HideInInspector] public bool isGrabbed;                                                                    // Grab the weapon
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour {
         coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
         hand = GameObject.Find("Hand");
 
-        spawnPoint = transform.GetChild(2);
+        spawnPoint = transform.GetChild(2);                                                                     // Get the Spawnpoint child
     }
 
     void Update () {
@@ -52,11 +52,11 @@ public class Weapon : MonoBehaviour {
         else if (FindObjectOfType<PlayerController>().facingRight == false && isGrabbed)
             transform.localEulerAngles = new Vector3(0, 0, 0);
 
-        // Shoot
+        // Single shoot
         if (!autoFire)
             if (Input.GetButtonDown("Fire2") && isGrabbed)
                 Shoot();
-
+        // Autofire
         if (autoFire)
             if (Input.GetButton("Fire2") && isGrabbed)
                 Shoot();
@@ -81,6 +81,7 @@ public class Weapon : MonoBehaviour {
         }
     }
 
+    // Shoot method
     public void Shoot()
     {
         if (Time.time > fireRate + lastShot)

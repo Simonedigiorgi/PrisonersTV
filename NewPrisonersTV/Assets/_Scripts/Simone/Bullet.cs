@@ -11,10 +11,13 @@ public class Bullet : MonoBehaviour {
     [BoxGroup("Controls")] public float destroyAfter;
 
     [BoxGroup("Kind of weapon")] public bool isArrow;
+    [BoxGroup("Kind of weapon")] public bool isGhost;
 
-	void Start () {
+    void Start () {
 
         rb = GetComponent<Rigidbody2D>();
+
+        // Autodestroy the bullet
         Destroy(gameObject, destroyAfter);
     }
 	
@@ -22,13 +25,19 @@ public class Bullet : MonoBehaviour {
 
         // Movement
         rb.velocity = transform.right * speed * Time.deltaTime;
+
+        if(isGhost)
+            GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Wall") && !isArrow)
         {
-            Destroy(gameObject);
+            if(!isGhost)
+                Destroy(gameObject);
+            else if (isGhost)
+                Destroy(gameObject, destroyAfter);
         }
     }
 
@@ -40,9 +49,8 @@ public class Bullet : MonoBehaviour {
             Destroy(gameObject, destroyAfter);
         }
 
-        if (collision.gameObject.CompareTag("Bullet") && isArrow)
+        if (collision.gameObject.CompareTag("Bullet"))
         {
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(gameObject);
         }
     }

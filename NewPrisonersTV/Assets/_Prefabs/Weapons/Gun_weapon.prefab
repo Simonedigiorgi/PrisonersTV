@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4999532811885444}
   - component: {fileID: 212401203520280166}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Gun_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 50251231705621740}
   - component: {fileID: 114672807640488488}
   - component: {fileID: 82817008796423680}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Gun_weapon
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4984691200565352}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: -1577725955494882426, guid: 0000000000000000d000000000000000, type: 0}
@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4137074898557406}
   - component: {fileID: 61237391209593686}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Collider2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
