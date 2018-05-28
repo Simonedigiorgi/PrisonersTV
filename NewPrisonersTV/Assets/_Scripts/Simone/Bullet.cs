@@ -10,8 +10,9 @@ public class Bullet : MonoBehaviour {
     [BoxGroup("Controls")] public float speed;
     [BoxGroup("Controls")] public float destroyAfter;
 
-    [BoxGroup("Kind of weapon")] public bool isArrow;
-    [BoxGroup("Kind of weapon")] public bool isGhost;
+    [BoxGroup("Kind of weapon")] public bool isArrow;                                                   // They block on Walls
+    [BoxGroup("Kind of weapon")] public bool isRandom;                                                  // Move randomly
+    [BoxGroup("Kind of weapon")] public bool isGhost;                                                   // Can surpass walls
 
     void Start () {
 
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Wall") && !isArrow)
         {
-            if(!isGhost)
+            if(!isGhost && !isRandom)
                 Destroy(gameObject);
             else if (isGhost)
                 Destroy(gameObject, destroyAfter);
@@ -48,6 +49,9 @@ public class Bullet : MonoBehaviour {
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             Destroy(gameObject, destroyAfter);
         }
+
+        if (collision.gameObject.CompareTag("Wall") && isRandom)
+            speed = -speed;
 
         if (collision.gameObject.CompareTag("Bullet"))
             Destroy(gameObject);
