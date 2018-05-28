@@ -24,6 +24,7 @@ public class Weapon : MonoBehaviour {
 
     private float lastShot = 0.0f;
 
+    [HideInInspector] public bool canShoot;
     [HideInInspector] public bool isGrabbed;                                                                    // Grab the weapon
 
     private void Start()

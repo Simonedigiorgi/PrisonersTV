@@ -50,8 +50,6 @@ public class Bullet : MonoBehaviour {
         }
 
         if (collision.gameObject.CompareTag("Bullet"))
-        {
             Destroy(gameObject);
-        }
     }
 }

@@ -62,7 +62,6 @@ public class PlayerController : MonoBehaviour {
     {
         JoyRotation();
         Jump();
-        
     }
 
     // Flip the player face method

@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222576285811866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: -4.6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4999532811885444}
@@ -300,6 +300,7 @@ MonoBehaviour:
   shootVolume: 0.1
   grabSound: {fileID: 8300000, guid: 2df033c06fa82a345abe1786d25e9541, type: 3}
   grabVolume: 0.2
+  canShoot: 0
   isGrabbed: 0
 --- !u!212 &212401203520280166
 SpriteRenderer:
@@ -336,7 +337,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 19a1c92fea4fd5c46ac39404cf982b83, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
