@@ -212,7 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6c092c37ed6df49bfc2d2aa2c1b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 0}
+  bullet: {fileID: 1338371413598098, guid: 897bf75d962076f4f8677b92c90a20ce, type: 2}
+  fireRate: 0.5
+  autoFire: 0
   isGrabbed: 0
 --- !u!212 &212429410083975420
 SpriteRenderer:

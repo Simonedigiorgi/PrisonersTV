@@ -8,11 +8,14 @@ public class Projectile : MonoBehaviour {
     private Rigidbody2D rb;
 
     [BoxGroup("Controls")] public float speed;
+    [BoxGroup("Controls")] public float destroyAfter;
+
     [BoxGroup("Kind of weapon")] public bool isArrow;
 
 	void Start () {
 
         rb = GetComponent<Rigidbody2D>();
+        Destroy(gameObject, destroyAfter);
     }
 	
 	void Update () {
@@ -26,10 +29,14 @@ public class Projectile : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
 
-        if (collision.gameObject.CompareTag("Wall") && isArrow)
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Bullet") && isArrow)
         {
-            Destroy(gameObject, 5);
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            Destroy(gameObject, destroyAfter);
         }
     }
 }
