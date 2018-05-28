@@ -8,9 +8,12 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D rb;                                                                     // Rigidbody components
     private Animator anim;
 
-    [BoxGroup("Ground")] public Transform groundCheck;                                          // Player ground collider
+    [BoxGroup("Components")] public GameObject arm;                                             // Player's arm
+    [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
+
     [BoxGroup("Ground")] public LayerMask groundMask;                                           // Ground mask
-    [BoxGroup("Ground")] public float checkRadius;                                              // Ground collider radius
+    [BoxGroup("Ground")] public float groundRadius;                                             // Ground collider radius
+
     private bool isGrounded;                                                                    // Is the Player on ground?                                                                        
 
     [BoxGroup("Controls")] public float speed;                                                  // Player speed
@@ -47,17 +50,19 @@ public class PlayerController : MonoBehaviour {
 
         // Flip the player face direction
         if (facingRight == false && moveInput < 0)
-            Flip();
+            PlayerFlip();
         else if (facingRight && moveInput > 0)
-            Flip();
+            PlayerFlip();
         #endregion
     }
 
     private void Update()
     {
+        JoyRotation();
+
         #region Jump
         // Check groundmask
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundMask);
+        isGrounded = Physics2D.OverlapCircle(groundCheck.transform.position, groundRadius, groundMask);
 
         // Jump && Double Jump
         if (isGrounded)
@@ -77,7 +82,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Flip the player face method
-    public void Flip()
+    public void PlayerFlip()
     {
         facingRight = !facingRight;
         Vector3 rotation = transform.localEulerAngles;
@@ -88,5 +93,18 @@ public class PlayerController : MonoBehaviour {
             rotation.y = 0;                                                                         // Rotate the player
 
         transform.localEulerAngles = rotation;
+    }
+
+    // Rotate the Joystick of 360°
+    public void JoyRotation()
+    {
+        Vector3 joyPosition = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+
+        float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
+
+        if (angle == 0 && facingRight)
+            angle = 180;
+
+        arm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 }

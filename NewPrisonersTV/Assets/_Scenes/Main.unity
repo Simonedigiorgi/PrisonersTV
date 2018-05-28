@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47686219}
   - component: {fileID: 47686221}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,25 +194,13 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 82035533}
-  - component: {fileID: 82035531}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &82035531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 82035530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095a27a90affd8e45a2446e2dfc32efa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &82035533
 Transform:
   m_ObjectHideFlags: 0
@@ -399,7 +387,7 @@ GameObject:
   - component: {fileID: 303924764}
   - component: {fileID: 303924766}
   - component: {fileID: 303924765}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Player_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1587,7 +1575,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1193025954}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -2387,7 +2375,7 @@ GameObject:
   - component: {fileID: 1905598045}
   - component: {fileID: 1905598046}
   - component: {fileID: 1905598044}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Player_1
   m_TagString: Player_1
   m_Icon: {fileID: 0}
@@ -2405,11 +2393,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bad70faffad3064a98048db7e6060e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 1193025954}
+  arm: {fileID: 82035530}
+  groundCheck: {fileID: 1193025953}
   groundMask:
     serializedVersion: 2
     m_Bits: 256
-  checkRadius: 0.6
+  groundRadius: 0.6
   speed: 14
   jump: 30
   gravity: 12
