@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class Weapons : MonoBehaviour {
+public class Weapon : MonoBehaviour {
 
     private BoxCollider2D coll;
     private GameObject hand;
@@ -46,8 +46,9 @@ public class Weapons : MonoBehaviour {
         if (!autoFire)
             if (Input.GetButtonDown("Fire2") && isGrabbed)
                 Shoot();
-        else
-            if (Input.GetButtonDown("Fire2") && isGrabbed)
+
+        if (autoFire)
+            if (Input.GetButton("Fire2") && isGrabbed)
                 Shoot();
     }
 
@@ -68,7 +69,7 @@ public class Weapons : MonoBehaviour {
         }
     }
 
-    void Shoot()
+    public void Shoot()
     {
         if (Time.time > fireRate + lastShot)
         {

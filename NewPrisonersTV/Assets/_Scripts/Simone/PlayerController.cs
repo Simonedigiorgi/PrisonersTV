@@ -61,26 +61,8 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         JoyRotation();
-
-        #region Jump
-        // Check groundmask
-        isGrounded = Physics2D.OverlapCircle(groundCheck.transform.position, groundRadius, groundMask);
-
-        // Jump && Double Jump
-        if (isGrounded)
-            extraJumps = extraJumpValue;
-
-        if (Input.GetButtonDown("Fire1") && extraJumps > 0)
-        {
-            rb.velocity = Vector2.up * jump;
-            extraJumps--;
-        }
-        else if(Input.GetButtonDown("Fire1") && extraJumps == 0 && isGrounded)
-            rb.velocity = Vector2.up * jump;
-
-        // Swich between ground bool (Jump)
-        anim.SetBool("Grounded", isGrounded);
-        #endregion
+        Jump();
+        
     }
 
     // Flip the player face method
@@ -108,5 +90,26 @@ public class PlayerController : MonoBehaviour {
             angle = 180;
 
         arm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+
+    public void Jump()
+    {
+        // Check groundmask
+        isGrounded = Physics2D.OverlapCircle(groundCheck.transform.position, groundRadius, groundMask);
+
+        // Swich between ground bool (Jump)
+        anim.SetBool("Grounded", isGrounded);
+
+        // Jump && Double Jump
+        if (isGrounded)
+            extraJumps = extraJumpValue;
+
+        if (Input.GetButtonDown("Fire1") && extraJumps > 0)
+        {
+            extraJumps--;
+            rb.velocity = Vector2.up * jump;
+        }
+        else if (Input.GetButtonDown("Fire1") && extraJumps == 0 && isGrounded)
+            rb.velocity = Vector2.up * jump;
     }
 }
