@@ -9,15 +9,22 @@ public class Weapons : MonoBehaviour {
     private BoxCollider2D coll;
     private GameObject hand;
 
+    private Transform spawnPoint;
+
+    public GameObject bullet;
+
     [HideInInspector] public bool isGrabbed;
 
     private void Start()
     {
         coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
         hand = GameObject.Find("Hand");
+
+        spawnPoint = transform.GetChild(2);
     }
 
     void Update () {
+
         if (isGrabbed)
         {
             transform.position = hand.transform.position;
@@ -27,9 +34,15 @@ public class Weapons : MonoBehaviour {
 
         // Rotate the weapon when equipped
         if (FindObjectOfType<PlayerController>().facingRight && isGrabbed)
-            transform.localEulerAngles = new Vector3(0, 0, 180);
+            transform.localEulerAngles = new Vector3(180, 0, 0);
         else if (FindObjectOfType<PlayerController>().facingRight == false && isGrabbed)
-            transform.localEulerAngles = new Vector3(180, 0, 180);
+            transform.localEulerAngles = new Vector3(0, 0, 0);
+
+        // Shoot
+        if (Input.GetButtonDown("Fire2") && isGrabbed)
+        {
+            Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        }
     }
 
     // Get the weapon and destroy the previously when get another

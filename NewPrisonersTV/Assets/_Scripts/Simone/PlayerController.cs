@@ -19,8 +19,10 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Controls")] public float speed;                                                  // Player speed
     [BoxGroup("Controls")] public float jump;                                                   // Player jump value
     [BoxGroup("Controls")] public float gravity;                                                // Player gravity value
-    [BoxGroup("Controls")] public int extraJumpValue;                                           // How many double jumps
-    [BoxGroup("Controls")] public float joypadDeathZone;                                        // Movement death zone
+
+    [BoxGroup("Power Ups")] public int extraJumpValue;                                          // How many double jumps
+
+    [BoxGroup("Joypad")] public float joypadDeathZone;                                          // Movement death zone
 
     private int extraJumps;                                                                     // Double jump
 
