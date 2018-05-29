@@ -84,15 +84,13 @@ public class PlayerController : MonoBehaviour {
 
         if (facingRight)
         {
-            //arm.transform.GetChild(1).localEulerAngles = new Vector3(180, 0, 0);
-            //arm.transform.position = new Vector2(arm.transform.position.x, arm.transform.position.y);
+            arm.transform.GetChild(1).localEulerAngles = new Vector3(180, 0, 20);                   // Rotate the arm
             rotation.y = 180;                                                                       // Rotate the player
         }
 
         else
         {
-            //arm.transform.GetChild(1).localEulerAngles = new Vector3(0, 0, 0);
-            //arm.transform.position = new Vector2(arm.transform.position.x, arm.transform.position.y - .2f);
+            arm.transform.GetChild(1).localEulerAngles = new Vector3(0, 0, 20);                     // Rotate the arm
             rotation.y = 0;                                                                         // Rotate the player
         }
             
