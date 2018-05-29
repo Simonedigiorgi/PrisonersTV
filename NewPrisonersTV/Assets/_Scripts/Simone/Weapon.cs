@@ -15,13 +15,18 @@ public class Weapon : MonoBehaviour {
     [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
 
     [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
-    [BoxGroup("Controls")] public bool autoFire;                                                                // Has autofire                                                                    
+    [BoxGroup("Controls")] public int bullets;                                                                  // How many bullets remaining  
+
+    [BoxGroup("King of weapon")] public bool autoFire;                                                          // Has autofire     
 
     [BoxGroup("Sounds")] public AudioClip shootSound;                                                           // Shoot sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;                                            // Shoot volume
 
     [BoxGroup("Sounds")] public AudioClip grabSound;                                                            // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float grabVolume;                                             // Grab volume
+
+    [BoxGroup("Sounds")] public AudioClip emptySound;                                                           // Grab sound
+    [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float emptyVolume;                                            // Grab volume
 
     public bool isGrabbed;                                                                                      // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
@@ -69,14 +74,27 @@ public class Weapon : MonoBehaviour {
     // Shoot method
     public void Shoot()
     {
-        if (Time.time > fireRate + lastShot)
+        if(bullets != 0)
         {
-            // Shoot sound
-            source.PlayOneShot(shootSound, shootVolume);
+            bullets--;
 
-            Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
-            lastShot = Time.time;
+            if (Time.time > fireRate + lastShot)
+            {
+                // Shoot sound
+                source.PlayOneShot(shootSound, shootVolume);
+
+                // Instantiate the bullet
+                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                lastShot = Time.time;
+            }
         }
+        else if (bullets == 0)
+        {
+            // Set autofire to false to avoid the annoying sound loop
+            autoFire = false;
+            source.PlayOneShot(emptySound, emptyVolume);
+        }
+
     }
 
     public void DestroyWeapon()

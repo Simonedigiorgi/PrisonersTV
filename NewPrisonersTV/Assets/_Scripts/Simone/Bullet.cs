@@ -8,9 +8,9 @@ public class Bullet : MonoBehaviour {
     [BoxGroup("Controls")] public float speed;                                                          // Bullet speed
     [BoxGroup("Controls")] public float destroyAfter;                                                   // Destroy the bullet after seconds
 
-    [BoxGroup("Kind of weapon")] public bool isArrow;                                                   // They block on Walls
-    [BoxGroup("Kind of weapon")] public bool isLaser;                                                   // Move like a laser beam
-    [BoxGroup("Kind of weapon")] public bool isGhost;                                                   // Can surpass walls
+    [BoxGroup("Kind of bullet")] public bool isArrow;                                                   // They block on Walls
+    [BoxGroup("Kind of bullet")] public bool isLaser;                                                   // Move like a laser beam
+    [BoxGroup("Kind of bullet")] public bool isGhost;                                                   // Can surpass walls
 
     void Start () {
 

@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Components")] public GameObject arm;                                                 // Player's arm
     [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
 
+    [BoxGroup("Player Inputs")] public string Horizontal;                                           // 
+    [BoxGroup("Player Inputs")] public string Vertical;                                             // 
+    [BoxGroup("Player Inputs")] public string Shoot;                                                // 
+    [BoxGroup("Player Inputs")] public string DoJump;                                               // 
+
     [BoxGroup("Ground")] public LayerMask groundMask;                                               // Ground mask
     [BoxGroup("Ground")] public float groundRadius;                                                 // Ground collider radius
 
@@ -33,16 +38,16 @@ public class PlayerController : MonoBehaviour {
         // Disable 360° arm sprite
         arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
     }
-	
-	void FixedUpdate () {
 
+    private void FixedUpdate()
+    {
         // Move inputs
-        float moveInput = Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxis(Horizontal);
 
         // Movements
-        if(moveInput >= joypadDeathZone)                                                            // Move right if "x" axis is over 0.2
+        if (moveInput >= joypadDeathZone)                                                            // Move right if "x" axis is over 0.2
             rb.velocity = new Vector2(speed, rb.velocity.y);
-        else if(moveInput <= -joypadDeathZone)                                                      // Move left if "x" axis is lover -0.2
+        else if (moveInput <= -joypadDeathZone)                                                      // Move left if "x" axis is lover -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
         else                                                                                        // Stop the player 
             rb.velocity = new Vector2(0, rb.velocity.y);
@@ -60,7 +65,7 @@ public class PlayerController : MonoBehaviour {
     private void Update()
     {
         // If you've got the weapon
-        if(arm.transform.GetChild(0).childCount == 1)
+        if (arm.transform.GetChild(0).childCount == 1)
         {
             // Enable 360° arm sprite
             arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
@@ -68,16 +73,17 @@ public class PlayerController : MonoBehaviour {
             // Enable The rotation of joystick
             JoyRotation();
 
+            // Get the weapon
             Weapon weapon = arm.transform.GetChild(0).GetChild(0).GetComponent<Weapon>();
 
             if (weapon.autoFire == false)
             {
-                if (Input.GetButtonDown("Button X") && weapon.isGrabbed)
+                if (Input.GetButtonDown(Shoot) && weapon.isGrabbed)
                     weapon.Shoot();
             }
             if (weapon.autoFire)
             {
-                if (Input.GetButton("Button X") && weapon.isGrabbed)
+                if (Input.GetButton(Shoot) && weapon.isGrabbed)
                     weapon.Shoot();
             }
 
@@ -115,7 +121,7 @@ public class PlayerController : MonoBehaviour {
     // Rotate the Joystick of 360°
     public void JoyRotation()
     {
-        Vector3 joyPosition = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 joyPosition = new Vector3(Input.GetAxis(Horizontal), Input.GetAxis(Vertical), 0);
 
         float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
 
@@ -137,12 +143,12 @@ public class PlayerController : MonoBehaviour {
         if (isGrounded)
             extraJumps = extraJumpValue;
 
-        if (Input.GetButtonDown("Player1_Button A") && extraJumps > 0)
+        if (Input.GetButtonDown(DoJump) && extraJumps > 0)
         {
             extraJumps--;
             rb.velocity = Vector2.up * jump;
         }
-        else if (Input.GetButtonDown("Player1_Button A") && extraJumps == 0 && isGrounded)
+        else if (Input.GetButtonDown(DoJump) && extraJumps == 0 && isGrounded)
             rb.velocity = Vector2.up * jump;
     }
 }

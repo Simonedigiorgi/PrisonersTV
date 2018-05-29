@@ -953,6 +953,26 @@ Prefab:
       propertyPath: m_Name
       value: Gun_weapon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bulletsRemaining
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptyVolume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10406121de413a649b9105f6224be9f1, type: 3}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bullets
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
   m_IsPrefabParent: 0
@@ -1091,6 +1111,31 @@ Prefab:
       propertyPath: isGrabbed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: autoFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bullets
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bulletsRemaining
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptyVolume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10406121de413a649b9105f6224be9f1, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
   m_IsPrefabParent: 0
@@ -1943,6 +1988,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arm: {fileID: 82035530}
   groundCheck: {fileID: 1193025953}
+  Horizontal: Player1_Horizontal
+  Vertical: Player1_Vertical
+  Shoot: Player1_Button X
+  DoJump: Player1_Button A
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -2043,11 +2092,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arm: {fileID: 62542974}
   groundCheck: {fileID: 271411440}
+  Horizontal: Player2_Horizontal
+  Vertical: Player2_Vertical
+  Shoot: Player2_Button X
+  DoJump: Player2_Button A
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   groundRadius: 0.6
-  speed: 14
+  speed: 15
   jump: 30
   extraJumpValue: 1
   facingRight: 0
@@ -2201,6 +2254,26 @@ Prefab:
     - target: {fileID: 1222576285811866, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
       propertyPath: m_Name
       value: Gun_weapon (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bulletsRemaining
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptyVolume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: emptySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 10406121de413a649b9105f6224be9f1, type: 3}
+    - target: {fileID: 114672807640488488, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bullets
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
