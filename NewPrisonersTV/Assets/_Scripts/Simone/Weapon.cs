@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour {
     private AudioSource source;                                                                                 // Get the Audiosource component
 
     private BoxCollider2D coll;                                                                                 // Weapon collider
-    private GameObject hand;                                                                                    // Get the Player hand (need to work on this to make Player 2)                                                                                        
+    private GameObject hand;                                                                                    // Get the Player hand                                                                                        
     private Transform spawnPoint;                                                                               // Where the bullet is istantiate
 
     [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
@@ -23,9 +23,7 @@ public class Weapon : MonoBehaviour {
     [BoxGroup("Sounds")] public AudioClip grabSound;                                                            // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float grabVolume;                                             // Grab volume
 
-    [HideInInspector] public bool canShoot;                                                                     // Can the weapon shoot?
-    [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
-
+    public bool isGrabbed;                                                                                      // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     private void Start()
@@ -33,7 +31,6 @@ public class Weapon : MonoBehaviour {
         source = GetComponent<AudioSource>();
 
         coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
-        hand = GameObject.Find("Hand");
 
         spawnPoint = transform.GetChild(2);                                                                     // Get the Spawnpoint child
     }
@@ -47,21 +44,6 @@ public class Weapon : MonoBehaviour {
             transform.parent = hand.transform;
             coll.enabled = false;
         }
-
-        // Rotate the weapon when equipped
-        if (FindObjectOfType<PlayerController>().facingRight && isGrabbed)
-            transform.localEulerAngles = new Vector3(180, 0, 0);
-        else if (FindObjectOfType<PlayerController>().facingRight == false && isGrabbed)
-            transform.localEulerAngles = new Vector3(0, 0, 0);
-
-        // Single shoot
-        if (!autoFire)
-            if (Input.GetButtonDown("Button X") && isGrabbed)
-                Shoot();
-        // Autofire
-        if (autoFire)
-            if (Input.GetButton("Button X") && isGrabbed)
-                Shoot();
     }
 
     // Get the weapon and destroy the previously when get another
@@ -69,18 +51,18 @@ public class Weapon : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
         {
-            // Grab sound
-            source.PlayOneShot(grabSound, grabVolume);
+            //Get the player hand
+            hand = GameObject.Find("Hand_Player1");
 
-            if (hand.transform.childCount <= 1)
-            {
-                isGrabbed = true;
-                if (hand.transform.childCount > 0)
-                {
-                    GameObject first = hand.transform.GetChild(0).gameObject;
-                    Destroy(first.gameObject);
-                }
-            }
+            DestroyWeapon();
+        }
+
+        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed)
+        {
+            //Get the player hand
+            hand = GameObject.Find("Hand_Player2");
+
+            DestroyWeapon();
         }
     }
 
@@ -94,6 +76,24 @@ public class Weapon : MonoBehaviour {
 
             Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
             lastShot = Time.time;
+        }
+    }
+
+    public void DestroyWeapon()
+    {
+        // Grab sound
+        source.PlayOneShot(grabSound, grabVolume);
+
+        // Destroy the first && get the second
+        if (hand.transform.childCount <= 1)
+        {
+            isGrabbed = true;
+
+            if (hand.transform.childCount > 0)
+            {
+                GameObject first = hand.transform.GetChild(0).gameObject;
+                Destroy(first.gameObject);
+            }
         }
     }
 }
