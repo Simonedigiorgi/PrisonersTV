@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour {
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-
+            Debug.Log("AHI!!");
         }
     }
 }
