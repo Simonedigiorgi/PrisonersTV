@@ -45,10 +45,18 @@ public class PlayerController : MonoBehaviour {
         else if(moveInput <= -joypadDeathZone)                                                  // Move left if "x" axis is lover -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
         else                                                                                    // Stop the player 
-            rb.velocity = new Vector2(0, rb.velocity.y);                                        
+            rb.velocity = new Vector2(0, rb.velocity.y);
 
         // Set Run animation
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
+        /*if (arm.transform.GetChild(0).transform.childCount == 1)
+        {
+            anim.SetBool("Weapon", true);
+            arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+        }
+
+        else
+            anim.SetBool("Weapon", false);*/
 
         // Flip the player face direction
         if (facingRight == false && moveInput < 0)
@@ -71,9 +79,19 @@ public class PlayerController : MonoBehaviour {
         Vector3 rotation = transform.localEulerAngles;
 
         if (facingRight)
+        {
+            //arm.transform.GetChild(1).localEulerAngles = new Vector3(180, 0, 0);
+            //arm.transform.position = new Vector2(arm.transform.position.x, arm.transform.position.y);
             rotation.y = 180;                                                                       // Rotate the player
+        }
+
         else
+        {
+            //arm.transform.GetChild(1).localEulerAngles = new Vector3(0, 0, 0);
+            //arm.transform.position = new Vector2(arm.transform.position.x, arm.transform.position.y - .2f);
             rotation.y = 0;                                                                         // Rotate the player
+        }
+            
 
         transform.localEulerAngles = rotation;
     }
