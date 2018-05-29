@@ -11,10 +11,10 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Components")] public GameObject arm;                                                 // Player's arm
     [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
 
-    [BoxGroup("Player Inputs")] public string Horizontal;                                           // 
-    [BoxGroup("Player Inputs")] public string Vertical;                                             // 
-    [BoxGroup("Player Inputs")] public string Shoot;                                                // 
-    [BoxGroup("Player Inputs")] public string DoJump;                                               // 
+    [BoxGroup("Player Inputs")] public string Horizontal;                                           // Get Horiziontal
+    [BoxGroup("Player Inputs")] public string Vertical;                                             // Get Vertical
+    [BoxGroup("Player Inputs")] public string Shoot;                                                // Shoot with you weapon
+    [BoxGroup("Player Inputs")] public string DoJump;                                               // Do a jump
 
     [BoxGroup("Ground")] public LayerMask groundMask;                                               // Ground mask
     [BoxGroup("Ground")] public float groundRadius;                                                 // Ground collider radius
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = new Vector2(speed, rb.velocity.y);
         else if (moveInput <= -joypadDeathZone)                                                      // Move left if "x" axis is lover -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
-        else                                                                                        // Stop the player 
+        else                                                                                         // Stop the player 
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         // Set Run animation
