@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+
+        // Disable 360° arm sprite
+        arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
     }
 	
 	void FixedUpdate () {
@@ -49,14 +52,6 @@ public class PlayerController : MonoBehaviour {
 
         // Set Run animation
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
-        /*if (arm.transform.GetChild(0).transform.childCount == 1)
-        {
-            anim.SetBool("Weapon", true);
-            arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-        }
-
-        else
-            anim.SetBool("Weapon", false);*/
 
         // Flip the player face direction
         if (facingRight == false && moveInput < 0)
@@ -68,7 +63,16 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        JoyRotation();
+        // If you've got the weapon
+        if(arm.transform.GetChild(0).childCount == 1)
+        {
+            // Enable 360° arm sprite
+            arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+
+            // Enable The rotation of joystick
+            JoyRotation();
+        }
+
         Jump();
     }
 

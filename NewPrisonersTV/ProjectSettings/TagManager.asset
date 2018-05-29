@@ -8,6 +8,7 @@ TagManager:
   - Player_2
   - Wall
   - Bullet
+  - Weapon
   layers:
   - Default
   - TransparentFX
