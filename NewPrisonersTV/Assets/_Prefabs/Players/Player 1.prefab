@@ -353,6 +353,7 @@ MonoBehaviour:
   jump: 30
   dashPower: 30
   dashTimer: 0.3
+  respawnTime: 5
   extraJumpValue: 1
   isActive: 1
   facingRight: 0

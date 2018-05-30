@@ -21,8 +21,12 @@ public class GameManager : MonoBehaviour {
 
         if(GameObject.FindGameObjectWithTag("Player_1") == null && !isPlayer1alive)
         {
-            Instantiate(player1, player1Spawn.position, Quaternion.identity);
-            isPlayer1alive = true;
+            if (Input.GetButtonDown("Player1_Start"))
+            {
+                Instantiate(player1, player1Spawn.position, Quaternion.identity);
+                isPlayer1alive = true;
+            }
+
         }
     }
 

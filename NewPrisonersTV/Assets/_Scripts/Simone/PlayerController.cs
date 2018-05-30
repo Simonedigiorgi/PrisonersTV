@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Controls")] public float jump;                                                       // Player jump value
     [BoxGroup("Controls")] public float dashPower;                                                  // Player dash power
     [BoxGroup("Controls")] public float dashTimer;                                                  // How many time in dash 
+    [BoxGroup("Controls")] public float respawnTime;                                                // Time before respawning
 
     [BoxGroup("Power Ups")] public int extraJumpValue;                                              // How many double jumps
 
@@ -54,12 +55,11 @@ public class PlayerController : MonoBehaviour {
         // Disable 360° arm sprite
         playerArm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
 
-        // Set player alive to false (need for the GameManager to respawn the player)
+        // Set player alive to false (need for the GameManager to respawn the players)
         if(gameObject.name == "Player 1" || gameObject.name == "Player 1(Clone)")
             gm.isPlayer1alive = false;
         else if(gameObject.name == "Player 2" || gameObject.name == "Player 2(Clone)")
             gm.isPlayer2alive = false;
-
     }
 
     private void FixedUpdate()
@@ -138,9 +138,7 @@ public class PlayerController : MonoBehaviour {
             if (life <= 0)
             {
                 life = 0;
-                Debug.Log("Dead");
-
-                Destroy(gameObject);
+                StartCoroutine(Death());
             }
 
             Dash();
@@ -149,6 +147,7 @@ public class PlayerController : MonoBehaviour {
         Jump();
     }
 
+    #region Methods
     // Flip the player face method
     public void PlayerFlip()
     {
@@ -229,7 +228,9 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(ResetDash());
         }
     }
+    #endregion
 
+    #region Coroutines
     IEnumerator ResetDash()
     {
         yield return new WaitForSeconds(dashTimer);
@@ -239,6 +240,22 @@ public class PlayerController : MonoBehaviour {
         transform.GetChild(1).GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
     }
 
+    public IEnumerator Death()
+    {
+        // Death animation
+        playerAnim.SetBool("Death", true);
+
+        // Stop the player and set active to false
+        rb.velocity = new Vector2(0, 0);
+        isActive = false;
+
+        // Destroy after
+        yield return new WaitForSeconds(respawnTime);
+        Destroy(gameObject);
+    }
+    #endregion
+
+    #region Collisions and Triggers
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // Ignore collision colliders between players and enemies
@@ -261,4 +278,5 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Enemy"))
             life--;
     }
+    #endregion
 }
