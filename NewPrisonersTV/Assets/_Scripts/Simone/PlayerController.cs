@@ -163,16 +163,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButtonDown(DoDash) && !isInDash)
         {
             isInDash = true;
-            Debug.Log("dash");
+            anim.SetTrigger("Dash");
 
             if (facingRight)
-            {
                 rb.velocity = Vector2.left * dashPower;
-            }
             else
-            {
                 rb.velocity = Vector2.right * dashPower;
-            }
 
             StartCoroutine(ResetDash());
         }
