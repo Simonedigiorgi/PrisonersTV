@@ -151,4 +151,17 @@ public class PlayerController : MonoBehaviour {
         else if (Input.GetButtonDown(DoJump) && extraJumps == 0 && isGrounded)
             rb.velocity = Vector2.up * jump;
     }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Ignore colliders between players
+        if(collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2"))
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2"))
+            Debug.Log("Trigger");
+    }
 }
