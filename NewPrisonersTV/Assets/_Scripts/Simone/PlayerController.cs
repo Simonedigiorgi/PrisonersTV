@@ -208,7 +208,7 @@ public class PlayerController : MonoBehaviour {
             playerAnim.SetTrigger("Dash");
 
             // Disable arm without the weapon
-            transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+            transform.GetChild(1).GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
 
             if (facingRight)
                 rb.velocity = Vector2.left * dashPower;
