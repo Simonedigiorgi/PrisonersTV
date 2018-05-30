@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour {
     [BoxGroup("Sounds")] public AudioClip emptySound;                                                           // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float emptyVolume;                                            // Grab volume
 
-    public bool isGrabbed;                                                                                      // The weapon is grabbed
+    [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     private void Start()

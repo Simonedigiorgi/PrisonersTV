@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 20033800}
   - component: {fileID: 20033801}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 47686219}
   - component: {fileID: 47686221}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_Player1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 62542975}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -297,7 +297,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 82035533}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 238432040}
   - component: {fileID: 238432042}
   - component: {fileID: 238432037}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Puppet
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 271411441}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -630,7 +630,7 @@ GameObject:
   - component: {fileID: 303924764}
   - component: {fileID: 303924766}
   - component: {fileID: 303924765}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,7 +986,7 @@ GameObject:
   - component: {fileID: 507935190}
   - component: {fileID: 507935192}
   - component: {fileID: 507935191}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1419,7 +1419,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1193025954}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
@@ -1545,7 +1545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1525130566}
   - component: {fileID: 1525130567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1812,7 +1812,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708648312}
   - component: {fileID: 1708648313}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1969,7 +1969,7 @@ GameObject:
   - component: {fileID: 1905598046}
   - component: {fileID: 1905598047}
   - component: {fileID: 1905598044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player_1
   m_TagString: Player_1
   m_Icon: {fileID: 0}
@@ -1993,6 +1993,7 @@ MonoBehaviour:
   Vertical: Player1_Vertical
   Shoot: Player1_Button X
   DoJump: Player1_Button A
+  Dash: Player1_Button B
   groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -2099,7 +2100,7 @@ GameObject:
   - component: {fileID: 1981957124}
   - component: {fileID: 1981957127}
   - component: {fileID: 1981957123}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player_2
   m_TagString: Player_2
   m_Icon: {fileID: 0}
@@ -2123,6 +2124,7 @@ MonoBehaviour:
   Vertical: Player2_Vertical
   Shoot: Player2_Button X
   DoJump: Player2_Button A
+  Dash: Player2_Button B
   groundMask:
     serializedVersion: 2
     m_Bits: 256

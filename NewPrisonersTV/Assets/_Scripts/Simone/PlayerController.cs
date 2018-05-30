@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Player Inputs")] public string Vertical;                                             // Get Vertical
     [BoxGroup("Player Inputs")] public string Shoot;                                                // Shoot with you weapon
     [BoxGroup("Player Inputs")] public string DoJump;                                               // Do a jump
+    [BoxGroup("Player Inputs")] public string Dash;                                                 // Do a dash
 
     [BoxGroup("Ground")] public LayerMask groundMask;                                               // Ground mask
     [BoxGroup("Ground")] public float groundRadius;                                                 // Ground collider radius
@@ -155,13 +156,15 @@ public class PlayerController : MonoBehaviour {
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // Ignore colliders between players
-        if(collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2"))
+        if(collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2") || collision.gameObject.CompareTag("Enemy"))
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2"))
-            Debug.Log("Trigger");
+            Debug.Log("Trigger Player");
+        if (collision.gameObject.CompareTag("Enemy"))
+            Debug.Log("Trigger Enemy");
     }
 }
