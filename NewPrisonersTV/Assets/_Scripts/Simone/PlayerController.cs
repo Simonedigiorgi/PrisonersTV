@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Player Inputs")] public string Vertical;                                             // Get Vertical
     [BoxGroup("Player Inputs")] public string Shoot;                                                // Shoot with you weapon
     [BoxGroup("Player Inputs")] public string DoJump;                                               // Do a jump
-    [BoxGroup("Player Inputs")] public string Dash;                                                 // Do a dash
+    [BoxGroup("Player Inputs")] public string DoDash;                                                 // Do a dash
 
     [BoxGroup("Ground")] public LayerMask groundMask;                                               // Ground mask
     [BoxGroup("Ground")] public float groundRadius;                                                 // Ground collider radius
@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
 
     [BoxGroup("Controls")] public float speed;                                                      // Player speed
     [BoxGroup("Controls")] public float jump;                                                       // Player jump value
+    [BoxGroup("Controls")] public float dashPower;                                                  // Player dash power
+    [BoxGroup("Controls")] public float dashTimer;                                                  // How many time in dash 
 
     [BoxGroup("Power Ups")] public int extraJumpValue;                                              // How many double jumps
 
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     private int extraJumps;                                                                         // Double jump
 
     [HideInInspector] public bool facingRight;                                                      // Player flip facing
+    [HideInInspector] public bool isInDash = false;                                                 // Check if the player is in dash
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
@@ -50,7 +53,7 @@ public class PlayerController : MonoBehaviour {
             rb.velocity = new Vector2(speed, rb.velocity.y);
         else if (moveInput <= -joypadDeathZone)                                                      // Move left if "x" axis is lover -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
-        else                                                                                         // Stop the player 
+        else if (!isInDash)                                                                          // Stop the player 
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         // Set Run animation
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         Jump();
+        Dash();
     }
 
     // Flip the player face method
@@ -151,6 +155,33 @@ public class PlayerController : MonoBehaviour {
         }
         else if (Input.GetButtonDown(DoJump) && extraJumps == 0 && isGrounded)
             rb.velocity = Vector2.up * jump;
+    }
+
+    public void Dash()
+    {
+        //Dash condition
+        if (Input.GetButtonDown(DoDash) && !isInDash)
+        {
+            isInDash = true;
+            Debug.Log("dash");
+
+            if (facingRight)
+            {
+                rb.velocity = Vector2.left * dashPower;
+            }
+            else
+            {
+                rb.velocity = Vector2.right * dashPower;
+            }
+
+            StartCoroutine(ResetDash());
+        }
+    }
+
+    IEnumerator ResetDash()
+    {
+        yield return new WaitForSeconds(dashTimer);
+        isInDash = false;
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
