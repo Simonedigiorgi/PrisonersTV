@@ -49,11 +49,11 @@ public class PlayerController : MonoBehaviour {
         float moveInput = Input.GetAxis(Horizontal);
 
         // Movements
-        if (moveInput >= joypadDeathZone)                                                            // Move right if "x" axis is over 0.2
+        if (moveInput >= joypadDeathZone && !isInDash)                                                            // Move right if "x" axis is over 0.2
             rb.velocity = new Vector2(speed, rb.velocity.y);
-        else if (moveInput <= -joypadDeathZone)                                                      // Move left if "x" axis is lover -0.2
+        else if (moveInput <= -joypadDeathZone && !isInDash)                                                      // Move left if "x" axis is lover -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
-        else if (!isInDash)                                                                          // Stop the player 
+        else if(!isInDash)                                                                         // Stop the player 
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         // Set Run animation
