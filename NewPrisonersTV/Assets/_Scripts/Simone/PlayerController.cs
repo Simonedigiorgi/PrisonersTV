@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     // *** THE WEAPON SCRIPT WORKS WITH THAT
 
     private Rigidbody2D rb;                                                                         // Rigidbody components
+    private GameManager gm;                                                                         // GameManager
     private Animator playerAnim, armAnim;                                                           // Get the Player Animators
 
     [BoxGroup("Components")] public GameObject playerArm;                                           // Player's arm
@@ -45,12 +46,20 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponentInChildren<Animator>();
+        gm = FindObjectOfType<GameManager>();
 
         // Get arm without weapon (Arm_Anim) child
         armAnim = transform.GetChild(1).GetChild(2).GetComponent<Animator>();
 
         // Disable 360° arm sprite
         playerArm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
+
+        // Set player alive to false (need for the GameManager to respawn the player)
+        if(gameObject.name == "Player 1" || gameObject.name == "Player 1(Clone)")
+            gm.isPlayer1alive = false;
+        else if(gameObject.name == "Player 2" || gameObject.name == "Player 2(Clone)")
+            gm.isPlayer2alive = false;
+
     }
 
     private void FixedUpdate()
@@ -130,6 +139,8 @@ public class PlayerController : MonoBehaviour {
             {
                 life = 0;
                 Debug.Log("Dead");
+
+                Destroy(gameObject);
             }
 
             Dash();

@@ -7,19 +7,29 @@ public class GameManager : MonoBehaviour {
     public Transform[] weaponsSpawn;
     public GameObject[] weapons;
 
-	void Start () {
-        StartCoroutine(RandomWeapons());
+    public GameObject player1;
+    public Transform player1Spawn;
+
+    public bool isPlayer1alive;
+    public bool isPlayer2alive;
+
+    void Start () {
+        //StartCoroutine(RandomWeapons());
 	}
 	
-	// Update is called once per frame
 	void Update () {
 
-	}
+        if(GameObject.FindGameObjectWithTag("Player_1") == null && !isPlayer1alive)
+        {
+            Instantiate(player1, player1Spawn.position, Quaternion.identity);
+            isPlayer1alive = true;
+        }
+    }
 
-    public IEnumerator RandomWeapons()
+    /*public IEnumerator RandomWeapons()
     {
         Random.Range(0, weaponsSpawn.Length);
         yield return new WaitForSeconds(1);
         StartCoroutine(RandomWeapons());
-    }
+    }*/
 }
