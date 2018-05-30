@@ -1,0 +1,247 @@
+fileFormatVersion: 2
+guid: 073891ec6bcd7f042b9d0eb90b5d5bef
+timeCreated: 1527701457
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Player_arm_run_0
+    21300002: Player_arm_run_1
+    21300004: Player_arm_run_2
+    21300006: Player_arm_run_3
+    21300008: Player_arm_run_4
+    21300010: Player_arm_run_5
+    21300012: Player_arm_run_6
+    21300014: Player_arm_run_7
+    21300016: Player_arm_run_8
+    21300018: Player_arm_run_9
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_arm_run_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 20
+        width: 28
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5, y: 0.8}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_1
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 24
+        width: 32
+        height: 44
+      alignment: 9
+      pivot: {x: 0.6949568, y: 0.7916596}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_2
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 29
+        width: 38
+        height: 41
+      alignment: 9
+      pivot: {x: 0.7510898, y: 0.76419735}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_3
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 29
+        width: 38
+        height: 41
+      alignment: 9
+      pivot: {x: 0.760747, y: 0.7416682}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_4
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 23
+        width: 32
+        height: 45
+      alignment: 9
+      pivot: {x: 0.7064247, y: 0.79358214}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_5
+      rect:
+        serializedVersion: 2
+        x: 508
+        y: 19
+        width: 28
+        height: 47
+      alignment: 9
+      pivot: {x: 0.55242485, y: 0.8123216}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_6
+      rect:
+        serializedVersion: 2
+        x: 608
+        y: 23
+        width: 36
+        height: 44
+      alignment: 9
+      pivot: {x: 0.31651136, y: 0.79191434}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_7
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 31
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.24396887, y: 0.76779455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_8
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 31
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.24396887, y: 0.76779455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Player_arm_run_9
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 23
+        width: 36
+        height: 44
+      alignment: 9
+      pivot: {x: 0.31651136, y: 0.8085951}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

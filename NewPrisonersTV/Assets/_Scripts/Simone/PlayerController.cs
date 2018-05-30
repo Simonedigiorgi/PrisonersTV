@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;                                                                         // Rigidbody components
     private Animator anim;
+    public Animator armAnim;
 
     [BoxGroup("Components")] public GameObject arm;                                                 // Player's arm
     [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     [BoxGroup("Player Inputs")] public string Vertical;                                             // Get Vertical
     [BoxGroup("Player Inputs")] public string Shoot;                                                // Shoot with you weapon
     [BoxGroup("Player Inputs")] public string DoJump;                                               // Do a jump
-    [BoxGroup("Player Inputs")] public string DoDash;                                                 // Do a dash
+    [BoxGroup("Player Inputs")] public string DoDash;                                               // Do a dash
 
     [BoxGroup("Ground")] public LayerMask groundMask;                                               // Ground mask
     [BoxGroup("Ground")] public float groundRadius;                                                 // Ground collider radius
@@ -49,15 +50,18 @@ public class PlayerController : MonoBehaviour {
         float moveInput = Input.GetAxis(Horizontal);
 
         // Movements
-        if (moveInput >= joypadDeathZone && !isInDash)                                                            // Move right if "x" axis is over 0.2
+        if (moveInput >= joypadDeathZone && !isInDash)                                              // Move right if "x" axis is over 0.2
             rb.velocity = new Vector2(speed, rb.velocity.y);
-        else if (moveInput <= -joypadDeathZone && !isInDash)                                                      // Move left if "x" axis is lover -0.2
+        else if (moveInput <= -joypadDeathZone && !isInDash)                                        // Move left if "x" axis is lower -0.2
             rb.velocity = new Vector2(-speed, rb.velocity.y);
-        else if(!isInDash)                                                                         // Stop the player 
+        else if(!isInDash)
             rb.velocity = new Vector2(0, rb.velocity.y);
 
         // Set Run animation
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
+
+        // This animate the arm without the weapon
+        armAnim.SetFloat("Speed", Mathf.Abs(moveInput));
 
         // Flip the player direction
         if (facingRight == false && moveInput < 0)
@@ -73,6 +77,9 @@ public class PlayerController : MonoBehaviour {
         {
             // Enable 360° arm sprite
             arm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
+
+            // Disable arm without the weapon
+            transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
 
             // Enable The rotation of joystick
             JoyRotation();
@@ -98,7 +105,10 @@ public class PlayerController : MonoBehaviour {
                 weapon.transform.localEulerAngles = new Vector3(0, 0, 0);
         }
 
+        // Jump method
         Jump();
+
+        // Dash method
         Dash();
     }
 
@@ -145,6 +155,9 @@ public class PlayerController : MonoBehaviour {
         // Swich between ground bool (Jump)
         anim.SetBool("Grounded", isGrounded);
 
+        // This animate the arm without the weapon
+        armAnim.SetBool("Grounded", isGrounded);
+
         if (isGrounded)
             extraJumps = extraJumpValue;
 
@@ -165,6 +178,9 @@ public class PlayerController : MonoBehaviour {
             isInDash = true;
             anim.SetTrigger("Dash");
 
+            // Disable arm without the weapon
+            transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
+
             if (facingRight)
                 rb.velocity = Vector2.left * dashPower;
             else
@@ -178,6 +194,9 @@ public class PlayerController : MonoBehaviour {
     {
         yield return new WaitForSeconds(dashTimer);
         isInDash = false;
+
+        // Enable arm without the weapon
+        transform.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
