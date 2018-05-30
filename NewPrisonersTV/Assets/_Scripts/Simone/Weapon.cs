@@ -62,7 +62,7 @@ public class Weapon : MonoBehaviour {
             DestroyWeapon();
         }
 
-        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<PlayerController>().isActive)
+        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_2").GetComponent<PlayerController>().isActive)
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player2");
