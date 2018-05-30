@@ -54,7 +54,7 @@ public class Weapon : MonoBehaviour {
     // Get the weapon and destroy the previously when get another
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
+        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<PlayerController>().isActive)
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player1");
@@ -62,7 +62,7 @@ public class Weapon : MonoBehaviour {
             DestroyWeapon();
         }
 
-        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed)
+        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<PlayerController>().isActive)
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player2");
@@ -94,7 +94,6 @@ public class Weapon : MonoBehaviour {
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
         }
-
     }
 
     public void DestroyWeapon()
