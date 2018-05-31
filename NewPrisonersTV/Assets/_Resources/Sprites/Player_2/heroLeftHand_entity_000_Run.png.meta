@@ -1,0 +1,247 @@
+fileFormatVersion: 2
+guid: a2ca4b454ade45e4bbe240e09f8382fd
+timeCreated: 1527780619
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: heroLeftHand_entity_000_Run_0
+    21300002: heroLeftHand_entity_000_Run_1
+    21300004: heroLeftHand_entity_000_Run_2
+    21300006: heroLeftHand_entity_000_Run_3
+    21300008: heroLeftHand_entity_000_Run_4
+    21300010: heroLeftHand_entity_000_Run_5
+    21300012: heroLeftHand_entity_000_Run_6
+    21300014: heroLeftHand_entity_000_Run_7
+    21300016: heroLeftHand_entity_000_Run_8
+    21300018: heroLeftHand_entity_000_Run_9
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 23
+        width: 28
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5311785, y: 0.78791106}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_1
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 27
+        width: 32
+        height: 44
+      alignment: 9
+      pivot: {x: 0.7046137, y: 0.7976206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_2
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 32
+        width: 38
+        height: 41
+      alignment: 9
+      pivot: {x: 0.7756902, y: 0.76616466}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_3
+      rect:
+        serializedVersion: 2
+        x: 357
+        y: 32
+        width: 38
+        height: 41
+      alignment: 9
+      pivot: {x: 0.7642027, y: 0.755518}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_4
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 26
+        width: 32
+        height: 45
+      alignment: 9
+      pivot: {x: 0.7046137, y: 0.7813066}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_5
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 22
+        width: 28
+        height: 47
+      alignment: 9
+      pivot: {x: 0.5467682, y: 0.806486}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_6
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 26
+        width: 36
+        height: 44
+      alignment: 9
+      pivot: {x: 0.33024427, y: 0.7777792}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_7
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 34
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.2563661, y: 0.7477489}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_8
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 34
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.2563661, y: 0.7477489}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: heroLeftHand_entity_000_Run_9
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 26
+        width: 36
+        height: 44
+      alignment: 9
+      pivot: {x: 0.33024427, y: 0.7976206}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
