@@ -12,6 +12,8 @@ public class Weapon : MonoBehaviour {
     private GameObject hand;                                                                                    // Get the Player hand                                                                                        
     private Transform spawnPoint;                                                                               // Where the bullet is istantiate
 
+    public Animator anim;
+
     [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
 
     [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
@@ -82,6 +84,8 @@ public class Weapon : MonoBehaviour {
             {
                 // Shoot sound
                 source.PlayOneShot(shootSound, shootVolume);
+
+                anim.SetTrigger("Shoot");
 
                 // Instantiate the bullet
                 Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);

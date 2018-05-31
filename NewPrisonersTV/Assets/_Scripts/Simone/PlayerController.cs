@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
 
             // Get the weapon component
             Weapon weapon = playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon>();
-            Transform muzzObject = playerArm.transform.GetChild(0).GetChild(0).GetChild(3);
+
 
             if (isActive)
             {
@@ -128,18 +128,8 @@ public class PlayerController : MonoBehaviour {
                 else if (!facingRight && weapon.isGrabbed)
                     weapon.transform.localEulerAngles = new Vector3(0, 0, 0);
 
-                // Flip the weapon when equipped
-                if (facingRight && weapon.isGrabbed)
-                {
-                    muzzObject.transform.localEulerAngles = new Vector3(90, 0, 0);
-                    //muzzObject.transform.position = new Vector3(muzzObject.position.x, muzzObject.position.y - 0.3f, muzzObject.position.z);
-                }
-
-                else if (!facingRight && weapon.isGrabbed)
-                {
-                    muzzObject.transform.localEulerAngles = new Vector3(-90, 0, 0);
-                    //muzzObject.transform.position = new Vector3(muzzObject.position.x, muzzObject.position.y, muzzObject.position.z);
-                }
+                // Rotation of Muzz effect
+                MuzzRotation();
             }
         }
     }
@@ -194,6 +184,28 @@ public class PlayerController : MonoBehaviour {
             angle = 180;
 
         playerArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    }
+
+    // Muzz rotation
+    public void MuzzRotation()
+    {
+        // Get the Muzz component on weapon
+        Transform muzzObject = playerArm.transform.GetChild(0).GetChild(0).GetChild(3);
+
+        Vector3 muzzPosition = new Vector3(Input.GetAxis(Horizontal), Input.GetAxis(Vertical), 0);
+
+        float angle = Mathf.Atan2(muzzPosition.y, muzzPosition.x) * Mathf.Rad2Deg;
+
+        if (angle == 0 && facingRight)
+            angle = 180;
+
+        muzzObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        // This avoid the muzz to have a glitchy position
+        if (facingRight)
+            muzzObject.GetComponent<SpriteRenderer>().flipY = true;
+        else
+            muzzObject.GetComponent<SpriteRenderer>().flipY = false;
     }
 
     // Jump && Double jump

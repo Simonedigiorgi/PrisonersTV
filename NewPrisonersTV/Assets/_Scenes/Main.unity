@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6c092c37ed6df49bfc2d2aa2c1b580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 294208276}
   bullet: {fileID: 1429077776476288, guid: 86d9dda68eb01de418bb3d89beeeed31, type: 2}
   fireRate: 0.15
   bullets: 50
@@ -298,6 +299,7 @@ Transform:
   - {fileID: 1829718586}
   - {fileID: 1830350751}
   - {fileID: 2105887061}
+  - {fileID: 294208274}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -533,11 +535,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 294208273}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6, y: -0.2, z: 0}
+  m_LocalPosition: {x: 2.8000002, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2105887061}
-  m_RootOrder: 0
+  m_Father: {fileID: 138753488}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &294208275
 SpriteRenderer:
@@ -575,7 +577,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 12.86, y: 9.52}
@@ -2378,8 +2380,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.6, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 294208274}
+  m_Children: []
   m_Father: {fileID: 138753488}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
