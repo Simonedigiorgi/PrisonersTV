@@ -511,6 +511,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3c387b4572146409d28c5dda7ade2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 0
+  isFlashing: 0
+  flashingSpeed: 0
+  speed: 0
 --- !u!1001 &276405933
 Prefab:
   m_ObjectHideFlags: 0
@@ -549,16 +553,6 @@ Prefab:
     - target: {fileID: 4113630020032476, guid: cb6f3c080f227e54493b24c137f03236, type: 2}
       propertyPath: m_RootOrder
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114363736860653298, guid: cb6f3c080f227e54493b24c137f03236,
-        type: 2}
-      propertyPath: facingRight
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114363736860653298, guid: cb6f3c080f227e54493b24c137f03236,
-        type: 2}
-      propertyPath: life
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb6f3c080f227e54493b24c137f03236, type: 2}
@@ -2249,10 +2243,6 @@ Prefab:
     - target: {fileID: 4335079041305572, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1368062636454544, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
