@@ -91,10 +91,7 @@ public class PlayerController : MonoBehaviour {
             else if (facingRight && moveInput > 0)
                 PlayerFlip();
         }
-    }
 
-    private void Update()
-    {
         // If you've got the weapon
         if (playerArm.transform.GetChild(0).childCount == 1)
         {
@@ -106,6 +103,7 @@ public class PlayerController : MonoBehaviour {
 
             // Get the weapon component
             Weapon weapon = playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon>();
+            Transform muzzObject = playerArm.transform.GetChild(0).GetChild(0).GetChild(3);
 
             if (isActive)
             {
@@ -129,9 +127,25 @@ public class PlayerController : MonoBehaviour {
                     weapon.transform.localEulerAngles = new Vector3(180, 0, 0);
                 else if (!facingRight && weapon.isGrabbed)
                     weapon.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+                // Flip the weapon when equipped
+                if (facingRight && weapon.isGrabbed)
+                {
+                    muzzObject.transform.localEulerAngles = new Vector3(90, 0, 0);
+                    //muzzObject.transform.position = new Vector3(muzzObject.position.x, muzzObject.position.y - 0.3f, muzzObject.position.z);
+                }
+
+                else if (!facingRight && weapon.isGrabbed)
+                {
+                    muzzObject.transform.localEulerAngles = new Vector3(-90, 0, 0);
+                    //muzzObject.transform.position = new Vector3(muzzObject.position.x, muzzObject.position.y, muzzObject.position.z);
+                }
             }
         }
+    }
 
+    private void Update()
+    {
         if (isActive)
         {
             // Player life
