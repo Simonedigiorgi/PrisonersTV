@@ -12,16 +12,13 @@ public class Bullet : MonoBehaviour {
     [BoxGroup("Kind of bullet")] public bool isLaser;                                                   // Move like a laser beam
     [BoxGroup("Kind of bullet")] public bool isGhost;                                                   // Can surpass walls
 
+    protected int damage;
+    protected bool destroyOnEnemyCollision;
+
     void Start () {
 
         // Autodestroy the bullet
         Destroy(gameObject, destroyAfter);
-    }
-	
-	void Update () {
-
-        // Direction
-        transform.Translate(transform.right * speed * Time.deltaTime, Space.World);
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -54,6 +51,16 @@ public class Bullet : MonoBehaviour {
                 transform.Rotate(0, 0, -45);
                 transform.right = -transform.right;
             }
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //substract enemy life
+            Enemy enemyHit = collision.gameObject.GetComponent<Enemy>();
+            enemyHit.life -= damage;
+
+            if(destroyOnEnemyCollision)
+                Destroy(gameObject);
         }
     }
 }
