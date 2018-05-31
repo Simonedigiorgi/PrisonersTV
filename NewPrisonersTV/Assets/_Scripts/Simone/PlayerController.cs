@@ -281,19 +281,6 @@ public class PlayerController : MonoBehaviour {
     }
     #endregion
 
-    #region Collisions and Triggers
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        // Ignore collision colliders between players and enemies
-        if(collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2") || collision.gameObject.CompareTag("Enemy"))
-            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
-
-        // Ignore weapon collider if player is not active
-        if(!isActive)
-            if (collision.gameObject.CompareTag("Weapon"))
-                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
-    }
-
     public void OnTriggerEnter2D(Collider2D collision)
     {
         // When players triggers each others
@@ -304,5 +291,4 @@ public class PlayerController : MonoBehaviour {
         if (collision.gameObject.CompareTag("Enemy"))
             life--;
     }
-    #endregion
 }
