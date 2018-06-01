@@ -62,6 +62,24 @@ public class PlayerController : MonoBehaviour {
             gm.isPlayer2alive = false;
     }
 
+    public void OnEnable()
+    {
+        playerAnim = GetComponentInChildren<Animator>();
+        playerAnim.Play("Idle");
+
+        armAnim = transform.GetChild(1).GetChild(2).GetComponent<Animator>();
+        armAnim.Play("Idle");
+
+        // Set the Arm_sprite sprite to true
+        playerArm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
+
+        // Set the Arm_Anim sprite to true
+        playerArm.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
+
+        life = 3;
+        isActive = true;
+    }
+
     private void FixedUpdate()
     {
         // *** LEAVE ALL OF THIS ON FIXED UPDATE TO AVOID PROBLEM OCCURING DURING THE FLIP
@@ -268,6 +286,9 @@ public class PlayerController : MonoBehaviour {
 
     public IEnumerator Death()
     {
+        // Set the Arm_Anim sprite to false
+        playerArm.transform.GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
+
         // Death animation
         playerAnim.SetBool("Death", true);
 
@@ -275,9 +296,17 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(0, 0);
         isActive = false;
 
-        // Destroy after
+        // Disable object after
         yield return new WaitForSeconds(respawnTime);
-        Destroy(gameObject);
+
+        // Destroy the weapon
+        if (playerArm.transform.GetChild(0).childCount > 0)
+        {
+            GameObject first = playerArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+            Destroy(first.gameObject);
+        }
+
+        gameObject.SetActive(false);
     }
     #endregion
 

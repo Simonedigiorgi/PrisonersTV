@@ -159,7 +159,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Arm1_Idle
+  m_Name: Idle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -174,7 +174,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 451ce70797a741a4aa97cf7d2e6f38b5, type: 2}
+  m_Motion: {fileID: 7400000, guid: bd2d00b5b3a617840aed63495183921c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
