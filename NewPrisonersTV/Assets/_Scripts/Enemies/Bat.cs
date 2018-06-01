@@ -6,6 +6,8 @@ public class Bat : Enemy
 {
     private int direction;
 
+    [Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
+
     [Tooltip("Initial movement directions")] public startDirectin myStartDirection;
 
 	protected override void Start ()
@@ -28,7 +30,7 @@ public class Bat : Enemy
         base.Update();
 
         //move bat
-        transform.position += Vector3.right * speed * direction * Time.deltaTime;
+        transform.position += new Vector3(speed * direction * Time.deltaTime, Mathf.Sin(Time.time * sinusoidalMovement) * Time.deltaTime * sinusoidalMovement, 0);
 	}
 
     public void OnCollisionEnter2D(Collision2D collision)
