@@ -82,14 +82,14 @@ public class Weapon : MonoBehaviour {
 
             if (Time.time > fireRate + lastShot)
             {
+                // Instantiate the bullet
+                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                lastShot = Time.time;
+
                 // Shoot sound
                 source.PlayOneShot(shootSound, shootVolume);
 
                 anim.SetTrigger("Shoot");
-
-                // Instantiate the bullet
-                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
-                lastShot = Time.time;
             }
         }
         else if (bullets == 0)

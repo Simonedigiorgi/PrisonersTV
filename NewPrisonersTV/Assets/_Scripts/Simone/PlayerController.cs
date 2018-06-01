@@ -204,7 +204,7 @@ public class PlayerController : MonoBehaviour {
         playerArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
-    // Muzz rotation
+    // Muzz flash rotation
     public void MuzzRotation()
     {
         // Get the Muzz component on weapon
@@ -253,6 +253,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    // Dash method
     public void Dash()
     {
         //Dash condition
@@ -306,6 +307,7 @@ public class PlayerController : MonoBehaviour {
             Destroy(first.gameObject);
         }
 
+        // Disable the Player
         gameObject.SetActive(false);
     }
     #endregion

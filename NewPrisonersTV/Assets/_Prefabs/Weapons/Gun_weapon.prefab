@@ -101,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1207898999891190}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.23, y: 0, z: -0.1}
+  m_LocalPosition: {x: -20.23, y: 9.22, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4572843436223378}
@@ -344,8 +344,8 @@ MonoBehaviour:
   anim: {fileID: 95545173481653150}
   bullet: {fileID: 1429077776476288, guid: 86d9dda68eb01de418bb3d89beeeed31, type: 2}
   fireRate: 0.15
-  bullets: 500
-  autoFire: 1
+  bullets: 24
+  autoFire: 0
   shootSound: {fileID: 8300000, guid: ed634c9fab282eb42abcb3b4c95e549e, type: 3}
   shootVolume: 0.1
   grabSound: {fileID: 8300000, guid: 2df033c06fa82a345abe1786d25e9541, type: 3}
