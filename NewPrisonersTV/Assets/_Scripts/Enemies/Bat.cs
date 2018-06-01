@@ -36,7 +36,7 @@ public class Bat : Enemy
     public void OnCollisionEnter2D(Collision2D collision)
     {
         //turn the direction if collide on wall
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
         {
             direction *= -1;
         }
