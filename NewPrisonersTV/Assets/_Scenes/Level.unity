@@ -2753,6 +2753,10 @@ Prefab:
       propertyPath: gm
       value: 
       objectReference: {fileID: 192872396}
+    - target: {fileID: 1291467587628316, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
   m_IsPrefabParent: 0
