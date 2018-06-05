@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour {
     // *** THE WEAPON SCRIPT WORKS WITH THAT
 
     private Rigidbody2D rb;                                                                         // Rigidbody components
-    private GameManager gm;                                                                         // GameManager
-    private Animator playerAnim, armAnim;                                                           // Get the Player Animators
+
+    [BoxGroup("Animator")] public Animator playerAnim, armAnim;                                     // Get the Player Animators
 
     [BoxGroup("Components")] public GameObject playerArm;                                           // Player's arm
     [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
@@ -45,29 +45,16 @@ public class PlayerController : MonoBehaviour {
     [HideInInspector] public bool isInDash = false;                                                 // Check if the player is in dash
 
     void Start () {
-        rb = GetComponent<Rigidbody2D>();
-        playerAnim = GetComponentInChildren<Animator>();
-        gm = FindObjectOfType<GameManager>();
 
-        // Get arm without weapon (Arm_Anim) child
-        armAnim = transform.GetChild(1).GetChild(2).GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
 
         // Disable 360° arm sprite
         playerArm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = false;
-
-        // Set player alive to false (need for the GameManager to respawn the players)
-        if(gameObject.name == "Player 1" || gameObject.name == "Player 1(Clone)")
-            gm.isPlayer1alive = false;
-        else if(gameObject.name == "Player 2" || gameObject.name == "Player 2(Clone)")
-            gm.isPlayer2alive = false;
     }
 
     public void OnEnable()
     {
-        playerAnim = GetComponentInChildren<Animator>();
         playerAnim.Play("Idle");
-
-        armAnim = transform.GetChild(1).GetChild(2).GetComponent<Animator>();
         armAnim.Play("Idle");
 
         // Set the Arm_sprite sprite to true
@@ -122,7 +109,6 @@ public class PlayerController : MonoBehaviour {
             // Get the weapon component
             Weapon weapon = playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon>();
 
-
             if (isActive)
             {
                 // Enable The rotation of joystick
@@ -164,9 +150,9 @@ public class PlayerController : MonoBehaviour {
             }
 
             Dash();
-        }
 
-        Jump();
+            Jump();
+        }
     }
 
     #region Methods

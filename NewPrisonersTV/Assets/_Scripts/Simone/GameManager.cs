@@ -16,12 +16,23 @@ public class GameManager : MonoBehaviour {
     public bool isPlayer2alive;
 
     void Start () {
-        //StartCoroutine(RandomWeapons());
-	}
+
+        // Set player alive to false (need for the GameManager to respawn the players)
+        if (player1)
+            isPlayer1alive = false;
+        else if (player2)
+            isPlayer2alive = false;
+    }
 	
 	void Update () {
 
-        if(GameObject.FindGameObjectWithTag("Player_1") == null && !isPlayer1alive)
+        Player1Active();
+        Player2Active();
+    }
+
+    public void Player1Active()
+    {
+        if (player1.activeInHierarchy == false && !isPlayer1alive)
         {
             if (Input.GetButtonDown("Player1_Start"))
             {
@@ -32,8 +43,11 @@ public class GameManager : MonoBehaviour {
         }
         else
             isPlayer1alive = false;
+    }
 
-        if (GameObject.FindGameObjectWithTag("Player_2") == null && !isPlayer1alive)
+    public void Player2Active()
+    {
+        if (player2.activeInHierarchy == false && !isPlayer2alive)
         {
             if (Input.GetButtonDown("Player2_Start"))
             {
@@ -46,10 +60,4 @@ public class GameManager : MonoBehaviour {
             isPlayer2alive = false;
     }
 
-    /*public IEnumerator RandomWeapons()
-    {
-        Random.Range(0, weaponsSpawn.Length);
-        yield return new WaitForSeconds(1);
-        StartCoroutine(RandomWeapons());
-    }*/
 }
