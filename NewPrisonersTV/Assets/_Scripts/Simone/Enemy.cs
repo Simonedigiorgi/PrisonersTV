@@ -90,7 +90,6 @@ public class Enemy : MonoBehaviour
     // this coroutine was created to give the time at membership to change and for make shure the score is assigned right
     public IEnumerator Die()
     {
-        Debug.Log("coroutine startata");
         yield return new WaitForEndOfFrame();
 
         //add score
