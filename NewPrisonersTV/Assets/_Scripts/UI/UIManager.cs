@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour {
     Text hammoP1;                                                                                   //UI player1 hammo text
     Text hammoP2;                                                                                   //UI player2 hammo text
 
+    Text scoreP1;                                                                                   //UI player1 score text
+    Text scoreP2;                                                                                   //UI player2 score text
+
     private Transform player1;                                                                      //Player1 transform
     private Transform player2;                                                                      //Player2 transform
     PlayerController pc1;                                                                           //PlayerController1
@@ -27,6 +30,8 @@ public class UIManager : MonoBehaviour {
 
     Camera mainCamera;
 
+    GameManager gameManager;
+
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
     [Tooltip("The vertical distance of the UI hammo text to the player")] public float hammoVerticalOffset;
 
@@ -37,14 +42,26 @@ public class UIManager : MonoBehaviour {
         handP1 = GameObject.Find("Hand_Player1");
         hammoP1 = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         lifeBarP1 = player1.GetChild(4).GetComponent<SpriteRenderer>();
+        scoreP1 = transform.GetChild(0).GetChild(2).GetComponent<Text>();
 
         player2 = GameObject.FindGameObjectWithTag("Player_2").transform;
         pc2 = player2.GetComponent<PlayerController>();
         handP2 = GameObject.Find("Hand_Player2");
         hammoP2 = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         lifeBarP2 = player2.GetChild(4).GetComponent<SpriteRenderer>();
+        scoreP2 = transform.GetChild(1).GetChild(2).GetComponent<Text>();
 
         mainCamera = Camera.main;
+
+        //Find game manager
+        if (GameObject.Find("GameManager") != null)
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+        else
+        {
+            Debug.Log("ADD GAME MANAGER TO SCENE!!! (named 'GameManager')");
+        }
     }
 	
 	// Update is called once per frame
@@ -168,6 +185,13 @@ public class UIManager : MonoBehaviour {
             lifeBarP2.transform.localScale = Vector3.zero;
         }
         #endregion
+
+        #region Score
+
+        scoreP1.text = "P1 Score: " + gameManager.P1Score.ToString();
+        scoreP2.text = "P2 Score: " + gameManager.P2Score.ToString();
+
+#endregion
     }
 
     //use this for change ui hammo value

@@ -15,6 +15,9 @@ public class Bullet : MonoBehaviour {
     protected int damage;
     protected bool destroyOnEnemyCollision;
 
+    [HideInInspector]
+    public int membership;                                                                              // shoted from player1 or player2
+
     void Start () {
 
         // Autodestroy the bullet
@@ -57,6 +60,7 @@ public class Bullet : MonoBehaviour {
         {
             //substract enemy life
             Enemy enemyHit = collision.gameObject.GetComponent<Enemy>();
+            enemyHit.enemyMembership = membership;
             enemyHit.life -= damage;
 
             if(destroyOnEnemyCollision)

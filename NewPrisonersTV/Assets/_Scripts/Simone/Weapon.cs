@@ -33,6 +33,8 @@ public class Weapon : MonoBehaviour {
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
+    int weaponMembership;                                                                                       // Grabbed on player1 or player2
+
     private void Start()
     {
         source = GetComponent<AudioSource>();
@@ -60,7 +62,7 @@ public class Weapon : MonoBehaviour {
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player1");
-
+            weaponMembership = 1;
             DestroyWeapon();
         }
 
@@ -68,7 +70,7 @@ public class Weapon : MonoBehaviour {
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player2");
-
+            weaponMembership = 2;
             DestroyWeapon();
         }
     }
@@ -84,6 +86,11 @@ public class Weapon : MonoBehaviour {
             {
                 // Instantiate the bullet
                 Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+
+                // Assign the bullet membership
+                bullet.GetComponent<Bullet>().membership = weaponMembership; 
+
+                // Delay
                 lastShot = Time.time;
 
                 // Shoot sound

@@ -396,6 +396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bad70faffad3064a98048db7e6060e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnim: {fileID: 95670473410743718}
+  armAnim: {fileID: 95745553968326220}
   playerArm: {fileID: 1952032824465384}
   groundCheck: {fileID: 1181024186783436}
   Horizontal: Player2_Horizontal

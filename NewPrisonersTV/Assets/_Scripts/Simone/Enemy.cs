@@ -6,28 +6,52 @@ public class Enemy : MonoBehaviour
 {
     public int life;
 
-    [HideInInspector] public bool isFlashing = false;
+    [Tooltip("Value off point earned by the player")]
+    public int points;
+
+    [HideInInspector]
+    public bool isFlashing = false;
 
     public float flashingSpeed;
 
     private SpriteRenderer mySpriteRender;
 
-    [Tooltip("Movement speed")] public int speed;
+    [Tooltip("Movement speed")]
+    public int speed;
 
-    [HideInInspector] public enum startDirectin { right, left }
+    [HideInInspector]
+    public enum startDirectin { right, left }
+
+    [HideInInspector ]
+    public int enemyMembership;
+
+    GameManager gameManager;
+
+    bool startDieCoroutine = false;
 
     protected virtual void Start ()
     {
         //get the sprite rendere
         mySpriteRender = GetComponent<SpriteRenderer>();
+
+        //Find game manager
+        if(GameObject.Find("GameManager") != null)
+        {
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        }
+        else
+        {
+            Debug.Log("ADD GAME MANAGER TO SCENE!!! (named 'GameManager')");
+        }
     }
 
     protected virtual void Update()
     {
         //enemy die
-        if (life <= 0)
+        if (life <= 0 && !startDieCoroutine)
         {
-            Destroy(gameObject);
+            startDieCoroutine = true;
+            StartCoroutine(Die());
         }
     }
 
@@ -61,5 +85,24 @@ public class Enemy : MonoBehaviour
         mySpriteRender.color = Color.white;
 
         isFlashing = false;
+    }
+
+    // this coroutine was created to give the time at membership to change and for make shure the score is assigned right
+    public IEnumerator Die()
+    {
+        Debug.Log("coroutine startata");
+        yield return new WaitForEndOfFrame();
+
+        //add score
+        if (enemyMembership == 1)
+        {
+            gameManager.P1Score += points;
+        }
+        else if (enemyMembership == 2)
+        {
+            gameManager.P2Score += points;
+        }
+
+        Destroy(gameObject);
     }
 }

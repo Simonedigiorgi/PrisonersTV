@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour {
     public bool isPlayer1alive;
     public bool isPlayer2alive;
 
+    public int P1Score = 0;
+    public int P2Score = 0;
+
     void Start () {
 
         // Set player alive to false (need for the GameManager to respawn the players)
