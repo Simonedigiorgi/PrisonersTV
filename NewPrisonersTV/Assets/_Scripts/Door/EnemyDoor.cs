@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDoor : MonoBehaviour
 {
-    [Tooltip("the enemies that the trapdoor can spawn")]
+    [Tooltip("the enemies that the door can spawn")]
     public GameObject[] enemies;
 
     [Tooltip("the time that the enemy takes for respawn after death")]
