@@ -42,21 +42,19 @@ public class EnemyDoor : MonoBehaviour
 
     IEnumerator Spawn()
     {
-        yield return new WaitForSeconds(timeToRespawn);
-
-        //set trapdoors open animation
+        //set door open animation
         myAnimator.SetInteger("State", 1);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(timeToRespawn);
 
         //spawn random enemies
         myEnemyInGame = Instantiate(enemies[Random.Range(0, enemies.Length)], transform.position, Quaternion.identity);
         yield return new WaitForSeconds(0.5f);
 
-        //set trapdoors closed animation
+        //set door closed animation
         myAnimator.SetInteger("State", 2);
         yield return new WaitForSeconds(1f);
 
-        //set trapdoors default animation
+        //set door default animation
         myAnimator.SetInteger("State", 0);
         coroutineInExecution = false;
     }
