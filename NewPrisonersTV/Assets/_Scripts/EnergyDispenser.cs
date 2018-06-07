@@ -11,7 +11,6 @@ public class EnergyDispenser : MonoBehaviour
     public sbyte energyPrice;
 
     bool Open = true;
-    bool startTimer = false;
 
     PlayerController pc1;
     PlayerController pc2;
