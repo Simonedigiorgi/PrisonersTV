@@ -55,6 +55,37 @@ public class Weapon : MonoBehaviour {
         }
     }
 
+    // Shoot method
+    public void Shoot()
+    {
+        if (bullets != 0)
+        {
+            if (Time.time > fireRate + lastShot)
+            {
+                // Instantiate the bullet
+                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                bullets--;
+
+                // Assign the bullet membership
+                bullet.GetComponent<Bullet>().membership = weaponMembership;
+
+                // Delay
+                lastShot = Time.time;
+
+                // Shoot sound
+                source.PlayOneShot(shootSound, shootVolume);
+
+                anim.SetTrigger("Shoot");
+            }
+        }
+        else if (bullets == 0)
+        {
+            // Set autofire to false to avoid the annoying sound loop
+            autoFire = false;
+            source.PlayOneShot(emptySound, emptyVolume);
+        }
+    }
+
     // Get the weapon and destroy the previously when get another
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -75,36 +106,6 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    // Shoot method
-    public void Shoot()
-    {
-        if(bullets != 0)
-        {
-            if (Time.time > fireRate + lastShot)
-            {
-                // Instantiate the bullet
-                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
-                bullets--;
-
-                // Assign the bullet membership
-                bullet.GetComponent<Bullet>().membership = weaponMembership; 
-
-                // Delay
-                lastShot = Time.time;
-
-                // Shoot sound
-                source.PlayOneShot(shootSound, shootVolume);
-
-                anim.SetTrigger("Shoot");
-            }
-        }
-        else if (bullets == 0)
-        {
-            // Set autofire to false to avoid the annoying sound loop
-            autoFire = false;
-            source.PlayOneShot(emptySound, emptyVolume);
-        }
-    }
 
     public void DestroyWeapon()
     {
