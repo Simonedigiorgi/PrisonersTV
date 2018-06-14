@@ -430,9 +430,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 5
+  points: 0
   isFlashing: 0
   flashingSpeed: 0
   speed: 0
+  enemyMembership: 0
 --- !u!1001 &276405933
 Prefab:
   m_ObjectHideFlags: 0
@@ -1925,6 +1927,21 @@ Prefab:
     - target: {fileID: 4290668268549842, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114342967719196420, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: bullets
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114342967719196420, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: autoFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114342967719196420, guid: 63f20e68622e81a41b29473cc2e4f34c,
+        type: 2}
+      propertyPath: isGrabbed
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}

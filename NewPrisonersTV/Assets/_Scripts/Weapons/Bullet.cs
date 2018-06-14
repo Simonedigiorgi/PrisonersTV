@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour {
     {
         // Destroy if touch another bullet
         if (collision.gameObject.CompareTag("Bullet"))
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
         // Destroy at impact || destroy after seconds
         if (collision.gameObject.CompareTag("Wall"))
@@ -36,16 +36,16 @@ public class Bullet : MonoBehaviour {
             if (!isArrow)
             {
                 if (!isGhost && !isLaser)
-                    Destroy(gameObject);
+                    gameObject.SetActive(false);
                 else if (isGhost)
-                    Destroy(gameObject, destroyAfter);
+                    gameObject.SetActive(false);
             }
 
             // Arrow behaviour (Stay stuck on wall)
             else if (isArrow)
             {
                 speed = 0;
-                Destroy(gameObject, destroyAfter);
+                gameObject.SetActive(false);
             }
 
             if (isLaser)
@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour {
             enemyHit.life -= damage;
 
             if(destroyOnEnemyCollision)
-                Destroy(gameObject);
+                gameObject.SetActive(false);
         }
     }
 }

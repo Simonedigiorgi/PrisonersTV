@@ -80,12 +80,11 @@ public class Weapon : MonoBehaviour {
     {
         if(bullets != 0)
         {
-            bullets--;
-
             if (Time.time > fireRate + lastShot)
             {
                 // Instantiate the bullet
                 Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                bullets--;
 
                 // Assign the bullet membership
                 bullet.GetComponent<Bullet>().membership = weaponMembership; 
