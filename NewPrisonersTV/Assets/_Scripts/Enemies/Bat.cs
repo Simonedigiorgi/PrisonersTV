@@ -53,10 +53,11 @@ public class Bat : Enemy
                 if (player1.activeSelf && Vector2.Distance(transform.position, player1.transform.position) <= attackView)
                 {
                     Vector2 rayDirection = player1.transform.position - transform.position;                   
-                    Ray ray = new Ray(transform.position, rayDirection);
-                    Debug.DrawRay(transform.position, rayDirection, Color.red);
-                    
-                    if (!Physics2D.Raycast(transform.position, rayDirection, Vector2.Distance(transform.position, player1.transform.position), obstacleMask))
+                    /*Debug.DrawRay(transform.position + Vector3.right, rayDirection, Color.red);
+                    Debug.DrawRay(transform.position + Vector3.left, rayDirection, Color.red);*/
+
+                    if (!Physics2D.Raycast(transform.position + Vector3.right, rayDirection, Vector2.Distance(transform.position, player1.transform.position), obstacleMask) 
+                        && !Physics2D.Raycast(transform.position + Vector3.left, rayDirection, Vector2.Distance(transform.position, player1.transform.position), obstacleMask))
                     {                        
                         player1Seen = true;
                         startSwoopPosition = transform.position;
@@ -66,10 +67,11 @@ public class Bat : Enemy
                 else if(player2.activeSelf && Vector2.Distance(transform.position, player2.transform.position) <= attackView)
                 {
                     Vector2 rayDirection = player2.transform.position - transform.position;
-                    Ray ray = new Ray(transform.position, rayDirection);
-                    Debug.DrawRay(transform.position, rayDirection, Color.green);
+                    /*Debug.DrawRay(transform.position + Vector3.right, rayDirection, Color.green);
+                    Debug.DrawRay(transform.position + Vector3.left, rayDirection, Color.green);*/
 
-                    if(!Physics2D.Raycast(transform.position, rayDirection, Vector2.Distance(transform.position, player2.transform.position), obstacleMask))
+                    if (!Physics2D.Raycast(transform.position + Vector3.right, rayDirection, Vector2.Distance(transform.position, player2.transform.position), obstacleMask)
+                        && !Physics2D.Raycast(transform.position + Vector3.left, rayDirection, Vector2.Distance(transform.position, player2.transform.position), obstacleMask))
                     {
                         player2Seen = true;
                         startSwoopPosition = transform.position;
