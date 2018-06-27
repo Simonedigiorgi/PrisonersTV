@@ -15,6 +15,9 @@ public class Bat : Enemy
 
     [Tooltip("Bat view obstacle")]public LayerMask obstacleMask;
 
+    [Range(0.5f, 3)]
+    [Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
+
     bool player1Seen = false;
     bool player2Seen = false;
 
@@ -114,10 +117,10 @@ public class Bat : Enemy
 
     IEnumerator Swoop()
     {
-        transform.DOMove(endSwoopPosition, 1.5f, false);
+        transform.DOMove(endSwoopPosition, swoopMoreSlowly, false);
         yield return new WaitUntil(() => transform.position == endSwoopPosition);
         
-        transform.DOMove(startSwoopPosition, 1.5f, false);
+        transform.DOMove(startSwoopPosition, swoopMoreSlowly, false);
         yield return new WaitUntil(() => transform.position == startSwoopPosition);
 
         swoopCoroutineInExecution = false;
