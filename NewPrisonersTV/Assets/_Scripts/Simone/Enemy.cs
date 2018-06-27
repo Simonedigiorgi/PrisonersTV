@@ -6,6 +6,10 @@ public class Enemy : MonoBehaviour
 {
     public int life;
 
+    [Range(1, 3)]
+    [Tooltip("Enemy start level")]
+    public sbyte enemyLevel = 1;
+
     [Tooltip("Value off point earned by the player")]
     public int points;
 
@@ -29,13 +33,19 @@ public class Enemy : MonoBehaviour
 
     bool startDieCoroutine = false;
 
+    protected GameObject player1, player2;
+
     protected virtual void Start ()
     {
         //get the sprite rendere
         mySpriteRender = GetComponent<SpriteRenderer>();
 
+        //find players
+        player1 = GameObject.FindGameObjectWithTag("Player_1");
+        player2 = GameObject.FindGameObjectWithTag("Player_2");
+
         //Find game manager
-        if(GameObject.Find("GameManager") != null)
+        if (GameObject.Find("GameManager") != null)
         {
             gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }

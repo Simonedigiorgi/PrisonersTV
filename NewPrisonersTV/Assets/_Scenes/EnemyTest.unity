@@ -313,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 0
+  enemyLevel: 1
   points: 0
   isFlashing: 0
   flashingSpeed: 0.2
@@ -1033,7 +1034,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4700396724359956, guid: 55a57d0133bb5504585ff26d244e9561, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7.11
+      value: -1.51
       objectReference: {fileID: 0}
     - target: {fileID: 4700396724359956, guid: 55a57d0133bb5504585ff26d244e9561, type: 2}
       propertyPath: m_LocalPosition.z

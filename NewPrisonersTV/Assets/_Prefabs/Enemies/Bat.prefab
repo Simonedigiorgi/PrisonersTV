@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 2
+  enemyLevel: 2
   points: 10
   isFlashing: 0
   flashingSpeed: 0.1
@@ -115,6 +116,10 @@ MonoBehaviour:
   enemyMembership: 0
   sinusoidalMovement: 5
   myStartDirection: 1
+  attackView: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!212 &212382712869728276
 SpriteRenderer:
   m_ObjectHideFlags: 1
