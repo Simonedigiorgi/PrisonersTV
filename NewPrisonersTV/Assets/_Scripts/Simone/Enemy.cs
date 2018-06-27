@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector]
     public bool isFlashing = false;
 
+    [Tooltip("The speed of the flash when enemy is hitted")]
     public float flashingSpeed;
 
     private SpriteRenderer mySpriteRender;
