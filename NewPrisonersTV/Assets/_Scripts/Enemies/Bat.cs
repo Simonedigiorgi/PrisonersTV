@@ -48,7 +48,6 @@ public class Bat : Enemy
         {
             if(!player2Seen && !player1Seen)
             {
-                Debug.Log(Vector2.Distance(transform.position, player1.transform.position));
 
                 if (player1.activeSelf && Vector2.Distance(transform.position, player1.transform.position) <= attackView)
                 {
