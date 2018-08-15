@@ -13,6 +13,9 @@ public class CameraView : MonoBehaviour
     float minimumOrthographicSize = 8f;
 
     [SerializeField]
+    float maxOrthographicSize = 15f;
+
+    [SerializeField]
     float zoomSpeed = 20f;
 
     Camera camera;
@@ -28,6 +31,10 @@ public class CameraView : MonoBehaviour
         Rect boundingBox = CalculateTargetsBoundingBox();
         transform.position = CalculateCameraPosition(boundingBox);
         camera.orthographicSize = CalculateOrthographicSize(boundingBox);
+
+        // Set max OrthographicSize
+        if (camera.orthographicSize > maxOrthographicSize)
+            camera.orthographicSize = maxOrthographicSize;
     }
 
     /// <summary>

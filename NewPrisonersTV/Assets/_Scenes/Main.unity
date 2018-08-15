@@ -9816,7 +9816,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4700396724359956, guid: 55a57d0133bb5504585ff26d244e9561, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.25
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4700396724359956, guid: 55a57d0133bb5504585ff26d244e9561, type: 2}
       propertyPath: m_LocalPosition.y
@@ -10312,7 +10312,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1850133130}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d7ea72cf87e3244f84d4f37011e1607, type: 3}
   m_Name: 
@@ -10337,7 +10337,8 @@ MonoBehaviour:
   - {fileID: 543838017}
   - {fileID: 1499771407}
   boundingBoxPadding: 9
-  minimumOrthographicSize: 8
+  minimumOrthographicSize: 12
+  maxOrthographicSize: 18
   zoomSpeed: 10
 --- !u!1 &1975256549
 GameObject:

@@ -24,6 +24,12 @@ public class LifeController : MonoBehaviour {
         life = 3;
     }
 
+    private void OnDisable()
+    {
+        // Set the player on the center of the screen (this fix the CameraView when a Player die)
+        transform.position = new Vector2(0, 0);
+    }
+
     void Update () {
 
         if (player.isActive)
