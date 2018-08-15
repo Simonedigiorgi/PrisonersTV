@@ -626,6 +626,25 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1700786006156372, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114687161211331396, guid: 230f16825a04c7845b86290d4ee292a5,
+        type: 2}
+      propertyPath: arm_anim
+      value: 
+      objectReference: {fileID: 690113815}
+    - target: {fileID: 114687161211331396, guid: 230f16825a04c7845b86290d4ee292a5,
+        type: 2}
+      propertyPath: hand_player
+      value: 
+      objectReference: {fileID: 1848119882}
+    - target: {fileID: 114687161211331396, guid: 230f16825a04c7845b86290d4ee292a5,
+        type: 2}
+      propertyPath: life
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 230f16825a04c7845b86290d4ee292a5, type: 2}
   m_IsPrefabParent: 0
@@ -754,6 +773,11 @@ Tilemap:
     e32: 0
     e33: 1
   m_TileRefreshArray: []
+--- !u!212 &690113815 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212754330971121506, guid: 230f16825a04c7845b86290d4ee292a5,
+    type: 2}
+  m_PrefabInternal: {fileID: 524767291}
 --- !u!1 &731666475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1567,11 @@ Transform:
   m_Father: {fileID: 731666476}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1848119882 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1231357664181106, guid: 230f16825a04c7845b86290d4ee292a5,
+    type: 2}
+  m_PrefabInternal: {fileID: 524767291}
 --- !u!1 &1850133130
 GameObject:
   m_ObjectHideFlags: 0

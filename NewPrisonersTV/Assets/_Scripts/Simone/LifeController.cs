@@ -20,6 +20,7 @@ public class LifeController : MonoBehaviour {
 
     private void OnEnable()
     {
+        // Set full life
         life = 3;
     }
 
