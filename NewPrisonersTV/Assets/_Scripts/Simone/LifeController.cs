@@ -39,6 +39,10 @@ public class LifeController : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        // When players triggers each others
+        if (collision.gameObject.CompareTag("Player_1") || collision.gameObject.CompareTag("Player_2"))
+            Debug.Log("Trigger Player");
+
         // When player trigger an enemy
         if (collision.gameObject.CompareTag("Enemy"))
             life--;

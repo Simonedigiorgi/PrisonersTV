@@ -31,12 +31,21 @@ public class ShootController : MonoBehaviour
                 if (weapon.autoFire == false)
                 {
                     if (Input.GetButtonDown(shootInput) && weapon.isGrabbed)
+                    {
                         weapon.Shoot();
+
+                        CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+                        shake.ShakeCamera(1f, .2f);
+                    }
                 }
                 if (weapon.autoFire)
                 {
                     if (Input.GetButton(shootInput) && weapon.isGrabbed)
+
                         weapon.Shoot();
+
+                        CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+                        shake.ShakeCamera(1f, .2f);
                 }
 
                 // Enable 360° arm sprite
