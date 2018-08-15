@@ -80,10 +80,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 40
   destroyAfter: 2
-  isArrow: 1
+  isArrow: 0
   isLaser: 0
   isGhost: 0
-  membership: 1
+  membership: 2
   myDamage: 1
 --- !u!212 &212225544084889666
 SpriteRenderer:

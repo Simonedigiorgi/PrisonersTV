@@ -35,7 +35,7 @@ public class ShootController : MonoBehaviour
                         weapon.Shoot();
 
                         CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-                        shake.ShakeCamera(1f, .2f);
+                        shake.ShakeCamera(1.2f, .2f);
                     }
                 }
                 if (weapon.autoFire)
@@ -45,7 +45,7 @@ public class ShootController : MonoBehaviour
                         weapon.Shoot();
 
                         CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-                        shake.ShakeCamera(1f, .2f);
+                        shake.ShakeCamera(1.2f, .2f);
                 }
 
                 // Enable 360° arm sprite

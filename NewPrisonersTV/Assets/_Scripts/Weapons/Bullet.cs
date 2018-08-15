@@ -33,6 +33,7 @@ public class Bullet : MonoBehaviour {
         // Destroy at impact || destroy after seconds
         if (collision.gameObject.CompareTag("Wall"))
         {
+            Debug.Log("Wallll");
             if (!isArrow)
             {
                 if (!isGhost && !isLaser)
@@ -54,6 +55,8 @@ public class Bullet : MonoBehaviour {
                 transform.Rotate(0, 0, -45);
                 transform.right = -transform.right;
             }
+
+            //gameObject.SetActive(false);
         }
 
         if (collision.gameObject.CompareTag("Enemy"))
