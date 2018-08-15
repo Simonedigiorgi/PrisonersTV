@@ -18,8 +18,8 @@ public class Bullet : MonoBehaviour {
     [HideInInspector]
     public int membership;                                                                              // shoted from player1 or player2
 
-    void Start () {
-
+    private void OnEnable()
+    {
         // Autodestroy the bullet
         Destroy(gameObject, destroyAfter);
     }

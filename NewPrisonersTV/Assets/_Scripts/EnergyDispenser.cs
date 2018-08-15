@@ -12,8 +12,7 @@ public class EnergyDispenser : MonoBehaviour
 
     bool Open = true;
 
-    PlayerController pc1;
-    PlayerController pc2;
+    LifeController life1, life2;                                                                            // Get the Player_1 $$ Player_2 LifeController script component
 
     SpriteRenderer mySpriteRenderer;
 
@@ -21,8 +20,8 @@ public class EnergyDispenser : MonoBehaviour
 
     void Start ()
     {
-        pc1 = GameObject.FindGameObjectWithTag("Player_1").GetComponent<PlayerController>();
-        pc2 = GameObject.FindGameObjectWithTag("Player_2").GetComponent<PlayerController>();
+        life1 = GameObject.FindGameObjectWithTag("Player_1").GetComponent<LifeController>();
+        life2 = GameObject.FindGameObjectWithTag("Player_2").GetComponent<LifeController>();
 
         mySpriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -43,13 +42,13 @@ public class EnergyDispenser : MonoBehaviour
         if (collision.gameObject.CompareTag("Player_1"))
         {
             //if dispenser is open and input is pressed and player1 is damaged and player1 has money
-            if (Open && Input.GetButtonDown("Player1_Button Y") && pc1.life < 3 && gameManager.P1Score >= energyPrice)
+            if (Open && Input.GetButtonDown("Player1_Button Y") && life1.life < 3 && gameManager.P1Score >= energyPrice)
             {
                 //close dispenser
                 Open = false;
-                
+
                 //add life
-                pc1.life++;
+                life1.life++;
 
                 //substract money
                 gameManager.P1Score -= energyPrice;
@@ -62,13 +61,13 @@ public class EnergyDispenser : MonoBehaviour
         if (collision.gameObject.CompareTag("Player_2"))
         {
             //if dispenser is open and input is pressed and player2 is damaged and player2 has money
-            if (Open && Input.GetButtonDown("Player2_Button Y") && pc2.life < 3 && gameManager.P2Score >= energyPrice)
+            if (Open && Input.GetButtonDown("Player2_Button Y") && life2.life < 3 && gameManager.P2Score >= energyPrice)
             {
                 //close dispenser
                 Open = false;
 
                 //add life
-                pc2.life++;
+                life2.life++;
 
                 //substract money
                 gameManager.P2Score -= energyPrice;

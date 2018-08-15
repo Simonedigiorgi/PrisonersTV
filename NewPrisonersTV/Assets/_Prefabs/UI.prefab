@@ -277,7 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Continue: {fileID: 114034816402403852}
   player2Continue: {fileID: 114628864810229452}
-  hammoHorizontalOffset: 20
+  hammoHorizontalOffset: 36
   hammoVerticalOffset: 0
 --- !u!114 &114221800192725146
 MonoBehaviour:

@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4649859350148998}
   - component: {fileID: 212225544084889666}
   - component: {fileID: 61444848476623324}
-  - component: {fileID: 50640419301896920}
   - component: {fileID: 114349596040276232}
   m_Layer: 12
   m_Name: Gun_bullet
@@ -43,26 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50640419301896920
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429077776476288}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 0
 --- !u!61 &61444848476623324
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -104,6 +83,7 @@ MonoBehaviour:
   isArrow: 1
   isLaser: 0
   isGhost: 0
+  membership: 1
   myDamage: 1
 --- !u!212 &212225544084889666
 SpriteRenderer:

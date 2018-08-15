@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour {
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
     [Tooltip("The vertical distance of the UI hammo text to the player")] public float hammoVerticalOffset;
 
+    LifeController life1, life2;                                                                    // Get the Player_1 $$ Player_2 LifeController script component
+
     void Start ()
     {
         player1 = GameObject.FindGameObjectWithTag("Player_1").transform;
@@ -44,12 +46,16 @@ public class UIManager : MonoBehaviour {
         lifeBarP1 = player1.GetChild(4).GetComponent<SpriteRenderer>();
         scoreP1 = transform.GetChild(0).GetChild(2).GetComponent<Text>();
 
+        life1 = player1.GetComponent<LifeController>();
+
         player2 = GameObject.FindGameObjectWithTag("Player_2").transform;
         pc2 = player2.GetComponent<PlayerController>();
         handP2 = GameObject.Find("Hand_Player2");
         hammoP2 = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         lifeBarP2 = player2.GetChild(4).GetComponent<SpriteRenderer>();
         scoreP2 = transform.GetChild(1).GetChild(2).GetComponent<Text>();
+
+        life2 = player2.GetComponent<LifeController>();
 
         mainCamera = Camera.main;
 
@@ -144,43 +150,43 @@ public class UIManager : MonoBehaviour {
         
         //Rescale and Recolor life bar
         //P1
-        if (pc1.life == 3)
+        if (life1.life == 3)
         {
             lifeBarP1.transform.localScale = new Vector3(15, 2.5f, 0);
             lifeBarP1.color = Color.green;
         }
-        else if(pc1.life == 2)
+        else if(life1.life == 2)
         {
             lifeBarP1.transform.localScale = new Vector3(10, 2.5f, 0);
             lifeBarP1.color = Color.yellow;
         }
-        else if (pc1.life == 1)
+        else if (life1.life == 1)
         {
             lifeBarP1.transform.localScale = new Vector3(5, 2.5f, 0);
             lifeBarP1.color = Color.red;
         }
-        else if (pc1.life <= 0)
+        else if (life1.life <= 0)
         {
             lifeBarP1.transform.localScale = Vector3.zero;
         }
 
         //P2
-        if (pc2.life == 3)
+        if (life2.life == 3)
         {
             lifeBarP2.transform.localScale = new Vector3(15, 2.5f, 0);
             lifeBarP2.color = Color.green;
         }
-        else if (pc2.life == 2)
+        else if (life2.life == 2)
         {
             lifeBarP2.transform.localScale = new Vector3(10, 2.5f, 0);
             lifeBarP2.color = Color.yellow;
         }
-        else if (pc2.life == 1)
+        else if (life2.life == 1)
         {
             lifeBarP2.transform.localScale = new Vector3(5, 2.5f, 0);
             lifeBarP2.color = Color.red;
         }
-        else if (pc2.life <= 0)
+        else if (life2.life <= 0)
         {
             lifeBarP2.transform.localScale = Vector3.zero;
         }

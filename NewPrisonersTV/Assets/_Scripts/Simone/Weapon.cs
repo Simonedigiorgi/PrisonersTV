@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour {
 
     private BoxCollider2D coll;                                                                                 // Weapon collider
     private GameObject hand;                                                                                    // Get the Player hand                                                                                        
-    private Transform spawnPoint;                                                                               // Where the bullet is istantiate
+    private GameObject spawnPoint;                                                                              // Where the bullet is istantiate
 
     public Animator anim;
 
@@ -38,10 +38,7 @@ public class Weapon : MonoBehaviour {
     private void Start()
     {
         source = GetComponent<AudioSource>();
-
         coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
-
-        spawnPoint = transform.GetChild(2);                                                                     // Get the Spawnpoint child
     }
 
     void Update () {
@@ -62,8 +59,8 @@ public class Weapon : MonoBehaviour {
         {
             if (Time.time > fireRate + lastShot)
             {
-                // Instantiate the bullet
-                Instantiate(bullet, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                // Instantiate the bullet               
+                Instantiate(bullet, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y + .15f, spawnPoint.transform.position.z), spawnPoint.transform.rotation);
                 bullets--;
 
                 // Assign the bullet membership
@@ -93,6 +90,7 @@ public class Weapon : MonoBehaviour {
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player1");
+            spawnPoint = GameObject.Find("Spawnpoint_1");
             weaponMembership = 1;
             DestroyWeapon();
         }
@@ -101,11 +99,11 @@ public class Weapon : MonoBehaviour {
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player2");
+            spawnPoint = GameObject.Find("Spawnpoint_2");
             weaponMembership = 2;
             DestroyWeapon();
         }
     }
-
 
     public void DestroyWeapon()
     {
