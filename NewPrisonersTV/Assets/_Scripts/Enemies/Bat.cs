@@ -55,8 +55,8 @@ public class Bat : Enemy
                 if (player1.activeSelf && Vector2.Distance(transform.position, player1.transform.position) <= attackView)
                 {
                     Vector2 rayDirection = player1.transform.position - transform.position;                   
-                    /*Debug.DrawRay(transform.position + Vector3.right, rayDirection, Color.red);
-                    Debug.DrawRay(transform.position + Vector3.left, rayDirection, Color.red);*/
+                    Debug.DrawRay(transform.position + Vector3.right, rayDirection, Color.red);
+                    Debug.DrawRay(transform.position + Vector3.left, rayDirection, Color.red);
 
                     if (!Physics2D.Raycast(transform.position + Vector3.right, rayDirection, Vector2.Distance(transform.position, player1.transform.position), obstacleMask) 
                         && !Physics2D.Raycast(transform.position + Vector3.left, rayDirection, Vector2.Distance(transform.position, player1.transform.position), obstacleMask))
