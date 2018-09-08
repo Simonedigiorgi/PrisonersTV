@@ -26,16 +26,14 @@ public class Bullet : MonoBehaviour {
     // Bounce Direction Test
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall") && canBounce)
-        {
-            onWallHit(collision);
+        if (collision.gameObject.CompareTag("Wall"))
+        {         
+                onWallHit(collision);       
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         // Destroy at impact || destroy after seconds
-        if(!canBounce)
-        onWallHit(collision);
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -61,17 +59,8 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    protected virtual void onWallHit(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            Debug.Log("Bullet hit the wall");
-            Destroy(gameObject);
-        }
-    }
-
     protected virtual void onWallHit(Collision2D collision)
-    {
-       
+    { 
+        Destroy(gameObject);
     }
 }

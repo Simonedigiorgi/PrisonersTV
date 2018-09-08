@@ -19,13 +19,17 @@ public class GunBullet : Bullet
 
     protected override void onWallHit(Collision2D collision)
     {
-        //base.onWallHit(collision);
-        Debug.Log("Override");
-        ContactPoint2D contact = collision.contacts[0];
-        Vector3 hitNorm = contact.normal;
-        newDir = Vector3.Reflect(dir, hitNorm);
-        newDir.z = 0;
-        dir = newDir;
+        if (canBounce)
+        {
+            Debug.Log("Override");
+            ContactPoint2D contact = collision.contacts[0];
+            Vector3 hitNorm = contact.normal;
+            newDir = Vector3.Reflect(dir, hitNorm);
+            newDir.z = 0;
+            dir = newDir;
+        }
+        else
+            Destroy(gameObject);
 
     }
 

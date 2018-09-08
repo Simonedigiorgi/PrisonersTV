@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212225544084889666}
   - component: {fileID: 61444848476623324}
   - component: {fileID: 114349596040276232}
-  - component: {fileID: 50216654370276998}
   - component: {fileID: 70578203595925794}
+  - component: {fileID: 50236103073579792}
   m_Layer: 12
   m_Name: Gun_bullet
   m_TagString: Bullet
@@ -44,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50216654370276998
+--- !u!50 &50236103073579792
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 40
   destroyAfter: 2
-  canBounce: 1
+  canBounce: 0
   membership: 1
   myDamage: 1
 --- !u!212 &212225544084889666
