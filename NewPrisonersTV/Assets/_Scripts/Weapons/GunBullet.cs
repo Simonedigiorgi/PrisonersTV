@@ -7,39 +7,54 @@ public class GunBullet : Bullet
 {
     [BoxGroup("Controls")] public int myDamage;
 
-    Vector3 dir;
-    Vector3 newDir;
+
 
     private void Awake()
     {
         damage = myDamage;
         destroyOnEnemyCollision = true;
         dir = transform.right;
+        colliderBoundX = gameObject.GetComponent<Collider2D>().bounds.size.x;
     }
 
-    protected override void onWallHit(Collision2D collision)
-    {
-        if (canBounce)
-        {
-            Debug.Log("Override");
-            ContactPoint2D contact = collision.contacts[0];
-            Vector3 hitNorm = contact.normal;
-            newDir = Vector3.Reflect(dir, hitNorm);
-            newDir.z = 0;
-            dir = newDir;
-        }
-        else
-            Destroy(gameObject);
-
-    }
 
     void Update()
     {
         // Direction
-        //if(newDir == Vector3.zero)
-            transform.Translate(dir * speed * Time.deltaTime, Space.World);
-        //else
-        //    transform.Translate(newDir * speed * Time.deltaTime, Space.World);
+        transform.Translate(dir * speed * Time.deltaTime, Space.World);
+
+        // Raycast check for wall Collision
+        EnvoiromentRaycastCheck();
+
+    }
+
+
+    protected override void EnvoiromentRaycastCheck()
+    {
+        Vector2 rayDirection = dir;
+        Debug.DrawRay(transform.position + (-transform.right * colliderBoundX / 2), rayDirection, Color.red);
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + (-transform.right * colliderBoundX / 2), rayDirection, 1.0f, obstacleMask);
+        if (hit && canBounce)
+        {
+
+            Vector3 hitNorm = hit.normal;
+            newDir = Vector3.Reflect(dir, hitNorm);
+            dir = newDir;
+
+            //take angle of shoot
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+            //rotate shuriken to target
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        }
+        else if (hit && !canBounce)
+        {
+            Destroy(gameObject);
+        }
 
     }
 }
+    
+
