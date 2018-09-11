@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class JumpController : MonoBehaviour {
+public class JumpController3D : MonoBehaviour {
 
-    private PlayerController player;                                                                // Get PlayerController script
+    private PlayerController3D player;                                                                // Get PlayerController script
     private Rigidbody2D rb;                                                                         // Rigidbody components
 
     [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
@@ -22,7 +22,7 @@ public class JumpController : MonoBehaviour {
 
     void Awake()
     {
-        player = GetComponent<PlayerController>();
+        player = GetComponent<PlayerController3D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -30,12 +30,6 @@ public class JumpController : MonoBehaviour {
 
         // Check groundmask
         isGrounded = Physics2D.OverlapCircle(groundCheck.transform.position, groundRadius, groundMask);
-
-        // Swich between ground bool (Jump)
-        player.playerAnim.SetBool("Grounded", isGrounded);
-
-        // This animate the arm without the weapon
-        player.armAnim.SetBool("Grounded", isGrounded);
 
         if (isGrounded)
             extraJumps = extraJumpValue;

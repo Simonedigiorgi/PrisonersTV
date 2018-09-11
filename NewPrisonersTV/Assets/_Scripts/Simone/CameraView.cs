@@ -18,23 +18,23 @@ public class CameraView : MonoBehaviour
     [SerializeField]
     float zoomSpeed = 20f;
 
-    Camera camera;
+    Camera cam;
 
     void Awake()
     {
-        camera = GetComponent<Camera>();
-        camera.orthographic = true;
+        cam = GetComponent<Camera>();
+        cam.orthographic = true;
     }
 
     void LateUpdate()
     {
         Rect boundingBox = CalculateTargetsBoundingBox();
         transform.position = CalculateCameraPosition(boundingBox);
-        camera.orthographicSize = CalculateOrthographicSize(boundingBox);
+        cam.orthographicSize = CalculateOrthographicSize(boundingBox);
 
         // Set max OrthographicSize
-        if (camera.orthographicSize > maxOrthographicSize)
-            camera.orthographicSize = maxOrthographicSize;
+        if (cam.orthographicSize > maxOrthographicSize)
+            cam.orthographicSize = maxOrthographicSize;
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class CameraView : MonoBehaviour
     {
         Vector2 boundingBoxCenter = boundingBox.center;
 
-        return new Vector3(boundingBoxCenter.x, boundingBoxCenter.y, camera.transform.position.z);
+        return new Vector3(boundingBoxCenter.x, boundingBoxCenter.y, cam.transform.position.z);
     }
 
     /// <summary>
@@ -80,15 +80,15 @@ public class CameraView : MonoBehaviour
     /// <returns>A float for the orthographic size.</returns>
     float CalculateOrthographicSize(Rect boundingBox)
     {
-        float orthographicSize = camera.orthographicSize;
+        float orthographicSize = cam.orthographicSize;
         Vector3 topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
-        Vector3 topRightAsViewport = camera.WorldToViewportPoint(topRight);
+        Vector3 topRightAsViewport = cam.WorldToViewportPoint(topRight);
 
         if (topRightAsViewport.x >= topRightAsViewport.y)
-            orthographicSize = Mathf.Abs(boundingBox.width) / camera.aspect / 2f;
+            orthographicSize = Mathf.Abs(boundingBox.width) / cam.aspect / 2f;
         else
             orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
 
-        return Mathf.Clamp(Mathf.Lerp(camera.orthographicSize, orthographicSize, Time.deltaTime * zoomSpeed), minimumOrthographicSize, Mathf.Infinity);
+        return Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, orthographicSize, Time.deltaTime * zoomSpeed), minimumOrthographicSize, Mathf.Infinity);
     }
 }

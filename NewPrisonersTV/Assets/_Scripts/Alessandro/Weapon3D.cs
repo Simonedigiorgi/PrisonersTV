@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Sirenix.OdinInspector;
 
-public class Weapon : MonoBehaviour {
+public class Weapon3D : MonoBehaviour {
 
     private AudioSource source;                                                                                 // Get the Audiosource component
 

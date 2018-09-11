@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour {
+public class UIManager3D : MonoBehaviour {
 
     public Text player1Continue;
     public Text player2Continue;
@@ -16,14 +16,14 @@ public class UIManager : MonoBehaviour {
 
     private Transform player1;                                                                      //Player1 transform
     private Transform player2;                                                                      //Player2 transform
-    PlayerController pc1;                                                                           //PlayerController1
-    PlayerController pc2;                                                                           //Playercontroller2
+    PlayerController3D pc1;                                                                           //PlayerController1
+    PlayerController3D pc2;                                                                           //Playercontroller2
 
     GameObject handP1;                                                                              //Hand player1
     GameObject handP2;                                                                              //Hand player2
 
-    Weapon actualWeaponP1;                                                                          //the weapon grabbed on P1
-    Weapon actualWeaponP2;                                                                          //the weapon grabbed on p2
+    Weapon3D actualWeaponP1;                                                                          //the weapon grabbed on P1
+    Weapon3D actualWeaponP2;                                                                          //the weapon grabbed on p2
 
     SpriteRenderer lifeBarP1;                                                                       //the lifeBar on player1
     SpriteRenderer lifeBarP2;                                                                       //the lifeBar on player2
@@ -35,27 +35,27 @@ public class UIManager : MonoBehaviour {
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
     [Tooltip("The vertical distance of the UI hammo text to the player")] public float hammoVerticalOffset;
 
-    LifeController life1, life2;                              // Get the Player_1 $$ Player_2 LifeController script component
+    LifeController3D life1, life2;                              // Get the Player_1 $$ Player_2 LifeController script component
 
     void Start ()
     {
         player1 = GameObject.FindGameObjectWithTag("Player_1").transform;
-        pc1 = player1.GetComponent<PlayerController>();//test
+        pc1 = player1.GetComponent<PlayerController3D>();//test
         handP1 = GameObject.Find("Hand_Player1");
         hammoP1 = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         lifeBarP1 = player1.GetChild(4).GetComponent<SpriteRenderer>();
         scoreP1 = transform.GetChild(0).GetChild(2).GetComponent<Text>();
 
-        life1 = player1.GetComponent<LifeController>();
+        life1 = player1.GetComponent<LifeController3D>();
 
         player2 = GameObject.FindGameObjectWithTag("Player_2").transform;
-        pc2 = player2.GetComponent<PlayerController>();
+        pc2 = player2.GetComponent<PlayerController3D>();
         handP2 = GameObject.Find("Hand_Player2");
         hammoP2 = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         lifeBarP2 = player2.GetChild(4).GetComponent<SpriteRenderer>();
         scoreP2 = transform.GetChild(1).GetChild(2).GetComponent<Text>();
 
-        life2 = player2.GetComponent<LifeController>();
+        life2 = player2.GetComponent<LifeController3D>();
 
         mainCamera = Camera.main;
 
@@ -101,12 +101,12 @@ public class UIManager : MonoBehaviour {
         //Switch weapon
         if(actualWeaponP1 == null && handP1.transform.childCount > 0)
         {
-            actualWeaponP1 = handP1.transform.GetChild(0).GetComponent<Weapon>();
+            actualWeaponP1 = handP1.transform.GetChild(0).GetComponent<Weapon3D>();
         }
 
         if (actualWeaponP2 == null && handP2.transform.childCount > 0)
         {
-            actualWeaponP2 = handP2.transform.GetChild(0).GetComponent<Weapon>();
+            actualWeaponP2 = handP2.transform.GetChild(0).GetComponent<Weapon3D>();
         }
 
         //Enabled and disabled Hammo text and assign hammo value at the text

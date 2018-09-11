@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class ShootController : MonoBehaviour
+public class ShootController3D : MonoBehaviour
 {
-    PlayerController player;                                                                                    // Get PlayerController script
+    PlayerController3D player;                                                                                    // Get PlayerController script
 
     [BoxGroup("Player Inputs")] public BUTTONS shootInput;                                                       // Player1_Button X || Player2_Button X (Shoot with you weapon)
 
     void Awake()
     {
-        player = GetComponent<PlayerController>();
+        player = GetComponent<PlayerController3D>();
     }
 
     void Update()
@@ -20,7 +20,7 @@ public class ShootController : MonoBehaviour
         if (player.playerArm.transform.GetChild(0).childCount == 1)
         {
             // Get the weapon component
-            Weapon weapon = player.playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon>();
+            Weapon3D weapon = player.playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon3D>();
 
             if (player.isActive)
             {
@@ -48,12 +48,6 @@ public class ShootController : MonoBehaviour
                         shake.ShakeCamera(1.2f, .2f);
                 }
 
-                // Enable 360° arm sprite
-                player.playerArm.transform.GetChild(1).GetComponent<SpriteRenderer>().enabled = true;
-
-                // Disable arm without the weapon
-                transform.GetChild(1).GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
-
                 // Flip the weapon when equipped
                 if (player.facingRight && weapon.isGrabbed)
                     weapon.transform.localEulerAngles = new Vector3(180, 0, 0);
@@ -73,7 +67,7 @@ public class ShootController : MonoBehaviour
         // Get the Muzz component on weapon
         Transform muzzObject = player.playerArm.transform.GetChild(0).GetChild(0).GetChild(2);
 
-        Vector3 muzzPosition = new Vector3(Input.GetAxis(player.Horizontal), Input.GetAxis(player.Vertical), 0);
+        Vector3 muzzPosition = new Vector3(Input.GetAxis(player.Horizontal.ToString()), Input.GetAxis(player.Vertical.ToString()), 0);
 
         float angle = Mathf.Atan2(muzzPosition.y, muzzPosition.x) * Mathf.Rad2Deg;
 

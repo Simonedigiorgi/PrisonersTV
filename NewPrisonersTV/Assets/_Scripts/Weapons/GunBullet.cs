@@ -38,8 +38,8 @@ public class GunBullet : Bullet
         if (hit && canBounce)
         {
 
-            Vector3 hitNorm = hit.normal;
-            newDir = Vector3.Reflect(dir, hitNorm);
+            Vector2 hitNorm = hit.normal;
+            newDir = Vector2.Reflect(dir, hitNorm);
             dir = newDir;
 
             //take angle of shoot

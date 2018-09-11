@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class DashController : MonoBehaviour {
+public class DashController3D : MonoBehaviour {
 
-    PlayerController player;                                                                        // Get PlayerController script
+    PlayerController3D player;                                                                        // Get PlayerController script
     private Rigidbody2D rb;                                                                         // Rigidbody components
 
     [BoxGroup("Player Inputs")] public BUTTONS dashInput;                                            // Do a dash (Player1_Button B || Player2_Button B)
@@ -17,7 +17,7 @@ public class DashController : MonoBehaviour {
 
     void Awake()
     {
-        player = GetComponent<PlayerController>();
+        player = GetComponent<PlayerController3D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -27,10 +27,7 @@ public class DashController : MonoBehaviour {
         if (Input.GetButtonDown(dashInput.ToString()) && player.isInDash == false)
         {
             player.isInDash = true;
-            player.playerAnim.SetTrigger("Dash");
-
-            // Disable arm without the weapon
-            transform.GetChild(1).GetChild(2).GetComponent<SpriteRenderer>().enabled = false;
+            //player.playerAnim.SetTrigger("Dash");
 
             // perform dash without the gravity (PowerUp)
             if (powerDash)
@@ -54,8 +51,5 @@ public class DashController : MonoBehaviour {
 
         // Reset the gravity
         rb.gravityScale = 10;
-
-        // Enable arm without the weapon
-        transform.GetChild(1).GetChild(2).GetComponent<SpriteRenderer>().enabled = true;
     }
 }
