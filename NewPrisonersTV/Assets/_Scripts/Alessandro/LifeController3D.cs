@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-
+using Character;
 public class LifeController3D : MonoBehaviour {
 
-    private PlayerController3D player;                                                                // Get PlayerController script
+    private _CharacterController player;                                                                // Get PlayerController script
     private Rigidbody2D rb;                                                                         // Rigidbody components
 
     [Range(0, 3)]
@@ -14,7 +14,7 @@ public class LifeController3D : MonoBehaviour {
 
     private void Awake()
     {
-        player = GetComponent<PlayerController3D>();
+        player = GetComponent<_CharacterController>();
         rb = GetComponent<Rigidbody2D>();
     }
 

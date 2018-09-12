@@ -209,7 +209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1588745376777070}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0.00000004371139}
-  m_LocalPosition: {x: 20, y: 2, z: 0}
+  m_LocalPosition: {x: 20, y: -12.5, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4009290987451766}
@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02dcc4eeb681a646aad509a4b784d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashInput: Player2_Button B
+  dashInput: 5
   dashPower: 30
   dashTimer: 0.3
   powerDash: 0
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05eadd40ac3f41441a3d52eee99ff951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootInput: Player2_Button X
+  shootInput: 6
 --- !u!114 &114363736860653298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 1181024186783436}
-  jumpInput: Player2_Button A
+  jumpInput: 4
   groundMask:
     serializedVersion: 2
     m_Bits: 256

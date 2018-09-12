@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.29
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 296915511}
-  m_IndirectSpecularColor: {r: 0.5072622, g: 0.5288325, b: 0.5806033, a: 0.29}
+  m_IndirectSpecularColor: {r: 0.5072619, g: 0.5288295, b: 0.580602, a: 0.29}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2051,6 +2051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 5
+  enemyLevel: 1
   points: 0
   isFlashing: 0
   flashingSpeed: 0
@@ -6721,6 +6722,16 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114221800192725146, guid: 092d2ce06af57ff45b10f60e12e501b7,
+        type: 2}
+      propertyPath: m_SubmitButton
+      value: Player1_Button_A
+      objectReference: {fileID: 0}
+    - target: {fileID: 114221800192725146, guid: 092d2ce06af57ff45b10f60e12e501b7,
+        type: 2}
+      propertyPath: m_CancelButton
+      value: Player1_Button_B
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 092d2ce06af57ff45b10f60e12e501b7, type: 2}

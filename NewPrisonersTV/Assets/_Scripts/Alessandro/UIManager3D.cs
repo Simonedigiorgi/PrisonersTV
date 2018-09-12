@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Character;
 public class UIManager3D : MonoBehaviour {
 
     public Text player1Continue;
@@ -16,8 +16,8 @@ public class UIManager3D : MonoBehaviour {
 
     private Transform player1;                                                                      //Player1 transform
     private Transform player2;                                                                      //Player2 transform
-    PlayerController3D pc1;                                                                           //PlayerController1
-    PlayerController3D pc2;                                                                           //Playercontroller2
+    _CharacterController pc1;                                                                           //PlayerController1
+    _CharacterController pc2;                                                                           //Playercontroller2
 
     GameObject handP1;                                                                              //Hand player1
     GameObject handP2;                                                                              //Hand player2
@@ -40,7 +40,7 @@ public class UIManager3D : MonoBehaviour {
     void Start ()
     {
         player1 = GameObject.FindGameObjectWithTag("Player_1").transform;
-        pc1 = player1.GetComponent<PlayerController3D>();//test
+        pc1 = player1.GetComponent<_CharacterController>();//test
         handP1 = GameObject.Find("Hand_Player1");
         hammoP1 = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         lifeBarP1 = player1.GetChild(4).GetComponent<SpriteRenderer>();
@@ -49,7 +49,7 @@ public class UIManager3D : MonoBehaviour {
         life1 = player1.GetComponent<LifeController3D>();
 
         player2 = GameObject.FindGameObjectWithTag("Player_2").transform;
-        pc2 = player2.GetComponent<PlayerController3D>();
+        pc2 = player2.GetComponent<_CharacterController>();
         handP2 = GameObject.Find("Hand_Player2");
         hammoP2 = transform.GetChild(1).GetChild(1).GetComponent<Text>();
         lifeBarP2 = player2.GetChild(4).GetComponent<SpriteRenderer>();

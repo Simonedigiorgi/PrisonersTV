@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using Sirenix.OdinInspector;
-
+using Character;
 public class Weapon3D : MonoBehaviour {
 
     private AudioSource source;                                                                                 // Get the Audiosource component
@@ -33,7 +33,7 @@ public class Weapon3D : MonoBehaviour {
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
-    int weaponMembership;                                                                                       // Grabbed on player1 or player2
+    public int weaponMembership;                                                                                       // Grabbed on player1 or player2
 
     private void Start()
     {
@@ -86,7 +86,7 @@ public class Weapon3D : MonoBehaviour {
     // Get the weapon and destroy the previously when get another
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<PlayerController3D>().isActive)
+        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<_CharacterController> ().isActive)
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player1");
@@ -95,7 +95,7 @@ public class Weapon3D : MonoBehaviour {
             DestroyWeapon();
         }
 
-        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_2").GetComponent<PlayerController3D>().isActive)
+        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_2").GetComponent<_CharacterController>().isActive)
         {
             //Get the player hand
             hand = GameObject.Find("Hand_Player2");

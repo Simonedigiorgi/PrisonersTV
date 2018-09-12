@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Character;
 
 public class DashController3D : MonoBehaviour {
 
-    PlayerController3D player;                                                                        // Get PlayerController script
+    _CharacterController player;                                                                        // Get PlayerController script
     private Rigidbody2D rb;                                                                         // Rigidbody components
 
     [BoxGroup("Player Inputs")] public BUTTONS dashInput;                                            // Do a dash (Player1_Button B || Player2_Button B)
@@ -17,7 +18,7 @@ public class DashController3D : MonoBehaviour {
 
     void Awake()
     {
-        player = GetComponent<PlayerController3D>();
+        player = GetComponent<_CharacterController>();
         rb = GetComponent<Rigidbody2D>();
     }
 
