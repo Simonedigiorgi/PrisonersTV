@@ -21,15 +21,23 @@ namespace Character.Actions
                 // Get the weapon component
                 if (controller.m_CharacterController.currentWeapon == null)
                 {
-                    Debug.Log("Grabbo");
                     controller.m_CharacterController.currentWeapon = controller.m_CharacterController.playerArm.transform.GetChild(0).GetChild(0).GetComponent<Weapon3D>();
                 }
 
                 if (controller.m_CharacterController.isActive)
                 {
                     // Enable The rotation of joystick
-                    controller.m_CharacterController.JoyRotation();
-
+                    if (controller.m_CharacterController.moveArmWithRight)
+                    {
+                        Debug.Log("right");
+                        controller.m_CharacterController.JoyRotation(controller.m_CharacterController.RightHorizontal, controller.m_CharacterController.RightVertical);
+                    }
+                    else if (!controller.m_CharacterController.moveArmWithRight)
+                    {
+                        Debug.Log("left");
+                        controller.m_CharacterController.JoyRotation(controller.m_CharacterController.LeftHorizontal, controller.m_CharacterController.LeftVertical);
+                    }
+                   
                     // Shoot condition
                     if (controller.m_CharacterController.currentWeapon.autoFire == false)
                     {
@@ -58,7 +66,14 @@ namespace Character.Actions
                         controller.m_CharacterController.currentWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
 
                     // Rotation of Muzz effect
-                    controller.m_CharacterController.armRotation();
+                    if (controller.m_CharacterController.moveArmWithRight)
+                    {
+                        controller.m_CharacterController.armRotation(controller.m_CharacterController.RightHorizontal, controller.m_CharacterController.RightVertical);
+                    }
+                    else if (!controller.m_CharacterController.moveArmWithRight)
+                    {
+                        controller.m_CharacterController.armRotation(controller.m_CharacterController.LeftHorizontal, controller.m_CharacterController.LeftVertical);
+                    }
                     return;
                 }
             }

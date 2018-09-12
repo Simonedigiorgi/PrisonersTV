@@ -448,10 +448,13 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   groundCheck: {fileID: 0}
   m_CharStats: {fileID: 11400000, guid: b342c0454d45e2a4fb0a908edbcbfffd, type: 2}
-  Horizontal: 0
-  Vertical: 0
+  LeftHorizontal: 0
+  LeftVertical: 0
+  RightHorizontal: 0
+  RightVertical: 0
   shootInput: 0
   jumpInput: 0
+  moveArmWithRight: 0
   facingRight: 0
   isInDash: 0
   isActive: 0

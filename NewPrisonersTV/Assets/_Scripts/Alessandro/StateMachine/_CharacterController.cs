@@ -18,10 +18,13 @@ namespace Character
         [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
         [BoxGroup("Components")] public CharacterStats m_CharStats;
 
-        [BoxGroup("Player Inputs")] public HORIZONTAL Horizontal;                                           // Get Horiziontal
-        [BoxGroup("Player Inputs")] public VERTICAL Vertical;                                             // Get Vertical
+        [BoxGroup("Player Inputs")] public HORIZONTAL LeftHorizontal;                                           // Get Horiziontal
+        [BoxGroup("Player Inputs")] public VERTICAL LeftVertical;                                             // Get Vertical
+        [BoxGroup("Player Inputs")] public HORIZONTAL RightHorizontal;                                           // Get Horiziontal
+        [BoxGroup("Player Inputs")] public VERTICAL RightVertical;                                             // Get Vertical
         [BoxGroup("Player Inputs")] public BUTTONS shootInput;                         // Player1_Button X || Player2_Button X (Shoot with you weapon)
         [BoxGroup("Player Inputs")] public BUTTONS jumpInput;                          // Player1_Button A || Player2_Button A
+        [BoxGroup("Player Inputs")] public bool moveArmWithRight;
 
         [HideInInspector] public bool facingRight;                                                      // Player flip facing
         [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
@@ -43,12 +46,12 @@ namespace Character
 
         #region Methods
 
-        public void armRotation()
+        public void armRotation(HORIZONTAL h, VERTICAL v)
         {
             // Get the arm component on weapon
             Transform armObject = playerArm.transform.GetChild(0).GetChild(0).GetChild(2);
 
-            Vector3 position = new Vector3(Input.GetAxis(Horizontal.ToString()), Input.GetAxis(Vertical.ToString()), 0);
+            Vector3 position = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);           
 
             float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
 
@@ -84,9 +87,9 @@ namespace Character
         }
 
         // Rotate the Joystick of 360°
-        public void JoyRotation()
+        public void JoyRotation(HORIZONTAL h, VERTICAL v)
         {
-            Vector3 joyPosition = new Vector3(Input.GetAxis(Horizontal.ToString()), Input.GetAxis(Vertical.ToString()), 0);
+            Vector3 joyPosition = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);
 
             float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
 
