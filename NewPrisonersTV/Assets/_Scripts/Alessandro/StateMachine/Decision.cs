@@ -12,7 +12,7 @@ namespace StateMachine
 
         //public virtual bool Decide(EnemiesAIStateController controller) { return true; }
 
-        //public virtual bool Decide(GMStateController controller) { return true; }
+        public virtual bool Decide(GMStateController controller) { return true; }
 
     }
 }

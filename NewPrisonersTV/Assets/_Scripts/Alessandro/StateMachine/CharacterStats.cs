@@ -15,6 +15,9 @@ public class CharacterStats : ScriptableObject
     public float groundRadius;                                                 // Ground collider radius
     public float jump;                                                       // Player jump value
     public int extraJumpValue;                                               // How many double jumps
+    [Space(10)]
+    [Range(0, 3)]
+    public int life;
 
 
 }

@@ -10,5 +10,5 @@ public class TrueDecision : Decision {
 
     //public override bool Decide(EnemiesAIStateController controller) { return true; }
 
-    //public override bool Decide(GMStateController controller) { return true; }
+    public override bool Decide(GMStateController controller) { return true; }
 }

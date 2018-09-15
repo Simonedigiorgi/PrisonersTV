@@ -18,7 +18,7 @@ namespace Character.Actions
             // *** LEAVE ALL OF THIS ON FIXED UPDATE TO AVOID PROBLEM OCCURING DURING THE FLIP
 
             // Move inputs
-            float moveInput = Input.GetAxis(controller.m_CharacterController.LeftHorizontal.ToString());
+            float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
 
             // Movements
             if (moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2

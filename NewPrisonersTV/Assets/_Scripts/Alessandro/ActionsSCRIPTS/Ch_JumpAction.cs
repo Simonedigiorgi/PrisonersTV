@@ -24,7 +24,7 @@ namespace Character.Actions
 
 
             // Jump Input
-            if (Input.GetButtonDown(controller.m_CharacterController.jumpInput.ToString()))
+            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()))
             {
                 controller.m_CharacterController.rb.velocity = Vector2.up * controller.m_CharacterController.m_CharStats.jump;
             }

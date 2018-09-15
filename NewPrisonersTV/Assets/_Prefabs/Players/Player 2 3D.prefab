@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 61662371527577166}
   - component: {fileID: 114936623903084862}
   - component: {fileID: 114288882461895498}
-  - component: {fileID: 114536220518661812}
   m_Layer: 10
   m_Name: Player 2 3D
   m_TagString: Player_2
@@ -408,7 +407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 04751215d08f3624c97c154ccea865a1, type: 2}
-  checkIfGameActive: {fileID: 11400000, guid: 6b28f5febe44f1d4f9aa58a1bf1e595f, type: 2}
+  checkIfGameActive: {fileID: 11400000, guid: 10c08d7aa3db5364b8b39e93b2cd4416, type: 2}
   inactiveState: {fileID: 0}
   remainState: {fileID: 0}
   stateTimeElapsed: 0
@@ -418,19 +417,6 @@ MonoBehaviour:
   defeatedState: {fileID: 0}
   m_CharacterController: {fileID: 0}
   navMeshAgent: {fileID: 0}
---- !u!114 &114536220518661812
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1241183022116536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d9881501a906d147924d81bf2b252c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  life: 3
-  respawnTime: 3
 --- !u!114 &114936623903084862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -448,15 +434,15 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   groundCheck: {fileID: 1340660182395206}
   m_CharStats: {fileID: 11400000, guid: b342c0454d45e2a4fb0a908edbcbfffd, type: 2}
-  Horizontal: 1
-  Vertical: 1
-  shootInput: 6
-  jumpInput: 4
+  m_ControlConfig: {fileID: 11400000, guid: 4277a8be0a3933a44a6ecc19180e9620, type: 2}
+  respawnTime: 0
   facingRight: 0
   isInDash: 0
-  isActive: 0
   isGrounded: 0
   extraJumps: 0
+  isAlive: 0
+  currentLife: 0
+  canRespawn: 0
 --- !u!212 &212111589198281542
 SpriteRenderer:
   m_ObjectHideFlags: 1

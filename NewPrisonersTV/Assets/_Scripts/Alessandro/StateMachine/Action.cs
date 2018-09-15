@@ -14,6 +14,6 @@ namespace StateMachine
 
         //public virtual void Execute(EnemiesAIStateController controller) { }
 
-       // public virtual void Execute(GMStateController controller) { }
+        public virtual void Execute(GMStateController controller) { }
     }
 }

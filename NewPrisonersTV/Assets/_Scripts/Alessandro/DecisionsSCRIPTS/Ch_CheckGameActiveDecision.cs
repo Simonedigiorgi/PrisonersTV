@@ -10,7 +10,7 @@ namespace Character.Decisions
     {
         public override bool Decide(CharacterStateController controller)
         {
-            return true;
+            return GMController.instance.GetGameStatus(); ;
         }
     }
 }

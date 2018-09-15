@@ -35,13 +35,13 @@ namespace StateMachine
         //    CheckTransitions(controller);
         //}
 
-        //public void UpdateState(GMStateController controller)
-        //{
-        //    DoActions(controller);
-        //    CheckTransitions(controller);
-        //}
+        public void UpdateState(GMStateController controller)
+        {
+            DoActions(controller);
+            CheckTransitions(controller);
+        }
 
-#endregion
+        #endregion
 
         #region Actions
 
@@ -69,15 +69,15 @@ namespace StateMachine
         //    }
         //}
 
-        //protected virtual void DoActions(GMStateController controller)
-        //{
-        //    for (int i = 0; i < actions.Length; i++)
-        //    {
-        //        actions[i].Execute(controller);
-        //    }
-        //}
+        protected virtual void DoActions(GMStateController controller)
+        {
+            for (int i = 0; i < actions.Length; i++)
+            {
+                actions[i].Execute(controller);
+            }
+        }
 
-#endregion
+        #endregion
 
         #region CheckTransition
 
@@ -146,27 +146,27 @@ namespace StateMachine
         //    }
         //}
 
-        //private void CheckTransitions(GMStateController controller)
-        //{
-        //    for (int i = 0; i < transitions.Length; i++)
-        //    {
-        //        bool decisionSucceeded = true;
-        //        for (int j = 0; j < transitions[i].decision.Length; j++)
-        //        {
-        //            decisionSucceeded = decisionSucceeded && transitions[i].decision[j].Decide(controller);
-        //        }
+        private void CheckTransitions(GMStateController controller)
+        {
+            for (int i = 0; i < transitions.Length; i++)
+            {
+                bool decisionSucceeded = true;
+                for (int j = 0; j < transitions[i].decision.Length; j++)
+                {
+                    decisionSucceeded = decisionSucceeded && transitions[i].decision[j].Decide(controller);
+                }
 
-        //        if (decisionSucceeded)
-        //        {
-        //            controller.TransitionToState(transitions[i].trueState);
-        //        }
-        //        else
-        //        {
-        //            controller.TransitionToState(transitions[i].falseState);
-        //        }
-        //    }
-        //}
-#endregion
+                if (decisionSucceeded)
+                {
+                    controller.TransitionToState(transitions[i].trueState);
+                }
+                else
+                {
+                    controller.TransitionToState(transitions[i].falseState);
+                }
+            }
+        }
+        #endregion
 
         #region ExitState
 
@@ -194,13 +194,13 @@ namespace StateMachine
         //    }
         //}
 
-        //public void OnExitState(GMStateController controller)
-        //{
-        //    for (int i = 0; i < exitActions.Length; i++)
-        //    {
-        //        exitActions[i].Execute(controller);
-        //    }
-        //}
+        public void OnExitState(GMStateController controller)
+        {
+            for (int i = 0; i < exitActions.Length; i++)
+            {
+                exitActions[i].Execute(controller);
+            }
+        }
         #endregion
 
         #region EnterState
@@ -229,14 +229,14 @@ namespace StateMachine
         //    }
         //}
 
-        //public void OnEnterState(GMStateController controller)
-        //{
-        //    for (int i = 0; i < enterActions.Length; i++)
-        //    {
-        //        enterActions[i].Execute(controller);
-        //    }
-        //}
-#endregion
+        public void OnEnterState(GMStateController controller)
+        {
+            for (int i = 0; i < enterActions.Length; i++)
+            {
+                enterActions[i].Execute(controller);
+            }
+        }
+        #endregion
 
     }
 }

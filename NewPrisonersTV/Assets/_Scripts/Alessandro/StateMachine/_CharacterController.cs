@@ -17,34 +17,54 @@ namespace Character
         [BoxGroup("Components")] public Weapon3D currentWeapon;
         [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
         [BoxGroup("Components")] public CharacterStats m_CharStats;
+        [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;     
 
-        [BoxGroup("Player Inputs")] public HORIZONTAL LeftHorizontal;                                           // Get Horiziontal
-        [BoxGroup("Player Inputs")] public VERTICAL LeftVertical;                                             // Get Vertical
-        [BoxGroup("Player Inputs")] public HORIZONTAL RightHorizontal;                                           // Get Horiziontal
-        [BoxGroup("Player Inputs")] public VERTICAL RightVertical;                                             // Get Vertical
-        [BoxGroup("Player Inputs")] public BUTTONS shootInput;                         // Player1_Button X || Player2_Button X (Shoot with you weapon)
-        [BoxGroup("Player Inputs")] public BUTTONS jumpInput;                          // Player1_Button A || Player2_Button A
-        [BoxGroup("Player Inputs")] public bool moveArmWithRight;
+        [BoxGroup("Rules")] public float respawnTime;
+        
 
         [HideInInspector] public bool facingRight;                                                      // Player flip facing
         [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
-        [HideInInspector] public bool isActive;                                                         // Check if the player is active
-        [HideInInspector] public bool isGrounded;                                                                        // Is the Player on ground?   
+        [HideInInspector] public bool isGrounded;                                                       // Is the Player on ground?   
         [HideInInspector] public int extraJumps;
+        [HideInInspector] public bool isAlive;
+        [HideInInspector] public int currentLife;
+        [HideInInspector] public bool canRespawn;
 
         void Start()
         {
-
             rb = GetComponent<Rigidbody2D>();
-
+            currentLife = m_CharStats.life;
         }
 
-        public void OnEnable()
-        {    
-            isActive = true;
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            // When player trigger an enemy
+            if (collision.gameObject.CompareTag("Enemy"))
+                currentLife--;
         }
 
         #region Methods
+        public IEnumerator Death()
+        {
+            // Stop the player and set active to false            
+            rb.velocity = new Vector2(0, 0);           
+
+            // Disable object after
+            yield return new WaitForSeconds(respawnTime);
+
+            // Set the player on the center of the screen (this fix the CameraView when a Player die)
+            transform.position = new Vector2(0, 0);
+
+            // Destroy the weapon
+            if (playerArm.transform.GetChild(0).childCount > 0)
+            {
+                GameObject first = playerArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+                Destroy(first.gameObject);
+            }
+
+            rb.isKinematic = false;
+            canRespawn = true;
+        }
 
         public void armRotation(HORIZONTAL h, VERTICAL v)
         {
