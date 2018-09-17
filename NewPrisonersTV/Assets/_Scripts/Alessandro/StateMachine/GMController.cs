@@ -19,9 +19,9 @@ public class GMController : MonoBehaviour
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup
-    public GAMEMODE currentGameMode;
-    public int numberOfPlayers;
     [HideInInspector] public bool playerSetupDone = false;
+    [HideInInspector] public int playerRequired;
+    public GAMEMODE currentMode;
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
@@ -38,12 +38,11 @@ public class GMController : MonoBehaviour
             Destroy(gameObject);
 
         //Get all the players required for the current game mode
-        if (currentGameMode != GAMEMODE.None)
+        if (currentMode != GAMEMODE.None)
         {  
-            numberOfPlayers = (int)currentGameMode;
-            playerInfo = new PlayerInfo[numberOfPlayers];
+            playerInfo = new PlayerInfo[playerRequired];
             //Add the players to the current playerInfo list
-            for (int i = 0; i < numberOfPlayers; i++)
+            for (int i = 0; i < playerRequired; i++)
             {
                 playerInfo[i] = new PlayerInfo(playerPrefab[i], playerPrefab[i].GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
             }

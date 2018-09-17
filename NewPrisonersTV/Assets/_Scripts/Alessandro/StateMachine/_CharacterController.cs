@@ -25,8 +25,8 @@ namespace Character
         [HideInInspector] public bool facingRight;                                                      // Player flip facing
         [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
         [HideInInspector] public bool isGrounded;                                                       // Is the Player on ground?   
-        [HideInInspector] public int extraJumps;
-        [HideInInspector] public bool isAlive;
+        [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
+        [HideInInspector] public bool isAlive;                                                          // Is player still Alive?
         [HideInInspector] public int currentLife;
         [HideInInspector] public bool canRespawn;
 

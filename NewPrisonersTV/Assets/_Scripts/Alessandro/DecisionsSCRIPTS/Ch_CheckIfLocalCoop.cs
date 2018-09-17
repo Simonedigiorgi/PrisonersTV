@@ -10,7 +10,7 @@ namespace Character.Decisions
     {
         public override bool Decide(CharacterStateController controller)
         {
-            if (GMController.instance.currentGameMode == GAMEMODE.LocalCoop_2P || GMController.instance.currentGameMode == GAMEMODE.LocalCoop_4P)
+            if (GMController.instance.currentMode == GAMEMODE.LocalCoop_2P || GMController.instance.currentMode == GAMEMODE.LocalCoop_4P)
                 return true;
             else
                 return false;
