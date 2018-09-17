@@ -16,6 +16,7 @@ namespace Character
         [BoxGroup("Components")] public Rigidbody2D rb;                                            // Rigidbody component
         [BoxGroup("Components")] public Weapon3D currentWeapon;
         [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
+        [BoxGroup("Components")] public Collider2D playerCollider;
         [BoxGroup("Components")] public CharacterStats m_CharStats;
         [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;     
 
@@ -25,15 +26,19 @@ namespace Character
         [HideInInspector] public bool facingRight;                                                      // Player flip facing
         [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
         [HideInInspector] public bool isGrounded;                                                       // Is the Player on ground?   
-        [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
-        [HideInInspector] public bool isAlive;                                                          // Is player still Alive?
-        [HideInInspector] public int currentLife;
+        [HideInInspector] public bool isAlive ;                                                          // Is player still Alive?
         [HideInInspector] public bool canRespawn;
+        [HideInInspector] public bool startDeathCR;
 
-        void Start()
+        [HideInInspector] public int currentLife;
+        [HideInInspector] public int playerNumber;
+        [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
+
+        void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             currentLife = m_CharStats.life;
+            isAlive = true;
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
@@ -44,8 +49,21 @@ namespace Character
         }
 
         #region Methods
+
+        public void PlayerRespawn(Transform spawnPoint)
+        {
+            if (Input.GetButtonDown(m_ControlConfig.respawnInput.ToString()) && canRespawn)
+            {
+                transform.position = spawnPoint.position;
+                isAlive = true;
+                currentLife = m_CharStats.life;
+                canRespawn = false;
+            }
+        }
+
         public IEnumerator Death()
         {
+            startDeathCR = false;
             // Stop the player and set active to false            
             rb.velocity = new Vector2(0, 0);           
 
@@ -53,7 +71,7 @@ namespace Character
             yield return new WaitForSeconds(respawnTime);
 
             // Set the player on the center of the screen (this fix the CameraView when a Player die)
-            transform.position = new Vector2(0, 0);
+           // transform.position = new Vector2(0, 0);
 
             // Destroy the weapon
             if (playerArm.transform.GetChild(0).childCount > 0)
@@ -79,12 +97,6 @@ namespace Character
                 angle = 180;
 
             armObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-
-            // This avoid the arm having a glitchy position
-            //if (facingRight)
-            //    armObject.GetComponent<SpriteRenderer>().flipY = true;
-            //else
-            //    armObject.GetComponent<SpriteRenderer>().flipY = false;
         }
 
         // Flip the player face method
@@ -118,7 +130,15 @@ namespace Character
 
             playerArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
         }
-        
+
         #endregion
+
+        private void Update()
+        {
+            if(startDeathCR)
+            {
+                StartCoroutine(Death());
+            }
+        }
     }
 }

@@ -17,8 +17,6 @@ public class UIManager3D : MonoBehaviour {
 
     Camera mainCamera;
 
-    GMController gameManager;
-
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
     [Tooltip("The vertical distance of the UI hammo text to the player")] public float hammoVerticalOffset;
 
@@ -26,33 +24,29 @@ public class UIManager3D : MonoBehaviour {
     void Start ()
     {
         //Find game manager
-        if (GameObject.Find("GameManager") != null)
-        {
-            gameManager = GameObject.Find("GameManager").GetComponent<GMController>();
-        }
-        else
+        if (GameObject.Find("GameManager") == null)
         {
             Debug.Log("ADD GAME MANAGER TO SCENE!!! (named 'GameManager')");
         }
 
         mainCamera = Camera.main;
 
-        if (gameManager.currentMode != GAMEMODE.None)
+        if (GMController.instance.currentMode != GAMEMODE.None)
         {
-            actualWeapon = new Weapon3D[gameManager.playerRequired];
-            playerHand = new GameObject[gameManager.playerRequired];
-            hammo = new Text[gameManager.playerRequired];
-            score = new Text[gameManager.playerRequired];
-            lifeBar = new SpriteRenderer[gameManager.playerRequired];
-
+            actualWeapon = new Weapon3D[GMController.instance.playerRequired];
+            playerHand = new GameObject[GMController.instance.playerRequired];
+            hammo = new Text[GMController.instance.playerRequired];
+            score = new Text[GMController.instance.playerRequired];
+            playerContinue = new Text[GMController.instance.playerRequired];
+            lifeBar = new SpriteRenderer[GMController.instance.playerRequired];
             //Get the components for all the players
-            for (int i = 0; i < gameManager.playerInfo.Length; i++)
+            for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
-                playerHand[i] = gameManager.playerInfo[i].playerController.playerArm.transform.GetChild(0).gameObject;
-                lifeBar[i] = gameManager.playerInfo[i].player.transform.GetChild(4).GetComponent<SpriteRenderer>();
+                playerHand[i] = GMController.instance.playerInfo[i].playerController.playerArm.transform.GetChild(0).gameObject;
+                lifeBar[i] = GMController.instance.playerInfo[i].player.transform.GetChild(4).GetComponent<SpriteRenderer>();
+                playerContinue[i] = playerUI[i].transform.GetChild(0).GetComponent<Text>();
                 hammo[i] = playerUI[i].transform.GetChild(1).GetComponent<Text>();
                 score[i] = playerUI[i].transform.GetChild(2).GetComponent<Text>();
-                playerContinue[i] = playerUI[i].transform.GetChild(0).GetComponent<Text>();
             }
         }
     }
@@ -60,30 +54,23 @@ public class UIManager3D : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (gameManager.currentMode != GAMEMODE.None)
+        if (GMController.instance.currentMode != GAMEMODE.None)
         {
-            for (int i = 0; i < gameManager.playerInfo.Length; i++)
+            for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
                 #region ContinueText
                 //Enabled and disabled Continue text
-                if (!gameManager.playerInfo[i].playerController.isAlive)
+                if (!GMController.instance.playerInfo[i].playerController.isAlive)
                 {
-                    playerContinue[i].enabled = true;
-
+                    playerContinue[i].gameObject.SetActive(true);
                 }
                 else
                 {
-                    playerContinue[i].enabled = false;
+                    playerContinue[i].gameObject.SetActive(false);
                 }
                 #endregion
 
                 #region Bullets
-                //Switch weapon
-                //if (gameManager.playerInfo[i].playerController.currentWeapon == null && playerHand[i].transform.childCount > 0)
-                //{
-                //    actualWeapon[i] = playerHand[i].transform.GetChild(0).GetComponent<Weapon3D>();
-                //}
-
 
                 //Enabled and disabled Hammo text and assign hammo value at the text
                 if (playerHand[i].transform.childCount <= 0)
@@ -91,14 +78,14 @@ public class UIManager3D : MonoBehaviour {
                     hammo[i].text = 0.ToString();
                     hammo[i].gameObject.SetActive(false);
                 }
-                else
+                else if(playerHand[i].transform.childCount > 0)
                 {
                     hammo[i].gameObject.SetActive(true);
-                    hammo[i].text = gameManager.playerInfo[i].playerController.currentWeapon.bullets.ToString();
+                    hammo[i].text = GMController.instance.playerInfo[i].playerController.currentWeapon.bullets.ToString();
                 }
                 //set hammo text position
-                hammo[i].transform.position = mainCamera.WorldToScreenPoint(gameManager.playerInfo[i].player.transform.position);
-                if (gameManager.playerInfo[i].playerController.facingRight)
+                hammo[i].transform.position = mainCamera.WorldToScreenPoint(GMController.instance.playerInfo[i].player.transform.position);
+                if (GMController.instance.playerInfo[i].playerController.facingRight)
                     hammo[i].transform.position += new Vector3(hammoHorizontalOffset, hammoVerticalOffset, 0);
                 else
                     hammo[i].transform.position += new Vector3(-hammoHorizontalOffset, hammoVerticalOffset, 0);
@@ -108,22 +95,22 @@ public class UIManager3D : MonoBehaviour {
                 #region Life
 
                 //Rescale and Recolor life bar
-                if (gameManager.playerInfo[i].playerController.currentLife == 3)
+                if (GMController.instance.playerInfo[i].playerController.currentLife == 3)
                 {
                     lifeBar[i].transform.localScale = new Vector3(15, 2.5f, 0);
                     lifeBar[i].color = Color.green;
                 }
-                else if (gameManager.playerInfo[i].playerController.currentLife == 2)
+                else if (GMController.instance.playerInfo[i].playerController.currentLife == 2)
                 {
                     lifeBar[i].transform.localScale = new Vector3(10, 2.5f, 0);
                     lifeBar[i].color = Color.yellow;
                 }
-                else if (gameManager.playerInfo[i].playerController.currentLife == 1)
+                else if (GMController.instance.playerInfo[i].playerController.currentLife == 1)
                 {
                     lifeBar[i].transform.localScale = new Vector3(5, 2.5f, 0);
                     lifeBar[i].color = Color.red;
                 }
-                else if (gameManager.playerInfo[i].playerController.currentLife <= 0)
+                else if (GMController.instance.playerInfo[i].playerController.currentLife <= 0)
                 {
                     lifeBar[i].transform.localScale = Vector3.zero;
                 }
@@ -132,7 +119,7 @@ public class UIManager3D : MonoBehaviour {
 
                 #region Score
 
-                score[i].text = "P"+i+ " Score: " + gameManager.playerInfo[i].score.ToString();
+                score[i].text = "P"+i+ " Score: " + GMController.instance.playerInfo[i].score.ToString();
       
                 #endregion
             }

@@ -20,7 +20,7 @@ public class GMController : MonoBehaviour
 
     // Needed for game mode setup
     [HideInInspector] public bool playerSetupDone = false;
-    [HideInInspector] public int playerRequired;
+    public int playerRequired;
     public GAMEMODE currentMode;
 
     public GameObject[] playerPrefab;
@@ -39,14 +39,10 @@ public class GMController : MonoBehaviour
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.None)
-        {  
+        {
             playerInfo = new PlayerInfo[playerRequired];
-            //Add the players to the current playerInfo list
-            for (int i = 0; i < playerRequired; i++)
-            {
-                playerInfo[i] = new PlayerInfo(playerPrefab[i], playerPrefab[i].GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
-            }
-           
+            //spawn players and add them to the current playerInfo list
+            PlayerSetup();     
         }
 
     }
@@ -68,21 +64,15 @@ public class GMController : MonoBehaviour
 
     public void PlayerSetup()
     {
-        for (int i = 0; i < playerInfo.Length; i++)
+        for (int i = 0; i < playerRequired; i++)
         {
-            Instantiate(playerInfo[i].player,playerInfo[i].playerSpawnPoint.position, playerInfo[i].playerSpawnPoint.rotation);
+            GameObject player = Instantiate(playerPrefab[i], playerSpawnPoint[i].position, playerSpawnPoint[i].rotation);
+
+            playerInfo[i] = new PlayerInfo(player, player.GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
+
+            playerInfo[i].playerController.playerNumber = i;
         }
         playerSetupDone = true;
-    }
-
-    public void PlayerRespawn(GameObject player, _CharacterController playerController, Transform spawnPoint, BUTTONS respawnInput)
-    {
-        if (!playerController.isAlive && Input.GetButtonDown(respawnInput.ToString()) && playerController.canRespawn)
-        {
-            player.transform.position = spawnPoint.position;
-            playerController.isAlive = true;
-            playerController.canRespawn = false;            
-        }
     }
 
     //public IEnumerator WaitFadeOut()

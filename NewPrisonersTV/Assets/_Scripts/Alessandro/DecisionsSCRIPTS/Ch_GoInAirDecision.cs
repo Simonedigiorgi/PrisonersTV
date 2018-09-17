@@ -10,10 +10,10 @@ namespace Character.Decisions
     {
         public override bool Decide(CharacterStateController controller)
         {
-            if (!controller.m_CharacterController.isGrounded)
-                return true;
+            if (!controller.m_CharacterController.isGrounded && controller.m_CharacterController.isAlive)
+                return true; 
             else
-                return false;
+                return false; 
         }
     }
 }

@@ -5,8 +5,8 @@ using StateMachine;
 
 namespace Character.Actions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Actions/Characters/DeathStartAction")]
-    public class Ch_DeathStartAction : _Action
+    [CreateAssetMenu(menuName = "StateMachine/Actions/Characters/DeathAction")]
+    public class Ch_DeathAction : _Action
     {
         public override void Execute(CharacterStateController controller)
         {
@@ -15,7 +15,10 @@ namespace Character.Actions
 
         public void Death(CharacterStateController controller)
         {
-            controller.m_CharacterController.startDeathCR = true;
+           //Call the Respawn method
+           controller.m_CharacterController.PlayerRespawn(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].playerSpawnPoint);
+            
+            
         }
 
     }

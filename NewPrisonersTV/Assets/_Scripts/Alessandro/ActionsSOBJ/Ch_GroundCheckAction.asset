@@ -8,15 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c24413db951a1b646b0264d48f6b91dd, type: 3}
-  m_Name: PlayerStats
+  m_Script: {fileID: 11500000, guid: 1437ffc26da5b09498334f6df3b39a4a, type: 3}
+  m_Name: Ch_GroundCheckAction
   m_EditorClassIdentifier: 
-  joypadDeathZone: 0.2
-  speed: 14
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
-  groundRadius: 0.4
-  jump: 30
-  extraJumpValue: 1
-  life: 3

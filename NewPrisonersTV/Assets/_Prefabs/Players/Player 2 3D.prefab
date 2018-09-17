@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 1713274226587178}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.16, z: 0}
-  m_LocalScale: {x: 15, y: 2.5, z: 1}
+  m_LocalScale: {x: 15, y: 2.5, z: 0}
   m_Children: []
   m_Father: {fileID: 4552882018241872}
   m_RootOrder: 4
@@ -433,9 +433,10 @@ MonoBehaviour:
   rb: {fileID: 0}
   currentWeapon: {fileID: 0}
   groundCheck: {fileID: 1340660182395206}
+  playerCollider: {fileID: 61989760961189898}
   m_CharStats: {fileID: 11400000, guid: b342c0454d45e2a4fb0a908edbcbfffd, type: 2}
   m_ControlConfig: {fileID: 11400000, guid: 4277a8be0a3933a44a6ecc19180e9620, type: 2}
-  respawnTime: 0
+  respawnTime: 3
   facingRight: 0
   isInDash: 0
   isGrounded: 0
@@ -443,6 +444,8 @@ MonoBehaviour:
   isAlive: 0
   currentLife: 0
   canRespawn: 0
+  playerNumber: 0
+  startDeathCR: 0
 --- !u!212 &212111589198281542
 SpriteRenderer:
   m_ObjectHideFlags: 1

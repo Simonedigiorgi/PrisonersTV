@@ -16,11 +16,8 @@ namespace GM.Actions
 
         private void SetRules(GMStateController controller)
         {
-            //Set variables for this game mode and spawn players
-            if (!controller.m_GM.playerSetupDone)
-            {
-                controller.m_GM.PlayerSetup();
-            }
+ 
+           
         }
     }
 }

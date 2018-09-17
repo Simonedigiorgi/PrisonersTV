@@ -15,12 +15,6 @@ namespace Character.Actions
 
         public void DoubleJump(CharacterStateController controller)
         {
-
-            // Check groundmask
-            controller.m_CharacterController.isGrounded = Physics2D.OverlapCircle(controller.m_CharacterController.groundCheck.transform.position, controller.m_CharacterController.m_CharStats.groundRadius, controller.m_CharacterController.m_CharStats.groundMask);
-
-           
-
             // Jump Input
             if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()) && controller.m_CharacterController.extraJumps > 0)
             {

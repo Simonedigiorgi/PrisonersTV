@@ -11,7 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
   m_Name: Death
   m_EditorClassIdentifier: 
-  actions: []
+  actions:
+  - {fileID: 11400000, guid: 42f83ca72421c5c43914ae3e7c2d843b, type: 2}
   enterActions:
   - {fileID: 11400000, guid: 28e3fdd004e0eba4b8f08ef667331f15, type: 2}
   exitActions: []
