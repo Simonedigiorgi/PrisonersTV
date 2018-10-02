@@ -5,12 +5,12 @@ using StateMachine;
 
 namespace Character.Decisions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Decisions/GM/CheckIfLocalCoop")]
-    public class Ch_CheckIfLocalCoop: Decision
+    [CreateAssetMenu(menuName = "StateMachine/Decisions/GM/CheckIfMenu")]
+    public class Ch_CheckIfMenu: Decision
     {
         public override bool Decide(CharacterStateController controller)
         {
-            if (GMController.instance.GetGameMode() == GAMEMODE.LocalCoop && GMController.instance.GetGameMode() != GAMEMODE.None)
+            if (GMController.instance.GetGameMode() == GAMEMODE.None)
                 return true;
             else
                 return false;

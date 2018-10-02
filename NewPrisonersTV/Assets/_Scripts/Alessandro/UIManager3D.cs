@@ -23,22 +23,16 @@ public class UIManager3D : MonoBehaviour {
 
     void Start ()
     {
-        //Find game manager
-        if (GameObject.Find("GameManager") == null)
-        {
-            Debug.Log("ADD GAME MANAGER TO SCENE!!! (named 'GameManager')");
-        }
-
         mainCamera = Camera.main;
 
-        if (GMController.instance.currentMode != GAMEMODE.None)
+        if (GMController.instance.GetGameMode() != GAMEMODE.None)
         {
-            actualWeapon = new Weapon3D[GMController.instance.playerRequired];
-            playerHand = new GameObject[GMController.instance.playerRequired];
-            hammo = new Text[GMController.instance.playerRequired];
-            score = new Text[GMController.instance.playerRequired];
-            playerContinue = new Text[GMController.instance.playerRequired];
-            lifeBar = new SpriteRenderer[GMController.instance.playerRequired];
+            actualWeapon = new Weapon3D[GMController.instance.GetPlayerNum()];
+            playerHand = new GameObject[GMController.instance.GetPlayerNum()];
+            hammo = new Text[GMController.instance.GetPlayerNum()];
+            score = new Text[GMController.instance.GetPlayerNum()];
+            playerContinue = new Text[GMController.instance.GetPlayerNum()];
+            lifeBar = new SpriteRenderer[GMController.instance.GetPlayerNum()];
             //Get the components for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
@@ -54,7 +48,7 @@ public class UIManager3D : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (GMController.instance.currentMode != GAMEMODE.None)
+        if (GMController.instance.GetGameMode() != GAMEMODE.None)
         {
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {

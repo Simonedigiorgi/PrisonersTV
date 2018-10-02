@@ -20,8 +20,9 @@ public class GMController : MonoBehaviour
 
     // Needed for game mode setup
     [HideInInspector] public bool playerSetupDone = false;
-    public int playerRequired;
-    public GAMEMODE currentMode;
+
+    private static int playerRequired;      // number of players for the current game mode
+    private static GAMEMODE currentMode;    // current game mode, is Menu by default
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
@@ -36,7 +37,7 @@ public class GMController : MonoBehaviour
         //If instance already exists and it's not this:
         else if (instance != this)
             Destroy(gameObject);
-
+        Debug.Log(currentMode);
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.None)
         {
@@ -50,6 +51,26 @@ public class GMController : MonoBehaviour
     private void Start()
     { 
         m_MainCamera = Camera.main;        
+    }
+
+    public GAMEMODE GetGameMode()
+    {
+        return currentMode;
+    }
+    
+    public void SetGameMode(GAMEMODE mode)
+    {
+        currentMode = mode;
+    }
+
+    public int GetPlayerNum()
+    {
+        return playerRequired;
+    }
+
+    public void SetPlayersRequired(int num)
+    {
+        playerRequired = num;
     }
 
     public void SetActive(bool state)

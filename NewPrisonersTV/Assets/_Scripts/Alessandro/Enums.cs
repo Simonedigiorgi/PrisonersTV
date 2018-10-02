@@ -6,5 +6,5 @@ public enum BUTTONS { Player1_Button_A, Player1_Button_B, Player1_Button_X, Play
                       Player2_Button_A, Player2_Button_B, Player2_Button_X, Player2_Button_Y,
                       Player1_Start, Player2_Start};
 
-public enum GAMEMODE { None, SinglePlayer, LocalCoop, OnlineCoop};
+public enum GAMEMODE { None = 1, SinglePlayer, LocalCoop, OnlineCoop};
 
