@@ -986,8 +986,6 @@ MonoBehaviour:
   deathTimer: 0
   m_MainCamera: {fileID: 0}
   playerSetupDone: 0
-  playerRequired: 1
-  currentMode: 2
   playerPrefab:
   - {fileID: 1970258239572268, guid: e997c3e1d07b1bc4b8d08ec7b475ed0d, type: 2}
   - {fileID: 1241183022116536, guid: 3023445b8949ef34ba97bab4c9e9d35b, type: 2}

@@ -4,17 +4,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class GoToGame : MonoBehaviour, IPointerClickHandler
+public class GoToGame : MonoBehaviour
 {
     public int playerNumber;
     public GAMEMODE gameMode;
-
-    public void OnPointerClick(PointerEventData pointer)
+    
+    public void GoTo()
     {
         GMController.instance.SetGameMode(gameMode);
         GMController.instance.SetPlayersRequired(playerNumber);
 
         SceneManager.LoadScene("Level Test AE");
-        Debug.Log("click");
+    }
+
+    public void Options()
+    {
+        // add options functions
     }
 }
