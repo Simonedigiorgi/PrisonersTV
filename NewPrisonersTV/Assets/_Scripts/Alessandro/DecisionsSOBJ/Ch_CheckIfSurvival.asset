@@ -9,5 +9,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c6254ed16f38204e97d2aa5e4c42cb5, type: 3}
-  m_Name: Ch_CheckIfLocalCoop
+  m_Name: Ch_CheckIfSurvival
   m_EditorClassIdentifier: 

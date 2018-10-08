@@ -8,6 +8,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9456f36bfd9c4df4684043d1c7eb06c7, type: 3}
-  m_Name: LocalCoopLoop
+  m_Script: {fileID: 11500000, guid: b9beebf3947f07748a04d42b5c7959f8, type: 3}
+  m_Name: SurvivalStart
   m_EditorClassIdentifier: 

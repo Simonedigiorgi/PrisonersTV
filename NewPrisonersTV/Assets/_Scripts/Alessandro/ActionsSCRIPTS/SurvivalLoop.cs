@@ -5,8 +5,8 @@ using StateMachine;
 
 namespace GM.Actions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Actions/GM/LocalGameLoop")]
-    public class LocalCoopLoop : _Action
+    [CreateAssetMenu(menuName = "StateMachine/Actions/GM/SurvivalLoop")]
+    public class SurvivalLoop : _Action
     {
 
         public override void Execute(GMStateController controller)

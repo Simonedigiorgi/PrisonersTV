@@ -2,23 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class GoToGame : MonoBehaviour
 {
     public int playerNumber;
-    public GAMEMODE gameMode;
-    
-    public void GoTo()
-    {
-        GMController.instance.SetGameMode(gameMode);
-        GMController.instance.SetPlayersRequired(playerNumber);
+    public EventSystem eventSystem;
+    public GameObject buttons;
+    public GameObject modalityPanel;
+    public ChooseModality[] modality;
 
-        SceneManager.LoadScene("Level Test AE");
+    public void SetNumber()
+    {
+        modalityPanel.SetActive(true);
+        eventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(eventSystem));
+        for (int i = 0; i < modality.Length; i++)
+        {
+            modality[i].playerNumber = playerNumber;
+        }
+        buttons.SetActive(false);
     }
 
-    public void Options()
+    public void BackToMenu()
     {
-        // add options functions
+        modalityPanel.SetActive(false);
+        buttons.SetActive(true);
+        eventSystem.SetSelectedGameObject(buttons.transform.GetChild(0).gameObject, new BaseEventData(eventSystem));
     }
 }

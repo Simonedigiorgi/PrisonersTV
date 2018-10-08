@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
-  m_Name: LocalCoop
+  m_Name: Survival
   m_EditorClassIdentifier: 
   actions:
   - {fileID: 11400000, guid: 00e33c3412217fd4ba2ae809e1ce20c5, type: 2}

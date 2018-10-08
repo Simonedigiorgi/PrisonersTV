@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using StateMachine;
 using Character;
+using AI;
 
 public class GMController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public static GMController instance = null;
 
     // Variables used in order to trigger transitions when the game is not active
-    public bool isGameActive = false;
+    [HideInInspector] public bool isGameActive = false;
     public float deathTimer = 0f;
 
     [HideInInspector] public PlayerInfo[] playerInfo;   // info on players in the  current scene
@@ -27,6 +28,13 @@ public class GMController : MonoBehaviour
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
 
+    private int currentEnemyCount;
+    private _EnemyController[] enemies;
+
+    public int maxEnemy;
+    public int maxBats;
+    public int maxNinja;
+
     void Awake() 
     {
         //Singleton
@@ -40,10 +48,11 @@ public class GMController : MonoBehaviour
         Debug.Log(currentMode);
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.None)
-        {
+        {            
             playerInfo = new PlayerInfo[playerRequired];
             //spawn players and add them to the current playerInfo list
-            PlayerSetup();     
+            PlayerSetup();
+            StartEnemyCount();
         }
 
     }
@@ -56,8 +65,7 @@ public class GMController : MonoBehaviour
     public GAMEMODE GetGameMode()
     {
         return currentMode;
-    }
-    
+    }   
     public void SetGameMode(GAMEMODE mode)
     {
         currentMode = mode;
@@ -67,20 +75,40 @@ public class GMController : MonoBehaviour
     {
         return playerRequired;
     }
-
     public void SetPlayersRequired(int num)
     {
         playerRequired = num;
+    }
+
+    public int GetEnemyCount()
+    {
+        return currentEnemyCount;
+    }
+    public void AddEnemyCount()
+    {
+        currentEnemyCount++;
+    }
+    public void SubEnemyCount()
+    {
+        currentEnemyCount--;
     }
 
     public void SetActive(bool state)
     {
         isGameActive = state;
     }
-
     public bool GetGameStatus()
     {
         return isGameActive;
+    }
+
+    public void StartEnemyCount()
+    {
+        enemies = FindObjectsOfType<_EnemyController>();
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            AddEnemyCount();
+        }
     }
 
     public void PlayerSetup()
