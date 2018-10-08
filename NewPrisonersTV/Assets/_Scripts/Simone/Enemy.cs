@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int life;
+    public int life;//
 
     [Range(1, 3)]
-    [Tooltip("Enemy start level")]
-    public sbyte enemyLevel = 1;
+    [Tooltip("Enemy start level")]//
+    public sbyte enemyLevel = 1;//
 
-    [Tooltip("Value off point earned by the player")]
-    public int points;
+    [Tooltip("Value off point earned by the player")]//
+    public int points;//
 
-    [HideInInspector]
-    public bool isFlashing = false;
+    [HideInInspector]//
+    public bool isFlashing = false;//
 
-    [Tooltip("The speed of the flash when enemy is hitted")]
-    public float flashingSpeed;
+    [Tooltip("The speed of the flash when enemy is hitted")]//
+    public float flashingSpeed;//
 
-    private SpriteRenderer mySpriteRender;
+    private SpriteRenderer mySpriteRender;//
 
-    [Tooltip("Movement speed")]
-    public int speed;
+    [Tooltip("Movement speed")]//
+    public int speed;//
 
-    [HideInInspector]
-    public enum startDirectin { right, left }
+    [HideInInspector]//
+    public int direction;//
 
-    [HideInInspector ]
-    public int enemyMembership;
+    [HideInInspector ]//
+    public int enemyMembership;//
 
     GameManager gameManager;
 
-    bool startDieCoroutine = false;
+    bool startDieCoroutine = false;//
 
     protected GameObject player1, player2;
 

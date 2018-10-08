@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using AI;
 
 public class Bullet : MonoBehaviour {
 
@@ -37,9 +38,9 @@ public class Bullet : MonoBehaviour {
             Debug.Log("You hit the Enemy");
 
             //Substract enemy life
-            Enemy enemyHit = collision.gameObject.GetComponent<Enemy>();
+            _EnemyController enemyHit = collision.gameObject.GetComponent<_EnemyController>();
             enemyHit.enemyMembership = membership;
-            enemyHit.life -= damage;
+            enemyHit.m_EnemyStats.life -= damage;
 
             if (destroyOnEnemyCollision)
                 gameObject.SetActive(false);

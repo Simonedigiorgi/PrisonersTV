@@ -8,3 +8,5 @@ public enum BUTTONS { Player1_Button_A, Player1_Button_B, Player1_Button_X, Play
 
 public enum GAMEMODE { None = 1, SinglePlayer, LocalCoop, OnlineCoop};
 
+public enum STARTDIRECTION { Right, Left }
+

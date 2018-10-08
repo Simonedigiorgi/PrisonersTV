@@ -11,7 +11,6 @@ public class Weapon3D : MonoBehaviour {
 
     private BoxCollider2D coll;                                                                                 // Weapon collider
     private GameObject hand;                                                                                    // Get the Player hand                                                                                        
-    private GameObject spawnPoint;                                                                              // Where the bullet is istantiate
 
     public Animator anim;
 
@@ -35,26 +34,16 @@ public class Weapon3D : MonoBehaviour {
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     public int weaponMembership;                                                                                       // Grabbed on player1 or player2
-
+    Rigidbody2D rb;
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         source = GetComponent<AudioSource>();
         coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
     }
 
-    void Update () {
-
-        // Weapon position = player's hand position
-        if (isGrabbed)
-        {
-            transform.position = hand.transform.position;
-            transform.parent = hand.transform;
-            coll.enabled = false;
-        }
-    }
-
     // Shoot method
-    public void Shoot()
+    public void Shoot(GameObject spawnPoint)
     {
         if (bullets != 0)
         {
@@ -87,40 +76,56 @@ public class Weapon3D : MonoBehaviour {
     // Get the weapon and destroy the previously when get another
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_1").GetComponent<_CharacterController> ().isAlive)
+        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
         {
-            //Get the player hand
-            hand = GameObject.Find("Hand_Player1");
-            spawnPoint = GameObject.Find("Spawnpoint_1");
-            weaponMembership = 1;
-            DestroyWeapon();
-        }
-
-        if (collision.gameObject.CompareTag("Player_2") && !isGrabbed && GameObject.FindGameObjectWithTag("Player_2").GetComponent<_CharacterController>().isAlive)
-        {
-            //Get the player hand
-            hand = GameObject.Find("Hand_Player2");
-            spawnPoint = GameObject.Find("Spawnpoint_2");
-            weaponMembership = 2;
-            DestroyWeapon();
+            _CharacterController player = collision.gameObject.GetComponent<_CharacterController>();
+            if (player.isAlive)
+            {   //Get the player hand
+                //if(player.facingRight)
+                //{
+                    hand = player.playerRightArm.transform.GetChild(0).gameObject;
+                //}
+                //else
+                //{
+                //    hand = player.playerLeftArm.transform.GetChild(0).gameObject;
+                //}
+                weaponMembership = player.playerNumber;
+                DestroyWeapon(player);
+            }
         }
     }
 
-    public void DestroyWeapon()
+    public void DestroyWeapon(_CharacterController player)
     {
         // Grab sound
         source.PlayOneShot(grabSound, grabVolume);
 
         // Destroy the first && get the second
+        if(player.playerRightArm.transform.GetChild(0).childCount > 0)
+        {
+            GameObject first = player.playerRightArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+            Destroy(first.gameObject);
+            player.currentWeapon = null;
+        }
+        //if (player.playerLeftArm.transform.GetChild(0).childCount > 0)
+        //{
+        //    GameObject first = player.playerLeftArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+        //    Destroy(first.gameObject);
+        //    player.currentWeapon = null;
+        //}
         if (hand.transform.childCount <= 1)
         {
-            isGrabbed = true;
-
-            if (hand.transform.childCount > 0)
-            {
-                GameObject first = hand.transform.GetChild(0).gameObject;
-                Destroy(first.gameObject);
-            }
+            GrabWeapon(player);
         }
+    }
+
+    void GrabWeapon(_CharacterController player)
+    {
+        isGrabbed = true;
+        rb.isKinematic = true;
+        transform.parent = hand.transform;
+        transform.position = hand.transform.position;
+        coll.enabled = false;
+        player.currentWeapon = GetComponent<Weapon3D>();
     }
 }

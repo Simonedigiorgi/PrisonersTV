@@ -6,15 +6,13 @@ using Sirenix.OdinInspector;
 
 public class Ninja : Enemy
 {
-    [Tooltip("Time in second needed between one shuriken and other shuriken")] public sbyte ShurikenCooldown;
+    [Tooltip("Time in second needed between one shuriken and other shuriken")] public sbyte ShurikenCooldown;//
+    
+    [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;///
 
-    private int direction;
+    [Tooltip("View distance")] public sbyte attackView;//
 
-    [Tooltip("Initial movement directions")] public startDirectin myStartDirection;
-
-    [Tooltip("View distance")] public sbyte attackView;
-
-    [Tooltip("Ninja view obstacle")] public LayerMask obstacleMask;
+    [Tooltip("Ninja view obstacle")] public LayerMask obstacleMask;//
 
     //[BoxGroup("DONT CHANGE")] public LayerMask groundMask;
 
@@ -39,7 +37,7 @@ public class Ninja : Enemy
         rb = GetComponent<Rigidbody2D>();
 
         //assign start directions
-		if (myStartDirection == startDirectin.right)
+		if (myStartDirection == STARTDIRECTION.Right)
         {
             direction = 1;
             isFacinRight = true;

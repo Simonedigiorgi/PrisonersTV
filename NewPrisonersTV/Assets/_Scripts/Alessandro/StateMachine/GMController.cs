@@ -15,7 +15,7 @@ public class GMController : MonoBehaviour
     public bool isGameActive = false;
     public float deathTimer = 0f;
 
-    [HideInInspector] public PlayerInfo[] playerInfo;
+    [HideInInspector] public PlayerInfo[] playerInfo;   // info on players in the  current scene
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup
@@ -88,7 +88,7 @@ public class GMController : MonoBehaviour
         for (int i = 0; i < playerRequired; i++)
         {
             GameObject player = Instantiate(playerPrefab[i], playerSpawnPoint[i].position, playerSpawnPoint[i].rotation);
-
+            player.SetActive(true);
             playerInfo[i] = new PlayerInfo(player, player.GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
 
             playerInfo[i].playerController.playerNumber = i;

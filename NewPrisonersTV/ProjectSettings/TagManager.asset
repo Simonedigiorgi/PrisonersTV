@@ -4,13 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Player_1
-  - Player_2
   - Wall
   - Bullet
   - Weapon
   - Enemy
   - EnergyDispenser
+  - Player_1
   layers:
   - Default
   - TransparentFX

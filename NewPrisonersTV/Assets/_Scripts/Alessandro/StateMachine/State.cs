@@ -29,11 +29,11 @@ namespace StateMachine
         //    CheckTransitions(controller);
         //}
 
-        //public void UpdateState(EnemiesAIStateController controller)
-        //{
-        //    DoActions(controller);
-        //    CheckTransitions(controller);
-        //}
+        public void UpdateState(EnemiesAIStateController controller)
+        {
+            DoActions(controller);
+            CheckTransitions(controller);
+        }
 
         public void UpdateState(GMStateController controller)
         {
@@ -61,13 +61,13 @@ namespace StateMachine
         //    }
         //}
 
-        //protected virtual void DoActions(EnemiesAIStateController controller)
-        //{
-        //    for (int i = 0; i < actions.Length; i++)
-        //    {
-        //        actions[i].Execute(controller);
-        //    }
-        //}
+        protected virtual void DoActions(EnemiesAIStateController controller)
+        {
+            for (int i = 0; i < actions.Length; i++)
+            {
+                actions[i].Execute(controller);
+            }
+        }
 
         protected virtual void DoActions(GMStateController controller)
         {
@@ -125,26 +125,26 @@ namespace StateMachine
         //    }
         //}
 
-        //private void CheckTransitions(EnemiesAIStateController controller)
-        //{
-        //    for (int i = 0; i < transitions.Length; i++)
-        //    {
-        //        bool decisionSucceeded = true;
-        //        for (int j = 0; j < transitions[i].decision.Length; j++)
-        //        {
-        //            decisionSucceeded = decisionSucceeded && transitions[i].decision[j].Decide(controller);
-        //        }
+        private void CheckTransitions(EnemiesAIStateController controller)
+        {
+            for (int i = 0; i < transitions.Length; i++)
+            {
+                bool decisionSucceeded = true;
+                for (int j = 0; j < transitions[i].decision.Length; j++)
+                {
+                    decisionSucceeded = decisionSucceeded && transitions[i].decision[j].Decide(controller);
+                }
 
-        //        if (decisionSucceeded)
-        //        {
-        //            controller.TransitionToState(transitions[i].trueState);
-        //        }
-        //        else
-        //        {
-        //            controller.TransitionToState(transitions[i].falseState);
-        //        }
-        //    }
-        //}
+                if (decisionSucceeded)
+                {
+                    controller.TransitionToState(transitions[i].trueState);
+                }
+                else
+                {
+                    controller.TransitionToState(transitions[i].falseState);
+                }
+            }
+        }
 
         private void CheckTransitions(GMStateController controller)
         {
@@ -186,13 +186,13 @@ namespace StateMachine
         //    }
         //}
 
-        //public void OnExitState(EnemiesAIStateController controller)
-        //{
-        //    for (int i = 0; i < exitActions.Length; i++)
-        //    {
-        //        exitActions[i].Execute(controller);
-        //    }
-        //}
+        public void OnExitState(EnemiesAIStateController controller)
+        {
+            for (int i = 0; i < exitActions.Length; i++)
+            {
+                exitActions[i].Execute(controller);
+            }
+        }
 
         public void OnExitState(GMStateController controller)
         {
@@ -221,13 +221,13 @@ namespace StateMachine
         //    }
         //}
 
-        //public void OnEnterState(EnemiesAIStateController controller)
-        //{
-        //    for (int i = 0; i < enterActions.Length; i++)
-        //    {
-        //        enterActions[i].Execute(controller);
-        //    }
-        //}
+        public void OnEnterState(EnemiesAIStateController controller)
+        {
+            for (int i = 0; i < enterActions.Length; i++)
+            {
+                enterActions[i].Execute(controller);
+            }
+        }
 
         public void OnEnterState(GMStateController controller)
         {

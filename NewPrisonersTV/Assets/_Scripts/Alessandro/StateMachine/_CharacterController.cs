@@ -12,8 +12,8 @@ namespace Character
 
         [BoxGroup("Animator")] public Animator playerAnim;                                     // Get the Player Animators
 
-        [BoxGroup("Components")] public GameObject playerArm;                                       // Player's arm
-        [BoxGroup("Components")] public Rigidbody2D rb;                                            // Rigidbody component
+        [BoxGroup("Components")] public GameObject playerRightArm;                                       // Player's arm
+        [BoxGroup("Components")] public GameObject playerLeftArm;                                       // Player's arm
         [BoxGroup("Components")] public Weapon3D currentWeapon;
         [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;
@@ -22,6 +22,7 @@ namespace Character
 
         [BoxGroup("Rules")] public float respawnTime;
         
+        [HideInInspector] public Rigidbody2D rb;                                            // Rigidbody component
 
         [HideInInspector] public bool facingRight;                                                      // Player flip facing
         [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
@@ -31,7 +32,7 @@ namespace Character
         [HideInInspector] public bool startDeathCR;
 
         [HideInInspector] public int currentLife;
-        [HideInInspector] public int playerNumber;
+        [HideInInspector] public int playerNumber;                                                      // player identification number and index in the playerInfo list
         [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
 
         void Awake()
@@ -74,9 +75,9 @@ namespace Character
            // transform.position = new Vector2(0, 0);
 
             // Destroy the weapon
-            if (playerArm.transform.GetChild(0).childCount > 0)
+            if (playerRightArm.transform.GetChild(0).childCount > 0)
             {
-                GameObject first = playerArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+                GameObject first = playerRightArm.transform.GetChild(0).transform.GetChild(0).gameObject;
                 Destroy(first.gameObject);
             }
 
@@ -84,11 +85,8 @@ namespace Character
             canRespawn = true;
         }
 
-        public void armRotation(HORIZONTAL h, VERTICAL v)
+        public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)
         {
-            // Get the arm component on weapon
-            Transform armObject = playerArm.transform.GetChild(0).GetChild(0).GetChild(2);
-
             Vector3 position = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);           
 
             float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
@@ -96,7 +94,13 @@ namespace Character
             if (angle == 0 && facingRight)
                 angle = 180;
 
-            armObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            // Get the arm component on weapon
+            Transform armObject;
+            if (arm.transform.GetChild(0).GetChild(0).GetChild(2) != null)
+            {
+                armObject = arm.transform.GetChild(0).GetChild(0).GetChild(2);
+                armObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            }
         }
 
         // Flip the player face method
@@ -124,11 +128,78 @@ namespace Character
             Vector3 joyPosition = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);
 
             float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
-
+            playerAnim.SetFloat("Arm", angle);
             if (angle == 0 && facingRight)
                 angle = 180;
+            playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        }
 
-            playerArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        public void SwapArm(bool direction)
+        {
+            if(playerRightArm.transform.GetChild(0).childCount == 1 && direction == !facingRight)
+            {
+                playerRightArm.transform.GetChild(0).GetChild(0).transform.SetParent(playerLeftArm.transform.GetChild(0).transform);
+                playerLeftArm.transform.GetChild(0).GetChild(0).transform.position = playerLeftArm.transform.GetChild(0).transform.position;
+            }
+            else if(playerLeftArm.transform.GetChild(0).childCount == 1 && direction == facingRight)
+            {
+                playerLeftArm.transform.GetChild(0).GetChild(0).transform.SetParent(playerRightArm.transform.GetChild(0).transform);
+                playerRightArm.transform.GetChild(0).GetChild(0).transform.position = playerRightArm.transform.GetChild(0).transform.position;
+            }
+        }
+
+        public void WeaponControl(GameObject arm)
+        {
+            // Set arm layer active
+            playerAnim.SetLayerWeight(1, 1);
+            // Enable The rotation of joystick
+            if (m_ControlConfig.moveArmWithRightStick)
+            {
+                JoyRotation(m_ControlConfig.RightHorizontal, m_ControlConfig.RightVertical);
+            }
+            else if (!m_ControlConfig.moveArmWithRightStick)
+            {
+                JoyRotation(m_ControlConfig.LeftHorizontal, m_ControlConfig.LeftVertical);
+            }
+
+            // Shoot condition
+            if (currentWeapon.autoFire == false)
+            {
+                if (Input.GetButtonDown(m_ControlConfig.shootInput.ToString()) && currentWeapon.isGrabbed)
+                {
+                    currentWeapon.Shoot(arm.transform.GetChild(1).gameObject);
+
+                    CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+                    //shake.ShakeCamera(1.2f, .2f);
+                }
+            }
+            if (currentWeapon.autoFire)
+            {
+                if (Input.GetButton(m_ControlConfig.shootInput.ToString()) && currentWeapon.isGrabbed)
+                {
+                    currentWeapon.Shoot(arm.transform.GetChild(1).gameObject);
+
+                    CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+                    shake.ShakeCamera(1.2f, .2f);
+                }
+            }
+
+            // Flip the weapon when equipped
+            if (facingRight && currentWeapon.isGrabbed)
+                currentWeapon.transform.localEulerAngles = new Vector3(180, 0, 0);
+            else if (facingRight == false && currentWeapon.isGrabbed)
+                currentWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
+
+            // Rotation of Muzz effect
+            if (m_ControlConfig.moveArmWithRightStick)
+            {
+                armRotation(m_ControlConfig.RightHorizontal, m_ControlConfig.RightVertical, arm);
+            }
+            else if (!m_ControlConfig.moveArmWithRightStick)
+            {
+                armRotation(m_ControlConfig.LeftHorizontal, m_ControlConfig.LeftVertical, arm);
+            }
+            return;
         }
 
         #endregion

@@ -19,7 +19,7 @@ namespace Character.Actions
 
             // Move inputs
             float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
-
+            Debug.Log(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
             // Movements
             if (moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2
             {

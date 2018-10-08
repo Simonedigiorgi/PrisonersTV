@@ -36,8 +36,8 @@ public class UIManager3D : MonoBehaviour {
             //Get the components for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
-                playerHand[i] = GMController.instance.playerInfo[i].playerController.playerArm.transform.GetChild(0).gameObject;
-                lifeBar[i] = GMController.instance.playerInfo[i].player.transform.GetChild(4).GetComponent<SpriteRenderer>();
+                playerHand[i] = GMController.instance.playerInfo[i].playerController.playerRightArm.transform.GetChild(0).gameObject;
+                lifeBar[i] = GMController.instance.playerInfo[i].player.transform.GetChild(3).GetComponent<SpriteRenderer>();
                 playerContinue[i] = playerUI[i].transform.GetChild(0).GetComponent<Text>();
                 hammo[i] = playerUI[i].transform.GetChild(1).GetComponent<Text>();
                 score[i] = playerUI[i].transform.GetChild(2).GetComponent<Text>();
@@ -113,7 +113,7 @@ public class UIManager3D : MonoBehaviour {
 
                 #region Score
 
-                score[i].text = "P"+i+ " Score: " + GMController.instance.playerInfo[i].score.ToString();
+                score[i].text = "P"+ (i+1) + " Score: " + GMController.instance.playerInfo[i].score.ToString();
       
                 #endregion
             }

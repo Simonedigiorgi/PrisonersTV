@@ -12,7 +12,7 @@ namespace StateMachine
 
         //public virtual void Execute(NpcStateController controller) { }
 
-        //public virtual void Execute(EnemiesAIStateController controller) { }
+        public virtual void Execute(EnemiesAIStateController controller) { }
 
         public virtual void Execute(GMStateController controller) { }
     }

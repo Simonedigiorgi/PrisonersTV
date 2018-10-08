@@ -5,18 +5,16 @@ using DG.Tweening;
 
 public class Bat : Enemy
 {
-    private int direction;
+    [Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;//
 
-    [Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
+    [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;//
 
-    [Tooltip("Initial movement directions")] public startDirectin myStartDirection;
+    [Tooltip("View distance")] public sbyte attackView;//
 
-    [Tooltip("View distance")] public sbyte attackView;
-
-    [Tooltip("Bat view obstacle")]public LayerMask obstacleMask;
+    [Tooltip("Bat view obstacle")]public LayerMask obstacleMask;//
 
     [Range(0.5f, 3)]
-    [Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
+    [Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;//
 
     bool player1Seen = false;
     bool player2Seen = false;
@@ -31,7 +29,7 @@ public class Bat : Enemy
         base.Start();
 
         //assign start directions
-		if (myStartDirection == startDirectin.right)
+		if (myStartDirection == STARTDIRECTION.Right)
         {
             direction = 1;
         }
