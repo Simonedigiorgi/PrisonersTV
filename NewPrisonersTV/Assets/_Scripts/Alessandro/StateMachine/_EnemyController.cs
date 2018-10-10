@@ -6,9 +6,12 @@ using DG.Tweening;
 
 namespace AI
 {
-    public class _EnemyController : MonoBehaviour
+    public abstract class _EnemyController : MonoBehaviour
     {
         public EnemyStats m_EnemyStats;
+
+        [HideInInspector] public ENEMYTYPE enemyType;
+        [HideInInspector] public int currentLife;
 
         [HideInInspector] public Rigidbody2D rb;
         [HideInInspector] public SpriteRenderer mySpriteRender;
@@ -18,17 +21,15 @@ namespace AI
         [HideInInspector] public int enemyMembership;
         [HideInInspector] public bool isFlashing = false;
 
-        [HideInInspector] public Vector3 startSwoopPosition;
-        [HideInInspector] public Vector3 endSwoopPosition;
-
         [HideInInspector] public bool startDieCoroutine = false;
         [HideInInspector] public bool playerSeen = false;
-
+        //Bats only
+        [HideInInspector] public Vector3 startSwoopPosition;
+        [HideInInspector] public Vector3 endSwoopPosition;
         [HideInInspector] public bool swoopCoroutineInExecution = false;
         [HideInInspector] public bool startSwoopCR = false;
-        [HideInInspector] public int currentLife;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             //get the sprite rendere
             thisTransform = this.transform;
@@ -46,16 +47,11 @@ namespace AI
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if(startDieCoroutine)
             {
                 StartCoroutine(Die());
-            }
-
-            if (startSwoopCR)
-            {
-                StartCoroutine(Swoop());
             }
         }
 
@@ -81,20 +77,6 @@ namespace AI
             }
         }
 
-        public IEnumerator Swoop()
-        {
-            startSwoopCR = false;
-            swoopCoroutineInExecution = true;
-            transform.DOMove(endSwoopPosition, m_EnemyStats.swoopMoreSlowly, false);
-            yield return new WaitUntil(() => transform.position == endSwoopPosition);
-
-            transform.DOMove(startSwoopPosition, m_EnemyStats.swoopMoreSlowly, false);
-            yield return new WaitUntil(() => transform.position == startSwoopPosition);
-
-            playerSeen = false;
-            swoopCoroutineInExecution = false;
-        }
-
         //Flash coroutine called on hit with bullet
         public IEnumerator Flash()
         {
@@ -115,14 +97,8 @@ namespace AI
         }
 
         // this coroutine was created to give the time at membership to change and for make shure the score is assigned right
-        public IEnumerator Die()
-        {
-            yield return new WaitForEndOfFrame();
-
-            GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points;
-            //GMController.instance.SubEnemyCount();
-            Destroy(gameObject);
-        }
+        public abstract IEnumerator Die();
+      
     }
 }
 

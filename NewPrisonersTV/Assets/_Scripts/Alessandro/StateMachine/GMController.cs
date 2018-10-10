@@ -15,7 +15,8 @@ public class GMController : MonoBehaviour
 
     // Variables used in order to trigger transitions when the game is not active
     [HideInInspector] public bool isGameActive = false;
-    [HideInInspector] public bool gameStart = false; // start players and everithing else in the level
+    [HideInInspector] public bool canStartGameCD = false;       // start game countdown coroutine
+     public bool gameStart = false;            // start players and everithing else in the level
     public float startGameTimer;
     public float deathTimer = 0f;
 
@@ -26,6 +27,8 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool playerSetupDone = false;
 
     [HideInInspector] public float currentGameTime;
+
+    [HideInInspector] public int maxEnemy;
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
@@ -43,13 +46,15 @@ public class GMController : MonoBehaviour
     [BoxGroup("List of all levels")] public List<string> mediumScenes;
     [BoxGroup("List of all levels")] public List<string> hardScenes;
 
-    [BoxGroup("Enemy Settings")] public int maxEnemy;
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
 
-
     private int currentEnemyCount;
+    private int currentBats;
+    private int currentNinja;
+
     private _EnemyController[] enemies;
+    private EnemySpawn[] enemySpawns;
 
     private static int playerRequired;      // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;    // current game mode, is Menu by default
@@ -77,7 +82,7 @@ public class GMController : MonoBehaviour
             Destroy(gameObject);
 
         totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
-
+        maxEnemy = maxBats + maxNinja;
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
@@ -86,9 +91,10 @@ public class GMController : MonoBehaviour
             //spawn players and add them to the current playerInfo list
             PlayerSetup();
             StartEnemyCount();
+            CollectEnemySpawns();
         }
 
-        // fill the scene pool
+        // refill the scene pool
         if(currentMode == GAMEMODE.Menu)
         {
             currentEasyScenes = new List<string>(); 
@@ -113,6 +119,14 @@ public class GMController : MonoBehaviour
     private void Start()
     { 
         m_MainCamera = Camera.main;        
+    }
+
+    private void Update()
+    {
+        if(canStartGameCD)
+        {
+            StartCoroutine(StartGameCD());
+        }
     }
 
     public GAMEMODE GetGameMode()
@@ -155,6 +169,36 @@ public class GMController : MonoBehaviour
         currentEnemyCount--;
     }
 
+    public int GetBatsCount()
+    {
+        return currentBats;
+    }
+    public void AddBatsCount()
+    {
+        currentBats++;
+        AddEnemyCount();
+    }
+    public void SubBatsCount()
+    {
+        currentBats--;
+        SubEnemyCount();
+    }
+
+    public int GetNinjaCount()
+    {
+        return currentNinja;
+    }
+    public void AddNinjaCount()
+    {
+        currentNinja++;
+        AddEnemyCount();
+    }
+    public void SubNinjaCount()
+    {
+        currentNinja++;
+        SubEnemyCount();
+    }
+
     public void SetActive(bool state)
     {
         isGameActive = state;
@@ -173,16 +217,27 @@ public class GMController : MonoBehaviour
         keyInGame = condition;
     }
 
-    public void StartEnemyCount()
+    private void StartEnemyCount()
     {
         enemies = FindObjectsOfType<_EnemyController>();
         for (int i = 0; i < enemies.Length; i++)
         {
-            AddEnemyCount();
+            if(enemies[i].enemyType == ENEMYTYPE.Bats)
+            {
+                AddBatsCount();
+            }
+            else if(enemies[i].enemyType == ENEMYTYPE.Ninja)
+            {
+                AddNinjaCount();
+            }
         }
     }
+    public void CollectEnemySpawns()
+    {
+        enemySpawns = FindObjectsOfType<EnemySpawn>();
+    }
 
-    public void PlayerSetup()
+    private void PlayerSetup()
     {
         for (int i = 0; i < playerRequired; i++)
         {
@@ -193,6 +248,15 @@ public class GMController : MonoBehaviour
             playerInfo[i].playerController.playerNumber = i;
         }
         playerSetupDone = true;
+    }
+
+    public IEnumerator StartGameCD()
+    {
+        // game start countdown
+        canStartGameCD = false; 
+        yield return new WaitForSeconds(startGameTimer);
+        gameStart = true;
+        yield return null;
     }
 
     public void NextLevel()

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(menuName = "Prototype/EnemyStats")]
 public class EnemyStats : ScriptableObject
@@ -16,10 +17,10 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;
     //bat stats
     [Range(0.5f, 3)]
-    [Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
-    [Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
+    [BoxGroup("Bat Only")][Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
+    [BoxGroup("Bat Only")][Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
     //ninja stats
-    [Tooltip("Time in second needed between one shuriken and other shuriken")] public sbyte ShurikenCooldown;
+    [BoxGroup("Ninja Only")][Tooltip("Time in second needed between one shuriken and other shuriken")] public sbyte ShurikenCooldown;
 
 
 }

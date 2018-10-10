@@ -17,7 +17,8 @@ namespace GM.Actions
         private void SetRules(GMStateController controller)
         {
             GMController.instance.currentGameTime = GMController.instance.gameTimer;
-           
+
+            GMController.instance.canStartGameCD = true;
         }
     }
 }

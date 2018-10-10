@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212083966763908662}
   - component: {fileID: 95049436679140902}
   - component: {fileID: 58125315409644648}
-  - component: {fileID: 114523019992164544}
   - component: {fileID: 114641554722469180}
   - component: {fileID: 50687380095917732}
+  - component: {fileID: 114797467832891328}
   m_Layer: 11
   m_Name: Bat
   m_TagString: Enemy
@@ -97,31 +97,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114523019992164544
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1505320542747672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f61f63f0b90f8f743a84d41127a3b462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EnemyStats: {fileID: 11400000, guid: 6a38d5ace53a7984cbf895ef83147caa, type: 2}
-  rb: {fileID: 0}
-  mySpriteRender: {fileID: 212083966763908662}
-  thisTransform: {fileID: 0}
-  direction: 0
-  enemyMembership: 0
-  isFlashing: 0
-  startSwoopPosition: {x: 0, y: 0, z: 0}
-  endSwoopPosition: {x: 0, y: 0, z: 0}
-  startDieCoroutine: 0
-  playerSeen: 0
-  swoopCoroutineInExecution: 0
-  startSwoopCR: 0
-  currentLife: 0
 --- !u!114 &114641554722469180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +119,32 @@ MonoBehaviour:
   defeatedState: {fileID: 0}
   m_EnemyController: {fileID: 0}
   navMeshAgent: {fileID: 0}
+--- !u!114 &114797467832891328
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505320542747672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08faba69bc9bdf64598cbfdc8e538b4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EnemyStats: {fileID: 11400000, guid: 6a38d5ace53a7984cbf895ef83147caa, type: 2}
+  enemyType: 2
+  rb: {fileID: 0}
+  mySpriteRender: {fileID: 0}
+  thisTransform: {fileID: 0}
+  direction: 0
+  enemyMembership: 0
+  isFlashing: 0
+  startSwoopPosition: {x: 0, y: 0, z: 0}
+  endSwoopPosition: {x: 0, y: 0, z: 0}
+  startDieCoroutine: 0
+  playerSeen: 0
+  swoopCoroutineInExecution: 0
+  startSwoopCR: 0
+  currentLife: 0
 --- !u!212 &212083966763908662
 SpriteRenderer:
   m_ObjectHideFlags: 1
