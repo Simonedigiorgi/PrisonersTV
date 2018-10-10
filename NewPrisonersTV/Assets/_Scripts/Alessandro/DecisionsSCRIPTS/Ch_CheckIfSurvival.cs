@@ -8,10 +8,10 @@ namespace Character.Decisions
     [CreateAssetMenu(menuName = "StateMachine/Decisions/GM/CheckIfSurvival")]
     public class Ch_CheckIfSurvival: Decision
     {
-        public override bool Decide(CharacterStateController controller)
+        public override bool Decide(GMStateController controller)
         {
-            if (GMController.instance.GetGameMode() == GAMEMODE.Survival && GMController.instance.GetGameMode() != GAMEMODE.None)
-                return true;
+            if (GMController.instance.GetGameMode() == GAMEMODE.Survival)            
+                return true;           
             else
                 return false;
         }

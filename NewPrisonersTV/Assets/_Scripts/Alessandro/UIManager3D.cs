@@ -25,7 +25,7 @@ public class UIManager3D : MonoBehaviour {
     {
         mainCamera = Camera.main;
 
-        if (GMController.instance.GetGameMode() != GAMEMODE.None)
+        if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
         {
             actualWeapon = new Weapon3D[GMController.instance.GetPlayerNum()];
             playerHand = new GameObject[GMController.instance.GetPlayerNum()];
@@ -48,7 +48,7 @@ public class UIManager3D : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (GMController.instance.GetGameMode() != GAMEMODE.None)
+        if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
         {
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
@@ -74,7 +74,7 @@ public class UIManager3D : MonoBehaviour {
                 }
                 else if(playerHand[i].transform.childCount > 0)
                 {
-                    hammo[i].gameObject.SetActive(true);
+                    hammo[i].gameObject.SetActive(true);              
                     hammo[i].text = GMController.instance.playerInfo[i].playerController.currentWeapon.bullets.ToString();
                 }
                 //set hammo text position

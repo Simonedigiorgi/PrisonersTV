@@ -35,6 +35,8 @@ namespace Character
         [HideInInspector] public int playerNumber;                                                      // player identification number and index in the playerInfo list
         [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
 
+        [HideInInspector] public bool canHeal = true;
+        public bool hasKey = false;
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -45,8 +47,44 @@ namespace Character
         public void OnTriggerEnter2D(Collider2D collision)
         {
             // When player trigger an enemy
-            if (collision.gameObject.CompareTag("Enemy"))
-                currentLife--;
+            if (collision.CompareTag("Enemy"))
+                currentLife--;           
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            if (isAlive)
+            {
+                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                {
+                    collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
+                    Debug.Log("healing");
+                }
+                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                {
+                    Debug.Log("weapon");
+                    Weapon3D weapon = collision.GetComponent<Weapon3D>();
+                   
+                    weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
+                
+                    weapon.weaponMembership = playerNumber;
+                    weapon.DestroyWeapon(this);
+                }
+                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                {
+                    Weapon3D key = collision.GetComponent<Weapon3D>();
+                    key.hand = playerRightArm.transform.GetChild(0).gameObject;
+
+                    key.weaponMembership = playerNumber;
+                    key.DestroyWeapon(this);
+                    hasKey = true;
+                }
+                if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interact.ToString()) && hasKey)
+                {
+                    Debug.Log("door");
+                    GMController.instance.NextLevel();
+                }
+            }
         }
 
         #region Methods
@@ -201,7 +239,7 @@ namespace Character
             }
             return;
         }
-
+     
         #endregion
 
         private void Update()

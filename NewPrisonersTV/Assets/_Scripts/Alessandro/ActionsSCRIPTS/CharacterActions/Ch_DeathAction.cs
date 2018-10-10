@@ -16,9 +16,7 @@ namespace Character.Actions
         public void Death(CharacterStateController controller)
         {
            //Call the Respawn method
-           controller.m_CharacterController.PlayerRespawn(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].playerSpawnPoint);
-            
-            
+           controller.m_CharacterController.PlayerRespawn(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].playerSpawnPoint);                       
         }
 
     }

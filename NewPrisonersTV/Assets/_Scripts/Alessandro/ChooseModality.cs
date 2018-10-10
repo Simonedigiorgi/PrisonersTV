@@ -13,9 +13,11 @@ public class ChooseModality : MonoBehaviour
     {
         GMController.instance.SetGameMode(gameMode);
         GMController.instance.SetPlayersRequired(playerNumber);
-
-        SceneManager.LoadScene("Level Test AE");
+        //SceneManager.LoadScene("Level Test AE");
+        GMController.instance.NextLevel();
     }
+
+   
 
     public void Options()
     {

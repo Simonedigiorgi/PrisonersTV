@@ -17,5 +17,6 @@ MonoBehaviour:
   RightVertical: 3
   shootInput: 6
   jumpInput: 4
+  interact: 5
   respawnInput: 9
   moveArmWithRightStick: 0

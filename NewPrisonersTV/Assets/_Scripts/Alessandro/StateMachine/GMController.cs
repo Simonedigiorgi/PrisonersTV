@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using StateMachine;
 using Character;
 using AI;
+using Sirenix.OdinInspector;
 
 public class GMController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GMController : MonoBehaviour
 
     // Variables used in order to trigger transitions when the game is not active
     [HideInInspector] public bool isGameActive = false;
+    [HideInInspector] public bool gameStart = false; // start players and everithing else in the level
+    public float startGameTimer;
     public float deathTimer = 0f;
 
     [HideInInspector] public PlayerInfo[] playerInfo;   // info on players in the  current scene
@@ -22,18 +25,45 @@ public class GMController : MonoBehaviour
     // Needed for game mode setup
     [HideInInspector] public bool playerSetupDone = false;
 
-    private static int playerRequired;      // number of players for the current game mode
-    private static GAMEMODE currentMode;    // current game mode, is Menu by default
+    [HideInInspector] public float currentGameTime;
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
 
+    [BoxGroup("Story Settings")] public float gameTimer;
+    [BoxGroup("Story Settings")] public float keySpawnTime;
+    [BoxGroup("Story Settings")] public GameObject key;
+    [BoxGroup("Story Settings")] public Transform keySpawn;
+
+    [BoxGroup("Max levels per difficulty")] public int maxEasyScenes;
+    [BoxGroup("Max levels per difficulty")] public int maxMediumScenes;
+    [BoxGroup("Max levels per difficulty")] public int maxHardScenes;
+    
+    [BoxGroup("List of all levels")] public List<string> easyScenes;
+    [BoxGroup("List of all levels")] public List<string> mediumScenes;
+    [BoxGroup("List of all levels")] public List<string> hardScenes;
+
+    [BoxGroup("Enemy Settings")] public int maxEnemy;
+    [BoxGroup("Enemy Settings")] public int maxBats;
+    [BoxGroup("Enemy Settings")] public int maxNinja;
+
+
     private int currentEnemyCount;
     private _EnemyController[] enemies;
 
-    public int maxEnemy;
-    public int maxBats;
-    public int maxNinja;
+    private static int playerRequired;      // number of players for the current game mode
+    private static GAMEMODE currentMode = GAMEMODE.Menu;    // current game mode, is Menu by default
+    private static int levelCount = 0;
+
+    // copy of the lists of scenes used for the pool
+    private static List<string> currentEasyScenes;
+    private static List<string> currentMediumScenes;
+    private static List<string> currentHardScenes;
+
+    private int totalScenes; // sum of all scenes needed for the game mode
+
+    private bool keyInGame = false; // true when the key can be spawned
+    public bool canSpawnKey = true; // true if the key is not in game
 
     void Awake() 
     {
@@ -45,15 +75,38 @@ public class GMController : MonoBehaviour
         //If instance already exists and it's not this:
         else if (instance != this)
             Destroy(gameObject);
-        Debug.Log(currentMode);
+
+        totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
+
+
         //Get all the players required for the current game mode
-        if (currentMode != GAMEMODE.None)
+        if (currentMode != GAMEMODE.Menu)
         {            
             playerInfo = new PlayerInfo[playerRequired];
             //spawn players and add them to the current playerInfo list
             PlayerSetup();
             StartEnemyCount();
         }
+
+        // fill the scene pool
+        if(currentMode == GAMEMODE.Menu)
+        {
+            currentEasyScenes = new List<string>(); 
+            for (int i = 0; i < easyScenes.Count; i++)
+            {
+                currentEasyScenes.Add(easyScenes[i]);
+            }
+            currentMediumScenes = new List<string>();
+            for (int i = 0; i < mediumScenes.Count; i++)
+            {
+                currentMediumScenes.Add(mediumScenes[i]);
+            }
+            currentHardScenes = new List<string>();
+            for (int i = 0; i < hardScenes.Count; i++)
+            {
+                currentHardScenes.Add(hardScenes[i]);
+            }
+        }     
 
     }
 
@@ -80,6 +133,15 @@ public class GMController : MonoBehaviour
         playerRequired = num;
     }
 
+    public int GetLevelCount()
+    {
+        return levelCount;
+    }
+    public void AddLevelCount()
+    {
+        levelCount++;
+    }
+
     public int GetEnemyCount()
     {
         return currentEnemyCount;
@@ -100,6 +162,15 @@ public class GMController : MonoBehaviour
     public bool GetGameStatus()
     {
         return isGameActive;
+    }
+
+    public bool GetKeyInGame()
+    {
+        return keyInGame;
+    }
+    public void SetKeyInGame(bool condition)
+    {
+        keyInGame = condition;
     }
 
     public void StartEnemyCount()
@@ -124,27 +195,57 @@ public class GMController : MonoBehaviour
         playerSetupDone = true;
     }
 
+    public void NextLevel()
+    {
+        AddLevelCount();
+        // easy difficulty
+        if (GetLevelCount() <= maxEasyScenes)
+        {
+            int i = Random.Range(0, currentEasyScenes.Count);
+            string level = currentEasyScenes[i];
+            currentEasyScenes.RemoveAt(i);
+            SceneManager.LoadScene(level);
+        }
+        // medium difficulty
+        else if (GetLevelCount() > maxEasyScenes && GetLevelCount() <= (totalScenes - maxHardScenes))
+        {
+            int i = Random.Range(0, currentMediumScenes.Count);
+            string level = currentMediumScenes[i];
+            currentMediumScenes.RemoveAt(i);
+            SceneManager.LoadScene(level);
+        }
+        // hard difficulty
+        else if (GetLevelCount() > (totalScenes - maxHardScenes) && GetLevelCount() <= totalScenes)
+        {
+            int i = Random.Range(0, currentHardScenes.Count);
+            string level = currentHardScenes[i];
+            currentHardScenes.RemoveAt(i);
+            SceneManager.LoadScene(level);
+        }
+
+    }
+
     //public IEnumerator WaitFadeOut()
     //{
     //    yield return new WaitForSecondsRealtime(fadeOutTime);
     //}
 
-    public void MoveToNextScene()
-    {
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-    }
+    //public void MoveToNextScene()
+    //{
+    //    int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+    //    if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
+    //    {
+    //        SceneManager.LoadScene(nextSceneIndex);
+    //    }
+    //}
 
-    public void MoveToScene(int nextSceneIndex)
-    {
-        if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-    }
+    //public void MoveToScene(int nextSceneIndex)
+    //{
+    //    if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
+    //    {
+    //        SceneManager.LoadScene(nextSceneIndex);
+    //    }
+    //}
 }
 
 

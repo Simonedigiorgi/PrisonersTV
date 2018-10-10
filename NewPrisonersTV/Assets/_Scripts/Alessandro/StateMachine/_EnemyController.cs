@@ -26,6 +26,7 @@ namespace AI
 
         [HideInInspector] public bool swoopCoroutineInExecution = false;
         [HideInInspector] public bool startSwoopCR = false;
+        [HideInInspector] public int currentLife;
 
         private void Awake()
         {
@@ -33,7 +34,7 @@ namespace AI
             thisTransform = this.transform;
             mySpriteRender = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
-
+            currentLife = m_EnemyStats.life;
             //assign start directions
             if (m_EnemyStats.myStartDirection == STARTDIRECTION.Right)
             {
@@ -118,8 +119,8 @@ namespace AI
         {
             yield return new WaitForEndOfFrame();
 
-            GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points;           
-
+            GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points;
+            //GMController.instance.SubEnemyCount();
             Destroy(gameObject);
         }
     }

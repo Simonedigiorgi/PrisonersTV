@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
-  m_Name: Survival
+  m_Name: Story
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: 00e33c3412217fd4ba2ae809e1ce20c5, type: 2}
+  - {fileID: 11400000, guid: 3053da6cfbbb701469119e89b3789026, type: 2}
   enterActions:
-  - {fileID: 11400000, guid: d8f271f7d41e96d4caf8deba440acc62, type: 2}
+  - {fileID: 11400000, guid: b2a8d4129d85ac8498cd271ebdec5d34, type: 2}
   exitActions: []
   transitions: []
   sceneGizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

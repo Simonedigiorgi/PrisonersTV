@@ -40,16 +40,12 @@ public class Bullet : MonoBehaviour {
             //Substract enemy life
             _EnemyController enemyHit = collision.gameObject.GetComponent<_EnemyController>();
             enemyHit.enemyMembership = membership;
-            enemyHit.m_EnemyStats.life -= damage;
+            enemyHit.currentLife -= damage;
 
             if (destroyOnEnemyCollision)
                 gameObject.SetActive(false);
         }
 
-        if (collision.gameObject.CompareTag("Player_2"))
-        {
-            Debug.Log("You hit Player 2");
-        }
 
         if (collision.gameObject.CompareTag("Player_1"))
         {

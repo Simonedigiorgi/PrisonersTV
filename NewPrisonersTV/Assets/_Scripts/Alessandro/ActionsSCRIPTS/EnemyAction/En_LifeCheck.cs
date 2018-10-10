@@ -16,7 +16,7 @@ namespace AI.Actions
         public void Life(EnemiesAIStateController controller)
         {
             //enemy die
-            if (controller.enemyStats.life <= 0 && !controller.m_EnemyController.startDieCoroutine)
+            if (controller.m_EnemyController.currentLife <= 0 && !controller.m_EnemyController.startDieCoroutine)
             {
                 controller.m_EnemyController.startDieCoroutine = true;               
             }

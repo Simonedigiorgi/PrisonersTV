@@ -9,52 +9,73 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1738374730871382}
+  m_RootGameObject: {fileID: 1996186943966548}
   m_IsPrefabParent: 1
---- !u!1 &1738374730871382
+--- !u!1 &1996186943966548
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4783242183744658}
-  - component: {fileID: 212824969905232186}
-  - component: {fileID: 61099159632644998}
-  - component: {fileID: 114777796220252838}
+  - component: {fileID: 4348751336554112}
+  - component: {fileID: 114589234308560596}
+  - component: {fileID: 61366059966421354}
+  - component: {fileID: 50956125520547318}
+  - component: {fileID: 212339240196671692}
   m_Layer: 0
-  m_Name: EnergyDispenser
+  m_Name: HealingStation
   m_TagString: EnergyDispenser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4783242183744658
+--- !u!4 &4348751336554112
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1738374730871382}
+  m_GameObject: {fileID: 1996186943966548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.9, y: -0.79, z: 0.671875}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: -9.941815, y: -11.5, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61099159632644998
+--- !u!50 &50956125520547318
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996186943966548}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &61366059966421354
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1738374730871382}
+  m_GameObject: {fileID: 1996186943966548}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000031292439, y: 0}
+  m_Offset: {x: 0.000000059604645, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -65,30 +86,31 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8931469, y: 1.28}
+  m_Size: {x: 1.0000001, y: 2}
   m_EdgeRadius: 0
---- !u!114 &114777796220252838
+--- !u!114 &114589234308560596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1738374730871382}
+  m_GameObject: {fileID: 1996186943966548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d866e0fefcc9d044293856f88e62485d, type: 3}
+  m_Script: {fileID: 11500000, guid: 712a7a7874e399c4e87f2f0a64642026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closedTime: 2
-  energyPrice: 10
---- !u!212 &212824969905232186
+  coolDown: 5
+  price: 10
+--- !u!212 &212339240196671692
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1738374730871382}
+  m_GameObject: {fileID: 1996186943966548}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -104,6 +126,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

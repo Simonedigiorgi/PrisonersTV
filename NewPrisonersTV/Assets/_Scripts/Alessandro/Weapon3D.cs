@@ -5,14 +5,17 @@ using UnityEngine.Audio;
 using Sirenix.OdinInspector;
 using Character;
 
-public class Weapon3D : MonoBehaviour {
+public class Weapon3D : MonoBehaviour
+{
 
-    private AudioSource source;                                                                                 // Get the Audiosource component
 
-    private BoxCollider2D coll;                                                                                 // Weapon collider
-    private GameObject hand;                                                                                    // Get the Player hand                                                                                        
-
+    public GameObject hand;                                                                                    // Get the Player hand                                                                                        
     public Animator anim;
+
+    protected AudioSource source;                                                                                 // Get the Audiosource component
+    protected BoxCollider2D coll;
+    protected BoxCollider2D collTrigger;// Weapon collider
+    protected Rigidbody2D rb;
 
     [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
 
@@ -33,17 +36,18 @@ public class Weapon3D : MonoBehaviour {
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
-    public int weaponMembership;                                                                                       // Grabbed on player1 or player2
-    Rigidbody2D rb;
-    private void Start()
+    [HideInInspector]public int weaponMembership;                                                                                       // Grabbed on player1 or player2
+
+    protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         source = GetComponent<AudioSource>();
-        coll = transform.GetChild(1).GetComponent<BoxCollider2D>();
+        coll = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        collTrigger = GetComponent<BoxCollider2D>();
     }
 
     // Shoot method
-    public void Shoot(GameObject spawnPoint)
+    public virtual void Shoot(GameObject spawnPoint)
     {
         if (bullets != 0)
         {
@@ -74,52 +78,55 @@ public class Weapon3D : MonoBehaviour {
     }
 
     // Get the weapon and destroy the previously when get another
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
-        {
-            _CharacterController player = collision.gameObject.GetComponent<_CharacterController>();
-            if (player.isAlive)
-            {   //Get the player hand
-                //if(player.facingRight)
-                //{
-                    hand = player.playerRightArm.transform.GetChild(0).gameObject;
-                //}
-                //else
-                //{
-                //    hand = player.playerLeftArm.transform.GetChild(0).gameObject;
-                //}
-                weaponMembership = player.playerNumber;
-                DestroyWeapon(player);
-            }
-        }
-    }
+    //public void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
+    //    {
+    //        _CharacterController player = collision.gameObject.GetComponent<_CharacterController>();
+    //        if (player.isAlive)
+    //        {   //Get the player hand
+    //            //if(player.facingRight)
+    //            //{
+    //                hand = player.playerRightArm.transform.GetChild(0).gameObject;
+    //            //}
+    //            //else
+    //            //{
+    //            //    hand = player.playerLeftArm.transform.GetChild(0).gameObject;
+    //            //}
+    //            weaponMembership = player.playerNumber;
+    //            DestroyWeapon(player);
+    //        }
+    //    }
+    //}
 
-    public void DestroyWeapon(_CharacterController player)
+    public virtual void DestroyWeapon(_CharacterController player)
     {
         // Grab sound
         source.PlayOneShot(grabSound, grabVolume);
-
+        coll.enabled = false;
+        collTrigger.enabled = false;
         // Destroy the first && get the second
         if(player.playerRightArm.transform.GetChild(0).childCount > 0)
         {
             GameObject first = player.playerRightArm.transform.GetChild(0).transform.GetChild(0).gameObject;
+
+            if (first.CompareTag("Key"))
+            {
+                player.hasKey = false;
+                GMController.instance.canSpawnKey = true;
+            }
+
             Destroy(first.gameObject);
             player.currentWeapon = null;
         }
-        //if (player.playerLeftArm.transform.GetChild(0).childCount > 0)
-        //{
-        //    GameObject first = player.playerLeftArm.transform.GetChild(0).transform.GetChild(0).gameObject;
-        //    Destroy(first.gameObject);
-        //    player.currentWeapon = null;
-        //}
+
         if (hand.transform.childCount <= 1)
         {
             GrabWeapon(player);
         }
     }
 
-    void GrabWeapon(_CharacterController player)
+    protected virtual void GrabWeapon(_CharacterController player)
     {
         isGrabbed = true;
         rb.isKinematic = true;

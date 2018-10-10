@@ -5,13 +5,13 @@ using StateMachine;
 
 namespace Character.Decisions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Decisions/GM/CheckIfMenu")]
-    public class Ch_CheckIfMenu: Decision
+    [CreateAssetMenu(menuName = "StateMachine/Decisions/GM/CheckIfStory")]
+    public class Ch_CheckIfStory: Decision
     {
         public override bool Decide(GMStateController controller)
         {
-            if (GMController.instance.GetGameMode() == GAMEMODE.Menu)
-                return true;
+            if (GMController.instance.GetGameMode() == GAMEMODE.Story) 
+                return true;           
             else
                 return false;
         }

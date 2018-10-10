@@ -3149,7 +3149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 04751215d08f3624c97c154ccea865a1, type: 2}
-  checkIfGameActive: {fileID: 11400000, guid: 10c08d7aa3db5364b8b39e93b2cd4416, type: 2}
+  checkIfGameActive: {fileID: 11400000, guid: 3e36febdd13a4b74dbefdd7d0c065cc1, type: 2}
   inactiveState: {fileID: 0}
   remainState: {fileID: 0}
   stateTimeElapsed: 0
@@ -3189,6 +3189,8 @@ MonoBehaviour:
   currentLife: 0
   playerNumber: 0
   extraJumps: 0
+  canHeal: 1
+  hasKey: 0
 --- !u!137 &137389952059400624
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

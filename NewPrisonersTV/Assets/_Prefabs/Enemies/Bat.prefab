@@ -121,6 +121,7 @@ MonoBehaviour:
   playerSeen: 0
   swoopCoroutineInExecution: 0
   startSwoopCR: 0
+  currentLife: 0
 --- !u!114 &114641554722469180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 11400000, guid: 4688a250513f8364b816a47ac47596b1, type: 2}
-  checkIfGameActive: {fileID: 11400000, guid: 10c08d7aa3db5364b8b39e93b2cd4416, type: 2}
+  checkIfGameActive: {fileID: 11400000, guid: 28cf2d4c3b9d4ca4cafa02e8004d26dc, type: 2}
   inactiveState: {fileID: 0}
   remainState: {fileID: 0}
   stateTimeElapsed: 0
