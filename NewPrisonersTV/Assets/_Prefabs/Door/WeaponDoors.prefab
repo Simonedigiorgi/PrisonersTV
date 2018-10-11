@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4725239708640220}
   - component: {fileID: 212854169948300870}
   - component: {fileID: 95953268866898400}
-  - component: {fileID: 114153744894746856}
+  - component: {fileID: 114898656473157950}
   m_Layer: 0
   m_Name: WeaponDoors
   m_TagString: Untagged
@@ -59,7 +59,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114153744894746856
+--- !u!114 &114898656473157950
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -67,12 +67,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1596042360538098}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1d46009f47144c40bfed2cab432ab2b, type: 3}
+  m_Script: {fileID: 11500000, guid: abfad1aa02c33884191ebf574297de8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons:
-  - {fileID: 1207898999891190, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
-  timeToRespawn: 2
+  spawnTimer: 0
+  totalRandom: 0
+  lowGradeRate: 0
+  midGradeRate: 0
+  specialRate: 0
+  weaponList: {fileID: 11400000, guid: 11f4dedb15b789a49a10e6fae3b74885, type: 2}
 --- !u!212 &212854169948300870
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -82,6 +85,7 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -97,6 +101,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

@@ -54,7 +54,7 @@ public class GMController : MonoBehaviour
     private int currentNinja;
 
     private _EnemyController[] enemies;
-    private EnemySpawn[] enemySpawns;
+    public EnemySpawn[] enemySpawns;
 
     private static int playerRequired;      // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;    // current game mode, is Menu by default

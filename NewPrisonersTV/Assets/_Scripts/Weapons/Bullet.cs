@@ -35,7 +35,6 @@ public class Bullet : MonoBehaviour {
 
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("You hit the Enemy");
 
             //Substract enemy life
             _EnemyController enemyHit = collision.gameObject.GetComponent<_EnemyController>();

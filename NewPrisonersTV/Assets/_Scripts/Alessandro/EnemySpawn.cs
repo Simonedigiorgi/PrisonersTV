@@ -12,10 +12,13 @@ public class EnemySpawn : MonoBehaviour
     public EnemyList enemyList;
 
     private float timer;
+    private Animator anim;
+    private bool spawnDone = true;
 
 	// Use this for initialization
 	void Start ()
     {
+        anim = GetComponent<Animator>();
         timer = spawnTimer;
 	}
 	
@@ -29,14 +32,14 @@ public class EnemySpawn : MonoBehaviour
                 timer -= Time.deltaTime;
             }
 
-            if (GMController.instance.GetEnemyCount() < GMController.instance.maxEnemy && timer <= 0)
+            if (GMController.instance.GetEnemyCount() < GMController.instance.maxEnemy && timer <= 0 && spawnDone)
             {
                 if (spawnType == ENEMYTYPE.Random)
                 {
                     int i = Random.Range((int)ENEMYTYPE.Bats, (int)ENEMYTYPE.Ninja);
                     if (i == (int)ENEMYTYPE.Bats)
                     {
-                        SpawnBat();
+                       StartCoroutine(SpawnBat());
                     }
                     else if (i == (int)ENEMYTYPE.Ninja)
                     {
@@ -45,7 +48,7 @@ public class EnemySpawn : MonoBehaviour
                 }
                 else if (spawnType == ENEMYTYPE.Bats && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
                 {
-                    SpawnBat();
+                    StartCoroutine(SpawnBat());
                 }
                 else if (spawnType == ENEMYTYPE.Ninja && GMController.instance.GetNinjaCount() < GMController.instance.maxNinja)
                 {
@@ -54,12 +57,24 @@ public class EnemySpawn : MonoBehaviour
             }
         }
 	}
-
-    private void SpawnBat()
+    public void ResetTimer()
     {
-        Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
-        GMController.instance.AddBatsCount();
         timer = spawnTimer;
+    }
+
+    private IEnumerator SpawnBat()
+    {
+        spawnDone = false;
+        GMController.instance.AddBatsCount();
+        anim.SetInteger("State",1);
+        yield return new WaitForSeconds(0.2f);
+        Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
+        anim.SetInteger("State", 2);
+        yield return new WaitForSeconds(0.2f);
+        anim.SetInteger("State", 0);
+        timer = spawnTimer;
+        spawnDone = true;
+        yield return null;
     }
 
     private void SpawnNinja()

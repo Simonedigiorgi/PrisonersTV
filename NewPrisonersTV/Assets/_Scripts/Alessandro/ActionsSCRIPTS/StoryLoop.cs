@@ -28,16 +28,7 @@ namespace GM.Actions
                     }
                 }
 
-            }
-            //// game start countdown
-            //if(GMController.instance.startGameTimer > 0 && !GMController.instance.gameStart)
-            //{
-            //    GMController.instance.startGameTimer -= Time.deltaTime;
-            //}
-            //else
-            //{
-            //    GMController.instance.gameStart = true;
-            //}
+            }   
 
             // game time countdown
             if(GMController.instance.currentGameTime > 0 && GMController.instance.gameStart)

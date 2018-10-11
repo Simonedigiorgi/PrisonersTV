@@ -7,8 +7,6 @@ using Character;
 
 public class Weapon3D : MonoBehaviour
 {
-
-
     public GameObject hand;                                                                                    // Get the Player hand                                                                                        
     public Animator anim;
 
@@ -36,7 +34,8 @@ public class Weapon3D : MonoBehaviour
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
-    [HideInInspector]public int weaponMembership;                                                                                       // Grabbed on player1 or player2
+    [HideInInspector] public int weaponMembership;                                                                                       // Grabbed on player1 or player2
+    [HideInInspector] public WeaponSpawn currentSpawn;
 
     protected virtual void Start()
     {
@@ -99,26 +98,14 @@ public class Weapon3D : MonoBehaviour
     //    }
     //}
 
-    public virtual void DestroyWeapon(_CharacterController player)
+    public virtual void GrabAndDestroy(_CharacterController player)
     {
         // Grab sound
         source.PlayOneShot(grabSound, grabVolume);
         coll.enabled = false;
         collTrigger.enabled = false;
         // Destroy the first && get the second
-        if(player.playerRightArm.transform.GetChild(0).childCount > 0)
-        {
-            GameObject first = player.playerRightArm.transform.GetChild(0).transform.GetChild(0).gameObject;
-
-            if (first.CompareTag("Key"))
-            {
-                player.hasKey = false;
-                GMController.instance.canSpawnKey = true;
-            }
-
-            Destroy(first.gameObject);
-            player.currentWeapon = null;
-        }
+        player.DestroyCurrentWeapon();
 
         if (hand.transform.childCount <= 1)
         {
@@ -134,5 +121,7 @@ public class Weapon3D : MonoBehaviour
         transform.position = hand.transform.position;
         coll.enabled = false;
         player.currentWeapon = GetComponent<Weapon3D>();
+        currentSpawn.SetCurrentWeaponToNull();
+        currentSpawn.ResetTimer();
     }
 }

@@ -9,4 +9,14 @@ public class Key : Weapon3D
     {
 
     }
+
+    protected override void GrabWeapon(_CharacterController player)
+    {
+        isGrabbed = true;
+        rb.isKinematic = true;
+        transform.parent = hand.transform;
+        transform.position = hand.transform.position;
+        coll.enabled = false;
+        player.currentWeapon = GetComponent<Key>(); 
+    }
 }

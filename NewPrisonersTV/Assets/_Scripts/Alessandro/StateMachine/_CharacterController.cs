@@ -36,7 +36,8 @@ namespace Character
         [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
 
         [HideInInspector] public bool canHeal = true;
-        public bool hasKey = false;
+        public bool hasKey = false;                                                                     // true if the player is holding the key
+
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -58,17 +59,15 @@ namespace Character
                 if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
                 {
                     collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
-                    Debug.Log("healing");
                 }
                 if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
                 {
-                    Debug.Log("weapon");
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
                    
                     weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
                 
                     weapon.weaponMembership = playerNumber;
-                    weapon.DestroyWeapon(this);
+                    weapon.GrabAndDestroy(this);
                 }
                 if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
                 {
@@ -76,12 +75,11 @@ namespace Character
                     key.hand = playerRightArm.transform.GetChild(0).gameObject;
 
                     key.weaponMembership = playerNumber;
-                    key.DestroyWeapon(this);
+                    key.GrabAndDestroy(this);
                     hasKey = true;
                 }
                 if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interact.ToString()) && hasKey)
                 {
-                    Debug.Log("door");
                     GMController.instance.NextLevel();
                 }
             }
@@ -110,17 +108,29 @@ namespace Character
             yield return new WaitForSeconds(respawnTime);
 
             // Set the player on the center of the screen (this fix the CameraView when a Player die)
-           // transform.position = new Vector2(0, 0);
+            // transform.position = new Vector2(0, 0);
 
+            DestroyCurrentWeapon();
+            //reset score
+            GMController.instance.playerInfo[playerNumber].score = 0;
+            rb.isKinematic = false;
+            canRespawn = true;
+        }
+        public void DestroyCurrentWeapon()
+        {
             // Destroy the weapon
             if (playerRightArm.transform.GetChild(0).childCount > 0)
             {
                 GameObject first = playerRightArm.transform.GetChild(0).transform.GetChild(0).gameObject;
-                Destroy(first.gameObject);
-            }
+                if (first.CompareTag("Key"))
+                {
+                    hasKey = false;
+                    GMController.instance.canSpawnKey = true;
+                }
 
-            rb.isKinematic = false;
-            canRespawn = true;
+                Destroy(first.gameObject);
+                currentWeapon = null;
+            }
         }
 
         public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)

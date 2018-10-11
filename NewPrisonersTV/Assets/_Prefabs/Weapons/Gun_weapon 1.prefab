@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 82080504394916678}
   - component: {fileID: 61285841574122090}
   m_Layer: 9
-  m_Name: Gun_weapon
+  m_Name: Gun_weapon 1
   m_TagString: Weapon
   m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -362,7 +362,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 19a1c92fea4fd5c46ac39404cf982b83, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.15570937, g: 0.102941155, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0

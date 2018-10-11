@@ -38,10 +38,15 @@ public class EnemyBat : _EnemyController
         yield return new WaitForEndOfFrame();
 
         GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points;
-        if (enemyType == ENEMYTYPE.Bats)
+        if(GMController.instance.GetBatsCount() == GMController.instance.maxBats)
         {
-            GMController.instance.SubBatsCount();
+            for (int i = 0; i < GMController.instance.enemySpawns.Length; i++)
+            {
+                GMController.instance.enemySpawns[i].ResetTimer();
+            }
         }
+        GMController.instance.SubBatsCount();
+        
       
         Destroy(gameObject);
     }
