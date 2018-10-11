@@ -3680,7 +3680,7 @@ Transform:
   m_GameObject: {fileID: 1454045442659900}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.082, y: -0.016, z: 0}
-  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4229456486061148}
   m_RootOrder: 0
@@ -5085,7 +5085,7 @@ Transform:
   m_GameObject: {fileID: 1818835874707108}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.082, y: -0.016, z: 0}
-  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4026104689016442}
   m_RootOrder: 0
@@ -6721,6 +6721,7 @@ MonoBehaviour:
   emptyVolume: 0.1
   isGrabbed: 0
   weaponMembership: 0
+  currentSpawn: {fileID: 0}
 --- !u!114 &114802523139137974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6733,12 +6734,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGameActive: 0
+  canStartGameCD: 0
   gameStart: 0
   startGameTimer: 3
   deathTimer: 0
   m_MainCamera: {fileID: 0}
   playerSetupDone: 0
   currentGameTime: 0
+  maxEnemy: 10
   playerPrefab:
   - {fileID: 1562544395646270}
   - {fileID: 1830164069292910}
@@ -6762,9 +6765,9 @@ MonoBehaviour:
   hardScenes:
   - Level Test AE 5
   - Level Test AE 6
-  maxEnemy: 10
   maxBats: 5
   maxNinja: 5
+  enemySpawns: []
   canSpawnKey: 1
 --- !u!114 &114817885106181184
 MonoBehaviour:
