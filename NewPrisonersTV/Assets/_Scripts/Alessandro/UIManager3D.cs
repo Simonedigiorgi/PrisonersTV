@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Character;
 
-public class UIManager3D : MonoBehaviour {
+public class UIManager3D : MonoBehaviour
+{
 
     public GameObject[] playerUI;
+    public Transform objective;
 
     Weapon3D[] actualWeapon;                                                                          //the weapon grabbed
     GameObject[] playerHand;                                                                              //Hand player
@@ -114,8 +116,12 @@ public class UIManager3D : MonoBehaviour {
                 #region Score
 
                 score[i].text = "P"+ (i+1) + " Score: " + GMController.instance.playerInfo[i].score.ToString();
-      
-                #endregion
+
+                #endregion               
+            }
+            if (GMController.instance.GetGameMode() == GAMEMODE.Story)
+            {
+                objective.GetChild(0).GetComponent<Text>().text = "Remaining Time: " + (int)GMController.instance.currentGameTime;
             }
         }
   
