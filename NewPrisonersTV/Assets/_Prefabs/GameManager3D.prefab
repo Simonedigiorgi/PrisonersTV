@@ -6738,6 +6738,7 @@ MonoBehaviour:
   gameStart: 0
   startGameTimer: 3
   deathTimer: 0
+  slowdownTimerMultiplier: 2
   m_MainCamera: {fileID: 0}
   playerSetupDone: 0
   currentGameTime: 0
@@ -6748,6 +6749,7 @@ MonoBehaviour:
   playerSpawnPoint:
   - {fileID: 4117232649003286}
   - {fileID: 4918786564526908}
+  enemySpawns: []
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -6767,7 +6769,6 @@ MonoBehaviour:
   - Level Test AE 6
   maxBats: 5
   maxNinja: 5
-  enemySpawns: []
   canSpawnKey: 1
 --- !u!114 &114817885106181184
 MonoBehaviour:

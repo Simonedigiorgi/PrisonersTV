@@ -16,22 +16,22 @@ public class GMController : MonoBehaviour
     // Variables used in order to trigger transitions when the game is not active
     [HideInInspector] public bool isGameActive = false;
     [HideInInspector] public bool canStartGameCD = false;       // start game countdown coroutine
-     public bool gameStart = false;            // start players and everithing else in the level
+    [HideInInspector] public bool gameStart = false;            // start players and everithing else in the level
     public float startGameTimer;
     public float deathTimer = 0f;
+    public float slowdownTimerMultiplier; 
 
     [HideInInspector] public PlayerInfo[] playerInfo;   // info on players in the  current scene
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup
     [HideInInspector] public bool playerSetupDone = false;
-
     [HideInInspector] public float currentGameTime;
-
     [HideInInspector] public int maxEnemy;
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
+    [HideInInspector] public EnemySpawn[] enemySpawns;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -54,7 +54,6 @@ public class GMController : MonoBehaviour
     private int currentNinja;
 
     private _EnemyController[] enemies;
-    public EnemySpawn[] enemySpawns;
 
     private static int playerRequired;      // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;    // current game mode, is Menu by default
@@ -235,6 +234,25 @@ public class GMController : MonoBehaviour
     public void CollectEnemySpawns()
     {
         enemySpawns = FindObjectsOfType<EnemySpawn>();
+    }
+    public void SlowdownSpawns()
+    {
+        if (!canSpawnKey)
+        {
+            for (int i = 0; i < enemySpawns.Length; i++)
+            {
+                enemySpawns[i].spawnTimer *= slowdownTimerMultiplier;
+                enemySpawns[i].ResetTimer();
+            }
+        }
+        else
+        {
+            for (int i = 0; i < enemySpawns.Length; i++)
+            {
+                enemySpawns[i].spawnTimer /= slowdownTimerMultiplier;
+                enemySpawns[i].ResetTimer();
+            }
+        }
     }
 
     private void PlayerSetup()

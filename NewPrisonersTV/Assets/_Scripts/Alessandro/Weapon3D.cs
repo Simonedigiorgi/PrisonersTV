@@ -76,28 +76,6 @@ public class Weapon3D : MonoBehaviour
         }
     }
 
-    // Get the weapon and destroy the previously when get another
-    //public void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Player_1") && !isGrabbed)
-    //    {
-    //        _CharacterController player = collision.gameObject.GetComponent<_CharacterController>();
-    //        if (player.isAlive)
-    //        {   //Get the player hand
-    //            //if(player.facingRight)
-    //            //{
-    //                hand = player.playerRightArm.transform.GetChild(0).gameObject;
-    //            //}
-    //            //else
-    //            //{
-    //            //    hand = player.playerLeftArm.transform.GetChild(0).gameObject;
-    //            //}
-    //            weaponMembership = player.playerNumber;
-    //            DestroyWeapon(player);
-    //        }
-    //    }
-    //}
-
     public virtual void GrabAndDestroy(_CharacterController player)
     {
         // Grab sound

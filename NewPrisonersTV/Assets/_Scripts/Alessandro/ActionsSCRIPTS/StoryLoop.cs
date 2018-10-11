@@ -51,10 +51,10 @@ namespace GM.Actions
             if(GMController.instance.GetKeyInGame() && GMController.instance.canSpawnKey)
             {
                 GMController.instance.canSpawnKey = false;
+                GMController.instance.SlowdownSpawns();
                 GameObject key = Instantiate(GMController.instance.key, GMController.instance.keySpawn.position, Quaternion.identity);
                 key.SetActive(true);
-            }
-
+            }          
         }
     }
 }

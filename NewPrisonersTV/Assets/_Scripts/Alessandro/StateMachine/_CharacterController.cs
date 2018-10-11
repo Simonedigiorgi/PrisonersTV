@@ -126,6 +126,7 @@ namespace Character
                 {
                     hasKey = false;
                     GMController.instance.canSpawnKey = true;
+                    GMController.instance.SlowdownSpawns();
                 }
 
                 Destroy(first.gameObject);
