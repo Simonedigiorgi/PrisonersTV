@@ -6733,23 +6733,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bd5bf713dc97ae48b84a7800ce1bcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGameActive: 0
-  canStartGameCD: 0
-  gameStart: 0
   startGameTimer: 3
   deathTimer: 0
   slowdownTimerMultiplier: 2
-  m_MainCamera: {fileID: 0}
-  playerSetupDone: 0
-  currentGameTime: 0
-  maxEnemy: 10
   playerPrefab:
   - {fileID: 1562544395646270}
   - {fileID: 1830164069292910}
   playerSpawnPoint:
   - {fileID: 4117232649003286}
   - {fileID: 4918786564526908}
-  enemySpawns: []
+  isGameActive: 0
+  canStartGameCD: 0
+  gameStart: 0
+  m_MainCamera: {fileID: 0}
+  playerSetupDone: 0
+  currentGameTime: 0
+  maxEnemy: 10
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -6769,6 +6768,8 @@ MonoBehaviour:
   - Level Test AE 6
   maxBats: 5
   maxNinja: 5
+  enemySpawns: []
+  allEnemies: []
   canSpawnKey: 1
 --- !u!114 &114817885106181184
 MonoBehaviour:
@@ -6846,6 +6847,7 @@ MonoBehaviour:
   extraJumps: 0
   canHeal: 1
   hasKey: 0
+  animSpeed: 0
 --- !u!114 &114948911184386440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6878,6 +6880,7 @@ MonoBehaviour:
   extraJumps: 0
   canHeal: 1
   hasKey: 0
+  animSpeed: 0
 --- !u!114 &114961770051448066
 MonoBehaviour:
   m_ObjectHideFlags: 1

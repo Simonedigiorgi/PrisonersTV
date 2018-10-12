@@ -9,6 +9,8 @@ namespace AI
     public abstract class _EnemyController : MonoBehaviour
     {
         public EnemyStats m_EnemyStats;
+        [HideInInspector] public Animator enemyAnim;
+        [HideInInspector] public float animSpeed;
 
         [HideInInspector] public ENEMYTYPE enemyType;
         [HideInInspector] public int currentLife;
@@ -36,6 +38,8 @@ namespace AI
             mySpriteRender = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
             currentLife = m_EnemyStats.life;
+            enemyAnim = GetComponent<Animator>();
+            animSpeed = enemyAnim.speed;
             //assign start directions
             if (m_EnemyStats.myStartDirection == STARTDIRECTION.Right)
             {
@@ -49,9 +53,12 @@ namespace AI
 
         protected virtual void Update()
         {
-            if(startDieCoroutine)
+            if (GMController.instance.gameStart)
             {
-                StartCoroutine(Die());
+                if (startDieCoroutine)
+                {
+                    StartCoroutine(Die());
+                }
             }
         }
 

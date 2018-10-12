@@ -30,7 +30,7 @@ namespace GM.Actions
 
             }   
 
-            // game time countdown
+            // game time countdown, influenced by pause 
             if(GMController.instance.currentGameTime > 0 && GMController.instance.gameStart)
             {
                 GMController.instance.currentGameTime -= Time.deltaTime;

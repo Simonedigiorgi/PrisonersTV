@@ -13,7 +13,8 @@ public class CharacterControlConfig : ScriptableObject
     public VERTICAL RightVertical;                                             // Get Vertical
     public BUTTONS shootInput;                         // Player1_Button X || Player2_Button X (Shoot with you weapon)
     public BUTTONS jumpInput;                          // Player1_Button A || Player2_Button A
-    public BUTTONS interact;
+    public BUTTONS interactInput; 
     public BUTTONS respawnInput;
+    public BUTTONS pauseInput;
     public bool moveArmWithRightStick;
 }

@@ -18,15 +18,17 @@ public class HealStation : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (timer > 0)
+        if (GMController.instance.gameStart)
         {
-            timer -= Time.deltaTime;
-        }
-        else
-        {
-            avaible = true;
-        }
-      
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+            }
+            else
+            {
+                avaible = true;
+            }
+        }       
 	}
 
     public void UseStation(_CharacterController player)

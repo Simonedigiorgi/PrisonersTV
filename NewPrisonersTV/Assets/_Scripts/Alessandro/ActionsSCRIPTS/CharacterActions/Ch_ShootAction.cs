@@ -17,17 +17,8 @@ namespace Character.Actions
         {
             // IF YOU GOT THE WEAPON
             if (controller.m_CharacterController.currentWeapon != null)
-            {
-                //if(controller.m_CharacterController.facingRight)
-                //{
-                    //controller.m_CharacterController.SwapArm(controller.m_CharacterController.facingRight);
-                    controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerRightArm);
-                //}
-                //else if(!controller.m_CharacterController.facingRight)
-                //{
-                //    controller.m_CharacterController.SwapArm(controller.m_CharacterController.facingRight);
-                //    controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerLeftArm);
-                //}
+            {          
+                controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerRightArm);       
             }
             else
             { // Disable arm layer 

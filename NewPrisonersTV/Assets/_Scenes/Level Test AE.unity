@@ -460,14 +460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3c387b4572146409d28c5dda7ade2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 5
-  enemyLevel: 1
-  points: 0
-  isFlashing: 0
-  flashingSpeed: 0
-  speed: 0
-  direction: 0
-  enemyMembership: 0
 --- !u!1 &296915509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1728,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: lowGradeRate
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
@@ -1751,12 +1743,17 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: midGradeRate
-      value: 0.782
+      value: 0.758
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: specialRate
       value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
+        type: 2}
+      propertyPath: specialGradeRate
+      value: 0.59
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c4ddc77d6358aee409a78d7db501df5e, type: 2}

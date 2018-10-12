@@ -65,10 +65,11 @@ public class EnemySpawn : MonoBehaviour
     private IEnumerator SpawnBat()
     {
         spawnDone = false;
-        GMController.instance.AddBatsCount();
+        GMController.instance.AddBatsCount(); // add bats count
         anim.SetInteger("State",1);
         yield return new WaitForSeconds(0.2f);
-        Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
+        GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
         anim.SetInteger("State", 2);
         yield return new WaitForSeconds(0.2f);
         anim.SetInteger("State", 0);

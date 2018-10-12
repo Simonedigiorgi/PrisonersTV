@@ -22,27 +22,29 @@ namespace Character
 
         [BoxGroup("Rules")] public float respawnTime;
         
-        [HideInInspector] public Rigidbody2D rb;                                            // Rigidbody component
+        [HideInInspector] public Rigidbody2D rb;                                                    // Rigidbody component
 
-        [HideInInspector] public bool facingRight;                                                      // Player flip facing
-        [HideInInspector] public bool isInDash;                                                         // Check if the player is in dash
-        [HideInInspector] public bool isGrounded;                                                       // Is the Player on ground?   
-        [HideInInspector] public bool isAlive ;                                                          // Is player still Alive?
-        [HideInInspector] public bool canRespawn;
-        [HideInInspector] public bool startDeathCR;
+        [HideInInspector] public bool facingRight;                                                  // Player flip facing
+        [HideInInspector] public bool isInDash;                                                     // Check if the player is in dash
+        [HideInInspector] public bool isGrounded;                                                   // Is the Player on ground?   
+        [HideInInspector] public bool isAlive ;                                                     // Is player still Alive?
+        [HideInInspector] public bool canRespawn;                                                   // Indicates if the players can respawn
+        [HideInInspector] public bool startDeathCR;                                                 // If true can start the death coroutine
 
-        [HideInInspector] public int currentLife;
-        [HideInInspector] public int playerNumber;                                                      // player identification number and index in the playerInfo list
-        [HideInInspector] public int extraJumps;                                                        // How many double jumps can he make
+        [HideInInspector] public int currentLife;                                                   // player's life points at current moment
+        [HideInInspector] public int playerNumber;                                                  // player identification number and index in the playerInfo list
+        [HideInInspector] public int extraJumps;                                                    // How many double jumps can he make
 
-        [HideInInspector] public bool canHeal = true;
-        public bool hasKey = false;                                                                     // true if the player is holding the key
+        [HideInInspector] public bool canHeal = true;                                               // If true the player can interact with the healing station
+        [HideInInspector] public bool hasKey = false;                                               // true if the player is holding the key
+        [HideInInspector] public float animSpeed;
 
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             currentLife = m_CharStats.life;
             isAlive = true;
+            animSpeed = playerAnim.speed;
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
@@ -56,11 +58,11 @@ namespace Character
         {
             if (isAlive)
             {
-                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
                 {
                     collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
                 }
-                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
                    
@@ -69,7 +71,7 @@ namespace Character
                     weapon.weaponMembership = playerNumber;
                     weapon.GrabAndDestroy(this);
                 }
-                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interact.ToString()))
+                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D key = collision.GetComponent<Weapon3D>();
                     key.hand = playerRightArm.transform.GetChild(0).gameObject;
@@ -78,7 +80,7 @@ namespace Character
                     key.GrabAndDestroy(this);
                     hasKey = true;
                 }
-                if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interact.ToString()) && hasKey)
+                if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()) && hasKey)
                 {
                     GMController.instance.NextLevel();
                 }
@@ -255,9 +257,12 @@ namespace Character
 
         private void Update()
         {
-            if(startDeathCR)
+            if (GMController.instance.gameStart)
             {
-                StartCoroutine(Death());
+                if (startDeathCR)
+                {
+                    StartCoroutine(Death());
+                }
             }
         }
     }

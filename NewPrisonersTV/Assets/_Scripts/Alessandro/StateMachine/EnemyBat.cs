@@ -13,10 +13,13 @@ public class EnemyBat : _EnemyController
  
     protected override void Update()
     {
-        base.Update();
-        if (startSwoopCR)
+        if (GMController.instance.gameStart)
         {
-            StartCoroutine(Swoop());
+            base.Update();
+            if (startSwoopCR)
+            {
+                StartCoroutine(Swoop());
+            }
         }
     }
 
@@ -26,10 +29,10 @@ public class EnemyBat : _EnemyController
         swoopCoroutineInExecution = true;
         transform.DOMove(endSwoopPosition, m_EnemyStats.swoopMoreSlowly, false);
         yield return new WaitUntil(() => transform.position == endSwoopPosition);
-
+  
         transform.DOMove(startSwoopPosition, m_EnemyStats.swoopMoreSlowly, false);
         yield return new WaitUntil(() => transform.position == startSwoopPosition);
-
+    
         playerSeen = false;
         swoopCoroutineInExecution = false;
     }
@@ -37,8 +40,8 @@ public class EnemyBat : _EnemyController
     {
         yield return new WaitForEndOfFrame();
 
-        GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points;
-        if(GMController.instance.GetBatsCount() == GMController.instance.maxBats)
+        GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points; // add points to player
+        if(GMController.instance.GetBatsCount() == GMController.instance.maxBats)  // if the bat count is at max then restart the timer of all spawns to give some time between the kill and the new spawn
         {
             for (int i = 0; i < GMController.instance.enemySpawns.Length; i++)
             {
@@ -46,6 +49,7 @@ public class EnemyBat : _EnemyController
             }
         }
         GMController.instance.SubBatsCount();
+        GMController.instance.allEnemies.Remove(this);
         
       
         Destroy(gameObject);

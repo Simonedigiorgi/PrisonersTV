@@ -10,28 +10,27 @@ using Sirenix.OdinInspector;
 
 public class GMController : MonoBehaviour
 {
-    // Needed for Singleton pattern 
-    [HideInInspector] public static GMController instance = null;
-
-    // Variables used in order to trigger transitions when the game is not active
-    [HideInInspector] public bool isGameActive = false;
-    [HideInInspector] public bool canStartGameCD = false;       // start game countdown coroutine
-    [HideInInspector] public bool gameStart = false;            // start players and everithing else in the level
     public float startGameTimer;
     public float deathTimer = 0f;
     public float slowdownTimerMultiplier; 
 
-    [HideInInspector] public PlayerInfo[] playerInfo;   // info on players in the  current scene
+    public GameObject[] playerPrefab;
+    public Transform[] playerSpawnPoint;
+
+    // Needed for Singleton pattern 
+    [HideInInspector] public static GMController instance = null;
+    // Variables used in order to trigger transitions when the game is not active
+    [HideInInspector] public bool isGameActive = false;
+    [HideInInspector] public bool canStartGameCD = false;                    // start game countdown coroutine
+    [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level
+
+    [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup
     [HideInInspector] public bool playerSetupDone = false;
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public int maxEnemy;
-
-    public GameObject[] playerPrefab;
-    public Transform[] playerSpawnPoint;
-    [HideInInspector] public EnemySpawn[] enemySpawns;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -49,14 +48,17 @@ public class GMController : MonoBehaviour
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
 
+    [HideInInspector] public EnemySpawn[] enemySpawns;
+    [HideInInspector] public List<_EnemyController> allEnemies;
+
+    private _EnemyController[] startingEnemies;
+
     private int currentEnemyCount;
     private int currentBats;
     private int currentNinja;
 
-    private _EnemyController[] enemies;
-
-    private static int playerRequired;      // number of players for the current game mode
-    private static GAMEMODE currentMode = GAMEMODE.Menu;    // current game mode, is Menu by default
+    private static int playerRequired;                                              // number of players for the current game mode
+    private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
 
     // copy of the lists of scenes used for the pool
@@ -64,10 +66,10 @@ public class GMController : MonoBehaviour
     private static List<string> currentMediumScenes;
     private static List<string> currentHardScenes;
 
-    private int totalScenes; // sum of all scenes needed for the game mode
+    private int totalScenes;                                                         // sum of all scenes needed for the game mode
 
-    private bool keyInGame = false; // true when the key can be spawned
-    public bool canSpawnKey = true; // true if the key is not in game
+    private bool keyInGame = false;                                                  // true when the key can be spawned
+    public bool canSpawnKey = true;                                                  // true if the key is not in game
 
     void Awake() 
     {
@@ -218,14 +220,15 @@ public class GMController : MonoBehaviour
 
     private void StartEnemyCount()
     {
-        enemies = FindObjectsOfType<_EnemyController>();
-        for (int i = 0; i < enemies.Length; i++)
+        startingEnemies = FindObjectsOfType<_EnemyController>();
+        for (int i = 0; i < startingEnemies.Length; i++)
         {
-            if(enemies[i].enemyType == ENEMYTYPE.Bats)
+            allEnemies.Add(startingEnemies[i]);
+            if(startingEnemies[i].enemyType == ENEMYTYPE.Bats)
             {
                 AddBatsCount();
             }
-            else if(enemies[i].enemyType == ENEMYTYPE.Ninja)
+            else if(startingEnemies[i].enemyType == ENEMYTYPE.Ninja)
             {
                 AddNinjaCount();
             }

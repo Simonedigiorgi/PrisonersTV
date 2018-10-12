@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace StateMachine
 {
-    public class GMStateController : StateController {
+    public class GMStateController : StateController
+    {
 
         [HideInInspector] public GMController m_GM;
 
