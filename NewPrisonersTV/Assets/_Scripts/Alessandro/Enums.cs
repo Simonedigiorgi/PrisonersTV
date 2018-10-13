@@ -12,6 +12,4 @@ public enum STARTDIRECTION { Right, Left }
 
 public enum ENEMYTYPE { None, Random, Bat, Ninja }
 
-public enum BULLETTYPE { GunBullet, Shuriken}
-
 

@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679498053893670}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.168, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4433770408897378}
@@ -162,7 +162,7 @@ Transform:
   m_GameObject: {fileID: 1937169287239998}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4433770408897378}
   m_RootOrder: 1
@@ -388,10 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hand: {fileID: 0}
   anim: {fileID: 95161733415446858}
-  bulletList: {fileID: 11400000, guid: e87c35535f8c7ef4dbd1e58589002a79, type: 2}
-  bulletType: 0
   bullet: {fileID: 114993137561415486}
-  bulletSpawnPoint: {fileID: 0}
   fireRate: 0.15
   bullets: 500
   autoFire: 0
@@ -420,6 +417,9 @@ MonoBehaviour:
   rayLenght: 1
   bulletGravity: 0
   canBounce: 0
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 2304
   afterBurn: {fileID: 0}
   membership: 0
 --- !u!198 &198763332772197922
@@ -482,7 +482,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 288375848
+  randomSeed: -546948758
   InitialModule:
     serializedVersion: 3
     enabled: 1

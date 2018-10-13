@@ -72,7 +72,7 @@ namespace AI
             //turn the direction if collide on wall
             if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
             {
-                direction *= -1;
+                direction *= -1; 
             }
         }    
 
@@ -93,7 +93,8 @@ namespace AI
             mySpriteRender.color = Color.white;
 
             isFlashing = false;
-            gotHit = false; 
+            gotHit = false;
+            yield return null; 
         }
 
         // this coroutine was created to give the time at membership to change and for make shure the score is assigned right

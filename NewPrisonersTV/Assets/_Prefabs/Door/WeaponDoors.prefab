@@ -74,8 +74,8 @@ MonoBehaviour:
   totalRandom: 0
   lowGradeRate: 0
   midGradeRate: 0
-  specialRate: 0
-  weaponList: {fileID: 11400000, guid: 11f4dedb15b789a49a10e6fae3b74885, type: 2}
+  specialGradeRate: 0
+  weaponList: {fileID: 11400000, guid: 7bc91429891f2ef4e9c3406ffbad1f7c, type: 2}
 --- !u!212 &212854169948300870
 SpriteRenderer:
   m_ObjectHideFlags: 1

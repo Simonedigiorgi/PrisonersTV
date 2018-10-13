@@ -55,10 +55,6 @@ namespace Character
                 {
                     StartCoroutine(Death());
                 }
-                if(currentWeapon != null)
-                {
-                    currentWeapon.bullet.transform.position = currentWeapon.bulletSpawnPoint.position; 
-                }
             }
         }
 
@@ -82,8 +78,7 @@ namespace Character
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
                     if (!weapon.isGrabbed)
                     {
-                        weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
-                        weapon.bulletSpawnPoint = playerRightArm.transform.GetChild(1).transform;
+                        weapon.hand = playerRightArm.transform.GetChild(0).gameObject; 
 
                         weapon.weaponMembership = playerNumber;
                         weapon.GrabAndDestroy(this); 

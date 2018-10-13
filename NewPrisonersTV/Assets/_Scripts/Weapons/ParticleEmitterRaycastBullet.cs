@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using AI;
 
 public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 {
-    public ParticleSystem Gun;
-    public int damage;
-    public float rayLenght = 1;
-    public float bulletGravity;
-    public bool canBounce;
+    [BoxGroup("Controls")] public ParticleSystem Gun;
+    [BoxGroup("Controls")] public int damage;
+    [BoxGroup("Controls")] public float rayLenght = 1;
+    [BoxGroup("Controls")] public float bulletGravity;
+    [BoxGroup("Controls")] public bool canBounce; 
+    [BoxGroup("Controls")] public LayerMask obstacleMask;
 
     [HideInInspector] public ParticleSystem afterBurn;
     [HideInInspector] public ParticleSystem.Particle[] bullets;
@@ -39,7 +41,7 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 
         for (int i = 0; i < numParticlesAlive; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, rayLenght);
+            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, rayLenght, obstacleMask);
             Debug.DrawRay(bullets[i].position, bullets[i].velocity.normalized, Color.blue); 
             if (hit) 
             {              
