@@ -22,6 +22,7 @@ namespace AI
         [HideInInspector] public int direction;
         [HideInInspector] public int enemyMembership;
         [HideInInspector] public bool isFlashing = false;
+        [HideInInspector] public bool gotHit = false;
 
         [HideInInspector] public bool startDieCoroutine = false;
         [HideInInspector] public bool playerSeen = false;
@@ -59,6 +60,10 @@ namespace AI
                 {
                     StartCoroutine(Die());
                 }
+                if (!isFlashing && gotHit)
+                {
+                    StartCoroutine(Flash());
+                }               
             }
         }
 
@@ -69,20 +74,7 @@ namespace AI
             {
                 direction *= -1;
             }
-        }
-
-        public void OnTriggerEnter2D(Collider2D collision)
-        {
-            //on collision with bullet
-            if (collision.gameObject.CompareTag("Bullet"))
-            {
-                //start flashing feedback
-                if (!isFlashing)
-                {
-                    StartCoroutine(Flash());
-                }
-            }
-        }
+        }    
 
         //Flash coroutine called on hit with bullet
         public IEnumerator Flash()
@@ -101,6 +93,7 @@ namespace AI
             mySpriteRender.color = Color.white;
 
             isFlashing = false;
+            gotHit = false; 
         }
 
         // this coroutine was created to give the time at membership to change and for make shure the score is assigned right

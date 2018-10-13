@@ -10,6 +10,8 @@ public enum GAMEMODE { Menu, Story, Survival, Boss};
 
 public enum STARTDIRECTION { Right, Left }
 
-public enum ENEMYTYPE { None, Random, Bats, Ninja }
+public enum ENEMYTYPE { None, Random, Bat, Ninja }
+
+public enum BULLETTYPE { GunBullet, Shuriken}
 
 

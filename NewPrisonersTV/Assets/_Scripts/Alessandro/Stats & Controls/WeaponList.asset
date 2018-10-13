@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: WeaponList
   m_EditorClassIdentifier: 
   LowGrade:
-  - {fileID: 114431354673164988, guid: 63f20e68622e81a41b29473cc2e4f34c, type: 2}
+  - {fileID: 114107782104601910, guid: 39ae3874f362cf84d9c9074a151e8580, type: 2}
   MidGrade:
-  - {fileID: 114431354673164988, guid: 980b5b3141157fd48b0fd38430bc92eb, type: 2}
+  - {fileID: 114107782104601910, guid: 39ae3874f362cf84d9c9074a151e8580, type: 2}
   Special:
-  - {fileID: 114431354673164988, guid: 1ccb44d26d52d76479b699731f2f9873, type: 2}
+  - {fileID: 114107782104601910, guid: 39ae3874f362cf84d9c9074a151e8580, type: 2}

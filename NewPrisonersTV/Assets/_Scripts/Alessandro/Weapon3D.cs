@@ -9,13 +9,16 @@ public class Weapon3D : MonoBehaviour
 {
     public GameObject hand;                                                                                    // Get the Player hand                                                                                        
     public Animator anim;
+    public BulletList bulletList;
 
     protected AudioSource source;                                                                                 // Get the Audiosource component
     protected BoxCollider2D coll;
     protected BoxCollider2D collTrigger;// Weapon collider
     protected Rigidbody2D rb;
 
-    [BoxGroup("Weapon bullet")] public GameObject bullet;                                                       // Bullet gameobject
+    [BoxGroup("Weapon bullet")] public BULLETTYPE bulletType; 
+    public ParticleEmitterRaycastBullet bullet;                                     // bullet;                                                       // Bullet gameobject
+    public Transform bulletSpawnPoint;
 
     [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
     [BoxGroup("Controls")] public int bullets;                                                                  // How many bullets remaining  
@@ -35,7 +38,7 @@ public class Weapon3D : MonoBehaviour
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     [HideInInspector] public int weaponMembership;                                                                                       // Grabbed on player1 or player2
-    [HideInInspector] public WeaponSpawn currentSpawn;
+    [HideInInspector] public WeaponSpawn currentSpawn; 
 
     protected virtual void Start()
     {
@@ -43,6 +46,11 @@ public class Weapon3D : MonoBehaviour
         source = GetComponent<AudioSource>();
         coll = transform.GetChild(0).GetComponent<BoxCollider2D>();
         collTrigger = GetComponent<BoxCollider2D>();
+        // create and place bullet type
+        //bullet = Instantiate(bulletList.bulletTypes[(int)bulletType].transform.gameObject, transform.position, Quaternion.identity).GetComponent<ParticleEmitterRaycastBullet>();
+        //bullet.transform.parent = transform;
+        //bullet.transform.rotation = Quaternion.LookRotation(transform.right, transform.up);
+       
     }
 
     // Shoot method
@@ -53,11 +61,12 @@ public class Weapon3D : MonoBehaviour
             if (Time.time > fireRate + lastShot)
             {
                 // Instantiate the bullet               
-                Instantiate(bullet, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y + .15f, spawnPoint.transform.position.z), spawnPoint.transform.rotation);
+                //Instantiate(bullet, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y + .15f, spawnPoint.transform.position.z), spawnPoint.transform.rotation);
+                bullet.EmitBullet();
                 bullets--;
 
                 // Assign the bullet membership
-                bullet.GetComponent<Bullet>().membership = weaponMembership;
+                //bullet.membership = weaponMembership;
 
                 // Delay
                 lastShot = Time.time;
@@ -98,7 +107,10 @@ public class Weapon3D : MonoBehaviour
         transform.parent = hand.transform;
         transform.position = hand.transform.position;
         coll.enabled = false;
+
         player.currentWeapon = GetComponent<Weapon3D>();
+        bullet.membership = weaponMembership;
+
         currentSpawn.SetCurrentWeaponToNull();
         currentSpawn.ResetTimer();
     }

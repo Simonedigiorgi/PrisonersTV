@@ -8,7 +8,7 @@ public class EnemyBat : _EnemyController
 {
     public EnemyBat()
     {
-        enemyType = ENEMYTYPE.Bats;
+        enemyType = ENEMYTYPE.Bat;
     }
  
     protected override void Update()

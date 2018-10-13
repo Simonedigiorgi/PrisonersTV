@@ -33,7 +33,7 @@ public class GunBullet : Bullet
     {
         Vector2 rayDirection = dir;
         Debug.DrawRay(transform.position + (-transform.right * colliderBoundX / 2), rayDirection, Color.red);
-
+         
         RaycastHit2D hit = Physics2D.Raycast(transform.position + (-transform.right * colliderBoundX / 2), rayDirection, 1.0f, obstacleMask);
         if (hit && canBounce)
         {

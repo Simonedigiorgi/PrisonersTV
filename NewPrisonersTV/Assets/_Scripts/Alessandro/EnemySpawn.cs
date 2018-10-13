@@ -36,8 +36,8 @@ public class EnemySpawn : MonoBehaviour
             {
                 if (spawnType == ENEMYTYPE.Random)
                 {
-                    int i = Random.Range((int)ENEMYTYPE.Bats, (int)ENEMYTYPE.Ninja);
-                    if (i == (int)ENEMYTYPE.Bats)
+                    int i = Random.Range((int)ENEMYTYPE.Bat, (int)ENEMYTYPE.Ninja);
+                    if (i == (int)ENEMYTYPE.Bat)
                     {
                        StartCoroutine(SpawnBat());
                     }
@@ -46,7 +46,7 @@ public class EnemySpawn : MonoBehaviour
                         SpawnNinja();
                     }
                 }
-                else if (spawnType == ENEMYTYPE.Bats && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
+                else if (spawnType == ENEMYTYPE.Bat && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
                 {
                     StartCoroutine(SpawnBat());
                 }

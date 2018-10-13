@@ -47,6 +47,21 @@ namespace Character
             animSpeed = playerAnim.speed;
         }
 
+        private void Update()
+        {
+            if (GMController.instance.gameStart)
+            {
+                if (startDeathCR)
+                {
+                    StartCoroutine(Death());
+                }
+                if(currentWeapon != null)
+                {
+                    currentWeapon.bullet.transform.position = currentWeapon.bulletSpawnPoint.position; 
+                }
+            }
+        }
+
         public void OnTriggerEnter2D(Collider2D collision)
         {
             // When player trigger an enemy
@@ -65,20 +80,26 @@ namespace Character
                 if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
-                   
-                    weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
-                
-                    weapon.weaponMembership = playerNumber;
-                    weapon.GrabAndDestroy(this);
+                    if (!weapon.isGrabbed)
+                    {
+                        weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
+                        weapon.bulletSpawnPoint = playerRightArm.transform.GetChild(1).transform;
+
+                        weapon.weaponMembership = playerNumber;
+                        weapon.GrabAndDestroy(this); 
+                    }
                 }
                 if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D key = collision.GetComponent<Weapon3D>();
-                    key.hand = playerRightArm.transform.GetChild(0).gameObject;
+                    if (!key.isGrabbed)
+                    {
+                        key.hand = playerRightArm.transform.GetChild(0).gameObject;
 
-                    key.weaponMembership = playerNumber;
-                    key.GrabAndDestroy(this);
-                    hasKey = true;
+                        key.weaponMembership = playerNumber;
+                        key.GrabAndDestroy(this);
+                        hasKey = true;
+                    }
                 }
                 if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()) && hasKey)
                 {
@@ -129,9 +150,8 @@ namespace Character
                     hasKey = false;
                     GMController.instance.canSpawnKey = true;
                     GMController.instance.SlowdownSpawns();
-                }
-
-                Destroy(first.gameObject);
+                }        
+                Destroy(first);
                 currentWeapon = null;
             }
         }
@@ -255,15 +275,6 @@ namespace Character
      
         #endregion
 
-        private void Update()
-        {
-            if (GMController.instance.gameStart)
-            {
-                if (startDeathCR)
-                {
-                    StartCoroutine(Death());
-                }
-            }
-        }
+     
     }
 }

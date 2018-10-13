@@ -224,7 +224,7 @@ public class GMController : MonoBehaviour
         for (int i = 0; i < startingEnemies.Length; i++)
         {
             allEnemies.Add(startingEnemies[i]);
-            if(startingEnemies[i].enemyType == ENEMYTYPE.Bats)
+            if(startingEnemies[i].enemyType == ENEMYTYPE.Bat)
             {
                 AddBatsCount();
             }
