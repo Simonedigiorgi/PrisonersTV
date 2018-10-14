@@ -19,7 +19,7 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 
     //public Gradient bulletColor; 
     //public float colorRange;
-    public abstract void EmitBullet();
+    public abstract void EmitBullet(Transform spawnPoint);
  
     protected void EmitAtLocation(Vector3 collision, Vector3 collisionNormal)
     {                       

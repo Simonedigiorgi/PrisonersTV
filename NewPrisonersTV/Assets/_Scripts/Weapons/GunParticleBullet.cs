@@ -6,12 +6,15 @@ using UnityEngine;
 public class GunParticleBullet : ParticleEmitterRaycastBullet
 {
     
-    public override void EmitBullet()
+    public override void EmitBullet(Transform spawnPoint)
     {
         //ParticleSystem.MainModule psMain = Gun.main;
         //psMain.startColor = bulletColor.Evaluate(colorRange);
         // psMain.gravityModifier = bulletGravity;
-        Gun.Emit(1); 
+        transform.position = spawnPoint.position;
+        transform.rotation = Quaternion.LookRotation(spawnPoint.right,spawnPoint.up);
+        Debug.Log(transform.position);  
+        Gun.Emit(1);  
     }
 
 }

@@ -145,7 +145,11 @@ namespace Character
                     hasKey = false;
                     GMController.instance.canSpawnKey = true;
                     GMController.instance.SlowdownSpawns();
-                }        
+                }  
+                if (first.CompareTag("Weapon"))
+                {
+                    Destroy(first.GetComponent<Weapon3D>().bullet.gameObject);
+                }
                 Destroy(first);
                 currentWeapon = null;
             }

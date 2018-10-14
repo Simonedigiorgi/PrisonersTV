@@ -54,7 +54,7 @@ public class Weapon3D : MonoBehaviour
             {
                 // Instantiate the bullet               
                 //Instantiate(bullet, new Vector3(spawnPoint.transform.position.x, spawnPoint.transform.position.y + .15f, spawnPoint.transform.position.z), spawnPoint.transform.rotation);
-                bullet.EmitBullet();
+                bullet.EmitBullet(spawnPoint.transform);
                 bullets--;
 
                 // Delay
@@ -99,6 +99,7 @@ public class Weapon3D : MonoBehaviour
 
         player.currentWeapon = GetComponent<Weapon3D>();
         bullet.membership = weaponMembership;
+        bullet.transform.parent = null;
 
         currentSpawn.SetCurrentWeaponToNull();
         currentSpawn.ResetTimer();
