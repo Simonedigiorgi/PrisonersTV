@@ -13,7 +13,6 @@ public class GunParticleBullet : ParticleEmitterRaycastBullet
         // psMain.gravityModifier = bulletGravity;
         transform.position = spawnPoint.position;
         transform.rotation = Quaternion.LookRotation(spawnPoint.right,spawnPoint.up);
-        Debug.Log(transform.position);  
         Gun.Emit(1);  
     }
 

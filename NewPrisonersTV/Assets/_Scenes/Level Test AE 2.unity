@@ -1848,7 +1848,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: lowGradeRate
-      value: 0.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
@@ -1863,7 +1863,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: midGradeRate
-      value: 0.679
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}

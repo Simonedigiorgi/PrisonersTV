@@ -24,34 +24,50 @@ public class WeaponSpawn : MonoBehaviour
     public WeaponList weaponList;
 
     private Weapon3D currentWeapon;
-    private float timer;
     private Animator anim;
-    private bool spawnDone = true;
+    private float timer;
+    private bool spawnDone = true;          // used to know if the spawn CR is completed
+    private int divide;                     // used for proportion
 
-    private WeaponSpawnRate biggerRate;
-    private WeaponSpawnRate mediumRate;
-    private WeaponSpawnRate lowerRate;
+    private WeaponSpawnRate biggerRate;     // the higher spawn rate between all the grades
+    private WeaponSpawnRate mediumRate;     // the mid spawn rate between all the grades
+    private WeaponSpawnRate lowerRate;      // the lower spawn rate between all the grades 
 
     void Start()
-    {
+    { 
         anim = GetComponent<Animator>();
         ResetTimer();
+
+        if (lowGradeRate > 0)
+            divide++;
+        if (midGradeRate > 0)
+            divide++;
+        if (specialGradeRate > 0)        
+            divide++;      
 
         // fix slider proportions 
         float sum = lowGradeRate + midGradeRate + specialGradeRate;
         if (sum > 1)
         {
             float difference = sum - 1;
-            lowGradeRate -= difference / 3;
-            midGradeRate -= difference / 3;
-            specialGradeRate -= difference / 3;
+
+            if(lowGradeRate > 0)
+                lowGradeRate -= difference / divide;
+            if(midGradeRate > 0)
+                midGradeRate -= difference / divide;
+            if(specialGradeRate > 0)
+                specialGradeRate -= difference / divide;
         }
         else if(sum < 1)
         {
             float difference = 1 - sum;
-            lowGradeRate += difference / 3;
-            midGradeRate += difference / 3;
-            specialGradeRate += difference / 3;
+
+            if(lowGradeRate > 0)
+                lowGradeRate += difference / divide;
+            if(midGradeRate > 0) 
+                midGradeRate += difference / divide;
+            if(specialGradeRate > 0)
+                specialGradeRate += difference / divide;
         }
         // find bigger, medium and lower rates between the sliders
         float bigger = Mathf.Max(lowGradeRate,midGradeRate,specialGradeRate);
@@ -111,7 +127,8 @@ public class WeaponSpawn : MonoBehaviour
             }        
 
             if (timer <= 0 && spawnDone && currentWeapon == null)
-            {
+            {  
+                // Random Spawn
                 if (totalRandom)
                 {
                     int i = Random.Range(0, 3);
@@ -129,11 +146,12 @@ public class WeaponSpawn : MonoBehaviour
                         StartCoroutine(SpawnWeaponFromList(weaponList.Special));
                     }
                 }
+                // Spawn With slider %
                 else
                 {
                     float i = Random.value;
 
-                    if (i <= biggerRate.rate) // bigger rate weapon grade
+                    if (i > 0 && i <= biggerRate.rate) // bigger rate weapon grade
                     {
                         StartCoroutine(SpawnWeaponFromList(biggerRate.weaponList));
                     }
@@ -166,7 +184,7 @@ public class WeaponSpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         anim.SetInteger("State", 0);        
         spawnDone = true;
-        yield return null;
+        yield return null; 
     }
 
     public Weapon3D GetCurrentWeapon()
@@ -177,7 +195,6 @@ public class WeaponSpawn : MonoBehaviour
     {
         currentWeapon = null;
     }
-
     public void ResetTimer()
     {
         timer = spawnTimer;

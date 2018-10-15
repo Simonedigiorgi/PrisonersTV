@@ -38,7 +38,7 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
             bullets = new ParticleSystem.Particle[Gun.main.maxParticles];
 
         int numParticlesAlive = Gun.GetParticles(bullets);
-
+        // cast ray from all the particles that are alive ti register hits 
         for (int i = 0; i < numParticlesAlive; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, rayLenght, obstacleMask);
