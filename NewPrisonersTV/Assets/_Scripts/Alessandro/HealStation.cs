@@ -7,15 +7,16 @@ public class HealStation : MonoBehaviour
 {
     public float coolDown;
     public int price;
+    [Range(1,3)]public int healAmount;
+
     private float timer;
     private bool avaible = true;
-	// Use this for initialization
+
 	void Start ()
     {
         timer = coolDown;
 	}
 
-    // Update is called once per frame
     void Update ()
     {
         if (GMController.instance.gameStart)
@@ -34,10 +35,10 @@ public class HealStation : MonoBehaviour
     public void UseStation(_CharacterController player)
     {
         if (avaible && GMController.instance.playerInfo[player.playerNumber].score >= price)
-        {
+        { 
             if (player.currentLife < player.m_CharStats.life)
             {
-                player.currentLife++;
+                player.currentLife += healAmount;
                 GMController.instance.playerInfo[player.playerNumber].score -= price;
                 Debug.Log("cured");
             }
