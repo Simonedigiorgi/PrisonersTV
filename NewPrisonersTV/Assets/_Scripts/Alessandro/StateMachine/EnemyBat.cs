@@ -41,6 +41,7 @@ public class EnemyBat : _EnemyController
         yield return new WaitForEndOfFrame();
 
         GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points; // add points to player
+        GMController.instance.UI.UpdateScoreUI(enemyMembership);//Update score on UI
         if(GMController.instance.GetBatsCount() == GMController.instance.maxBats)  // if the bat count is at max then restart the timer of all spawns to give some time between the kill and the new spawn
         {
             for (int i = 0; i < GMController.instance.enemySpawns.Length; i++)

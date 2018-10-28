@@ -31,6 +31,8 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool playerSetupDone = false;
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public int maxEnemy;
+    [HideInInspector] public UIManager3D UI;
+    [HideInInspector] public BonusWeapon bonusWeapon;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -68,8 +70,19 @@ public class GMController : MonoBehaviour
 
     private int totalScenes;                                                         // sum of all scenes needed for the game mode
 
+    private static int[] playersTotalScore;                                          // record the sum of all level scores for each player in the current game
+    private static Weapon3D[] weaponRewardFromLastLevel;                             // record the rewards choosen in the last level
+
+    [HideInInspector] public bool canSpawnKey = true;                                // true if the key is not in game
     private bool keyInGame = false;                                                  // true when the key can be spawned
-    public bool canSpawnKey = true;                                                  // true if the key is not in game
+
+    [HideInInspector] public bool gameEnded = false;                                 // true if the player reach and interact with the exit door. it disables pause
+    [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
+    [HideInInspector] public bool canChooseReward = false;
+    [HideInInspector] public bool readyForNextLevel = false;                         // if true allow to skip to the next level
+    [HideInInspector] public int[] DecrescentScoreOrder;
+    [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
+    [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
 
     void Awake() 
     {
@@ -87,15 +100,41 @@ public class GMController : MonoBehaviour
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
-        {            
+        {
+            if(playersTotalScore == null)
+               playersTotalScore = new int[playerRequired];
+            Debug.Log(playersTotalScore.Length);
+
+            // GETS THE REQUIRED COMPONENTS FOR THIS MODE
+            UI = FindObjectOfType<UIManager3D>();
+            bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
+            DecrescentScoreOrder = new int[playerRequired];
             playerInfo = new PlayerInfo[playerRequired];
+
             //spawn players and add them to the current playerInfo list
             PlayerSetup();
             StartEnemyCount();
             CollectEnemySpawns();
+
+            if (levelCount > 1) // if the current level is not the first of the current game
+            {
+                // add weapon of choice
+                for (int i = 0; i < playerInfo.Length; i++)
+                {
+                    Weapon3D rewardWeapon = Instantiate(weaponRewardFromLastLevel[i]);
+                    rewardWeapon.isReward = true;
+                    rewardWeapon.hand = playerInfo[i].playerController.playerRightArm.transform.GetChild(0).gameObject;
+                    rewardWeapon.weaponMembership = i;
+                    rewardWeapon.GrabAndDestroy(playerInfo[i].playerController);
+                }
+            }
+            else
+            {
+                weaponRewardFromLastLevel = new Weapon3D[playerRequired];
+            }
         }
 
-        // refill the scene pool
+        // refill the scene pool and reset total scores, weaponRewards
         if(currentMode == GAMEMODE.Menu)
         {
             currentEasyScenes = new List<string>(); 
@@ -113,6 +152,11 @@ public class GMController : MonoBehaviour
             {
                 currentHardScenes.Add(hardScenes[i]);
             }
+
+            weaponRewardFromLastLevel = null;
+            playersTotalScore = null;
+            levelCount = 0;
+            Debug.Log(playersTotalScore);
         }     
 
     }
@@ -128,6 +172,20 @@ public class GMController : MonoBehaviour
         {
             StartCoroutine(StartGameCD());
         }
+    }
+
+    public void AddWeaponReward(int i, Weapon3D weapon)
+    {
+        weaponRewardFromLastLevel[i] = weapon;
+    }
+
+    public int GetPlayerTotalScore(int i)
+    {
+        return playersTotalScore[i];
+    }
+    public void AddPlayersTotalScore(int i, int score)
+    {
+        playersTotalScore[i] += score;
     }
 
     public GAMEMODE GetGameMode()
@@ -270,6 +328,21 @@ public class GMController : MonoBehaviour
         }
         playerSetupDone = true;
     }
+    public void RewardOrder()
+    {
+        int[] tempOrder = new int[playerRequired];
+        for (int i = 0; i < tempOrder.Length; i++)
+        {
+            tempOrder[i] = playerInfo[i].score;
+        }
+        System.Array.Reverse(tempOrder);
+
+        for (int i = 0; i < tempOrder.Length; i++)
+        {
+            if (playerInfo[i].score == tempOrder[i])
+                DecrescentScoreOrder[i] = playerInfo[i].playerController.playerNumber;
+        }
+    }
 
     public IEnumerator StartGameCD()
     {
@@ -309,28 +382,6 @@ public class GMController : MonoBehaviour
         }
 
     }
-
-    //public IEnumerator WaitFadeOut()
-    //{
-    //    yield return new WaitForSecondsRealtime(fadeOutTime);
-    //}
-
-    //public void MoveToNextScene()
-    //{
-    //    int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-    //    if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
-    //    {
-    //        SceneManager.LoadScene(nextSceneIndex);
-    //    }
-    //}
-
-    //public void MoveToScene(int nextSceneIndex)
-    //{
-    //    if (SceneManager.sceneCountInBuildSettings > nextSceneIndex)
-    //    {
-    //        SceneManager.LoadScene(nextSceneIndex);
-    //    }
-    //}
 }
 
 

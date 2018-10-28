@@ -39,7 +39,9 @@ public class HealStation : MonoBehaviour
             if (player.currentLife < player.m_CharStats.life)
             {
                 player.currentLife += healAmount;
-                GMController.instance.playerInfo[player.playerNumber].score -= price;
+                GMController.instance.playerInfo[player.playerNumber].score -= price; // subtract payment from score
+                GMController.instance.UI.UpdateScoreUI(player.playerNumber); // update score on UI
+                GMController.instance.UI.UpdateLifeUI(player.playerNumber);// update life on UI
                 Debug.Log("cured");
             }
             timer = coolDown;

@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Sirenix.OdinInspector;
 using Character;
+using UnityEngine.UI;
 
 public class Weapon3D : MonoBehaviour
 {
     public GameObject hand;                                                                                    // Get the Player hand                                                                                        
     public Animator anim;
+    public Image weaponIcon;
 
     protected AudioSource source;                                                                                 // Get the Audiosource component
     protected BoxCollider2D coll;
@@ -35,9 +37,10 @@ public class Weapon3D : MonoBehaviour
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     [HideInInspector] public int weaponMembership;                                                                                       // Grabbed on player1 or player2
-    [HideInInspector] public WeaponSpawn currentSpawn; 
+    [HideInInspector] public WeaponSpawn currentSpawn;
+    [HideInInspector] public bool isReward = false;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         source = GetComponent<AudioSource>();
@@ -100,8 +103,10 @@ public class Weapon3D : MonoBehaviour
         player.currentWeapon = GetComponent<Weapon3D>();
         bullet.membership = weaponMembership;
         bullet.transform.parent = null;
-
-        currentSpawn.SetCurrentWeaponToNull();
-        currentSpawn.ResetTimer();
+        if (!isReward)
+        {
+            currentSpawn.SetCurrentWeaponToNull();
+            currentSpawn.ResetTimer();
+        }
     }
 }

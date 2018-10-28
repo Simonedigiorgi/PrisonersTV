@@ -7,8 +7,6 @@ namespace Character
 {
     public class _CharacterController : MonoBehaviour
     {
-        // *** ALWAYS REMEMBER TO DON'T RENAME THE PLAYER COMPONENT (Hand_Player1 || Hand_Player2)
-        // *** THE WEAPON SCRIPT WORKS WITH THAT
 
         [BoxGroup("Animator")] public Animator playerAnim;                                     // Get the Player Animators
 
@@ -39,6 +37,9 @@ namespace Character
         [HideInInspector] public bool hasKey = false;                                               // true if the player is holding the key
         [HideInInspector] public float animSpeed;
 
+        [HideInInspector] public bool canExit = false;                                              // if true ends the level
+        [HideInInspector] public bool canGetReward = false;                                         // true if the player already choose the reward
+
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -62,7 +63,10 @@ namespace Character
         {
             // When player trigger an enemy
             if (collision.CompareTag("Enemy"))
-                currentLife--;           
+            {
+                currentLife--;
+                GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
+            }
         }
 
         private void OnTriggerStay2D(Collider2D collision)
@@ -96,10 +100,19 @@ namespace Character
                         hasKey = true;
                     }
                 }
-                if (collision.CompareTag("Exit") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()) && hasKey)
+                if (collision.CompareTag("Exit") &&  hasKey)
                 {
-                    GMController.instance.NextLevel();
+                    //GMController.instance.NextLevel();
+                    canExit = true;
                 }
+            }
+        }
+
+        public void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Exit") )
+            {
+                canExit = false;
             }
         }
 
@@ -112,6 +125,8 @@ namespace Character
                 transform.position = spawnPoint.position;
                 isAlive = true;
                 currentLife = m_CharStats.life;
+                GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
+                GMController.instance.UI.SetContinueText(playerNumber); // set continue text if needed
                 canRespawn = false;
             }
         }
@@ -130,7 +145,8 @@ namespace Character
 
             DestroyCurrentWeapon();
             //reset score
-            GMController.instance.playerInfo[playerNumber].score = 0;
+            GMController.instance.playerInfo[playerNumber].score = 0; // reset score
+            GMController.instance.UI.UpdateScoreUI(playerNumber); // update score on UI
             rb.isKinematic = false;
             canRespawn = true;
         }

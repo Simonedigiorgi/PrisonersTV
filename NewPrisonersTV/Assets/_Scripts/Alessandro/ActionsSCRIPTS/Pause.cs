@@ -16,19 +16,22 @@ namespace GM.Actions
 
         private void PauseGame(GMStateController controller)
         {
-            for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
+            if (!GMController.instance.gameEnded)
             {
-                if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
+                for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
                 {
-                    GMController.instance.gameStart = false;                                        // pause the scripts
+                    if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
+                    {
+                        GMController.instance.gameStart = false;                                        // pause the scripts
 
-                    Time.timeScale = 0;
-                }
-                else if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
-                {
-                    GMController.instance.gameStart = true;
+                        Time.timeScale = 0;
+                    }
+                    else if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
+                    {
+                        GMController.instance.gameStart = true;
 
-                    Time.timeScale = 1; 
+                        Time.timeScale = 1;
+                    }
                 }
             }
         }

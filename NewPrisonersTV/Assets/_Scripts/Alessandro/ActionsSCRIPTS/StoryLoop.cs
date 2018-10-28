@@ -25,6 +25,7 @@ namespace GM.Actions
                     {
                         controller.m_GM.playerInfo[i].playerController.currentLife = 0;
                         controller.m_GM.playerInfo[i].playerController.isAlive = false;
+                        GMController.instance.UI.SetContinueText(i); // set continue text if needed
                     }
                 }
 
@@ -39,6 +40,7 @@ namespace GM.Actions
             {
                 GMController.instance.gameStart = false;
                 Debug.Log("GameLost");
+                Time.timeScale = 0;
             }
 
             // when the time is right enable the key spawn

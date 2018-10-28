@@ -27,6 +27,7 @@ namespace GM.Actions
                     {
                         controller.m_GM.playerInfo[i].playerController.currentLife = 0;
                         controller.m_GM.playerInfo[i].playerController.isAlive = false;
+                        GMController.instance.UI.SetContinueText(i); // set continue text if needed
                     }
                 }
 
