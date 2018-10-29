@@ -12,6 +12,7 @@ public class BonusWeapon : MonoBehaviour
     public int specialGrade;
     public Transform panel;
     public Button button;
+    public Sprite unknownIcon;
 
     [HideInInspector] public Weapon3D[] bonusPool;
 
@@ -24,15 +25,16 @@ public class BonusWeapon : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            Button currentButton; 
 
-            if(i < midGrade)
+            if(i <= midGrade)
             {
-                bonusPool[i] = weaponList.MidGrade[Random.Range(0, weaponList.MidGrade.Count)];   
+                bonusPool[i] = weaponList.MidGrade[Random.Range(0, weaponList.MidGrade.Count)];
+                ButtonCreation(i, bonusPool[i].weaponIcon.sprite);
             }
             else if(i > midGrade && i < specialGrade)
             {
                 bonusPool[i] = weaponList.Special[Random.Range(0, weaponList.Special.Count)];
+                ButtonCreation(i, bonusPool[i].weaponIcon.sprite);
             }
             else
             {
@@ -43,15 +45,21 @@ public class BonusWeapon : MonoBehaviour
                     bonusPool[i] = weaponList.MidGrade[Random.Range(0, weaponList.MidGrade.Count)];
                 else if(luck == 2)
                     bonusPool[i] = weaponList.Special[Random.Range(0, weaponList.Special.Count)];
+
+                ButtonCreation(i, unknownIcon);
             }
-            
-            currentButton = Instantiate(button, panel);
-            currentButton.gameObject.SetActive(true);
-            button.image = bonusPool[i].weaponIcon;      
-            currentButton.GetComponent<Reward>().poolIndex = i;
         }
         GMController.instance.UI.eventSystem.SetSelectedGameObject(panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.UI.eventSystem));
         GMController.instance.canChooseReward = true;
+    }
+
+    void ButtonCreation( int i, Sprite icon)
+    {
+        Button currentButton = Instantiate(button, panel);
+        currentButton.GetComponent<Image>().sprite = icon;
+        currentButton.gameObject.SetActive(true);
+        currentButton.GetComponent<Reward>().poolIndex = i;
+        Debug.Log(button.gameObject.GetComponent<Image>().sprite + "  " + currentButton.GetComponent<Reward>().poolIndex);
     }
 
    

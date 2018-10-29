@@ -22,7 +22,7 @@ public class GMController : MonoBehaviour
     // Variables used in order to trigger transitions when the game is not active
     [HideInInspector] public bool isGameActive = false;
     [HideInInspector] public bool canStartGameCD = false;                    // start game countdown coroutine
-    [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level
+    [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level, if false pause the game and skip updates and sets the players to inactive
 
     [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
     [HideInInspector] public Camera m_MainCamera;
@@ -76,11 +76,11 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool canSpawnKey = true;                                // true if the key is not in game
     private bool keyInGame = false;                                                  // true when the key can be spawned
 
-    [HideInInspector] public bool gameEnded = false;                                 // true if the player reach and interact with the exit door. it disables pause
+    [HideInInspector] public bool gameEnded = false;                                 // true if the player reach and interact with the exit door. it disables pause 
     [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
-    [HideInInspector] public bool canChooseReward = false;
+    [HideInInspector] public bool canChooseReward = false;                           // if true enables the reward script
     [HideInInspector] public bool readyForNextLevel = false;                         // if true allow to skip to the next level
-    [HideInInspector] public int[] DecrescentScoreOrder;
+    [HideInInspector] public int[] DecrescentScoreOrder;                             // list of players from the one with less score to the one with top score 
     [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
 
@@ -336,11 +336,12 @@ public class GMController : MonoBehaviour
             tempOrder[i] = playerInfo[i].score;
         }
         System.Array.Reverse(tempOrder);
-
+        
         for (int i = 0; i < tempOrder.Length; i++)
         {
             if (playerInfo[i].score == tempOrder[i])
                 DecrescentScoreOrder[i] = playerInfo[i].playerController.playerNumber;
+            Debug.Log(DecrescentScoreOrder[i]);
         }
     }
 

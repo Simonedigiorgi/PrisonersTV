@@ -160,10 +160,10 @@ public class UIManager3D : MonoBehaviour
             //wait for input
             yield return null;
        }
-
-        GMController.instance.RewardOrder();
-        //GMController.instance.bonusWeapon.gameObject.SetActive(true); 
+       // preparation for the rewards, set the player order, activates the reward panel and generate the reward pool
+        GMController.instance.RewardOrder(); 
         rewardPanel.SetActive(true);
+        resultsPanel.SetActive(false);
         GMController.instance.bonusWeapon.RewardPool();
        
         yield return null; 

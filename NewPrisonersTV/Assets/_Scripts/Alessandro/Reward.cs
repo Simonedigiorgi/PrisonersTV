@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class Reward : MonoBehaviour
 {
-    [HideInInspector] public int poolIndex;
+    [HideInInspector] public int poolIndex; 
 
     public void Selection()
     {    

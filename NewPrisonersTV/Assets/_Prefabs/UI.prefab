@@ -747,6 +747,7 @@ MonoBehaviour:
   specialGrade: 1
   panel: {fileID: 224535954319830652}
   button: {fileID: 114558673654090304}
+  unknownIcon: {fileID: 21300060, guid: 71ae9cf2cbddbbf46afcc9b7c0ab1d27, type: 3}
   bonusPool: []
 --- !u!114 &114366509253518740
 MonoBehaviour:
@@ -1001,7 +1002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1277,13 +1278,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5e888f03c05bc5042aca7512571c9f9c, type: 3}
+  m_Sprite: {fileID: 21300330, guid: 71ae9cf2cbddbbf46afcc9b7c0ab1d27, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
