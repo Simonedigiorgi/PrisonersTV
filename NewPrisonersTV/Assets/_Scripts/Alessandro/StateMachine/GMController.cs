@@ -335,13 +335,17 @@ public class GMController : MonoBehaviour
         {
             tempOrder[i] = playerInfo[i].score;
         }
-        System.Array.Reverse(tempOrder);
-        
+        System.Array.Sort(tempOrder);
+
         for (int i = 0; i < tempOrder.Length; i++)
         {
-            if (playerInfo[i].score == tempOrder[i])
-                DecrescentScoreOrder[i] = playerInfo[i].playerController.playerNumber;
-            Debug.Log(DecrescentScoreOrder[i]);
+            for (int y = 0; y < playerInfo.Length; y++)
+            {
+                if (playerInfo[y].score == tempOrder[i])
+                {
+                    DecrescentScoreOrder[i] = playerInfo[y].playerController.playerNumber;
+                }
+            }
         }
     }
 

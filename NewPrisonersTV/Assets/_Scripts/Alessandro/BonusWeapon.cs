@@ -25,7 +25,6 @@ public class BonusWeapon : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-
             if(i <= midGrade)
             {
                 bonusPool[i] = weaponList.MidGrade[Random.Range(0, weaponList.MidGrade.Count)];
@@ -59,7 +58,6 @@ public class BonusWeapon : MonoBehaviour
         currentButton.GetComponent<Image>().sprite = icon;
         currentButton.gameObject.SetActive(true);
         currentButton.GetComponent<Reward>().poolIndex = i;
-        Debug.Log(button.gameObject.GetComponent<Image>().sprite + "  " + currentButton.GetComponent<Reward>().poolIndex);
     }
 
    
