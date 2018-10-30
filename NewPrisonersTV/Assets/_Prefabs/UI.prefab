@@ -344,7 +344,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4516397866077672}
   - component: {fileID: 114006306092757922}
-  - component: {fileID: 114221800192725146}
+  - component: {fileID: 114564401776964026}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -685,24 +685,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
---- !u!114 &114221800192725146
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1527436163190024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalAxis: Player1_Horizontal
-  m_VerticalAxis: Player1_Vertical
-  m_SubmitButton: Player1_Button_A
-  m_CancelButton: Player1_Button_B
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &114222185277145830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -761,6 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objective: {fileID: 224980260413352782}
+  objectiveText: {fileID: 114045093890972532}
   hammoHorizontalOffset: 60
   hammoVerticalOffset: 0
   playerUI:
@@ -1042,6 +1025,24 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114564401776964026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527436163190024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b8ade94ad00f88438a4ea7e46eaeb45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Player1_Horizontal
+  m_VerticalAxis: Player1_Vertical
+  m_SubmitButton: Player1_Button_A
+  m_CancelButton: Player1_Button_B
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
 --- !u!114 &114628864810229452
 MonoBehaviour:
   m_ObjectHideFlags: 1

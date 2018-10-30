@@ -2484,17 +2484,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114358348286991418, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
-        type: 2}
-      propertyPath: m_ControlConfig
-      value: 
-      objectReference: {fileID: 11400000, guid: 4277a8be0a3933a44a6ecc19180e9620,
-        type: 2}
-    - target: {fileID: 114802523139137974, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
-        type: 2}
-      propertyPath: maxEnemy
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
   m_IsPrefabParent: 0

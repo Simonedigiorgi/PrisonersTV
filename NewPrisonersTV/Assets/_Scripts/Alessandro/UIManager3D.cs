@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class UIManager3D : MonoBehaviour
 {
     public Transform objective;
+    public Text objectiveText;
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
     [Tooltip("The vertical distance of the UI hammo text to the player")] public float hammoVerticalOffset; 
     public GameObject[] playerUI;
@@ -40,7 +41,8 @@ public class UIManager3D : MonoBehaviour
             playerContinue = new Text[GMController.instance.GetPlayerNum()];
             lifeBar = new SpriteRenderer[GMController.instance.GetPlayerNum()];
             inputModule = eventSystem.GetComponent<StandaloneInputModule>();
-            //Get the components for all the players
+
+            //Get the components and sets/enables UI for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
                 playerHand[i] = GMController.instance.playerInfo[i].playerController.playerRightArm.transform.GetChild(0).gameObject;
@@ -49,6 +51,7 @@ public class UIManager3D : MonoBehaviour
                 hammo[i] = playerUI[i].transform.GetChild(1).GetComponent<Text>();
                 score[i] = playerUI[i].transform.GetChild(2).GetComponent<Text>();
                 resultsUI[i].gameObject.SetActive(true);
+                UpdateScoreUI(i);
             }
         }
     }
@@ -84,11 +87,10 @@ public class UIManager3D : MonoBehaviour
             }
             if (GMController.instance.GetGameMode() == GAMEMODE.Story)
             {
-                objective.GetChild(0).GetComponent<Text>().text = "Remaining Time: " + (int)GMController.instance.currentGameTime;
-                if (!GMController.instance.canResultCR)
-                {
+                if (GMController.instance.gameStart)
+                    objectiveText.text = "Remaining Time: " + (int)GMController.instance.currentGameTime;
+                if (!GMController.instance.canResultCR)                
                     StartCoroutine(ShowResults()); 
-                }
             }
         }
   

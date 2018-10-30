@@ -8,11 +8,10 @@ using UnityEngine.UI;
 
 public class Weapon3D : MonoBehaviour
 {
-    public GameObject hand;                                                                                    // Get the Player hand                                                                                        
     public Animator anim;
     public Image weaponIcon;
 
-    protected AudioSource source;                                                                                 // Get the Audiosource component
+    protected AudioSource source;                                                                              // Get the Audiosource component
     protected BoxCollider2D coll;
     protected BoxCollider2D collTrigger;// Weapon collider
     protected Rigidbody2D rb;
@@ -21,6 +20,7 @@ public class Weapon3D : MonoBehaviour
 
     [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
     [BoxGroup("Controls")] public int bullets;                                                                  // How many bullets remaining  
+    [BoxGroup("Controls")] public int bulletsIfReward;
 
     [BoxGroup("King of weapon")] public bool autoFire;                                                          // Has autofire     
 
@@ -33,6 +33,7 @@ public class Weapon3D : MonoBehaviour
     [BoxGroup("Sounds")] public AudioClip emptySound;                                                           // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float emptyVolume;                                            // Grab volume
 
+    [HideInInspector]public GameObject hand;                                                                    // the Player hand                                                                                        
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     private float lastShot = 0.0f;                                                                              // Need to be always at 0;
 

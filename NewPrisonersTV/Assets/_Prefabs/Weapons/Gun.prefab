@@ -431,12 +431,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e69135de2da214792359519c2255cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 0}
   anim: {fileID: 95161733415446858}
   weaponIcon: {fileID: 114016769918838440}
   bullet: {fileID: 114993137561415486}
   fireRate: 0.15
   bullets: 500
+  bulletsIfReward: 25
   autoFire: 0
   shootSound: {fileID: 8300000, guid: ed634c9fab282eb42abcb3b4c95e549e, type: 3}
   shootVolume: 0.1
@@ -444,6 +444,7 @@ MonoBehaviour:
   grabVolume: 0.2
   emptySound: {fileID: 8300000, guid: 10406121de413a649b9105f6224be9f1, type: 3}
   emptyVolume: 0.1
+  hand: {fileID: 0}
   isGrabbed: 0
   weaponMembership: 0
   currentSpawn: {fileID: 0}

@@ -6707,14 +6707,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54241a32eafe5d747b6e510033c46b83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 0}
   anim: {fileID: 0}
-  bulletList: {fileID: 0}
-  bulletType: 0
+  weaponIcon: {fileID: 0}
   bullet: {fileID: 0}
-  bulletSpawnPoint: {fileID: 0}
   fireRate: 0
   bullets: 0
+  bulletsIfReward: 0
   autoFire: 0
   shootSound: {fileID: 0}
   shootVolume: 0.1
@@ -6722,9 +6720,11 @@ MonoBehaviour:
   grabVolume: 0.2
   emptySound: {fileID: 0}
   emptyVolume: 0.1
+  hand: {fileID: 0}
   isGrabbed: 0
   weaponMembership: 0
   currentSpawn: {fileID: 0}
+  isReward: 0
 --- !u!114 &114802523139137974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6752,6 +6752,8 @@ MonoBehaviour:
   playerSetupDone: 0
   currentGameTime: 0
   maxEnemy: 10
+  UI: {fileID: 0}
+  bonusWeapon: {fileID: 0}
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -6774,6 +6776,13 @@ MonoBehaviour:
   enemySpawns: []
   allEnemies: []
   canSpawnKey: 1
+  gameEnded: 0
+  canResultCR: 1
+  canChooseReward: 0
+  readyForNextLevel: 0
+  DecrescentScoreOrder: 
+  lastPlayerThatChooseReward: 0
+  rewardIndex: 0
 --- !u!114 &114817885106181184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6851,6 +6860,8 @@ MonoBehaviour:
   canHeal: 1
   hasKey: 0
   animSpeed: 0
+  canExit: 0
+  canGetReward: 0
 --- !u!114 &114948911184386440
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6884,6 +6895,8 @@ MonoBehaviour:
   canHeal: 1
   hasKey: 0
   animSpeed: 0
+  canExit: 0
+  canGetReward: 0
 --- !u!114 &114961770051448066
 MonoBehaviour:
   m_ObjectHideFlags: 1

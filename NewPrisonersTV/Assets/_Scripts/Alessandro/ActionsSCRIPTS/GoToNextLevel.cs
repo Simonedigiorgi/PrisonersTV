@@ -15,14 +15,11 @@ namespace GM.Actions
         }
 
         private void NextGame(GMStateController controller)
-        {
-          //for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
-          //{
-                if (GMController.instance.readyForNextLevel)// && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.interactInput.ToString()))
-                {
-                    GMController.instance.NextLevel();
-                }
-          //}
+        {     
+            if (GMController.instance.readyForNextLevel)
+            {
+                GMController.instance.NextLevel();
+            }
         }
     }
 }

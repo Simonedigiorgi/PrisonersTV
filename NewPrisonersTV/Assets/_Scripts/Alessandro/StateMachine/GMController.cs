@@ -10,29 +10,13 @@ using Sirenix.OdinInspector;
 
 public class GMController : MonoBehaviour
 {
-    public float startGameTimer;
+    #region EXPOSED VARIABLES
+    public int startGameTimer;
     public float deathTimer = 0f;
     public float slowdownTimerMultiplier; 
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
-
-    // Needed for Singleton pattern 
-    [HideInInspector] public static GMController instance = null;
-    // Variables used in order to trigger transitions when the game is not active
-    [HideInInspector] public bool isGameActive = false;
-    [HideInInspector] public bool canStartGameCD = false;                    // start game countdown coroutine
-    [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level, if false pause the game and skip updates and sets the players to inactive
-
-    [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
-    [HideInInspector] public Camera m_MainCamera;
-
-    // Needed for game mode setup
-    [HideInInspector] public bool playerSetupDone = false;
-    [HideInInspector] public float currentGameTime;
-    [HideInInspector] public int maxEnemy;
-    [HideInInspector] public UIManager3D UI;
-    [HideInInspector] public BonusWeapon bonusWeapon;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -49,6 +33,27 @@ public class GMController : MonoBehaviour
 
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
+    #endregion
+
+    // Needed for Singleton pattern 
+    [HideInInspector] public static GMController instance = null;
+    // Variables used in order to trigger transitions when the game is not active
+    [HideInInspector] public bool isGameActive = false;                      // state machine stuff
+    [HideInInspector] public bool canStartGameCD = false;                    // start game countdown coroutine
+    [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level, if false pause the game, skips updates and sets the players to inactive
+    [HideInInspector] public bool inGame = false;                            // true when in a level scene, enables the state change to the currentState
+
+    [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
+    [HideInInspector] public Camera m_MainCamera;
+
+    // Needed for game mode setup
+    [HideInInspector] public bool playerSetupDone = false;
+    [HideInInspector] public float currentGameTime;
+    [HideInInspector] public UIManager3D UI;
+    [HideInInspector] public BonusWeapon bonusWeapon;
+
+    #region ENEMIES/SPAWNS INFO
+    [HideInInspector] public int maxEnemy;
 
     [HideInInspector] public EnemySpawn[] enemySpawns;
     [HideInInspector] public List<_EnemyController> allEnemies;
@@ -58,7 +63,9 @@ public class GMController : MonoBehaviour
     private int currentEnemyCount;
     private int currentBats;
     private int currentNinja;
+    #endregion
 
+    #region STATIC VARIABLES
     private static int playerRequired;                                              // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
@@ -72,10 +79,12 @@ public class GMController : MonoBehaviour
 
     private static int[] playersTotalScore;                                          // record the sum of all level scores for each player in the current game
     private static Weapon3D[] weaponRewardFromLastLevel;                             // record the rewards choosen in the last level
+    #endregion
 
-    [HideInInspector] public bool canSpawnKey = true;                                // true if the key is not in game
     private bool keyInGame = false;                                                  // true when the key can be spawned
-
+    [HideInInspector] public bool canSpawnKey = true;                                // true if the key is not in game
+    
+    #region END GAME/REWARDS VARIABLES
     [HideInInspector] public bool gameEnded = false;                                 // true if the player reach and interact with the exit door. it disables pause 
     [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
     [HideInInspector] public bool canChooseReward = false;                           // if true enables the reward script
@@ -83,6 +92,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public int[] DecrescentScoreOrder;                             // list of players from the one with less score to the one with top score 
     [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
+    #endregion
 
     void Awake() 
     {
@@ -94,16 +104,17 @@ public class GMController : MonoBehaviour
         //If instance already exists and it's not this:
         else if (instance != this)
             Destroy(gameObject);
-
+        // Sum up scenes and enemies
         totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
         maxEnemy = maxBats + maxNinja;
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
         {
-            if(playersTotalScore == null)
-               playersTotalScore = new int[playerRequired];
-            Debug.Log(playersTotalScore.Length);
+            inGame = true;
+            // if the total score array doesn't exist the initialize one
+            if (playersTotalScore == null)
+                playersTotalScore = new int[playerRequired];
 
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
@@ -111,21 +122,18 @@ public class GMController : MonoBehaviour
             DecrescentScoreOrder = new int[playerRequired];
             playerInfo = new PlayerInfo[playerRequired];
 
-            //spawn players and add them to the current playerInfo list
+            //spawn players and add them to the current playerInfo list, collect spawn and enemy info
             PlayerSetup();
             StartEnemyCount();
             CollectEnemySpawns();
 
-            if (levelCount > 1) // if the current level is not the first of the current game
+            // if the current level is not the first of the current game
+            if (levelCount > 1)
             {
                 // add weapon of choice
                 for (int i = 0; i < playerInfo.Length; i++)
                 {
-                    Weapon3D rewardWeapon = Instantiate(weaponRewardFromLastLevel[i]);
-                    rewardWeapon.isReward = true;
-                    rewardWeapon.hand = playerInfo[i].playerController.playerRightArm.transform.GetChild(0).gameObject;
-                    rewardWeapon.weaponMembership = i;
-                    rewardWeapon.GrabAndDestroy(playerInfo[i].playerController);
+                    SetStartingWeapon(i);
                 }
             }
             else
@@ -137,6 +145,7 @@ public class GMController : MonoBehaviour
         // refill the scene pool and reset total scores, weaponRewards
         if(currentMode == GAMEMODE.Menu)
         {
+            inGame = false;
             currentEasyScenes = new List<string>(); 
             for (int i = 0; i < easyScenes.Count; i++)
             {
@@ -156,9 +165,7 @@ public class GMController : MonoBehaviour
             weaponRewardFromLastLevel = null;
             playersTotalScore = null;
             levelCount = 0;
-            Debug.Log(playersTotalScore);
         }     
-
     }
 
     private void Start()
@@ -174,9 +181,18 @@ public class GMController : MonoBehaviour
         }
     }
 
-    public void AddWeaponReward(int i, Weapon3D weapon)
+    private void SetStartingWeapon(int playerNumber)
     {
-        weaponRewardFromLastLevel[i] = weapon;
+        Weapon3D rewardWeapon = Instantiate(weaponRewardFromLastLevel[playerNumber]);
+        rewardWeapon.isReward = true;
+        rewardWeapon.bullets = rewardWeapon.bulletsIfReward;
+        rewardWeapon.hand = playerInfo[playerNumber].playerController.playerRightArm.transform.GetChild(0).gameObject;
+        rewardWeapon.weaponMembership = playerNumber;
+        rewardWeapon.GrabAndDestroy(playerInfo[playerNumber].playerController);
+    }
+    public void AddWeaponReward(int playerNumber, Weapon3D weapon)
+    {
+        weaponRewardFromLastLevel[playerNumber] = weapon;
     }
 
     public int GetPlayerTotalScore(int i)
@@ -352,12 +368,16 @@ public class GMController : MonoBehaviour
     public IEnumerator StartGameCD()
     {
         // game start countdown
-        canStartGameCD = false; 
-        yield return new WaitForSeconds(startGameTimer);
-        gameStart = true;
-        yield return null;
-    }
+        canStartGameCD = false;
+        for (int i = 0; i < startGameTimer; i++)
+        {
+            UI.objectiveText.text = "Game Starts in " + (startGameTimer-i);
+            yield return new WaitForSeconds(1);
+        } 
 
+        gameStart = true;
+        yield return null; 
+    }
     public void NextLevel()
     {
         AddLevelCount();

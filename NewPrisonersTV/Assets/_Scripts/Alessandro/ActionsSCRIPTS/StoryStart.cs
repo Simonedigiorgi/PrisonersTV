@@ -18,7 +18,6 @@ namespace GM.Actions
         {
             Time.timeScale = 1;
             GMController.instance.currentGameTime = GMController.instance.gameTimer;
-
             GMController.instance.canStartGameCD = true;
         }
     }
