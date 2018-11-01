@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
   m_Name: EnemyStatsBat
   m_EditorClassIdentifier: 
-  life: 3
+  life: 100
   enemyLevel: 2
   points: 10
   attackView: 10
@@ -21,6 +21,12 @@ MonoBehaviour:
   speed: 5
   flashingSpeed: 0.1
   myStartDirection: 1
+  weakness:
+  - type: 1
+    value: 2
+  resistance:
+  - type: 0
+    value: 3
   swoopMoreSlowly: 2.571
   sinusoidalMovement: 2
   ShurikenCooldown: 0

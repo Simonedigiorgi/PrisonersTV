@@ -17,6 +17,8 @@ public class GMController : MonoBehaviour
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
+    public Transform decalDepot;
+    public DecalDepot decalList;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;

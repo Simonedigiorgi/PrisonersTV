@@ -15,6 +15,8 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Movement speed")] public int speed;
     [Tooltip("The speed of the flash when enemy is hitted")] public float flashingSpeed;
     [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;
+    [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
+    [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
     //bat stats
     [Range(0.5f, 3)]
     [BoxGroup("Bat Only")][Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;

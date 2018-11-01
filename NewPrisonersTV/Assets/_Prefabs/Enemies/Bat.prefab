@@ -131,20 +131,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EnemyStats: {fileID: 11400000, guid: 6a38d5ace53a7984cbf895ef83147caa, type: 2}
+  hasDecalsOn: 0
+  DecalsOn: []
+  enemyAnim: {fileID: 0}
+  animSpeed: 0
   enemyType: 2
+  currentLife: 0
   rb: {fileID: 0}
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
-  startSwoopPosition: {x: 0, y: 0, z: 0}
-  endSwoopPosition: {x: 0, y: 0, z: 0}
+  gotHit: 0
   startDieCoroutine: 0
   playerSeen: 0
+  startSwoopPosition: {x: 0, y: 0, z: 0}
+  endSwoopPosition: {x: 0, y: 0, z: 0}
   swoopCoroutineInExecution: 0
   startSwoopCR: 0
-  currentLife: 0
 --- !u!212 &212083966763908662
 SpriteRenderer:
   m_ObjectHideFlags: 1

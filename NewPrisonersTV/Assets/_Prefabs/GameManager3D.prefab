@@ -1399,6 +1399,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1437984083360488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4227155104142494}
+  m_Layer: 0
+  m_Name: DecalDepot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1454045442659900
 GameObject:
   m_ObjectHideFlags: 1
@@ -4055,6 +4070,19 @@ Transform:
   m_Father: {fileID: 4283417502649708}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4227155104142494
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1437984083360488}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4989890872566298}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4227584622613952
 Transform:
   m_ObjectHideFlags: 1
@@ -6284,6 +6312,7 @@ Transform:
   - {fileID: 4661151938436950}
   - {fileID: 4181758358814508}
   - {fileID: 4090965039401886}
+  - {fileID: 4227155104142494}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6745,15 +6774,8 @@ MonoBehaviour:
   playerSpawnPoint:
   - {fileID: 4117232649003286}
   - {fileID: 4918786564526908}
-  isGameActive: 0
-  canStartGameCD: 0
-  gameStart: 0
-  m_MainCamera: {fileID: 0}
-  playerSetupDone: 0
-  currentGameTime: 0
-  maxEnemy: 10
-  UI: {fileID: 0}
-  bonusWeapon: {fileID: 0}
+  decalDepot: {fileID: 4227155104142494}
+  decalList: {fileID: 11400000, guid: f079fa4ecbf7641408e30b35f24fe4ac, type: 2}
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -6773,6 +6795,16 @@ MonoBehaviour:
   - Level Test AE 6
   maxBats: 5
   maxNinja: 5
+  isGameActive: 0
+  canStartGameCD: 0
+  gameStart: 0
+  inGame: 0
+  m_MainCamera: {fileID: 0}
+  playerSetupDone: 0
+  currentGameTime: 0
+  UI: {fileID: 0}
+  bonusWeapon: {fileID: 0}
+  maxEnemy: 10
   enemySpawns: []
   allEnemies: []
   canSpawnKey: 1

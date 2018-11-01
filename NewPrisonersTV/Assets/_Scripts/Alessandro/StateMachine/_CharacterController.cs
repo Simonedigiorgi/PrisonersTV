@@ -164,7 +164,15 @@ namespace Character
                 }  
                 if (first.CompareTag("Weapon"))
                 {
-                    Destroy(first.GetComponent<Weapon3D>().bullet.gameObject);
+                    ParticleEmitterRaycastBullet bullet = first.GetComponent<Weapon3D>().bullet;
+                    if (bullet.leaveDecal)// destroy the decals first
+                    {
+                        for (int i = 0; i < bullet.decalPool.Length; i++)
+                        {
+                            Destroy(bullet.decalPool[i]);
+                        }
+                    }                   
+                    Destroy(bullet.gameObject);
                 }
                 Destroy(first);
                 currentWeapon = null;

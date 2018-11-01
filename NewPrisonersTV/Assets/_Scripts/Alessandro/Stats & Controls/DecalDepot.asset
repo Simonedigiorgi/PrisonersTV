@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef960dcf456727e4db6a7e64158cb297, type: 3}
+  m_Name: DecalDepot
+  m_EditorClassIdentifier: 
+  depot:
+  - decalType: 0
+    decal: {fileID: 1143596360587356, guid: c2785d88bc47ff04da0ab436657c2b41, type: 2}

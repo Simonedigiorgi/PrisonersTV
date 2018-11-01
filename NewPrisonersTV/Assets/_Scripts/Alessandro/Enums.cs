@@ -12,4 +12,8 @@ public enum STARTDIRECTION { Right, Left }
 
 public enum ENEMYTYPE { None, Random, Bat, Ninja }
 
+public enum DAMAGETYPE { Impact, Slash, Electric, Laser, Fire, Ice}
+
+public enum DECALTYPE { Gun}
+
 

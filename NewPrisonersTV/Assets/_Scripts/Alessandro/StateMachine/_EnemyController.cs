@@ -9,6 +9,10 @@ namespace AI
     public abstract class _EnemyController : MonoBehaviour
     {
         public EnemyStats m_EnemyStats;
+
+        [HideInInspector] public bool hasDecalsOn;
+        [HideInInspector] public List<Transform> DecalsOn;
+
         [HideInInspector] public Animator enemyAnim;
         [HideInInspector] public float animSpeed;
 

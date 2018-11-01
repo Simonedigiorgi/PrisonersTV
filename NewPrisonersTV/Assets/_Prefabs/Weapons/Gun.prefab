@@ -461,14 +461,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gun: {fileID: 198763332772197922}
-  damage: 1
+  decalType: 0
+  maxDecals: 2
+  damageType: 01000000
+  damage: 30
   rayLenght: 1
   bulletGravity: 0
-  canBounce: 0
+  bulletSpeed: 30
+  numberOfHits: 3
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 2304
-  afterBurn: {fileID: 0}
+    m_Bits: 18688
+  leaveDecal: 1
+  canPerforate: 0
+  canBounce: 0
+  decalPool: []
+  decalScale: {x: 0, y: 0, z: 0}
   membership: 0
 --- !u!198 &198763332772197922
 ParticleSystem:
@@ -530,7 +538,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -546948758
+  randomSeed: 786898964
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -723,7 +731,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -764,7 +772,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -927,7 +935,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     maxNumParticles: 1000
-    size3D: 0
+    size3D: 1
     rotation3D: 1
     gravityModifier:
       serializedVersion: 2

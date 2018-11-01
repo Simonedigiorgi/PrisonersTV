@@ -20,7 +20,7 @@ public class Weapon3D : MonoBehaviour
 
     [BoxGroup("Controls")] public float fireRate;                                                               // Rate of fire
     [BoxGroup("Controls")] public int bullets;                                                                  // How many bullets remaining  
-    [BoxGroup("Controls")] public int bulletsIfReward;
+    [BoxGroup("Controls")] public int bulletsIfReward;                                                          // How many bullets if it was a reward
 
     [BoxGroup("King of weapon")] public bool autoFire;                                                          // Has autofire     
 

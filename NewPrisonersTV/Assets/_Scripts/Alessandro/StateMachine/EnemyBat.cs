@@ -51,7 +51,15 @@ public class EnemyBat : _EnemyController
         }
         GMController.instance.SubBatsCount();
         GMController.instance.allEnemies.Remove(this);
-        
+        // if has decals on, puts them in the general depot
+        if(hasDecalsOn)
+        {
+            for (int i = 0; i < DecalsOn.Count; i++)
+            {
+                DecalsOn[i].transform.parent = GMController.instance.decalDepot;
+                DecalsOn[i].transform.position = GMController.instance.decalDepot.position;
+            }
+        }
       
         Destroy(gameObject);
     }
