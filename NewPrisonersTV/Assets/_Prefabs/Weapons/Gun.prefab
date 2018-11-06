@@ -434,9 +434,25 @@ MonoBehaviour:
   anim: {fileID: 95161733415446858}
   weaponIcon: {fileID: 114016769918838440}
   bullet: {fileID: 114993137561415486}
+  perfBullet: 0
   fireRate: 0.15
   bullets: 500
   bulletsIfReward: 25
+  numberOfHits: 5
+  rayLenght: 1
+  bulletLifeTime: 2
+  bulletGravity: 0
+  bulletSpeed: 30
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 2304
+  decalType: 0
+  maxDecals: 0
+  damage: 30
+  damageType: 
+  leaveDecal: 0
+  canPerforate: 0
+  canBounce: 0
   autoFire: 0
   shootSound: {fileID: 8300000, guid: ed634c9fab282eb42abcb3b4c95e549e, type: 3}
   shootVolume: 0.1
@@ -449,6 +465,7 @@ MonoBehaviour:
   weaponMembership: 0
   currentSpawn: {fileID: 0}
   isReward: 0
+  currentDepot: {fileID: 0}
 --- !u!114 &114993137561415486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -461,19 +478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Gun: {fileID: 198763332772197922}
-  decalType: 0
-  maxDecals: 2
+  weapon: {fileID: 114107782104601910}
   damageType: 01000000
   damage: 30
-  rayLenght: 1
-  bulletGravity: 0
-  bulletSpeed: 30
-  numberOfHits: 3
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 18688
-  leaveDecal: 1
-  canPerforate: 0
   canBounce: 0
   decalPool: []
   decalScale: {x: 0, y: 0, z: 0}
@@ -934,7 +941,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     size3D: 1
     rotation3D: 1
     gravityModifier:
@@ -2888,8 +2895,8 @@ ParticleSystem:
   CollisionModule:
     enabled: 0
     serializedVersion: 3
-    type: 0
-    collisionMode: 0
+    type: 1
+    collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
@@ -2944,7 +2951,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2985,7 +2992,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.33
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3028,24 +3035,25 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 2304
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
-    collisionShape0: {fileID: 0}
+    collisionShape0: {fileID: 4061767963005278, guid: 1a94798ab697d054697981bb20b43cd5,
+      type: 2}
     collisionShape1: {fileID: 0}
     collisionShape2: {fileID: 0}
     collisionShape3: {fileID: 0}
     collisionShape4: {fileID: 0}
     collisionShape5: {fileID: 0}
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     radiusScale: 1
   SubModule:
@@ -3054,7 +3062,7 @@ ParticleSystem:
     subEmitters:
     - serializedVersion: 2
       emitter: {fileID: 0}
-      type: 0
+      type: 2
       properties: 0
   LightsModule:
     enabled: 0
@@ -3371,7 +3379,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   CustomDataModule:
     enabled: 0
-    mode0: 0
+    mode0: 1
     vectorComponentCount0: 4
     color0:
       serializedVersion: 2

@@ -4,7 +4,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using AI;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour
+{
 
     [BoxGroup("Controls")] public float speed;                                                          // Bullet speed
     [BoxGroup("Controls")] public float destroyAfter;                                                   // Destroy the bullet after seconds

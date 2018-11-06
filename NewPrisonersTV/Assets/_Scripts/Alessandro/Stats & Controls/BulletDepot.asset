@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef960dcf456727e4db6a7e64158cb297, type: 3}
+  m_Name: BulletDepot
+  m_EditorClassIdentifier: 
+  depot:
+  - bulletType: 0
+    bullet: {fileID: 1635732916961706, guid: 1fd78b61409d37a4abd9274c9ffb37dd, type: 2}
+    isActive: 0
+    numberOfHits: 0
+    dir: {x: 0, y: 0, z: 0}
+    newDir: {x: 0, y: 0, z: 0}
+    collider: {fileID: 0}

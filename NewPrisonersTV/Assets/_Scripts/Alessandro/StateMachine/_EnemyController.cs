@@ -77,8 +77,17 @@ namespace AI
             if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
             {
                 direction *= -1; 
+            }        
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if(collision.CompareTag("Bullet"))
+            {
+                collision.transform.parent.GetComponent<PerforationBullet>().DoDamage(this, collision.transform.GetSiblingIndex());
+                Debug.Log("hit");
             }
-        }    
+        }
 
         //Flash coroutine called on hit with bullet
         public IEnumerator Flash()

@@ -13,12 +13,14 @@ public class GMController : MonoBehaviour
     #region EXPOSED VARIABLES
     public int startGameTimer;
     public float deathTimer = 0f;
-    public float slowdownTimerMultiplier; 
+    public float slowdownTimerMultiplier;
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
     public Transform decalDepot;
-    public DecalDepot decalList;
+    public BulletDepot decalPool;
+    public Transform bulletPool;
+    public BulletDepot bulletDepot;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -56,7 +58,7 @@ public class GMController : MonoBehaviour
 
     #region ENEMIES/SPAWNS INFO
     [HideInInspector] public int maxEnemy;
-
+   
     [HideInInspector] public EnemySpawn[] enemySpawns;
     [HideInInspector] public List<_EnemyController> allEnemies;
 
@@ -343,6 +345,7 @@ public class GMController : MonoBehaviour
             playerInfo[i] = new PlayerInfo(player, player.GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
 
             playerInfo[i].playerController.playerNumber = i;
+            bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
         }
         playerSetupDone = true;
     }

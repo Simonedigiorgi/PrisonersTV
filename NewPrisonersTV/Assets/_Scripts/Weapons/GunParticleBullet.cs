@@ -10,15 +10,13 @@ public class GunParticleBullet : ParticleEmitterRaycastBullet
     {
         ParticleSystem.MainModule psMain = Gun.main;
         //Stat changes
-        psMain.startSpeed = bulletSpeed;
-        psMain.gravityModifier = bulletGravity;
-
-        if(canBounce || canPerforate)
-            currentHits = numberOfHits+1;
+        psMain.startLifetime = weapon.bulletLifeTime;
+        psMain.startSpeed = weapon.bulletSpeed;
+        psMain.gravityModifier = weapon.bulletGravity;        
 
         // emission
         transform.position = spawnPoint.position;
         transform.rotation = Quaternion.LookRotation(spawnPoint.right,spawnPoint.up);
-        Gun.Emit(1);  
-    }
+        Gun.Emit(1);
+    }  
 }

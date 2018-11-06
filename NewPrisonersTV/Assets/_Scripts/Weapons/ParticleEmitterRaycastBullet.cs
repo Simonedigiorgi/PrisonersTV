@@ -6,42 +6,41 @@ using AI;
 
 public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 {
-    [BoxGroup("Controls")] public ParticleSystem Gun;
-    [BoxGroup("Controls")] public DECALTYPE decalType;
-    [BoxGroup("Controls")] public int maxDecals;
-    [BoxGroup("Controls")] public DAMAGETYPE[] damageType;
-    [BoxGroup("Controls")] public int damage;
-    [BoxGroup("Controls")] public float rayLenght = 1;
-    [BoxGroup("Controls")] public float bulletGravity;
-    [BoxGroup("Controls")] public float bulletSpeed;
-    [BoxGroup("Controls")] public int numberOfHits;
-    [BoxGroup("Controls")] public LayerMask obstacleMask;
-    [BoxGroup("Behaviour")] public bool leaveDecal;
-    [BoxGroup("Behaviour")] public bool canPerforate;
-    [BoxGroup("Behaviour")] public bool canBounce;
+    [BoxGroup("Components")] public ParticleSystem Gun;
+    [BoxGroup("Components")] public Weapon3D weapon;
 
+    [HideInInspector] public DAMAGETYPE[] damageType;
+    [HideInInspector] public int damage;
+    [HideInInspector] public bool canBounce;
     [HideInInspector] protected ParticleSystem.Particle[] bullets;
     [HideInInspector] public GameObject[] decalPool;
     [HideInInspector] public Vector3 decalScale;
     [HideInInspector] public int membership;
-    [HideInInspector] protected int currentHits;
+    [HideInInspector] protected float percentageOfHits;
     [HideInInspector] protected int decalUsed = 0;
+
+    List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
 
     protected void Awake()
     {
-        if (leaveDecal)
+        percentageOfHits = 1f/weapon.numberOfHits*100;
+        damage = weapon.damage;
+        damageType = weapon.damageType;
+        canBounce = weapon.canBounce;
+
+        if (weapon.leaveDecal)
         {
             // Find corresponding decal in the list then instantiate it in the list
             GameObject decal = null;
-            for (int i = 0; i < GMController.instance.decalList.depot.Length; i++)
+            for (int i = 0; i < GMController.instance.decalPool.depot.Length; i++)
             {
-                if(GMController.instance.decalList.depot[i].decalType == decalType)
+                if(GMController.instance.decalPool.depot[i].bulletType == weapon.decalType)
                 {
-                    decal = GMController.instance.decalList.depot[i].decal;
+                    decal = GMController.instance.decalPool.depot[i].bullet;
                     break;
                 }
             }
-            decalPool = new GameObject[maxDecals];
+            decalPool = new GameObject[weapon.maxDecals];
             for (int i = 0; i < decalPool.Length; i++)
             {               
                 decalPool[i] = Instantiate(decal, GMController.instance.decalDepot);
@@ -74,28 +73,26 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
         }
         if (tempDmg < 0)
             tempDmg = 0;
-        Debug.Log(tempDmg);
+        Debug.Log(tempDmg + "  " + enemyHit.currentLife);
     }
 
     protected void CheckBulletLife(RaycastHit2D hit, int i, _EnemyController enemyHit)
     {
-        float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime / currentHits;
-        if (bulletLife <= 0 && leaveDecal) // check if it's the last hit and leave a decal
+        float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits/100;
+        if (bulletLife <= 0 && weapon.leaveDecal) // check if it's the last hit and leave a decal
         {
             SpawnDecal(hit, i, enemyHit);
         }
-        bullets[i].remainingLifetime -= bullets[i].remainingLifetime -= bullets[i].remainingLifetime / currentHits;
-        currentHits--;
+        bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
     }
     protected void CheckBulletLife(RaycastHit2D hit, int i)
     {
-        float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime / currentHits;
-        if (bulletLife <= 0 && leaveDecal) // check if it's the last hit and leave a decal
+        float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
+        if (bulletLife <= 0 && weapon.leaveDecal) // check if it's the last hit and leave a decal
         {
             SpawnDecal(hit, i);
         }
-        bullets[i].remainingLifetime -= bullets[i].remainingLifetime -= bullets[i].remainingLifetime / currentHits;
-        currentHits--;
+        bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
     }
 
     protected void SpawnDecal(RaycastHit2D hit, int i, _EnemyController enemyHit)
@@ -135,10 +132,11 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
             bullets = new ParticleSystem.Particle[Gun.main.maxParticles];
 
         int numParticlesAlive = Gun.GetParticles(bullets);
+
         // cast ray from all the particles that are alive ti register hits 
         for (int i = 0; i < numParticlesAlive; i++)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, rayLenght, obstacleMask);
+        {                  
+            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, weapon.rayLenght, weapon.obstacleMask);
             Debug.DrawRay(bullets[i].position, bullets[i].velocity.normalized, Color.blue);
             if (hit)
             {
@@ -146,19 +144,12 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
                 {
                     _EnemyController enemyHit = hit.transform.GetComponent<_EnemyController>();
                     enemyHit.enemyMembership = membership;
-                    if (canPerforate)
-                    {
-                        CheckBulletLife(hit, i, enemyHit);
-
-                        // perforation here
-                    }
-                    else
-                    {
-                        if (leaveDecal)
+                    
+                    if (weapon.leaveDecal)
                             SpawnDecal(hit, i, enemyHit);
 
-                        bullets[i].startLifetime = 0;
-                    }
+                    bullets[i].startLifetime = 0;
+                                      
                     // check damage type and enemy resistance                 
                     int tempDmg = damage;
                     CheckDmg(enemyHit, tempDmg);
@@ -166,7 +157,7 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
                     enemyHit.currentLife -= tempDmg;
                     enemyHit.gotHit = true;
                 }
-                else if (canBounce)
+                else if (weapon.canBounce)
                 {
                     CheckBulletLife(hit, i);            
 
@@ -177,9 +168,9 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
                 }
                 else
                 {
-                    if (leaveDecal)
+                    if (weapon.leaveDecal)
                         SpawnDecal(hit, i);
-
+   
                     bullets[i].startLifetime = 0;
                 }
             }
@@ -192,5 +183,8 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
     protected virtual void Update ()
     {
         EmissionHandler();
+        // destroy itself if the weapon is destroyed and there aren't bullets flying
+        if (weapon == null && Gun.particleCount == 0)
+            Destroy(gameObject);
 	}
 }
