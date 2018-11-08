@@ -7169,14 +7169,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   poolSize: 10
-  useTripleRaycast: 0
-  rayPositionForw: 0
-  rayPositionSide: 0
+  useTripleRaycast: 1
+  rayPositionForw: 0.5
+  rayPositionSide: 0.294
   perfPool: []
   damageType: 
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114205169122721570
 MonoBehaviour:
@@ -7199,6 +7200,7 @@ MonoBehaviour:
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114285210801903078
 MonoBehaviour:
@@ -7214,13 +7216,14 @@ MonoBehaviour:
   type: 1
   poolSize: 10
   useTripleRaycast: 1
-  rayPositionForw: 0
+  rayPositionForw: 0.5
   rayPositionSide: 0.294
   perfPool: []
   damageType: 
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114540483137327414
 MonoBehaviour:
@@ -7243,6 +7246,7 @@ MonoBehaviour:
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114600355642885426
 MonoBehaviour:
@@ -7257,14 +7261,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   poolSize: 10
-  useTripleRaycast: 0
-  rayPositionForw: 0
-  rayPositionSide: 0
+  useTripleRaycast: 1
+  rayPositionForw: 0.5
+  rayPositionSide: 0.294
   perfPool: []
   damageType: 
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114755511142431352
 MonoBehaviour:
@@ -7287,6 +7292,7 @@ MonoBehaviour:
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114802523139137974
 MonoBehaviour:
@@ -7364,14 +7370,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   poolSize: 10
-  useTripleRaycast: 0
-  rayPositionForw: 0
-  rayPositionSide: 0
+  useTripleRaycast: 1
+  rayPositionForw: 0.5
+  rayPositionSide: 0.294
   perfPool: []
   damageType: 
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114817885106181184
 MonoBehaviour:
@@ -7416,6 +7423,7 @@ MonoBehaviour:
   damage: 0
   bulletLifeTime: 0
   canBounce: 0
+  gravityMulti: 0
   magazineReady: 0
 --- !u!114 &114850100192042814
 MonoBehaviour:

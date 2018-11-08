@@ -8,7 +8,7 @@ public class PerforationBullet : MonoBehaviour
     public BULLETTYPE type;
     public int poolSize;
     public bool useTripleRaycast;
-    [Range(0,1)]
+    [Range(0,0.5f)]
     public float rayPositionForw;
     [Range(0, 1)]
     public float rayPositionSide;
@@ -55,14 +55,12 @@ public class PerforationBullet : MonoBehaviour
                     {
                         // Movement
                         perfPool[i].velocity = (perfPool[i].dir * playerWeapon.bulletSpeed);
-                        //perfPool[i].velocity += Physics2D.gravity *  gravityMulti * Time.deltaTime;
                         perfPool[i].bullet.transform.Translate(perfPool[i].velocity * Time.deltaTime, Space.World);
-                        //perfPool[i].bullet.transform.position += new Vector3 (perfPool[i].velocity.x, perfPool[i].velocity.y,0) * Time.deltaTime;
 
                         // timer CD
                         perfPool[i].lifeTime -= Time.deltaTime; 
 
-                        // Raycast check for wall Collision 
+                        // Raycast check for Collision 
                         EnvoiromentRaycastCheck(i);
 
                         if (perfPool[i].numberOfHits <= 0 || perfPool[i].lifeTime <= 0)
@@ -174,8 +172,7 @@ public class PerforationBullet : MonoBehaviour
         // direction
         perfPool[i].dir = perfPool[i].bullet.transform.right;
         Vector2 rayDirection = perfPool[i].dir;
-
-
+         
         if (useTripleRaycast)
         {
             bool hasHit = false;
@@ -184,7 +181,7 @@ public class PerforationBullet : MonoBehaviour
             for (int y = 0; y < coord.Length; y++)
             {
                 Debug.DrawRay(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw) + coord[y], rayDirection, Color.red);
-                RaycastHit2D hit = Physics2D.Raycast(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw) + coord[y], rayDirection, 1.0f, playerWeapon.obstacleMask);
+                RaycastHit2D hit = Physics2D.Raycast(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw) + coord[y], rayDirection, (playerWeapon.rayLenght+rayPositionForw), playerWeapon.obstacleMask);
                 if (hit)
                 {
                     hasHit = true;
@@ -203,7 +200,7 @@ public class PerforationBullet : MonoBehaviour
         {
             Debug.DrawRay(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw), rayDirection, Color.red);
 
-            RaycastHit2D hit = Physics2D.Raycast(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw), rayDirection, 1.0f, playerWeapon.obstacleMask);
+            RaycastHit2D hit = Physics2D.Raycast(perfPool[i].bullet.transform.position + (-perfPool[i].bullet.transform.right * rayPositionForw), rayDirection, (playerWeapon.rayLenght + rayPositionForw), playerWeapon.obstacleMask);
             if (hit)
             {               
                 RaycastHitApply(hit.transform, hit.normal, i); 
