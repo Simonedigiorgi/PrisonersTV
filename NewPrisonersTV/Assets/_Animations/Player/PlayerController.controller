@@ -132,7 +132,7 @@ BlendTree:
   m_BlendParameterY: Forward
   m_MinThreshold: -90
   m_MaxThreshold: 180
-  m_UseAutomaticThresholds: 0
+  m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
 --- !u!206 &206982768377815186

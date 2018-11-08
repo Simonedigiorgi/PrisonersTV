@@ -172,7 +172,6 @@ namespace Character
                             Destroy(bullet.decalPool[i]);
                         }
                     }                   
-                   // Destroy(bullet.gameObject);
                 }
                 Destroy(first);
                 currentWeapon = null;
@@ -274,7 +273,7 @@ namespace Character
                     currentWeapon.Shoot(arm.transform.GetChild(1).gameObject);
 
                     CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-                    shake.ShakeCamera(1.2f, .2f);
+                    //shake.ShakeCamera(1.2f, .2f);
                 }
             }
 

@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 50673480908390940}
   - component: {fileID: 82038183991011642}
   m_Layer: 9
-  m_Name: Gun
+  m_Name: CircularSaw
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 199347135864742614}
   - component: {fileID: 114993137561415486}
   m_Layer: 12
-  m_Name: GunBullet
+  m_Name: SawBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1550468768250884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.9, y: 0, z: 0}
+  m_LocalPosition: {x: -10.820913, y: -9.832596, z: 10.721151}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4344138440785010}
@@ -199,7 +199,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4508dd927d447c24d9591f9f59b1ce52, type: 2}
+  - {fileID: 2100000, guid: 2b24f914bdaf85c498be523addf7f2f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -434,26 +434,26 @@ MonoBehaviour:
   anim: {fileID: 95161733415446858}
   weaponIcon: {fileID: 114016769918838440}
   bullet: {fileID: 114993137561415486}
-  perfBullet: 0
-  fireRate: 0.15
+  perfBullet: 1
+  fireRate: 0.5
   bullets: 500
   bulletsIfReward: 25
   numberOfHits: 5
   rayLenght: 1
-  bulletLifeTime: 2
+  bulletLifeTime: 5
   bulletGravity: 0
-  bulletSpeed: 60
+  bulletSpeed: 30
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2304
-  decalType: 0
+  decalType: 1
   maxDecals: 0
   damage: 30
-  damageType: 00000000
+  damageType: 01000000
   leaveDecal: 0
-  canPerforate: 0
-  canBounce: 0
-  autoFire: 1
+  canPerforate: 1
+  canBounce: 1
+  autoFire: 0
   shootSound: {fileID: 8300000, guid: ed634c9fab282eb42abcb3b4c95e549e, type: 3}
   shootVolume: 0.1
   grabSound: {fileID: 8300000, guid: 2df033c06fa82a345abe1786d25e9541, type: 3}
@@ -545,7 +545,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 786898964
+  randomSeed: -1218636243
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -820,7 +820,7 @@ ParticleSystem:
     startRotationX:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5707963
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -902,7 +902,7 @@ ParticleSystem:
     startRotation:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: -0.5235988
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3896,7 +3896,7 @@ ParticleSystemRenderer:
   m_Pivot: {x: 0, y: 0, z: 0}
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 15d48a017cc8ad54ca3d85bd990d9058, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}

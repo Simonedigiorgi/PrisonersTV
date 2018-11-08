@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using AI;
 [System.Serializable]
 public class BulletInfo
 {
@@ -8,10 +9,11 @@ public class BulletInfo
     public bool isActive;
     public int numberOfHits;
     public float lifeTime;
+    public _EnemyController[] enemyHit;
 
-    [HideInInspector] public Vector3 dir;
-    [HideInInspector] public Vector3 newDir;
-    [HideInInspector] public Collider2D col;
+    [HideInInspector] public Vector2 dir;
+    [HideInInspector] public Vector2 newDir;
+    [HideInInspector] public Vector2 velocity;
 
     public BulletInfo(BULLETTYPE type, GameObject obj)
     {
@@ -19,8 +21,7 @@ public class BulletInfo
         bullet = obj;
         numberOfHits = 0;
         isActive = false;
-        dir = bullet.transform.forward;
-        col = bullet.GetComponent<Collider2D>();
+        dir = bullet.transform.right;
         lifeTime = 0;
     }
     public BulletInfo(BULLETTYPE type, GameObject obj, int hits, bool state, int timer)
@@ -30,7 +31,6 @@ public class BulletInfo
         numberOfHits = hits;
         isActive = state;
         dir = bullet.transform.forward;
-        col = bullet.GetComponent<Collider2D>();
         lifeTime = timer;
     }
 }

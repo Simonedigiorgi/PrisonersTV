@@ -9,13 +9,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef960dcf456727e4db6a7e64158cb297, type: 3}
-  m_Name: BulletDepot
+  m_Name: PerfBulletDepot
   m_EditorClassIdentifier: 
   depot:
   - bulletType: 0
     bullet: {fileID: 1635732916961706, guid: 1fd78b61409d37a4abd9274c9ffb37dd, type: 2}
     isActive: 0
     numberOfHits: 0
+    lifeTime: 0
     dir: {x: 0, y: 0, z: 0}
     newDir: {x: 0, y: 0, z: 0}
-    collider: {fileID: 0}
+    col: {fileID: 0}
+    enemyHit: []
+  - bulletType: 1
+    bullet: {fileID: 1768573359652166, guid: 372d6e05b69547642aa6b0a29a95b155, type: 2}
+    isActive: 0
+    numberOfHits: 0
+    lifeTime: 0
+    dir: {x: 0, y: 0, z: 0}
+    newDir: {x: 0, y: 0, z: 0}
+    col: {fileID: 0}
+    enemyHit: []

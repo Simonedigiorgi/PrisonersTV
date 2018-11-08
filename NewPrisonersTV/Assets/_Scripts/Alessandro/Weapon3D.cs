@@ -76,10 +76,9 @@ public class Weapon3D : MonoBehaviour
                 // Instantiate the bullet               
                 if(!canPerforate)
                     bullet.EmitBullet(spawnPoint.transform);
-                else
-                {
+                else              
                     currentDepot.ShootPerf(spawnPoint.transform);
-                }
+
                 bullets--;
 
                 // Delay

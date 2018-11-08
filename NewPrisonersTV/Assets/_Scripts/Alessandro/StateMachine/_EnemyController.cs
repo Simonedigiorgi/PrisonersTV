@@ -80,15 +80,6 @@ namespace AI
             }        
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if(collision.CompareTag("Bullet"))
-            {
-                collision.transform.parent.GetComponent<PerforationBullet>().DoDamage(this, collision.transform.GetSiblingIndex());
-                Debug.Log("hit");
-            }
-        }
-
         //Flash coroutine called on hit with bullet
         public IEnumerator Flash()
         {
