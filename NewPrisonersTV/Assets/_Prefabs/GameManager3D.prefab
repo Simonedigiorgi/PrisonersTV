@@ -7193,7 +7193,7 @@ MonoBehaviour:
   type: 3
   poolSize: 10
   useTripleRaycast: 0
-  rayPositionForw: 0.5
+  rayPositionForw: 0.2
   rayPositionSide: 0.294
   perfPool: []
   damageType: 
@@ -7239,7 +7239,7 @@ MonoBehaviour:
   type: 3
   poolSize: 10
   useTripleRaycast: 0
-  rayPositionForw: 0.5
+  rayPositionForw: 0.2
   rayPositionSide: 0.294
   perfPool: []
   damageType: 
@@ -7415,7 +7415,7 @@ MonoBehaviour:
   type: 3
   poolSize: 10
   useTripleRaycast: 0
-  rayPositionForw: 0.5
+  rayPositionForw: 0.2
   rayPositionSide: 0.294
   perfPool: []
   damageType: 
@@ -7508,7 +7508,7 @@ MonoBehaviour:
   type: 3
   poolSize: 10
   useTripleRaycast: 0
-  rayPositionForw: 0.5
+  rayPositionForw: 0.2
   rayPositionSide: 0.294
   perfPool: []
   damageType: 

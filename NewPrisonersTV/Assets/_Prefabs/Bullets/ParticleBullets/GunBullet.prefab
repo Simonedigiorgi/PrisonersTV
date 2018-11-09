@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4343352358101186}
   - component: {fileID: 198901326587215518}
   - component: {fileID: 199565142485125094}
-  - component: {fileID: 114456176794894682}
+  - component: {fileID: 114905274655745220}
   m_Layer: 12
   m_Name: GunBullet
   m_TagString: Bullet
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
---- !u!114 &114456176794894682
+--- !u!114 &114905274655745220
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -50,17 +50,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1804467502524584}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2c97d93433cad4b94b132917fbfcbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d192683b9c58df47bba6a808e2cb729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Gun: {fileID: 198901326587215518}
   weapon: {fileID: 0}
   damageType: 
-  damage: 1
+  damage: 0
   canBounce: 0
+  membership: 0
   decalPool: []
   decalScale: {x: 0, y: 0, z: 0}
-  membership: 0
 --- !u!198 &198901326587215518
 ParticleSystem:
   m_ObjectHideFlags: 1

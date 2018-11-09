@@ -50,13 +50,13 @@ public class Weapon3D : MonoBehaviour
 
     [HideInInspector]public GameObject hand;                                                                    // the Player hand                                                                                        
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
-    private float lastShot = 0.0f;                                                                              // Need to be always at 0;
+    protected float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
     [HideInInspector] public int weaponMembership;                                                                                       // Grabbed on player1 or player2
     [HideInInspector] public WeaponSpawn currentSpawn;
     [HideInInspector] public bool isReward = false;
 
-    public PerforationBullet currentDepot;
+    [HideInInspector] public PerforationBullet currentDepot;
 
     protected virtual void Awake()
     {

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4864403030077514}
   - component: {fileID: 198282131221292632}
   - component: {fileID: 199297544186670122}
-  - component: {fileID: 114516029999704316}
+  - component: {fileID: 114554940010579412}
   m_Layer: 12
   m_Name: Laser
   m_TagString: Bullet
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &114516029999704316
+--- !u!114 &114554940010579412
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -50,17 +50,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1265150447728162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de2c97d93433cad4b94b132917fbfcbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d192683b9c58df47bba6a808e2cb729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Gun: {fileID: 198282131221292632}
   weapon: {fileID: 0}
-  damageType: 01000000
-  damage: 30
+  damageType: 
+  damage: 0
   canBounce: 0
+  membership: 0
   decalPool: []
   decalScale: {x: 0, y: 0, z: 0}
-  membership: 0
 --- !u!198 &198282131221292632
 ParticleSystem:
   m_ObjectHideFlags: 1

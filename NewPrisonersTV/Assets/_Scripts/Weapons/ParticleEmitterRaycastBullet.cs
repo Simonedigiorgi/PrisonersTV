@@ -4,11 +4,10 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using AI;
 
-public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
+public class ParticleEmitterRaycastBullet : MonoBehaviour
 {
     [BoxGroup("Components")] public ParticleSystem Gun;
     [BoxGroup("Components")] public Weapon3D weapon;
-    [BoxGroup("Components")] public LayerMask explosionMask;
 
     // copy variables from the gun to continue to apply effects to live particles after the gun is dropped
     [HideInInspector] public DAMAGETYPE[] damageType;
@@ -28,18 +27,18 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 
     protected virtual void Awake()
     {
-        percentageOfHits = 1f/weapon.numberOfHits*100;
+        percentageOfHits = 1f / weapon.numberOfHits * 100;
         damage = weapon.damage;
         damageType = weapon.damageType;
         canBounce = weapon.canBounce;
-       
+
         if (weapon.leaveDecal)
         {
             // Find corresponding decal in the list then instantiate it in the list
             GameObject decal = null;
             for (int i = 0; i < GMController.instance.decalPool.depot.Length; i++)
             {
-                if(GMController.instance.decalPool.depot[i].bulletType == weapon.decalType)
+                if (GMController.instance.decalPool.depot[i].bulletType == weapon.decalType)
                 {
                     decal = GMController.instance.decalPool.depot[i].bullet;
                     break;
@@ -47,14 +46,48 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
             }
             decalPool = new GameObject[weapon.maxDecals];
             for (int i = 0; i < decalPool.Length; i++)
-            {               
+            {
                 decalPool[i] = Instantiate(decal, GMController.instance.decalDepot);
             }
             decalScale = decal.transform.localScale;
         }
     }
 
-    public abstract void EmitBullet(Transform spawnPoint);
+    public virtual void EmitBullet(Transform spawnPoint)
+    {
+        ParticleSystem.MainModule psMain = Gun.main;
+        //Stat changes
+        psMain.startLifetime = weapon.bulletLifeTime;
+        psMain.startSpeed = weapon.bulletSpeed;
+        psMain.gravityModifier = weapon.bulletGravity;
+
+        // emission
+        transform.position = spawnPoint.position;
+        transform.rotation = Quaternion.LookRotation(spawnPoint.right, spawnPoint.up);
+        Gun.Emit(1);
+    }
+    public virtual void EmitBullet(Transform spawnPoint, float offset)
+    {
+        ParticleSystem.MainModule psMain = Gun.main;
+        //Stat changes
+        psMain.startLifetime = weapon.bulletLifeTime;
+        psMain.startSpeed = weapon.bulletSpeed;
+        psMain.gravityModifier = weapon.bulletGravity;
+
+        // emission
+        Vector3 pos = spawnPoint.position;
+        pos += transform.up * offset;
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(spawnPoint.right, spawnPoint.up);
+        Gun.Emit(1);
+        // emission
+        pos = spawnPoint.position;
+        pos -= transform.up * offset;
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(spawnPoint.right, spawnPoint.up);
+        Gun.Emit(1);
+    }
+
     protected void CheckDmg(_EnemyController enemyHit, int tempDmg)
     {
         for (int y = 0; y < damageType.Length; y++)

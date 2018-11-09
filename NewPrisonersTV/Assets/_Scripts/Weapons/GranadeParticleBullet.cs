@@ -6,7 +6,7 @@ using AI;
 
 public class GranadeParticleBullet : ParticleEmitterRaycastBullet
 {
-
+    public LayerMask explosionMask;
     protected override void Awake()
     {
         base.Awake();
