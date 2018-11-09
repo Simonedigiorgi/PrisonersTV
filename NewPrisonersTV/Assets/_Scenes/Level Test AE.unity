@@ -1364,6 +1364,10 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: -5.85
       objectReference: {fileID: 0}
+    - target: {fileID: 4006064854236664, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3.85
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
   m_IsPrefabParent: 0
@@ -1644,7 +1648,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: lowGradeRate
-      value: 0.5
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
@@ -1659,7 +1663,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: midGradeRate
-      value: 0.5
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
@@ -1669,7 +1673,7 @@ Prefab:
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
       propertyPath: specialGradeRate
-      value: 0
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 114898656473157950, guid: c4ddc77d6358aee409a78d7db501df5e,
         type: 2}
