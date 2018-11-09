@@ -431,11 +431,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6447b7aca03d72419c82ee276fd0cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 0}
+  anim: {fileID: 95161733415446858}
   weaponIcon: {fileID: 114016769918838440}
   bullet: {fileID: 114800969631727768}
   perfBullet: 0
-  fireRate: 0
+  fireRate: 0.3
   bullets: 500
   bulletsIfReward: 25
   numberOfHits: 0
@@ -449,7 +449,7 @@ MonoBehaviour:
   decalType: 0
   maxDecals: 0
   damage: 20
-  damageType: 
+  damageType: 00000000
   leaveDecal: 0
   canPerforate: 0
   canBounce: 0

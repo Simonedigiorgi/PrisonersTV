@@ -37,7 +37,7 @@ public class Weapon3D : MonoBehaviour
     [BoxGroup("Behaviour")] public bool canPerforate;
     [BoxGroup("Behaviour")] public bool canBounce;
 
-    [BoxGroup("King of weapon")] public bool autoFire;                                                          // Has autofire     
+    [BoxGroup("Kind of weapon")] public bool autoFire;                                                          // Has autofire     
 
     [BoxGroup("Sounds")] public AudioClip shootSound;                                                           // Shoot sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;                                            // Shoot volume

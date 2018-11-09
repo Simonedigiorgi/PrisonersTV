@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using AI;
 
 public class ShotgunParticleBullet : ParticleEmitterRaycastBullet
 {
-    public int bulletNumber;
+    [BoxGroup("Controls")] public int bulletNumber;
 
     public override void EmitBullet(Transform spawnPoint, float offset)
     {

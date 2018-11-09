@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Character;
 
 public class Nailgun3D : Weapon3D
 {
-    public float Offset;
+    [BoxGroup("Controls")] public float Offset;
 
     public override void Shoot(GameObject spawnPoint)
     {

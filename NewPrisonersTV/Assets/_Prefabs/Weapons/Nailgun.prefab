@@ -406,11 +406,11 @@ MonoBehaviour:
   canPerforate: 0
   canBounce: 0
   autoFire: 0
-  shootSound: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: ed634c9fab282eb42abcb3b4c95e549e, type: 3}
   shootVolume: 0.1
-  grabSound: {fileID: 0}
-  grabVolume: 0.1
-  emptySound: {fileID: 0}
+  grabSound: {fileID: 8300000, guid: 2df033c06fa82a345abe1786d25e9541, type: 3}
+  grabVolume: 0.2
+  emptySound: {fileID: 8300000, guid: 10406121de413a649b9105f6224be9f1, type: 3}
   emptyVolume: 0.1
   hand: {fileID: 0}
   isGrabbed: 0
