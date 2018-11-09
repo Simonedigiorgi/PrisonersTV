@@ -69,10 +69,14 @@ public class Weapon3D : MonoBehaviour
     // Shoot method
     public virtual void Shoot(GameObject spawnPoint)
     {
+        if (perfBullet == BULLETTYPE.None) // if the perf bullet tag is none force the perforation option to false
+            canPerforate = false;
+        if (bullet == null && !canPerforate && perfBullet != BULLETTYPE.None) // if there isn't a particle bullet and can't perforate and the perf bullet tag is not NUll then activate perforation
+            canPerforate = true;
         if (bullets != 0)
         {
             if (Time.time > fireRate + lastShot)
-            {
+            {              
                 // Instantiate the bullet               
                 if(!canPerforate)
                     bullet.EmitBullet(spawnPoint.transform);
@@ -87,7 +91,8 @@ public class Weapon3D : MonoBehaviour
                 // Shoot sound
                 source.PlayOneShot(shootSound, shootVolume);
 
-                anim.SetTrigger("Shoot");
+                if (anim != null)
+                    anim.SetTrigger("Shoot");
             }
         }
         else if (bullets == 0)
@@ -122,8 +127,11 @@ public class Weapon3D : MonoBehaviour
         coll.enabled = false;
 
         player.currentWeapon = GetComponent<Weapon3D>();
-        bullet.membership = weaponMembership;
-        bullet.transform.parent = null;
+        if (bullet != null)
+        {
+            bullet.membership = weaponMembership;
+            bullet.transform.parent = null;
+        }
         if (!isReward)
         {
             currentSpawn.SetCurrentWeaponToNull();

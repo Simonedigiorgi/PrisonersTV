@@ -14,6 +14,6 @@ public enum ENEMYTYPE { None, Random, Bat, Ninja }
 
 public enum DAMAGETYPE { Impact, Slash, Electric, Laser, Fire, Ice}
 
-public enum BULLETTYPE { Gun, CircularSaw}
+public enum BULLETTYPE { None,Gun, CircularSaw, CrossBow, LaserGun}
 
 

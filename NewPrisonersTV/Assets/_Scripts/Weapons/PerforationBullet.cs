@@ -55,7 +55,10 @@ public class PerforationBullet : MonoBehaviour
                     {
                         // Movement
                         perfPool[i].velocity = (perfPool[i].dir * playerWeapon.bulletSpeed);
-                        perfPool[i].bullet.transform.Translate(perfPool[i].velocity * Time.deltaTime, Space.World);
+                        //perfPool[i].velocity.x += Physics2D.gravity.y * gravityMulti * Time.deltaTime;
+                        //perfPool[i].velocity.y += Physics2D.gravity.y * gravityMulti * Time.deltaTime;
+                        //Debug.Log(perfPool[i].velocity);
+                        perfPool[i].bullet.transform.Translate(perfPool[i].velocity* Time.deltaTime, Space.World);
 
                         // timer CD
                         perfPool[i].lifeTime -= Time.deltaTime; 

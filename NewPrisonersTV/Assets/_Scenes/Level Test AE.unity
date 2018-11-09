@@ -2843,6 +2843,82 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: currentState
+      value: 
+      objectReference: {fileID: 11400000, guid: 4688a250513f8364b816a47ac47596b1,
+        type: 2}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: inactiveState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: remainState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: lastActiveState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: enemyStats
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: gameStartState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: defeatedState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114641554722469180, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: m_EnemyController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: enemyAnim
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: animSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: currentLife
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: mySpriteRender
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: thisTransform
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5,
+        type: 2}
+      propertyPath: direction
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a94798ab697d054697981bb20b43cd5, type: 2}
   m_IsPrefabParent: 0

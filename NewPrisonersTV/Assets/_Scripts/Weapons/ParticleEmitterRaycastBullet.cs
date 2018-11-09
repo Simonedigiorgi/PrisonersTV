@@ -8,26 +8,31 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
 {
     [BoxGroup("Components")] public ParticleSystem Gun;
     [BoxGroup("Components")] public Weapon3D weapon;
+    [BoxGroup("Components")] public LayerMask explosionMask;
 
+    // copy variables from the gun to continue to apply effects to live particles after the gun is dropped
     [HideInInspector] public DAMAGETYPE[] damageType;
     [HideInInspector] public int damage;
     [HideInInspector] public bool canBounce;
+    [HideInInspector] public int membership;
+
+    [HideInInspector] protected ParticleSystem childParticle; // used to store child particle if needed
     [HideInInspector] protected ParticleSystem.Particle[] bullets;
+    [HideInInspector] protected float percentageOfHits;
+    //decal test
     [HideInInspector] public GameObject[] decalPool;
     [HideInInspector] public Vector3 decalScale;
-    [HideInInspector] public int membership;
-    [HideInInspector] protected float percentageOfHits;
     [HideInInspector] protected int decalUsed = 0;
 
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         percentageOfHits = 1f/weapon.numberOfHits*100;
         damage = weapon.damage;
         damageType = weapon.damageType;
         canBounce = weapon.canBounce;
-
+       
         if (weapon.leaveDecal)
         {
             // Find corresponding decal in the list then instantiate it in the list
@@ -126,7 +131,7 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
             decalUsed = 0;
     }
 
-    protected void EmissionHandler()
+    protected virtual void EmissionHandler()
     {
         if (bullets == null || bullets.Length < Gun.main.maxParticles)
             bullets = new ParticleSystem.Particle[Gun.main.maxParticles];
@@ -143,19 +148,13 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
                 if (hit.transform.CompareTag("Enemy"))
                 {
                     _EnemyController enemyHit = hit.transform.GetComponent<_EnemyController>();
-                    enemyHit.enemyMembership = membership;
-                    
+
                     if (weapon.leaveDecal)
-                            SpawnDecal(hit, i, enemyHit);
+                        SpawnDecal(hit, i, enemyHit);
 
-                    bullets[i].startLifetime = 0;
-                                      
-                    // check damage type and enemy resistance                 
-                    int tempDmg = damage;
-                    CheckDmg(enemyHit, tempDmg);
+                    bullets[i].remainingLifetime = 0;
 
-                    enemyHit.currentLife -= tempDmg;
-                    enemyHit.gotHit = true;
+                    DamageDealer(enemyHit);
                 }
                 else if (weapon.canBounce)
                 {
@@ -170,8 +169,8 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
                 {
                     if (weapon.leaveDecal)
                         SpawnDecal(hit, i);
-   
-                    bullets[i].startLifetime = 0;
+
+                    bullets[i].remainingLifetime = 0;
                 }
             }
         }
@@ -179,6 +178,29 @@ public abstract class ParticleEmitterRaycastBullet : MonoBehaviour
         Gun.SetParticles(bullets, numParticlesAlive);
     }
     
+    protected virtual void DamageDealer(_EnemyController enemyHit)
+    {
+        // check damage type and enemy resistance                 
+        int tempDmg = damage;
+        CheckDmg(enemyHit, tempDmg);
+        enemyHit.enemyMembership = membership;
+        enemyHit.currentLife -= tempDmg;
+        enemyHit.gotHit = true;
+    }
+    protected virtual void DamageDealer(Collider2D[] Hit)
+    {
+        for (int i = 0; i < Hit.Length; i++)
+        {
+            _EnemyController enemyHit = Hit[i].GetComponent<_EnemyController>();
+            // check damage type and enemy resistance                 
+            int tempDmg = damage;
+            CheckDmg(enemyHit, tempDmg);
+            enemyHit.enemyMembership = membership;
+            enemyHit.currentLife -= tempDmg;
+            enemyHit.gotHit = true;
+        }
+        Debug.Log("boom");
+    }
 
     protected virtual void Update ()
     {
