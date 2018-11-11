@@ -48,7 +48,7 @@ public class Weapon3D : MonoBehaviour
     [BoxGroup("Sounds")] public AudioClip emptySound;                                                           // Grab sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float emptyVolume;                                            // Grab volume
 
-    [HideInInspector]public GameObject hand;                                                                    // the Player hand                                                                                        
+    [HideInInspector] public GameObject hand;                                                                    // the Player hand                                                                                        
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     protected float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
@@ -107,24 +107,22 @@ public class Weapon3D : MonoBehaviour
     {
         // Grab sound
         source.PlayOneShot(grabSound, grabVolume);
-        coll.enabled = false;
         collTrigger.enabled = false;
-        // Destroy the first && get the second
+        // Destroy the first  
         player.DestroyCurrentWeapon();
-
-        if (hand.transform.childCount <= 1)
-        {
+        // get the second
+        if (hand.transform.childCount <= 1)// (need to check condition)       
             GrabWeapon(player);
-        }
     }
 
     protected virtual void GrabWeapon(_CharacterController player)
     {
         isGrabbed = true;
         rb.isKinematic = true;
+        rb.simulated = false;
         transform.parent = hand.transform;
         transform.position = hand.transform.position;
-        coll.enabled = false;
+        //coll.enabled = false;
 
         player.currentWeapon = GetComponent<Weapon3D>();
         if (bullet != null)

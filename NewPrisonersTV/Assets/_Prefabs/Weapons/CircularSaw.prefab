@@ -366,7 +366,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2304
-  decalType: 1
+  decalType: 2
   maxDecals: 0
   damage: 30
   damageType: 01000000

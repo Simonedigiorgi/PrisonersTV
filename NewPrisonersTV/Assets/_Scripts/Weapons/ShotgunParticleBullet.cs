@@ -22,7 +22,12 @@ public class ShotgunParticleBullet : ParticleEmitterRaycastBullet
             // emission
             transform.position = spawnPoint.position;
             dir = spawnPoint.position + spawnPoint.right;
-            dir += transform.up * offset * i; 
+            // set the lower bullet on a straight line 
+            if (GMController.instance.playerInfo[membership].playerController.facingRight)
+                dir -= transform.up * offset * i; 
+            else
+                dir += transform.up * offset * i;
+            // define the new direction for the current bullet
             transform.rotation = Quaternion.LookRotation(dir - spawnPoint.position, spawnPoint.up);
             Gun.Emit(1);
         }       

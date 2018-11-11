@@ -15,8 +15,6 @@ namespace Character.Actions
 
         public void Move(CharacterStateController controller)
         {
-            // *** LEAVE ALL OF THIS ON FIXED UPDATE TO AVOID PROBLEM OCCURING DURING THE FLIP
-
             // Move inputs
             float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
 
@@ -34,16 +32,11 @@ namespace Character.Actions
                     controller.m_CharacterController.rb.velocity = new Vector2(0, controller.m_CharacterController.rb.velocity.y);
             }
 
-            // Set Run animation
-            //playerAnim.SetFloat("Speed", Mathf.Abs(moveInput));
-
             // Flip the player direction
             if (!controller.m_CharacterController.facingRight && moveInput < 0)
                 controller.m_CharacterController.PlayerFlip();
             else if (controller.m_CharacterController.facingRight && moveInput > 0)
-                controller.m_CharacterController.PlayerFlip();
-           
+                controller.m_CharacterController.PlayerFlip();           
         }
-
     }
 }
