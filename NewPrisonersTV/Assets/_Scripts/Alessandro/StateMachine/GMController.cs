@@ -17,10 +17,10 @@ public class GMController : MonoBehaviour
 
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
-    public Transform decalDepot;
-    public BulletDepot decalPool;
-    public Transform bulletPool;
-    public BulletDepot bulletDepot;
+    public Transform decalPool;                                             // reference to the decal pool parent obj
+    public DecalDepot decalDepot;                                           // reference to the decal prefab list
+    public Transform bulletPool;                                            // reference to the bullet pool parent obj
+    public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -346,6 +346,7 @@ public class GMController : MonoBehaviour
 
             playerInfo[i].playerController.playerNumber = i;
             bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
+            decalPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player decal pool
         }
         playerSetupDone = true;
     }

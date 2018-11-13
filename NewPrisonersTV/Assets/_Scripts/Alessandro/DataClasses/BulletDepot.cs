@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Prototype/DecalDepot")]
+[CreateAssetMenu(menuName = "Prototype/BulletDepot")]
 public class BulletDepot : ScriptableObject
 {
     public BulletInfo[] depot;

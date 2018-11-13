@@ -7,9 +7,9 @@ public class BulletInfo
     public GameObject bullet;
 
     public bool isActive;
-    public int numberOfHits;
-    public float lifeTime;
-    public _EnemyController[] enemyHit;
+    [HideInInspector] public int numberOfHits;
+    [HideInInspector] public float lifeTime;
+    [HideInInspector] public _EnemyController[] enemyHit;
 
     [HideInInspector] public Vector2 dir;
     [HideInInspector] public Vector2 newDir;

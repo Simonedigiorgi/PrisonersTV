@@ -161,18 +161,7 @@ namespace Character
                     hasKey = false;
                     GMController.instance.canSpawnKey = true;
                     GMController.instance.SlowdownSpawns();
-                }  
-                if (first.CompareTag("Weapon"))
-                {
-                    ParticleEmitterRaycastBullet bullet = first.GetComponent<Weapon3D>().bullet;
-                    if (first.GetComponent<Weapon3D>().leaveDecal)// destroy the decals first
-                    {
-                        for (int i = 0; i < bullet.decalPool.Length; i++)
-                        {
-                            Destroy(bullet.decalPool[i]);
-                        }
-                    }                   
-                }
+                }                 
                 Destroy(first);
                 currentWeapon = null;
             }

@@ -13,9 +13,8 @@ public class ShotgunParticleBullet : ParticleEmitterRaycastBullet
     {
         ParticleSystem.MainModule psMain = Gun.main;
         //Stat changes
-        psMain.startLifetime = weapon.bulletLifeTime;
-        psMain.startSpeed = weapon.bulletSpeed;
-        psMain.gravityModifier = weapon.bulletGravity;
+        ApplyStats(psMain);
+
         Vector3 dir;
         for (int i = 0; i < bulletNumber; i++)
         {

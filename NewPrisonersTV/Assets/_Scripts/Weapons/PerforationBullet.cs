@@ -20,10 +20,12 @@ public class PerforationBullet : MonoBehaviour
     private float bulletLifeTime;
     private float bulletSpeed;
     private bool canBounce;
+    private bool leaveDecal;
     private float gravityMulti;
     private float rayLenght;
     private LayerMask obstacleMask;
     private int lastWeaponNumberOfHits;
+    private DecalHandler currentDecal;
     #endregion
 
     private int playerNumber;
@@ -69,11 +71,10 @@ public class PerforationBullet : MonoBehaviour
                     // Raycast check for Collision 
                     EnvoiromentRaycastCheck(i);
 
-                    if (perfPool[i].numberOfHits <= 0 || perfPool[i].lifeTime <= 0)
+                    if (perfPool[i].numberOfHits <= 0 || perfPool[i].lifeTime <= 0)                    
                         Collector(i);
                 }
-            }
-            
+            }           
         }
     }
 
@@ -83,6 +84,10 @@ public class PerforationBullet : MonoBehaviour
         int tempDmg = damage;
         CheckDmg(enemyHit, tempDmg);
         perfPool[i].numberOfHits--;
+        // apply decal if needed
+        if (perfPool[i].numberOfHits <= 0 && leaveDecal)
+            currentDecal.PlaceDecal(perfPool[i].bullet.transform, enemyHit);
+
         enemyHit.enemyMembership = playerNumber;
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
@@ -114,6 +119,10 @@ public class PerforationBullet : MonoBehaviour
     }
     private void CopyStats()
     {
+        if (playerWeapon.currentDecal != currentDecal)
+            currentDecal = playerWeapon.currentDecal;
+        if (playerWeapon.leaveDecal != leaveDecal)
+            leaveDecal = playerWeapon.leaveDecal;
         if (playerWeapon.obstacleMask != obstacleMask)
             obstacleMask = playerWeapon.obstacleMask;
         if (playerWeapon.rayLenght != rayLenght)
@@ -254,9 +263,14 @@ public class PerforationBullet : MonoBehaviour
             perfPool[i].bullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             perfPool[i].numberOfHits--;
+
+            if (perfPool[i].numberOfHits <= 0 && leaveDecal)
+                currentDecal.PlaceDecal(perfPool[i].bullet.transform);
         }
         else if (!canBounce)
         {
+            if (leaveDecal)
+                currentDecal.PlaceDecal(perfPool[i].bullet.transform);
             Collector(i);
         }
     }

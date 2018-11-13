@@ -11,7 +11,7 @@ namespace AI
         public EnemyStats m_EnemyStats;
 
         [HideInInspector] public bool hasDecalsOn;
-        [HideInInspector] public List<Transform> DecalsOn;
+        [HideInInspector] public int decalsNum;
 
         [HideInInspector] public Animator enemyAnim;
         [HideInInspector] public float animSpeed;
@@ -60,7 +60,10 @@ namespace AI
         {
             if (GMController.instance.gameStart)
             {
-                if (startDieCoroutine)
+                if (decalsNum <= 0)
+                    hasDecalsOn = false;
+
+                if (startDieCoroutine && !hasDecalsOn)
                 {
                     StartCoroutine(Die());
                 }

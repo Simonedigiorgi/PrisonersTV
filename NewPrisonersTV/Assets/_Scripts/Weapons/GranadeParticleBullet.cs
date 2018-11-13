@@ -17,9 +17,7 @@ public class GranadeParticleBullet : ParticleEmitterRaycastBullet
     {
         ParticleSystem.MainModule psMain = Gun.main;
         //Stat changes
-        psMain.startLifetime = weapon.bulletLifeTime;
-        psMain.startSpeed = weapon.bulletSpeed;
-        psMain.gravityModifier = weapon.bulletGravity;        
+        ApplyStats(psMain);
 
         // emission
         transform.position = spawnPoint.position;
@@ -50,7 +48,7 @@ public class GranadeParticleBullet : ParticleEmitterRaycastBullet
                     alreadyExploded = true;
                     bullets[i].remainingLifetime = 0;
                 }
-                else if (weapon.canBounce)
+                else if (canBounce)
                 {
                     CheckBulletLife(hit, i);
                     // bounce here
@@ -60,8 +58,8 @@ public class GranadeParticleBullet : ParticleEmitterRaycastBullet
                 }
                 else
                 {
-                    if (weapon.leaveDecal)
-                        SpawnDecal(hit, i);
+                    if (leaveDecal)
+                        currentDecal.PlaceDecal(hit, bullets[i].velocity);
 
                     bullets[i].remainingLifetime = 0;      
                 }

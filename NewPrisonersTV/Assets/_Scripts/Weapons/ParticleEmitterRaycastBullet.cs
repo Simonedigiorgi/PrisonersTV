@@ -10,18 +10,16 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
     [BoxGroup("Components")] public Weapon3D weapon;
 
     // copy variables from the gun to continue to apply effects to live particles after the gun is dropped
-    [HideInInspector] public DAMAGETYPE[] damageType;
-    [HideInInspector] public int damage;
-    [HideInInspector] public bool canBounce;
+    protected DAMAGETYPE[] damageType;
+    protected int damage;
+    protected bool canBounce;
+    protected bool leaveDecal;
+    protected DecalHandler currentDecal;
     [HideInInspector] public int membership;
 
-    [HideInInspector] protected ParticleSystem childParticle; // used to store child particle if needed
-    [HideInInspector] protected ParticleSystem.Particle[] bullets;
-    [HideInInspector] protected float percentageOfHits;
-    //decal test
-    [HideInInspector] public GameObject[] decalPool;
-    [HideInInspector] public Vector3 decalScale;
-    [HideInInspector] protected int decalUsed = 0;
+    protected ParticleSystem childParticle; // used to store child particle if needed
+    protected ParticleSystem.Particle[] bullets;
+    protected float percentageOfHits;
 
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
 
@@ -31,35 +29,14 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         damage = weapon.damage;
         damageType = weapon.damageType;
         canBounce = weapon.canBounce;
-
-        if (weapon.leaveDecal)
-        {
-            // Find corresponding decal in the list then instantiate it in the list
-            GameObject decal = null;
-            for (int i = 0; i < GMController.instance.decalPool.depot.Length; i++)
-            {
-                if (GMController.instance.decalPool.depot[i].bulletType == weapon.decalType)
-                {
-                    decal = GMController.instance.decalPool.depot[i].bullet;
-                    break;
-                }
-            }
-            decalPool = new GameObject[weapon.maxDecals];
-            for (int i = 0; i < decalPool.Length; i++)
-            {
-                decalPool[i] = Instantiate(decal, GMController.instance.decalDepot);
-            }
-            decalScale = decal.transform.localScale;
-        }
+        leaveDecal = weapon.leaveDecal;
     }
 
     public virtual void EmitBullet(Transform spawnPoint)
     {
         ParticleSystem.MainModule psMain = Gun.main;
         //Stat changes
-        psMain.startLifetime = weapon.bulletLifeTime;
-        psMain.startSpeed = weapon.bulletSpeed;
-        psMain.gravityModifier = weapon.bulletGravity;
+        ApplyStats(psMain);
 
         // emission
         transform.position = spawnPoint.position;
@@ -70,10 +47,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
     {
         ParticleSystem.MainModule psMain = Gun.main;
         //Stat changes
-        psMain.startLifetime = weapon.bulletLifeTime;
-        psMain.startSpeed = weapon.bulletSpeed;
-        psMain.gravityModifier = weapon.bulletGravity;
-
+        ApplyStats(psMain);
         // emission
         Vector3 pos = spawnPoint.position;
         pos += transform.up * offset;
@@ -86,6 +60,15 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         transform.position = pos;
         transform.rotation = Quaternion.LookRotation(spawnPoint.right, spawnPoint.up);
         Gun.Emit(1);
+    }
+
+    protected void ApplyStats(ParticleSystem.MainModule psMain)
+    {
+        //Stat changes
+        psMain.startLifetime = weapon.bulletLifeTime;
+        psMain.startSpeed = weapon.bulletSpeed;
+        psMain.gravityModifier = weapon.bulletGravity;
+        currentDecal = weapon.currentDecal;
     }
 
     protected void CheckDmg(_EnemyController enemyHit, int tempDmg)
@@ -114,54 +97,14 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         Debug.Log(tempDmg + "  " + enemyHit.currentLife);
     }
 
-    protected void CheckBulletLife(RaycastHit2D hit, int i, _EnemyController enemyHit)
-    {
-        float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits/100;
-        if (bulletLife <= 0 && weapon.leaveDecal) // check if it's the last hit and leave a decal
-        {
-            SpawnDecal(hit, i, enemyHit);
-        }
-        bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
-    }
     protected void CheckBulletLife(RaycastHit2D hit, int i)
     {
         float bulletLife = bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
-        if (bulletLife <= 0 && weapon.leaveDecal) // check if it's the last hit and leave a decal
+        if (bulletLife <= 0 && leaveDecal) // check if it's the last hit and leave a decal
         {
-            SpawnDecal(hit, i);
+            currentDecal.PlaceDecal(hit, bullets[i].velocity);
         }
         bullets[i].remainingLifetime -= bullets[i].remainingLifetime * percentageOfHits / 100;
-    }
-
-    protected void SpawnDecal(RaycastHit2D hit, int i, _EnemyController enemyHit)
-    {
-        if (decalUsed < decalPool.Length)
-        {
-            decalPool[decalUsed].transform.position = hit.point;
-            decalPool[decalUsed].transform.rotation = Quaternion.LookRotation(bullets[i].velocity.normalized); 
-            decalPool[decalUsed].transform.parent = hit.transform;
-            decalPool[decalUsed].transform.localScale = decalScale;
-            
-            enemyHit.DecalsOn.Add(decalPool[decalUsed].transform);
-            enemyHit.hasDecalsOn = true;
-
-            decalUsed++;
-        }
-        else
-            decalUsed = 0;
-    }
-    protected void SpawnDecal(RaycastHit2D hit, int i)
-    {
-        if (decalUsed < decalPool.Length)
-        {
-            decalPool[decalUsed].transform.position = hit.point;
-            decalPool[decalUsed].transform.rotation = Quaternion.LookRotation(bullets[i].velocity.normalized);
-            decalPool[decalUsed].transform.parent = hit.transform;
-            decalPool[decalUsed].transform.localScale = decalScale;
-            decalUsed++;
-        }
-        else
-            decalUsed = 0;
     }
 
     protected virtual void EmissionHandler()
@@ -182,14 +125,14 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
                 {
                     _EnemyController enemyHit = hit.transform.GetComponent<_EnemyController>();
 
-                    if (weapon.leaveDecal)
-                        SpawnDecal(hit, i, enemyHit);
+                    if (leaveDecal)
+                        currentDecal.PlaceDecal(hit, bullets[i].velocity, enemyHit);
 
                     bullets[i].remainingLifetime = 0;
 
                     DamageDealer(enemyHit);
                 }
-                else if (weapon.canBounce)
+                else if (canBounce)
                 {
                     CheckBulletLife(hit, i);            
 
@@ -200,8 +143,8 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
                 }
                 else
                 {
-                    if (weapon.leaveDecal)
-                        SpawnDecal(hit, i);
+                    if (leaveDecal)
+                        currentDecal.PlaceDecal(hit, bullets[i].velocity);
 
                     bullets[i].remainingLifetime = 0;
                 }

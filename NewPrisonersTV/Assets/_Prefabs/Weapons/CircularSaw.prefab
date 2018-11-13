@@ -367,10 +367,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   decalType: 2
-  maxDecals: 0
   damage: 30
   damageType: 01000000
-  leaveDecal: 0
+  leaveDecal: 1
   canPerforate: 1
   canBounce: 1
   autoFire: 0
@@ -386,6 +385,7 @@ MonoBehaviour:
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}
+  currentDecal: {fileID: 0}
 --- !u!222 &222108171934148814
 CanvasRenderer:
   m_ObjectHideFlags: 1

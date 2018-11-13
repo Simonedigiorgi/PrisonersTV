@@ -29,7 +29,6 @@ public class Weapon3D : MonoBehaviour
     [BoxGroup("Controls")] public float bulletSpeed;
     [BoxGroup("Controls")] public LayerMask obstacleMask;
     [BoxGroup("Controls")] public BULLETTYPE decalType;
-    [BoxGroup("Controls")] public int maxDecals;
     [BoxGroup("Controls")] public int damage;
     [BoxGroup("Controls")] public DAMAGETYPE[] damageType;
 
@@ -57,6 +56,7 @@ public class Weapon3D : MonoBehaviour
     [HideInInspector] public bool isReward = false;
 
     [HideInInspector] public PerforationBullet currentDepot;
+    [HideInInspector] public DecalHandler currentDecal;
 
     protected virtual void Awake()
     {
@@ -122,7 +122,6 @@ public class Weapon3D : MonoBehaviour
         rb.simulated = false;
         transform.parent = hand.transform;
         transform.position = hand.transform.position;
-        //coll.enabled = false;
 
         player.currentWeapon = GetComponent<Weapon3D>();
         if (bullet != null)
