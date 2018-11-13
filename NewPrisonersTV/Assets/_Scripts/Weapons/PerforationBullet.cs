@@ -15,35 +15,35 @@ public class PerforationBullet : MonoBehaviour
     public BulletInfo[] perfPool;
 
     #region Player Weapon stats copy
-    private DAMAGETYPE[] damageType;
-    private int damage;
-    private float bulletLifeTime;
-    private float bulletSpeed;
-    private bool canBounce;
-    private bool leaveDecal;
-    private float gravityMulti;
-    private float rayLenght;
-    private LayerMask obstacleMask;
-    private int lastWeaponNumberOfHits;
-    private DecalHandler currentDecal;
+    protected DAMAGETYPE[] damageType;
+    protected int damage;
+    protected float bulletLifeTime;
+    protected float bulletSpeed;
+    protected bool canBounce;
+    protected bool leaveDecal;
+    protected float gravityMulti;
+    protected float rayLenght;
+    protected LayerMask obstacleMask;
+    protected int lastWeaponNumberOfHits;
+    protected DecalHandler currentDecal;
     #endregion
 
-    private int playerNumber;
-    private bool magazineReady = false;
+    protected int playerNumber;
+    protected bool magazineReady = false;
 
-    private float colliderBoundX;
-    private Weapon3D playerWeapon = null;
-    private Vector3[] coord;
-    private int rayNumber = 3;
+    protected float colliderBoundX;
+    protected Weapon3D playerWeapon = null;
+    protected Vector3[] coord;
+    protected int rayNumber = 3;
 
-    private void Start()
+    protected void Start()
     {      
         playerNumber = transform.parent.GetSiblingIndex();
         PoolFilling();
         coord = new Vector3[rayNumber];
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (GMController.instance.gameStart && magazineReady)
         {
@@ -92,7 +92,7 @@ public class PerforationBullet : MonoBehaviour
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
     }
-    public void ShootPerf(Transform spawnPoint)
+    public virtual void ShootPerf(Transform spawnPoint)
     {
         for (int i = 0; i < perfPool.Length; i++)
         {
@@ -108,7 +108,7 @@ public class PerforationBullet : MonoBehaviour
             }
         }
     }
-    private void Collector(int i)
+    protected virtual void Collector(int i)
     {
         perfPool[i].isActive = false;
         perfPool[i].bullet.transform.position = transform.position;
@@ -117,7 +117,7 @@ public class PerforationBullet : MonoBehaviour
         perfPool[i].enemyHit = null;
 
     }
-    private void CopyStats()
+    protected void CopyStats()
     {
         if (playerWeapon.currentDecal != currentDecal)
             currentDecal = playerWeapon.currentDecal;
@@ -144,7 +144,7 @@ public class PerforationBullet : MonoBehaviour
         if (playerWeapon.bulletGravity != gravityMulti)
             gravityMulti = playerWeapon.bulletGravity;
     }
-    private void CheckDmg(_EnemyController enemyHit, int tempDmg)
+    protected void CheckDmg(_EnemyController enemyHit, int tempDmg)
     {
         for (int y = 0; y < damageType.Length; y++)
         {
@@ -169,7 +169,7 @@ public class PerforationBullet : MonoBehaviour
             tempDmg = 0;
         Debug.Log(tempDmg + "  " + enemyHit.currentLife);
     }
-    private void PoolFilling()
+    protected void PoolFilling()
     {
         BulletInfo perf = null;
         for (int i = 0; i < GMController.instance.bulletDepot.depot.Length; i++)
@@ -188,7 +188,7 @@ public class PerforationBullet : MonoBehaviour
         }
         magazineReady = true;
     }
-    private void EnvoiromentRaycastCheck(int i)
+    protected void EnvoiromentRaycastCheck(int i)
     {
         // direction
         perfPool[i].dir = perfPool[i].bullet.transform.right;
@@ -234,7 +234,7 @@ public class PerforationBullet : MonoBehaviour
         }
 
     }
-    private void RaycastHitApply(Transform hit, Vector3 normal,int i)
+    protected void RaycastHitApply(Transform hit, Vector3 normal,int i)
     {
         if (hit.CompareTag("Enemy"))
         {
@@ -274,7 +274,7 @@ public class PerforationBullet : MonoBehaviour
             Collector(i);
         }
     }
-    private void RayGridControl(GameObject bullet)
+    protected void RayGridControl(GameObject bullet)
     {
         coord[0] = bullet.transform.up * rayPositionSide ;
         coord[1] = Vector3.zero;

@@ -11,9 +11,9 @@ public class BulletInfo
     [HideInInspector] public float lifeTime;
     [HideInInspector] public _EnemyController[] enemyHit;
 
-    [HideInInspector] public Vector2 dir;
-    [HideInInspector] public Vector2 newDir;
-    [HideInInspector] public Vector2 velocity;
+    [HideInInspector] public Vector3 dir;
+    [HideInInspector] public Vector3 newDir;
+    [HideInInspector] public Vector3 velocity;
 
     public BulletInfo(BULLETTYPE type, GameObject obj)
     {

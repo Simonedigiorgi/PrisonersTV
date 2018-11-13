@@ -20,7 +20,7 @@ MonoBehaviour:
     enemyHit: []
     dir: {x: 0, y: 0}
     newDir: {x: 0, y: 0}
-    velocity: {x: 0, y: 0}
+    velocity: {x: 0, y: 0, z: 0}
   - bulletType: 3
     bullet: {fileID: 1542428182457634, guid: b77a73908a047f74798fb0301c95d659, type: 2}
     isActive: 0
@@ -29,13 +29,13 @@ MonoBehaviour:
     enemyHit: []
     dir: {x: 0, y: 0}
     newDir: {x: 0, y: 0}
-    velocity: {x: 0, y: 0}
-  - bulletType: 9
-    bullet: {fileID: 1790393574084040, guid: 9da09098cbb46a9449d9263f3034a2a4, type: 2}
+    velocity: {x: 0, y: 0, z: 0}
+  - bulletType: 10
+    bullet: {fileID: 1052853199714898, guid: 09932a0a29df40645927108c8c8ab82f, type: 2}
     isActive: 0
     numberOfHits: 0
     lifeTime: 0
     enemyHit: []
     dir: {x: 0, y: 0}
     newDir: {x: 0, y: 0}
-    velocity: {x: 0, y: 0}
+    velocity: {x: 0, y: 0, z: 0}
