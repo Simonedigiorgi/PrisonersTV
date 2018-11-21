@@ -13,4 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bat:
   - {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5, type: 2}
+  - {fileID: 114797467832891328, guid: 9643828ad61c2cc409f7bbba410572b4, type: 2}
+  - {fileID: 114797467832891328, guid: 1bdf19d7a119f6e4083123b1e6d9d81f, type: 2}
   Ninja: []
+  Kamikaze:
+  - {fileID: 114408505455886102, guid: 28238f2519b0801438502ee9fe2e6111, type: 2}
+  - {fileID: 114408505455886102, guid: 04cee7ee520337349b89548436b9d9ea, type: 2}
+  - {fileID: 114408505455886102, guid: 78cfa26c38921224eabcd7a44552cddb, type: 2}

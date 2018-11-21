@@ -19,4 +19,4 @@ MonoBehaviour:
   groundRadius: 0.4
   jump: 30
   extraJumpValue: 1
-  life: 3
+  life: 100

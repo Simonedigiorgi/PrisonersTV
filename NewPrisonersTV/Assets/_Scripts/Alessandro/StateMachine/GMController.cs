@@ -21,6 +21,7 @@ public class GMController : MonoBehaviour
     public DecalDepot decalDepot;                                           // reference to the decal prefab list
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
+    public Transform[] enemyPatrolPoints;
 
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -37,6 +38,7 @@ public class GMController : MonoBehaviour
 
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
+    [BoxGroup("Enemy Settings")] public int maxKamikaze;
     #endregion
 
     // Needed for Singleton pattern 
@@ -67,6 +69,7 @@ public class GMController : MonoBehaviour
     private int currentEnemyCount;
     private int currentBats;
     private int currentNinja;
+    private int currentKamikaze;
     #endregion
 
     #region STATIC VARIABLES
@@ -235,48 +238,6 @@ public class GMController : MonoBehaviour
         levelCount++;
     }
 
-    public int GetEnemyCount()
-    {
-        return currentEnemyCount;
-    }
-    public void AddEnemyCount()
-    {
-        currentEnemyCount++;
-    }
-    public void SubEnemyCount()
-    {
-        currentEnemyCount--;
-    }
-
-    public int GetBatsCount()
-    {
-        return currentBats;
-    }
-    public void AddBatsCount()
-    {
-        currentBats++;
-        AddEnemyCount();
-    }
-    public void SubBatsCount()
-    {
-        currentBats--;
-        SubEnemyCount();
-    }
-
-    public int GetNinjaCount()
-    {
-        return currentNinja;
-    }
-    public void AddNinjaCount()
-    {
-        currentNinja++;
-        AddEnemyCount();
-    }
-    public void SubNinjaCount()
-    {
-        currentNinja++;
-        SubEnemyCount();
-    }
 
     public void SetActive(bool state)
     {
@@ -413,6 +374,68 @@ public class GMController : MonoBehaviour
         }
 
     }
+
+    #region EnemyCount Get/Set
+
+    public int GetEnemyCount()
+    {
+        return currentEnemyCount;
+    }
+    public void AddEnemyCount()
+    {
+        currentEnemyCount++;
+    }
+    public void SubEnemyCount()
+    {
+        currentEnemyCount--;
+    }
+
+    public int GetBatsCount()
+    {
+        return currentBats;
+    }
+    public void AddBatsCount()
+    {
+        currentBats++;
+        AddEnemyCount();
+    }
+    public void SubBatsCount()
+    {
+        currentBats--;
+        SubEnemyCount();
+    }
+
+    public int GetNinjaCount()
+    {
+        return currentNinja;
+    }
+    public void AddNinjaCount()
+    {
+        currentNinja++;
+        AddEnemyCount();
+    }
+    public void SubNinjaCount()
+    {
+        currentNinja--;
+        SubEnemyCount();
+    }
+
+    public int GetKamikazeCount()
+    {
+        return currentKamikaze;
+    }
+    public void AddKamikazeCount()
+    {
+        currentKamikaze++;
+        AddEnemyCount();
+    }
+    public void SubKamikazeCount()
+    {
+        currentKamikaze--;
+        SubEnemyCount();
+    }
+
+    #endregion
 }
 
 

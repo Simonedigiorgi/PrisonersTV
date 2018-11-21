@@ -8,5 +8,6 @@ public class EnemyList : ScriptableObject
 {
     public List<_EnemyController> Bat;
     public List<_EnemyController> Ninja;
+    public List<_EnemyController> Kamikaze;
 }
 

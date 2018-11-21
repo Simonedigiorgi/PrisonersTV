@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
+  m_Name: StatsBat 3
+  m_EditorClassIdentifier: 
+  life: 100
+  enemyLevel: 3
+  points: 10
+  attackView: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 5
+  attackValue: 35
+  weakness:
+  - type: 1
+    value: 2
+  resistance:
+  - type: 0
+    value: 3
+  swoopMoreSlowly: 2.571
+  myStartDirection: 1
+  sinusoidalMovement: 2
+  ShurikenCooldown: 0
+  explosionTimer: 0

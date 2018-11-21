@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AI;
 using DG.Tweening;
+using Character;
 
 public class EnemyBat : _EnemyController
 {
@@ -10,7 +11,43 @@ public class EnemyBat : _EnemyController
     {
         enemyType = ENEMYTYPE.Bat;
     }
- 
+
+    protected override void Awake()
+    {
+        base.Awake();
+        //assign start directions
+        if (m_EnemyStats.myStartDirection == STARTDIRECTION.Right)
+        {
+            direction = 1;
+        }
+        else
+        {
+            direction = -1;
+        }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+        //turn the direction if collide on wall
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+        {
+            direction *= -1;
+        }
+    }
+
+    protected override void OnTriggerEnter2D(Collider2D collision)
+    {
+        // When player trigger an enemy
+        if (collision.CompareTag("Player_1"))
+        {
+            _CharacterController player = collision.GetComponent<_CharacterController>();
+            player.currentLife -= m_EnemyStats.attackValue;
+            if (player.currentLife <= 0)
+                player.currentLife = 0;
+            GMController.instance.UI.UpdateLifeUI(player.playerNumber); // update life on UI
+        }
+    }
+
     protected override void Update()
     {
         if (GMController.instance.gameStart)
@@ -46,7 +83,8 @@ public class EnemyBat : _EnemyController
         {
             for (int i = 0; i < GMController.instance.enemySpawns.Length; i++)
             {
-                GMController.instance.enemySpawns[i].ResetTimer();
+                if (GMController.instance.enemySpawns[i].spawnType == enemyType)
+                    GMController.instance.enemySpawns[i].ResetTimer();
             }
         }
         GMController.instance.SubBatsCount();

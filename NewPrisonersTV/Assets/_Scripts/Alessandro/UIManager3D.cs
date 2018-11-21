@@ -102,26 +102,27 @@ public class UIManager3D : MonoBehaviour
     }
     public void UpdateLifeUI(int player)
     {
+        // percentage of current life 
+        float percentageOfLife = GMController.instance.playerInfo[player].playerController.currentLife * 100 / GMController.instance.playerInfo[player].playerController.m_CharStats.life;
         //Rescale and Recolor life bar
-        if (GMController.instance.playerInfo[player].playerController.currentLife == 3)
+        if (percentageOfLife > 75)
         {
-            lifeBar[player].transform.localScale = new Vector3(15, 2.5f, 0);
             lifeBar[player].color = Color.green;
         }
-        else if (GMController.instance.playerInfo[player].playerController.currentLife == 2)
+        else if (percentageOfLife > 50 && percentageOfLife < 75)
         {
-            lifeBar[player].transform.localScale = new Vector3(10, 2.5f, 0);
             lifeBar[player].color = Color.yellow;
         }
-        else if (GMController.instance.playerInfo[player].playerController.currentLife == 1)
+        else if (percentageOfLife < 50 && percentageOfLife > 25 )
         {
-            lifeBar[player].transform.localScale = new Vector3(5, 2.5f, 0);
+            lifeBar[player].color = Color.magenta;
+        }
+        else if (percentageOfLife < 25)
+        {
             lifeBar[player].color = Color.red;
         }
-        else if (GMController.instance.playerInfo[player].playerController.currentLife <= 0)
-        {
-            lifeBar[player].transform.localScale = Vector3.zero;
-        }
+        // change the lifebar proportions to match the life %
+        lifeBar[player].transform.localScale = new Vector3((percentageOfLife / 100 * 15), 2.5f, 0);
     }
     public void SetContinueText(int player)
     {

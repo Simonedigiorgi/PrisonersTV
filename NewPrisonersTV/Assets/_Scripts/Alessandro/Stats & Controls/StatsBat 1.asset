@@ -9,18 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
-  m_Name: EnemyStatsBat
+  m_Name: StatsBat 1
   m_EditorClassIdentifier: 
   life: 100
-  enemyLevel: 2
+  enemyLevel: 1
   points: 10
   attackView: 10
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
   speed: 5
-  flashingSpeed: 0.1
-  myStartDirection: 1
+  attackValue: 20
   weakness:
   - type: 1
     value: 2
@@ -28,5 +27,7 @@ MonoBehaviour:
   - type: 0
     value: 3
   swoopMoreSlowly: 2.571
+  myStartDirection: 1
   sinusoidalMovement: 2
   ShurikenCooldown: 0
+  explosionTimer: 0

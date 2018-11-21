@@ -20,9 +20,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
     protected ParticleSystem childParticle; // used to store child particle if needed
     protected ParticleSystem.Particle[] bullets;
     protected float percentageOfHits;
-
-    List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-
+  
     protected virtual void Awake()
     {
         percentageOfHits = 1f / weapon.numberOfHits * 100;

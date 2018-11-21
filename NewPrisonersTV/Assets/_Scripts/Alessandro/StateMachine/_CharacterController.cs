@@ -29,7 +29,7 @@ namespace Character
         [HideInInspector] public bool canRespawn;                                                   // Indicates if the players can respawn
         [HideInInspector] public bool startDeathCR;                                                 // If true can start the death coroutine
 
-        [HideInInspector] public int currentLife;                                                   // player's life points at current moment
+         public int currentLife;                                                   // player's life points at current moment
         [HideInInspector] public int playerNumber;                                                  // player identification number and index in the playerInfo list
         [HideInInspector] public int extraJumps;                                                    // How many double jumps can he make
 
@@ -56,16 +56,6 @@ namespace Character
                 {
                     StartCoroutine(Death());
                 }
-            }
-        }
-
-        public void OnTriggerEnter2D(Collider2D collision)
-        {
-            // When player trigger an enemy
-            if (collision.CompareTag("Enemy"))
-            {
-                currentLife--;
-                GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
             }
         }
 

@@ -15,7 +15,7 @@ namespace AI.Actions
 
         public void Attack(EnemiesAIStateController controller)
         {
-            if (controller.enemyStats.enemyLevel == 2 && !controller.m_EnemyController.swoopCoroutineInExecution && controller.m_EnemyController.playerSeen)
+            if (controller.enemyStats.enemyLevel == 3 && !controller.m_EnemyController.swoopCoroutineInExecution && controller.m_EnemyController.playerSeen)
             {                                     
                 controller.m_EnemyController.startSwoopCR = true;
             } 
