@@ -14,26 +14,22 @@ namespace AI.Actions
         }
 
         public void Move(EnemiesAIStateController controller)
-        { 
-            if (!controller.m_EnemyController.playerSeen)
+        {           
+            if (controller.m_EnemyController.agent.isOnOffMeshLink)
+                controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
+            else
+                controller.m_EnemyController.agent.speed = controller.enemyStats.speed;
+            //---------------------------------------------------------------------------------------
+            // set first destination if needed
+            if (controller.m_EnemyController.agent.destination == null)
+                controller.m_EnemyController.agent.destination = controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position;
+            //---------------------------------------------------------------------------------------
+            // check if has reached the next patrol point
+            if ((controller.m_EnemyController.thisTransform.position - controller.m_EnemyController.agent.destination).sqrMagnitude
+                <= controller.m_EnemyController.agent.stoppingDistance * controller.m_EnemyController.agent.stoppingDistance)
             {
-                if (controller.m_EnemyController.agent.isOnOffMeshLink)
-                    controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
-                else
-                    controller.m_EnemyController.agent.speed = controller.enemyStats.speed;
-
-                // set first destination if needed
-                if (controller.m_EnemyController.agent.destination == null)
-                    controller.m_EnemyController.agent.destination = controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position;
-
-                // check if has reached the next patrol point
-                if ((controller.m_EnemyController.thisTransform.position - controller.m_EnemyController.agent.destination).sqrMagnitude
-                    <= controller.m_EnemyController.agent.stoppingDistance * controller.m_EnemyController.agent.stoppingDistance)
-                {
-                    controller.m_EnemyController.SetNextPatrolPoint();                                     
-                }
-            }
+                controller.m_EnemyController.SetNextPatrolPoint();                                     
+            }            
         }
-
     }
 }

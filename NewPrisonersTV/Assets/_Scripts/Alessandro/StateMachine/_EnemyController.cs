@@ -8,9 +8,10 @@ namespace AI
 {
     public abstract class _EnemyController : MonoBehaviour
     {
+        public Animator enemyAnim;
         public EnemyStats m_EnemyStats;
         public Transform[] raycastEyes;
-
+        //------------------------------------------------------------------
         [BoxGroup("Only for Enemies with NavAgent")] public Transform[] patrolPoints;
         [BoxGroup("Only for Enemies with NavAgent")] public bool randomNavPoints;
 
@@ -20,31 +21,32 @@ namespace AI
         [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public MineParticle mine;
         [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public LayerMask mineMask;
 
+        [BoxGroup("Attack particle (if needed)")] public ParticleSystem attackParticle;
+        //------------------------------------------------------------------
         [HideInInspector] public int currentDestinationCount = 0;
         [HideInInspector] public NavMeshAgent agent;
-        
+        //------------------------------------------------------------------
         [HideInInspector] public bool hasDecalsOn;
         [HideInInspector] public int decalsNum;
-
-        [HideInInspector] public Animator enemyAnim;
+        //------------------------------------------------------------------
         [HideInInspector] public float animSpeed;
-
+        //------------------------------------------------------------------
         [HideInInspector] public ENEMYTYPE enemyType;
         [HideInInspector] public int currentLife;
-
+        //------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;
         [HideInInspector] public SpriteRenderer mySpriteRender;
         [HideInInspector] public Transform thisTransform;
-
+        //------------------------------------------------------------------
         [HideInInspector] public int direction;
         [HideInInspector] public int enemyMembership;
         [HideInInspector] public bool isFlashing = false;
         [HideInInspector] public bool gotHit = false;
-
+        //------------------------------------------------------------------
         [HideInInspector] public bool startDieCoroutine = false;
         [HideInInspector] public bool playerSeen = false;
         [HideInInspector] public int playerSeenIndex;
-
+        //------------------------------------------------------------------
         #region BATS
         [HideInInspector] public Vector3 startSwoopPosition;
         [HideInInspector] public Vector3 endSwoopPosition;
@@ -57,6 +59,9 @@ namespace AI
         [HideInInspector] public bool canExplode;
 
         #endregion
+        //------------------------------------------------------------------
+        //[HideInInspector] public Vector3 smoothDeltaPosition = Vector3.zero;
+        //[HideInInspector] public Vector3 velocity = Vector3.zero;
 
         protected virtual void Awake()
         {
@@ -64,11 +69,10 @@ namespace AI
             mySpriteRender = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
             currentLife = m_EnemyStats.life;
-            enemyAnim = GetComponent<Animator>();
             //animSpeed = enemyAnim.speed;
             agent = GetComponent<NavMeshAgent>();         
         }
-        
+        //------------------------------------------------------------------
         protected virtual void Update()
         {
             if (GMController.instance.gameStart)
@@ -86,7 +90,7 @@ namespace AI
                 }               
             }
         }
-
+        //------------------------------------------------------------------
         protected virtual void OnCollisionEnter2D(Collision2D collision){ }
         protected virtual void OnTriggerEnter2D(Collider2D collision){ }
 

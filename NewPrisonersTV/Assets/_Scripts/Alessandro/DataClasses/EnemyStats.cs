@@ -16,7 +16,7 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Movement speed")] public int attackValue;
     [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
     [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
-
+    //---------------------------------------------------------------------------------------
     #region BATS
     [Range(0.5f, 3)]
     [BoxGroup("Bat Only")][Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;

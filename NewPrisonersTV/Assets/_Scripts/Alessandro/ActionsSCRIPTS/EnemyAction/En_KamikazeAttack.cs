@@ -21,15 +21,14 @@ namespace AI.Actions
                controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
             else
                 controller.m_EnemyController.agent.speed = controller.enemyStats.runSpeed;
-
-
+            //---------------------------------------------------------------------------------------
 
             if (controller.enemyStats.enemyLevel == 3 && !controller.m_EnemyController.mine.isActive)
             {
                 //drop bombs
                 controller.m_EnemyController.mine.isActive = true;
             }
-
+            // explosions timer
             controller.m_EnemyController.currentExplosionTimer -= Time.deltaTime;
            
             if (controller.m_EnemyController.currentExplosionTimer <= 0 )

@@ -14,7 +14,7 @@ public class GMController : MonoBehaviour
     public int startGameTimer;
     public float deathTimer = 0f;
     public float slowdownTimerMultiplier;
-
+    //------------------------------------------------------------------
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;
     public Transform decalPool;                                             // reference to the decal pool parent obj
@@ -22,7 +22,7 @@ public class GMController : MonoBehaviour
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
     public Transform[] enemyPatrolPoints;
-
+    //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
     [BoxGroup("Story Settings")] public GameObject key;
@@ -40,7 +40,7 @@ public class GMController : MonoBehaviour
     [BoxGroup("Enemy Settings")] public int maxNinja;
     [BoxGroup("Enemy Settings")] public int maxKamikaze;
     #endregion
-
+    //------------------------------------------------------------------
     // Needed for Singleton pattern 
     [HideInInspector] public static GMController instance = null;
     // Variables used in order to trigger transitions when the game is not active
@@ -52,12 +52,12 @@ public class GMController : MonoBehaviour
     [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
     [HideInInspector] public Camera m_MainCamera;
 
-    // Needed for game mode setup
+    // Needed for game mode setup ---------------------------------------
     [HideInInspector] public bool playerSetupDone = false;
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public UIManager3D UI;
     [HideInInspector] public BonusWeapon bonusWeapon;
-
+    //------------------------------------------------------------------
     #region ENEMIES/SPAWNS INFO
     [HideInInspector] public int maxEnemy;
    
@@ -71,7 +71,7 @@ public class GMController : MonoBehaviour
     private int currentNinja;
     private int currentKamikaze;
     #endregion
-
+    //------------------------------------------------------------------
     #region STATIC VARIABLES
     private static int playerRequired;                                              // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
@@ -87,10 +87,10 @@ public class GMController : MonoBehaviour
     private static int[] playersTotalScore;                                          // record the sum of all level scores for each player in the current game
     private static Weapon3D[] weaponRewardFromLastLevel;                             // record the rewards choosen in the last level
     #endregion
-
+    //------------------------------------------------------------------
     private bool keyInGame = false;                                                  // true when the key can be spawned
     [HideInInspector] public bool canSpawnKey = true;                                // true if the key is not in game
-    
+    //------------------------------------------------------------------
     #region END GAME/REWARDS VARIABLES
     [HideInInspector] public bool gameEnded = false;                                 // true if the player reach and interact with the exit door. it disables pause 
     [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
@@ -100,7 +100,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
     #endregion
-
+    //------------------------------------------------------------------
     void Awake() 
     {
         //Singleton
@@ -187,7 +187,7 @@ public class GMController : MonoBehaviour
             StartCoroutine(StartGameCD());
         }
     }
-
+    //------------------------------------------------------------------
     private void SetStartingWeapon(int playerNumber)
     {
         Weapon3D rewardWeapon = Instantiate(weaponRewardFromLastLevel[playerNumber]);
@@ -238,7 +238,7 @@ public class GMController : MonoBehaviour
         levelCount++;
     }
 
-
+    //------------------------------------------------------------------
     public void SetActive(bool state)
     {
         isGameActive = state;
@@ -374,7 +374,7 @@ public class GMController : MonoBehaviour
         }
 
     }
-
+    //------------------------------------------------------------------
     #region EnemyCount Get/Set
 
     public int GetEnemyCount()
@@ -436,6 +436,7 @@ public class GMController : MonoBehaviour
     }
 
     #endregion
+    //------------------------------------------------------------------
 }
 
 

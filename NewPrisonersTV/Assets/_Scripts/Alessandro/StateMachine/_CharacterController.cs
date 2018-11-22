@@ -8,18 +8,18 @@ namespace Character
     public class _CharacterController : MonoBehaviour
     {
 
-        [BoxGroup("Animator")] public Animator playerAnim;                                     // Get the Player Animators
+        [BoxGroup("Animator")] public Animator playerAnim;                                          // Get the Player Animators
 
-        [BoxGroup("Components")] public GameObject playerRightArm;                                       // Player's arm
-        [BoxGroup("Components")] public GameObject playerLeftArm;                                       // Player's arm
+        [BoxGroup("Components")] public GameObject playerRightArm;                                  // Player's arm
+        [BoxGroup("Components")] public GameObject playerLeftArm;                                   // Player's arm
         [BoxGroup("Components")] public Weapon3D currentWeapon;
-        [BoxGroup("Components")] public GameObject groundCheck;                                         // Player ground collider
+        [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;
         [BoxGroup("Components")] public CharacterStats m_CharStats;
         [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;     
 
         [BoxGroup("Rules")] public float respawnTime;
-        
+        //---------------------------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;                                                    // Rigidbody component
 
         [HideInInspector] public bool facingRight;                                                  // Player flip facing
@@ -29,7 +29,7 @@ namespace Character
         [HideInInspector] public bool canRespawn;                                                   // Indicates if the players can respawn
         [HideInInspector] public bool startDeathCR;                                                 // If true can start the death coroutine
 
-         public int currentLife;                                                   // player's life points at current moment
+        [HideInInspector] public int currentLife;                                                   // player's life points at current moment
         [HideInInspector] public int playerNumber;                                                  // player identification number and index in the playerInfo list
         [HideInInspector] public int extraJumps;                                                    // How many double jumps can he make
 
@@ -39,7 +39,7 @@ namespace Character
 
         [HideInInspector] public bool canExit = false;                                              // if true ends the level
         [HideInInspector] public bool canGetReward = false;                                         // true if the player already choose the reward
-
+        //---------------------------------------------------------------------------------------
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -58,7 +58,7 @@ namespace Character
                 }
             }
         }
-
+        //---------------------------------------------------------------------------------------
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (isAlive)
@@ -105,8 +105,8 @@ namespace Character
                 canExit = false;
             }
         }
-
-        #region Methods
+        //---------------------------------------------------------------------------------------
+        #region METHODS
 
         public void PlayerRespawn(Transform spawnPoint)
         {
@@ -273,9 +273,8 @@ namespace Character
             }
             return;
         }
-     
-        #endregion
 
-     
+        #endregion
+        //---------------------------------------------------------------------------------------
     }
 }

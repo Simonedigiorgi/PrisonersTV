@@ -22,9 +22,7 @@ namespace AI.Actions
             {
                 controller.m_EnemyController.explosionParticle.Explosion(controller.m_EnemyController.thisTransform.position);
             }
-            controller.m_EnemyController.startDieCoroutine = true;        
-                      
+            controller.m_EnemyController.startDieCoroutine = true;                             
         }
-
     }
 }
