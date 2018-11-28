@@ -15,7 +15,10 @@ MonoBehaviour:
   - {fileID: 114797467832891328, guid: 1a94798ab697d054697981bb20b43cd5, type: 2}
   - {fileID: 114797467832891328, guid: 9643828ad61c2cc409f7bbba410572b4, type: 2}
   - {fileID: 114797467832891328, guid: 1bdf19d7a119f6e4083123b1e6d9d81f, type: 2}
-  Ninja: []
+  Ninja:
+  - {fileID: 114988697314055000, guid: 86871da54ed96784e9364087f255d0dd, type: 2}
+  - {fileID: 114988697314055000, guid: ba413d2917753db4dbfa75bca77df564, type: 2}
+  - {fileID: 114988697314055000, guid: f0ebcd10c0fba5f45b8baf4c4bcd5b58, type: 2}
   Kamikaze:
   - {fileID: 114408505455886102, guid: 28238f2519b0801438502ee9fe2e6111, type: 2}
   - {fileID: 114408505455886102, guid: 04cee7ee520337349b89548436b9d9ea, type: 2}

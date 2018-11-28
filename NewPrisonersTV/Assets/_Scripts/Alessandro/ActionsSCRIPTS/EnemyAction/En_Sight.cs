@@ -5,7 +5,7 @@ using StateMachine;
 
 namespace AI.Actions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Actions/Enemy/Sight")]
+    [CreateAssetMenu(menuName = "StateMachine/Actions/Enemy/BatSight")]
     public class En_Sight: _Action
     {
         public override void Execute(EnemiesAIStateController controller)

@@ -36,7 +36,6 @@ GameObject:
   - component: {fileID: 4061767963005278}
   - component: {fileID: 212083966763908662}
   - component: {fileID: 95049436679140902}
-  - component: {fileID: 58125315409644648}
   - component: {fileID: 114641554722469180}
   - component: {fileID: 50687380095917732}
   - component: {fileID: 114797467832891328}
@@ -62,6 +61,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1747334629498032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4810822518906546}
+  - component: {fileID: 58048871473467170}
+  m_Layer: 11
+  m_Name: GameObject
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4061767963005278
 Transform:
   m_ObjectHideFlags: 1
@@ -72,6 +87,7 @@ Transform:
   m_LocalPosition: {x: -8.682957, y: -1.2071879, z: 2.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4810822518906546}
   - {fileID: 4167471978231054}
   - {fileID: 4515383772121064}
   m_Father: {fileID: 0}
@@ -88,7 +104,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4061767963005278}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4515383772121064
 Transform:
@@ -101,7 +117,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4061767963005278}
-  m_RootOrder: 1
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4810822518906546
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747334629498032}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.149, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4061767963005278}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50687380095917732
 Rigidbody2D:
@@ -123,12 +152,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &58125315409644648
+--- !u!58 &58048871473467170
 CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1505320542747672}
+  m_GameObject: {fileID: 1747334629498032}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -212,6 +241,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
+  playerMesh: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -225,6 +255,9 @@ MonoBehaviour:
   startSwoopCR: 0
   currentExplosionTimer: 0
   canExplode: 0
+  currentShurikenTimer: 0
+  currentJumpTimer: 0
+  worldDeltaPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &212083966763908662
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -165,7 +165,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
     {
         for (int i = 0; i < Hit.Length; i++)
         {
-            _EnemyController enemyHit = Hit[i].GetComponent<_EnemyController>();
+            _EnemyController enemyHit = Hit[i].transform.parent.GetComponent<_EnemyController>();
             // check damage type and enemy resistance                 
             int tempDmg = damage;
             CheckDmg(enemyHit, tempDmg);

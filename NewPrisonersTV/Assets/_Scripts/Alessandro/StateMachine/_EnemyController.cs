@@ -15,11 +15,11 @@ namespace AI
         [BoxGroup("Only for Enemies with NavAgent")] public Transform[] patrolPoints;
         [BoxGroup("Only for Enemies with NavAgent")] public bool randomNavPoints;
 
-        [BoxGroup("Kamikaze Explosion Particle")] public KamikazeExplosionParticle explosionParticle;
-        [BoxGroup("Kamikaze Explosion Particle")] public LayerMask explosionMask;
+        [BoxGroup("Ninja Shuriken SpawnPoint")] public Transform shurikenSpawn;
 
-        [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public MineParticle mine;
-        [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public LayerMask mineMask;
+        [BoxGroup("Kamikaze Explosion Particle")] public KamikazeExplosionParticle explosionParticle;
+
+        [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public MineParticle mine; 
 
         [BoxGroup("Attack particle (if needed)")] public ParticleSystem attackParticle;
         //------------------------------------------------------------------
@@ -35,8 +35,10 @@ namespace AI
         [HideInInspector] public int currentLife;
         //------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;
+        [HideInInspector] public Collider2D col;
         [HideInInspector] public SpriteRenderer mySpriteRender;
         [HideInInspector] public Transform thisTransform;
+        [HideInInspector] public Transform playerMesh; 
         //------------------------------------------------------------------
         [HideInInspector] public int direction;
         [HideInInspector] public int enemyMembership;
@@ -46,6 +48,7 @@ namespace AI
         [HideInInspector] public bool startDieCoroutine = false;
         [HideInInspector] public bool playerSeen = false;
         [HideInInspector] public int playerSeenIndex;
+        [HideInInspector] public Transform playerPartSeen;
         //------------------------------------------------------------------
         #region BATS
         [HideInInspector] public Vector3 startSwoopPosition;
@@ -57,20 +60,41 @@ namespace AI
         #region KAMIKAZE
         [HideInInspector] public float currentExplosionTimer;
         [HideInInspector] public bool canExplode;
+        #endregion
 
+        #region NINJA
+        [HideInInspector] public float currentShurikenTimer;
+        [HideInInspector] public Vector3 startJumpPos;
+        [HideInInspector] public float currentJumpTimer;
+        [HideInInspector] public bool onGround;
+        [HideInInspector] public NinjaShurikenParticle shuriken;
         #endregion
         //------------------------------------------------------------------
-        //[HideInInspector] public Vector3 smoothDeltaPosition = Vector3.zero;
-        //[HideInInspector] public Vector3 velocity = Vector3.zero;
+        //public Vector3 worldDeltaPosition;
 
         protected virtual void Awake()
         {
             thisTransform = this.transform;
             mySpriteRender = GetComponent<SpriteRenderer>();
-            rb = GetComponent<Rigidbody2D>();
+            rb = thisTransform.GetComponent<Rigidbody2D>(); 
             currentLife = m_EnemyStats.life;
-            //animSpeed = enemyAnim.speed;
-            agent = GetComponent<NavMeshAgent>();         
+            animSpeed = enemyAnim.speed;
+            agent = GetComponent<NavMeshAgent>();
+            col = thisTransform.GetChild(0).GetComponent<Collider2D>();
+            playerMesh = enemyAnim.transform;
+        }
+
+        protected virtual void Start()
+        {
+            if (agent != null)
+            {
+                agent.speed = m_EnemyStats.speed;
+                if (patrolPoints.Length == 0)
+                {
+                    patrolPoints = new Transform[GMController.instance.enemyPatrolPoints.Length];
+                    patrolPoints = GMController.instance.enemyPatrolPoints;
+                }
+            }
         }
         //------------------------------------------------------------------
         protected virtual void Update()

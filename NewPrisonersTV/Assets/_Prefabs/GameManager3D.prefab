@@ -8189,6 +8189,7 @@ MonoBehaviour:
   playerAnim: {fileID: 95761752473439462}
   playerRightArm: {fileID: 1801427065749182}
   playerLeftArm: {fileID: 1685494337393344}
+  TargetForEnemies: {fileID: 4799291267944316}
   currentWeapon: {fileID: 0}
   groundCheck: {fileID: 1388345411682282}
   playerCollider: {fileID: 61009034355861944}
@@ -8224,6 +8225,7 @@ MonoBehaviour:
   playerAnim: {fileID: 95146952285228518}
   playerRightArm: {fileID: 1336342989018660}
   playerLeftArm: {fileID: 1505437316525056}
+  TargetForEnemies: {fileID: 4465063322312976}
   currentWeapon: {fileID: 0}
   groundCheck: {fileID: 1963415835020992}
   playerCollider: {fileID: 61422318308006990}

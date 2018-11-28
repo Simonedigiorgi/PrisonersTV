@@ -43,7 +43,7 @@ public class EnemySpawn : MonoBehaviour
                     }
                     else if (i == (int)ENEMYTYPE.Ninja && GMController.instance.GetNinjaCount() < GMController.instance.maxNinja)
                     {
-                        SpawnNinja();
+                        StartCoroutine(SpawnNinja());
                     }
                     else if (i == (int)ENEMYTYPE.Kamikaze && GMController.instance.GetKamikazeCount() < GMController.instance.maxKamikaze)
                     {
@@ -56,7 +56,7 @@ public class EnemySpawn : MonoBehaviour
                 }
                 else if (spawnType == ENEMYTYPE.Ninja && GMController.instance.GetNinjaCount() < GMController.instance.maxNinja)
                 {
-                    SpawnNinja();
+                    StartCoroutine(SpawnNinja());
                 }
                 else if (spawnType == ENEMYTYPE.Kamikaze && GMController.instance.GetKamikazeCount() < GMController.instance.maxKamikaze)
                 {
@@ -105,9 +105,22 @@ public class EnemySpawn : MonoBehaviour
         yield return null;
     }
 
-    private void SpawnNinja()
+    private IEnumerator SpawnNinja()
     {
+        spawnDone = false;
+        GMController.instance.AddNinjaCount(); // add ninja count
+        anim.SetInteger("State", 1);
 
+        yield return new WaitForSeconds(0.2f);
+        GameObject newEnemy = Instantiate(enemyList.Ninja[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
+        GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
+        anim.SetInteger("State", 2);
+
+        yield return new WaitForSeconds(0.2f);
+        anim.SetInteger("State", 0);
+        timer = spawnTimer;
+        spawnDone = true;
+        yield return null;
     }
 
 }

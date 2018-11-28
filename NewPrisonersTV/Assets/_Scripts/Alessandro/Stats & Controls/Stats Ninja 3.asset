@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
+  m_Name: Stats Ninja 3
+  m_EditorClassIdentifier: 
+  life: 50
+  enemyLevel: 3
+  points: 15
+  attackView: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  speed: 5
+  attackValue: 20
+  weakness: []
+  resistance: []
+  jumpSpeed: 7
+  swoopMoreSlowly: 0.5
+  myStartDirection: 0
+  sinusoidalMovement: 0
+  ShurikenCooldown: 3
+  shurikenHitMask:
+    serializedVersion: 2
+    m_Bits: 17664
+  shurikenNumberofHits: 3
+  canBounce: 1
+  shurikenLifeTime: 2
+  shurikenSpeed: 20
+  shurikenGravity: 0
+  ShurikenRayLenght: 1
+  ninjaJumpLenght: 5
+  ninjaJumpHeight: 10
+  ninjaJumpCooldown: 3
+  groundCheckRadius: 0.2
+  explosionTimer: 0
+  runSpeed: 0
+  explosionMask:
+    serializedVersion: 2
+    m_Bits: 0

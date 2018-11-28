@@ -11,15 +11,10 @@ public class EnemyKamikaze : _EnemyController
         enemyType = ENEMYTYPE.Kamikaze;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        currentExplosionTimer = m_EnemyStats.explosionTimer;
-        agent.speed = m_EnemyStats.speed;
-        if (patrolPoints.Length == 0)
-        {
-            patrolPoints = new Transform[GMController.instance.enemyPatrolPoints.Length];
-            patrolPoints = GMController.instance.enemyPatrolPoints;            
-        }
+        base.Start();
+        currentExplosionTimer = m_EnemyStats.explosionTimer;  
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

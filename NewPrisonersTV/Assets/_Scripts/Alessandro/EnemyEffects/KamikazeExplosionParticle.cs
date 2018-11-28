@@ -16,7 +16,7 @@ public class KamikazeExplosionParticle : MonoBehaviour
     private void Start()
     {
         // copy components
-        explosionMask = owner.explosionMask;
+        explosionMask = owner.m_EnemyStats.explosionMask;
         damage = owner.m_EnemyStats.attackValue;
     }
 

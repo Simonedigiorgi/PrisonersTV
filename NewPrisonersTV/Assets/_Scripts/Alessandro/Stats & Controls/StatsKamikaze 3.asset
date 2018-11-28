@@ -22,10 +22,20 @@ MonoBehaviour:
   attackValue: 20
   weakness: []
   resistance: []
+  jumpSpeed: 7
   swoopMoreSlowly: 0.5
   myStartDirection: 0
   sinusoidalMovement: 0
   ShurikenCooldown: 0
+  shurikenHitMask:
+    serializedVersion: 2
+    m_Bits: 0
+  ninjaJumpLenght: 0
+  ninjaJumpHeight: 0
+  ninjaJumpCooldown: 0
+  groundCheckRadius: 0
   explosionTimer: 3
   runSpeed: 8
-  jumpSpeed: 7
+  explosionMask:
+    serializedVersion: 2
+    m_Bits: 1024
