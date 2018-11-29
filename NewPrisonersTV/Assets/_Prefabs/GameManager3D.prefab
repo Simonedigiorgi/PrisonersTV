@@ -8060,6 +8060,7 @@ MonoBehaviour:
   maxBats: 5
   maxNinja: 5
   maxKamikaze: 5
+  maxSpiders: 5
   isGameActive: 0
   canStartGameCD: 0
   gameStart: 0

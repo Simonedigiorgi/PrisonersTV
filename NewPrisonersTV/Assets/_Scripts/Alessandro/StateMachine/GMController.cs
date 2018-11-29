@@ -38,7 +38,8 @@ public class GMController : MonoBehaviour
 
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
-    [BoxGroup("Enemy Settings")] public int maxKamikaze;
+    [BoxGroup("Enemy Settings")] public int maxKamikaze; 
+    [BoxGroup("Enemy Settings")] public int maxSpiders;
     #endregion
     //------------------------------------------------------------------
     // Needed for Singleton pattern 
@@ -70,6 +71,7 @@ public class GMController : MonoBehaviour
     private int currentBats;
     private int currentNinja;
     private int currentKamikaze;
+    private int currentSpiders;
     #endregion
     //------------------------------------------------------------------
     #region STATIC VARIABLES
@@ -432,6 +434,21 @@ public class GMController : MonoBehaviour
     public void SubKamikazeCount()
     {
         currentKamikaze--;
+        SubEnemyCount();
+    }
+
+    public int GetSpidersCount()
+    {
+        return currentSpiders;
+    }
+    public void AddSpidersCount()
+    {
+        currentSpiders++;
+        AddEnemyCount();
+    }
+    public void SubSpidersCount()
+    {
+        currentSpiders--;
         SubEnemyCount();
     }
 

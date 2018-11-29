@@ -426,6 +426,7 @@ GameObject:
   - component: {fileID: 303612881}
   - component: {fileID: 303612880}
   - component: {fileID: 303612883}
+  - component: {fileID: 303612884}
   m_Layer: 8
   m_Name: Platform (14)
   m_TagString: Wall
@@ -526,6 +527,25 @@ MonoBehaviour:
   m_AgentTypeID: 0
   m_StartPoint: {x: 3.3, y: 1.11, z: 0}
   m_EndPoint: {x: 5.13, y: -7.34, z: 0}
+  m_Width: 2
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
+--- !u!114 &303612884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 303612878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -1372625422
+  m_StartPoint: {x: 15.116112, y: -8.88787, z: 0}
+  m_EndPoint: {x: 2.5079098, y: -0.22945023, z: 0}
   m_Width: 2
   m_CostModifier: -1
   m_Bidirectional: 1
@@ -1131,7 +1151,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_BuildHeightMesh: 0
-  m_NavMeshData: {fileID: 23800000, guid: 5a5594323622f444eb4a25e95f7eb36c, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f36d68f98bdab6e4b9076931ac2a6c91, type: 2}
 --- !u!1 &731666475
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,6 +1217,7 @@ GameObject:
   - component: {fileID: 743059412}
   - component: {fileID: 743059411}
   - component: {fileID: 743059414}
+  - component: {fileID: 743059415}
   m_Layer: 8
   m_Name: Platform (17)
   m_TagString: Wall
@@ -1297,6 +1318,25 @@ MonoBehaviour:
   m_AgentTypeID: 0
   m_StartPoint: {x: -3.59, y: 1.04, z: 0}
   m_EndPoint: {x: -5.31, y: -7.04, z: 0}
+  m_Width: 2
+  m_CostModifier: -1
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 0
+  m_Area: 0
+--- !u!114 &743059415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 743059409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: -1372625422
+  m_StartPoint: {x: -2.9763184, y: -0.9768685, z: 0}
+  m_EndPoint: {x: -14.986965, y: -9.051068, z: 0}
   m_Width: 2
   m_CostModifier: -1
   m_Bidirectional: 1
@@ -1478,7 +1518,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4314236432950052, guid: 110708e11db94b042982c161a9d17616, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -5.5
+      value: -2.87
       objectReference: {fileID: 0}
     - target: {fileID: 4314236432950052, guid: 110708e11db94b042982c161a9d17616, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1512,12 +1552,12 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnType
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnLevel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 110708e11db94b042982c161a9d17616, type: 2}

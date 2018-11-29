@@ -5,7 +5,7 @@ using AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public ENEMYTYPE spawnType;
+    public ENEMYTYPE spawnType; 
     [Range(1,3)]
     public int spawnLevel;
     public float spawnTimer;
@@ -49,6 +49,10 @@ public class EnemySpawn : MonoBehaviour
                     {
                         StartCoroutine(SpawnKamikaze());
                     }
+                    else if (i == (int)ENEMYTYPE.Spider && GMController.instance.GetSpidersCount() < GMController.instance.maxSpiders)
+                    {
+                        StartCoroutine(SpawnSpiders());
+                    }
                 }
                 else if (spawnType == ENEMYTYPE.Bat && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
                 {
@@ -61,6 +65,10 @@ public class EnemySpawn : MonoBehaviour
                 else if (spawnType == ENEMYTYPE.Kamikaze && GMController.instance.GetKamikazeCount() < GMController.instance.maxKamikaze)
                 {
                     StartCoroutine(SpawnKamikaze());
+                }
+                else if (spawnType == ENEMYTYPE.Spider && GMController.instance.GetSpidersCount() < GMController.instance.maxSpiders)
+                {
+                    StartCoroutine(SpawnSpiders());
                 }
             }
         }
@@ -104,7 +112,6 @@ public class EnemySpawn : MonoBehaviour
         spawnDone = true;
         yield return null;
     }
-
     private IEnumerator SpawnNinja()
     {
         spawnDone = false;
@@ -113,6 +120,23 @@ public class EnemySpawn : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Ninja[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
+        GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
+        anim.SetInteger("State", 2);
+
+        yield return new WaitForSeconds(0.2f);
+        anim.SetInteger("State", 0);
+        timer = spawnTimer;
+        spawnDone = true;
+        yield return null;
+    }
+    private IEnumerator SpawnSpiders()
+    {
+        spawnDone = false;
+        GMController.instance.AddSpidersCount(); // add Spider count
+        anim.SetInteger("State", 1);
+
+        yield return new WaitForSeconds(0.2f);
+        GameObject newEnemy = Instantiate(enemyList.Spider[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
         anim.SetInteger("State", 2);
 
