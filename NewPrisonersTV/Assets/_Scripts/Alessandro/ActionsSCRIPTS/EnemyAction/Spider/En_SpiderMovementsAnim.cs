@@ -29,7 +29,7 @@ namespace AI.Actions
                 move = Vector3.ProjectOnPlane(move, Vector3.up); 
 
                 float m_ForwardAmount = move.x;// if the agent turns correctly this should be Z
-                m_ForwardAmount = Mathf.Clamp(m_ForwardAmount, 0, 1f);
+                m_ForwardAmount = Mathf.Clamp(Mathf.Abs(m_ForwardAmount), 0, 1f);
 
                 controller.m_EnemyController.enemyAnim.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
                 //---------------------------------------------------------------------------------------

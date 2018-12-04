@@ -24,4 +24,6 @@ MonoBehaviour:
   - {fileID: 114408505455886102, guid: 04cee7ee520337349b89548436b9d9ea, type: 2}
   - {fileID: 114408505455886102, guid: 78cfa26c38921224eabcd7a44552cddb, type: 2}
   Spider:
+  - {fileID: 114858132321137682, guid: 3db90b05fe2f02f4daa418e8fe7c62d1, type: 2}
+  - {fileID: 114858132321137682, guid: 528fb727ad18726458d7d9cc35b4ecc6, type: 2}
   - {fileID: 114858132321137682, guid: 1cca125446a7a7745983c71ffb0934a1, type: 2}

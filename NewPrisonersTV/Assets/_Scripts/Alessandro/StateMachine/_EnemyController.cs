@@ -17,7 +17,7 @@ namespace AI
 
         [BoxGroup("Ninja Shuriken SpawnPoint")] public Transform shurikenSpawn;
 
-        [BoxGroup("Kamikaze Explosion Particle")] public KamikazeExplosionParticle explosionParticle;
+        [BoxGroup("Kamikaze or Spider Explosion Particle")] public EnemyExplosionParticle explosionParticle;
 
         [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public MineParticle mine; 
 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
+  m_Name: SpiderDeath
+  m_EditorClassIdentifier: 
+  actions: []
+  enterActions:
+  - {fileID: 11400000, guid: 97a8cef07267b3747a0dc3bb24091f0c, type: 2}
+  - {fileID: 11400000, guid: fa3f58dadb7f75048b3569801b8721c0, type: 2}
+  exitActions: []
+  transitions: []
+  sceneGizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

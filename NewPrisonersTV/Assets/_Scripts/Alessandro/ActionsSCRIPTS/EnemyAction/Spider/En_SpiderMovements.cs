@@ -14,7 +14,13 @@ namespace AI.Actions
         }
 
         public void Move(EnemiesAIStateController controller) 
-        {           
+        {
+            if (!controller.m_EnemyController.mine.isActive)// activate mines
+            {
+                //drop mines
+                controller.m_EnemyController.mine.isActive = true;
+            }
+            //---------------------------------------------------------------------------------------
             if (controller.m_EnemyController.agent.isOnOffMeshLink)
                 controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
             else
@@ -24,11 +30,11 @@ namespace AI.Actions
             if (controller.m_EnemyController.agent.destination == null)
                 controller.m_EnemyController.agent.destination = controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position;
             //---------------------------------------------------------------------------------------
-            // check if has reached the next patrol point
-            //Debug.Log((controller.m_EnemyController.thisTransform.position - controller.m_EnemyController.agent.destination).sqrMagnitude + " " + controller.m_EnemyController.agent.stoppingDistance * controller.m_EnemyController.agent.stoppingDistance); 
+            // check if has reached the next patrol point           
             if ((controller.m_EnemyController.thisTransform.position - controller.m_EnemyController.agent.destination).sqrMagnitude
                 <= controller.m_EnemyController.agent.stoppingDistance * controller.m_EnemyController.agent.stoppingDistance)
             {
+                //Debug.Log("Next"); 
                 controller.m_EnemyController.SetNextPatrolPoint();                                     
             }            
         }

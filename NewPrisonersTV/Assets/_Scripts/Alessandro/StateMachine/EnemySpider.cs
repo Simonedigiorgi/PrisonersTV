@@ -10,12 +10,6 @@ public class EnemySpider : _EnemyController
         enemyType = ENEMYTYPE.Spider;
     }
 
-    protected override void Start()
-    {
-        base.Start(); 
-       
-    }   
-
     public override IEnumerator Die()
     {
         yield return new WaitForEndOfFrame();
@@ -31,8 +25,9 @@ public class EnemySpider : _EnemyController
             }
         }
         GMController.instance.SubSpidersCount();
-        GMController.instance.allEnemies.Remove(this);     
-      
+        GMController.instance.allEnemies.Remove(this);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
+        yield return null;
     }
 }

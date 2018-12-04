@@ -4,7 +4,7 @@ using UnityEngine;
 using AI;
 using Character;
 
-public class KamikazeExplosionParticle : MonoBehaviour
+public class EnemyExplosionParticle : MonoBehaviour
 {
     public _EnemyController owner;
     public ParticleSystem thisParticle;
@@ -23,7 +23,7 @@ public class KamikazeExplosionParticle : MonoBehaviour
     public void Explosion(Vector2 position)
     {
         // get the particle burst info
-        var emission = thisParticle.emission;
+        var emission = thisParticle.emission; 
         ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
         emission.GetBursts(bursts);
         int min = bursts[0].minCount;
@@ -44,6 +44,7 @@ public class KamikazeExplosionParticle : MonoBehaviour
                 playerHit.currentLife = 0;
             GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
         }
+        //Debug.Log("boom");
     }
 
     private void Update()

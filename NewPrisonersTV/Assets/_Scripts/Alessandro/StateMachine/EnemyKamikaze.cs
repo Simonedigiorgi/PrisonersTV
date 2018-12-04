@@ -43,5 +43,6 @@ public class EnemyKamikaze : _EnemyController
         GMController.instance.allEnemies.Remove(this);     
       
         Destroy(gameObject);
+        yield return null;
     }
 }

@@ -30,12 +30,21 @@ MonoBehaviour:
   shurikenHitMask:
     serializedVersion: 2
     m_Bits: 0
+  shurikenNumberofHits: 0
+  canBounce: 0
+  shurikenLifeTime: 0
+  shurikenSpeed: 0
+  shurikenGravity: 0
+  ShurikenRayLenght: 0
   ninjaJumpLenght: 0
   ninjaJumpHeight: 0
   ninjaJumpCooldown: 0
   groundCheckRadius: 0
   explosionTimer: 3
-  runSpeed: 8
   explosionMask:
     serializedVersion: 2
     m_Bits: 1024
+  runSpeed: 8
+  bombsTimer: 0
+  bombsXseconds: 1
+  bombsOnDeath: 0

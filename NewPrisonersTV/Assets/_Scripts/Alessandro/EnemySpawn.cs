@@ -36,7 +36,7 @@ public class EnemySpawn : MonoBehaviour
             {
                 if (spawnType == ENEMYTYPE.Random)
                 {
-                    int i = Random.Range((int)ENEMYTYPE.Bat, (int)ENEMYTYPE.Ninja);
+                    int i = Random.Range((int)ENEMYTYPE.Bat,(int)ENEMYTYPE.Spider);
                     if (i == (int)ENEMYTYPE.Bat && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
                     {
                         StartCoroutine(SpawnBat());

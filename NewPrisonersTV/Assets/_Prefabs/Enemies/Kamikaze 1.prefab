@@ -3046,14 +3046,9 @@ MonoBehaviour:
   - {fileID: 4275822116140470}
   patrolPoints: []
   randomNavPoints: 0
+  shurikenSpawn: {fileID: 0}
   explosionParticle: {fileID: 114799019768817114}
-  explosionMask:
-    serializedVersion: 2
-    m_Bits: 1024
   mine: {fileID: 0}
-  mineMask:
-    serializedVersion: 2
-    m_Bits: 256
   attackParticle: {fileID: 198183669687850480}
   currentDestinationCount: 0
   agent: {fileID: 0}
@@ -3074,6 +3069,7 @@ MonoBehaviour:
   startDieCoroutine: 0
   playerSeen: 0
   playerSeenIndex: 0
+  playerPartSeen: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
   endSwoopPosition: {x: 0, y: 0, z: 0}
   swoopCoroutineInExecution: 0
@@ -3084,7 +3080,7 @@ MonoBehaviour:
   startJumpPos: {x: 0, y: 0, z: 0}
   currentJumpTimer: 0
   onGround: 0
-  worldDeltaPosition: {x: 0, y: 0, z: 0}
+  shuriken: {fileID: 0}
 --- !u!114 &114583926653365082
 MonoBehaviour:
   m_ObjectHideFlags: 1

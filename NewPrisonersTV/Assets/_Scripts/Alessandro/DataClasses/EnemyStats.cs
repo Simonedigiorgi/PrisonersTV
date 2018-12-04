@@ -25,7 +25,7 @@ public class EnemyStats : ScriptableObject
     [BoxGroup("Bat Only")] [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;
     [BoxGroup("Bat Only")][Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
     #endregion
-
+    //---------------------------------------------------------------------------------------
     #region NINJA
     [BoxGroup("Ninja Only")][Tooltip("Time in second needed between one shuriken and other shuriken")] public float ShurikenCooldown;
     [BoxGroup("Ninja Only")] public LayerMask shurikenHitMask;
@@ -40,10 +40,20 @@ public class EnemyStats : ScriptableObject
     [BoxGroup("Ninja Only")] public float ninjaJumpCooldown;
     [BoxGroup("Ninja Only")] public float groundCheckRadius;
     #endregion
-
+    //---------------------------------------------------------------------------------------
     #region KAMIKAZE
     [BoxGroup("Kamikaze Only")] public float explosionTimer;
-    [BoxGroup("Kamikaze Only")] public float runSpeed;
     #endregion
+    //---------------------------------------------------------------------------------------
+    #region KAMIKAZE & SPIDER
     [BoxGroup("Kamikaze and Spider")] public LayerMask explosionMask;
+    [BoxGroup("Kamikaze and Spider")] public float runSpeed;
+    [BoxGroup("Kamikaze and Spider")] public float bombsTimer;
+    [BoxGroup("Kamikaze and Spider")] public float bombsXseconds;
+    #endregion
+    //---------------------------------------------------------------------------------------
+    #region SPIDER
+    [BoxGroup("Spider Only")] public int bombsOnDeath;
+    #endregion
+    //---------------------------------------------------------------------------------------
 }

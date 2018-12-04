@@ -15,7 +15,7 @@ namespace StateMachine
         [HideInInspector] public State gameStartState;
         [HideInInspector] public State defeatedState;
         [HideInInspector] public _EnemyController m_EnemyController;
-        [HideInInspector] public NavMeshAgent navMeshAgent;
+       // [HideInInspector] public NavMeshAgent navMeshAgent;
 
         // Use this for initialization
         protected override void Awake()

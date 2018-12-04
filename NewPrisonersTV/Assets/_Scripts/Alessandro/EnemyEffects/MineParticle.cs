@@ -11,6 +11,19 @@ public class MineParticle : MonoBehaviour
     [HideInInspector] public bool isActive = false;
 
     private ParticleSystem.Particle[] mines;
+    private ParticleSystem.MainModule psMain;
+    private ParticleSystem.EmissionModule particleEmission;
+    private ParticleSystem.ShapeModule particleShape;
+    private void Start()
+    {
+        psMain = thisParticle.main;
+        particleEmission = thisParticle.emission;
+        particleShape = thisParticle.shape;
+
+        psMain.startLifetime = owner.m_EnemyStats.bombsTimer;
+        particleEmission.rateOverTime = owner.m_EnemyStats.bombsXseconds;
+
+    }
 
     private void Update()
     {
@@ -20,13 +33,11 @@ public class MineParticle : MonoBehaviour
             if (!thisParticle.emission.enabled && owner != null)
             {
                 thisParticle.transform.parent = null;
-                ParticleSystem.EmissionModule particle = thisParticle.emission;
-                particle.enabled = true;
+                particleEmission.enabled = true;
             }
             else if(owner == null && thisParticle.emission.enabled)
             {
-                ParticleSystem.EmissionModule particle = thisParticle.emission;
-                particle.enabled = false;
+                particleEmission.enabled = false;
             }
 
             // relocate the particle system on the owner
@@ -44,6 +55,7 @@ public class MineParticle : MonoBehaviour
                 bool alreadyExploded = false;
                 if (mines[i].remainingLifetime <= 0.1 && !alreadyExploded)
                 {
+                    //Debug.Log("enter");
                     owner.explosionParticle.Explosion(mines[i].position);
                     alreadyExploded = true;
                     mines[i].remainingLifetime = 0;
@@ -56,6 +68,13 @@ public class MineParticle : MonoBehaviour
             if (owner == null && thisParticle.particleCount == 0)
                 Destroy(gameObject);
         }
+    }
+
+    public void MineGrapple()
+    {
+        particleEmission.enabled = false;
+        particleShape.enabled = true;
+        thisParticle.Emit(owner.m_EnemyStats.bombsOnDeath);
     }
 
 }

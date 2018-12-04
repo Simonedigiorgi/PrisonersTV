@@ -12,13 +12,11 @@ public class EnemyBat : _EnemyController
         enemyType = ENEMYTYPE.Bat;
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-        //assign start directions
+    protected override void Start()
+    {  //assign start directions
         if (m_EnemyStats.myStartDirection == STARTDIRECTION.Right)
         {
-            direction = 1;
+            direction = 1; 
         }
         else
         {
@@ -91,5 +89,6 @@ public class EnemyBat : _EnemyController
         GMController.instance.allEnemies.Remove(this);     
       
         Destroy(gameObject);
+        yield return null;
     }
 }

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
+  m_Name: Spider Attack
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 1ab1b655da8f3c0459a9b8696bb6d45a, type: 2}
+  - {fileID: 11400000, guid: bc5d15cd0855f0c4ab186ce9f524afa3, type: 2}
+  enterActions: []
+  exitActions: []
+  transitions:
+  - decision:
+    - {fileID: 11400000, guid: 891fd7d1f4f21564ab90e71eae0d5063, type: 2}
+    trueState: {fileID: 11400000, guid: 3a4c7ec9188c28e43bb4c7225db220e3, type: 2}
+    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
+  - decision:
+    - {fileID: 11400000, guid: 36a8142b30e72624cb2a6351fae2f472, type: 2}
+    trueState: {fileID: 11400000, guid: 782bb45ef461d3d41947079316134bab, type: 2}
+    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
+  sceneGizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
