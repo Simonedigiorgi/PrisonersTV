@@ -60,7 +60,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public BonusWeapon bonusWeapon;
     //------------------------------------------------------------------
     #region ENEMIES/SPAWNS INFO
-    [HideInInspector] public int maxEnemy;
+    [HideInInspector] public int maxEnemy; 
    
     [HideInInspector] public EnemySpawn[] enemySpawns;
     [HideInInspector] public List<_EnemyController> allEnemies;
@@ -115,7 +115,7 @@ public class GMController : MonoBehaviour
             Destroy(gameObject);
         // Sum up scenes and enemies
         totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
-        maxEnemy = maxBats + maxNinja;
+        maxEnemy = maxBats + maxNinja + maxKamikaze + maxSpiders;
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
@@ -273,6 +273,15 @@ public class GMController : MonoBehaviour
             {
                 AddNinjaCount();
             }
+            else if (startingEnemies[i].enemyType == ENEMYTYPE.Kamikaze)
+            {
+                AddKamikazeCount();
+            }
+            else if (startingEnemies[i].enemyType == ENEMYTYPE.Spider)
+            {
+                AddSpidersCount();
+            }
+
         }
     }
     public void CollectEnemySpawns()

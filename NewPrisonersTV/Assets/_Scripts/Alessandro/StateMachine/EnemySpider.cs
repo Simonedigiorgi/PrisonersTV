@@ -26,7 +26,6 @@ public class EnemySpider : _EnemyController
         }
         GMController.instance.SubSpidersCount();
         GMController.instance.allEnemies.Remove(this);
-        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
         yield return null;
     }

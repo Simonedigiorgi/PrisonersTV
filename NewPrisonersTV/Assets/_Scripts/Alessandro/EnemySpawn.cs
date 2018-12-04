@@ -132,7 +132,7 @@ public class EnemySpawn : MonoBehaviour
     private IEnumerator SpawnSpiders()
     {
         spawnDone = false;
-        GMController.instance.AddSpidersCount(); // add Spider count
+        GMController.instance.AddSpidersCount(); // add Spider count 
         anim.SetInteger("State", 1);
 
         yield return new WaitForSeconds(0.2f);
