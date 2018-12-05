@@ -136,7 +136,7 @@ public class EnemySpawn : MonoBehaviour
         anim.SetInteger("State", 1);
 
         yield return new WaitForSeconds(0.2f);
-        GameObject newEnemy = Instantiate(enemyList.Spider[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemyList.Spider[spawnLevel - 1].gameObject, transform.position, Quaternion.Euler(180,0,0)); 
         GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
         anim.SetInteger("State", 2);
 

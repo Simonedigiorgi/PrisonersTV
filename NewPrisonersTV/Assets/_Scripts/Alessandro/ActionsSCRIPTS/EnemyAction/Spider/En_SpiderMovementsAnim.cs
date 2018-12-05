@@ -28,7 +28,7 @@ namespace AI.Actions
                 move = controller.m_EnemyController.thisTransform.InverseTransformDirection(move);
                 move = Vector3.ProjectOnPlane(move, Vector3.up); 
 
-                float m_ForwardAmount = move.x;// if the agent turns correctly this should be Z
+                float m_ForwardAmount = move.z;
                 m_ForwardAmount = Mathf.Clamp(Mathf.Abs(m_ForwardAmount), 0, 1f);
 
                 controller.m_EnemyController.enemyAnim.SetFloat("Forward", m_ForwardAmount, 0.1f, Time.deltaTime);
