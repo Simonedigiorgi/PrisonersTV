@@ -38,11 +38,7 @@ public class EnemyBat : _EnemyController
         // When player trigger an enemy
         if (collision.CompareTag("Player_1"))
         {
-            _CharacterController player = collision.GetComponent<_CharacterController>();
-            player.currentLife -= m_EnemyStats.attackValue;
-            if (player.currentLife <= 0)
-                player.currentLife = 0;
-            GMController.instance.UI.UpdateLifeUI(player.playerNumber); // update life on UI
+            DamagePlayer(collision);
         }
     }
 

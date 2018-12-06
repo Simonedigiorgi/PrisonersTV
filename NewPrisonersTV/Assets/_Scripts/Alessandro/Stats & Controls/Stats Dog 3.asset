@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
+  m_Name: Stats Dog 3
+  m_EditorClassIdentifier: 
+  life: 50
+  enemyLevel: 3
+  points: 10
+  attackView: 10
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 16640
+  speed: 7
+  runSpeed: 15
+  jumpSpeed: 7
+  attackValue: 10
+  weakness: []
+  resistance: []
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  swoopMoreSlowly: 0.5
+  myStartDirection: 0
+  sinusoidalMovement: 0
+  ShurikenCooldown: 0
+  shurikenNumberOfHits: 0
+  canBounce: 0
+  shurikenLifeTime: 0
+  shurikenSpeed: 0
+  shurikenGravity: 0
+  ShurikenRayLenght: 0
+  ninjaJumpLenght: 0
+  ninjaJumpHeight: 0
+  ninjaJumpCooldown: 0
+  groundCheckRadius: 0
+  explosionTimer: 0
+  bombsTimer: 0
+  bombsXseconds: 0
+  bombsOnDeath: 0
+  triggerBiteDistance: 3
+  biteRadius: 4
+  biteCooldown: 3
+  disengageTimer: 3

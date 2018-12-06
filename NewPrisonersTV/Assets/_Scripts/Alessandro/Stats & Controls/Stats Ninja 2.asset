@@ -19,18 +19,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   speed: 5
+  runSpeed: 0
+  jumpSpeed: 7
   attackValue: 20
   weakness: []
   resistance: []
-  jumpSpeed: 7
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 17664
   swoopMoreSlowly: 0.5
   myStartDirection: 0
   sinusoidalMovement: 0
   ShurikenCooldown: 3
-  shurikenHitMask:
-    serializedVersion: 2
-    m_Bits: 17664
-  shurikenNumberofHits: 3
+  shurikenNumberOfHits: 0
   canBounce: 0
   shurikenLifeTime: 2
   shurikenSpeed: 20
@@ -41,7 +42,10 @@ MonoBehaviour:
   ninjaJumpCooldown: 3
   groundCheckRadius: 0.2
   explosionTimer: 0
-  runSpeed: 0
-  explosionMask:
-    serializedVersion: 2
-    m_Bits: 0
+  bombsTimer: 0
+  bombsXseconds: 0
+  bombsOnDeath: 0
+  triggerBiteDistance: 0
+  biteRadius: 0
+  biteCooldown: 0
+  disengageTimer: 0

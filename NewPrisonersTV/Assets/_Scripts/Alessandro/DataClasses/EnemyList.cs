@@ -6,9 +6,10 @@ using AI;
 [CreateAssetMenu(menuName = "Prototype/EnemyList")]
 public class EnemyList : ScriptableObject
 {
-    public List<_EnemyController> Bat;
-    public List<_EnemyController> Ninja;
-    public List<_EnemyController> Kamikaze;
-    public List<_EnemyController> Spider;
+    public _EnemyController[] Bat;
+    public _EnemyController[] Ninja;
+    public _EnemyController[] Kamikaze;
+    public _EnemyController[] Spider;
+    public _EnemyController[] Dogs; 
 }
 

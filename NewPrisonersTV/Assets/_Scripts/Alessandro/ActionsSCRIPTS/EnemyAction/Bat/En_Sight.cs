@@ -22,10 +22,10 @@ namespace AI.Actions
                 {
                     for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
                     {       // check distance between player and enemy without Vector2.Distance
-                        float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[i].player.transform.position).sqrMagnitude;
+                        float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[i].playerController.TargetForEnemies.position).sqrMagnitude;
                         if (rayDistance <= (controller.enemyStats.attackView * controller.enemyStats.attackView))
                         {
-                            Vector2 rayDirection = GMController.instance.playerInfo[i].player.transform.position - controller.m_EnemyController.thisTransform.position;
+                            Vector2 rayDirection = GMController.instance.playerInfo[i].playerController.TargetForEnemies.position - controller.m_EnemyController.thisTransform.position;
 
                             for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
                             {

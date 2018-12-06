@@ -22,7 +22,7 @@ public class NinjaShurikenParticle : MonoBehaviour
 
     private void Awake()
     {
-        percentageOfHits = 1f / owner.m_EnemyStats.shurikenNumberofHits * 100;
+        percentageOfHits = 1f / owner.m_EnemyStats.shurikenNumberOfHits * 100;
         damage = owner.m_EnemyStats.attackValue;
         canBounce = owner.m_EnemyStats.canBounce;
         transform.parent = null;
@@ -65,7 +65,7 @@ public class NinjaShurikenParticle : MonoBehaviour
         // cast ray from all the particles that are alive ti register hits 
         for (int i = 0; i < numParticlesAlive; i++)
         {
-            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, owner.m_EnemyStats.ShurikenRayLenght, owner.m_EnemyStats.shurikenHitMask);
+            RaycastHit2D hit = Physics2D.Raycast(bullets[i].position, bullets[i].velocity.normalized, owner.m_EnemyStats.ShurikenRayLenght, owner.m_EnemyStats.hitMask);
             Debug.DrawRay(bullets[i].position, bullets[i].velocity.normalized, Color.blue);
             if (hit)
             {

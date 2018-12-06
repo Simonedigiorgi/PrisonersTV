@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
+  m_Name: DogAttack
+  m_EditorClassIdentifier: 
+  actions:
+  - {fileID: 11400000, guid: 6e89d3bf0ff91cc43bfaf6a5faef91cb, type: 2}
+  - {fileID: 11400000, guid: 0600a3a7ef24df745bd758b4e56e6e0a, type: 2}
+  - {fileID: 11400000, guid: bbf537bfc2e20db468c5ef24c92a9b2f, type: 2}
+  - {fileID: 11400000, guid: 368c5e9cd4629474494e094efce266fe, type: 2}
+  enterActions: []
+  exitActions:
+  - {fileID: 11400000, guid: 8f593468d5b23f9468ed5399fc180fed, type: 2}
+  transitions:
+  - decision:
+    - {fileID: 11400000, guid: 77ec1a775b4d74e4895ed1ea8852b099, type: 2}
+    trueState: {fileID: 11400000, guid: f2457cad14c43bd489cfa696a3c3a31f, type: 2}
+    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
+  - decision:
+    - {fileID: 11400000, guid: 2ae63db73aa1adc488a8018bc6c06470, type: 2}
+    trueState: {fileID: 11400000, guid: 5483b5fb456838c4f9392a799d80594b, type: 2}
+    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
+  sceneGizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

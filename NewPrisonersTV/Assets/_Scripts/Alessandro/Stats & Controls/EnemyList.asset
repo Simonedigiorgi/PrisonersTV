@@ -27,3 +27,7 @@ MonoBehaviour:
   - {fileID: 114858132321137682, guid: 3db90b05fe2f02f4daa418e8fe7c62d1, type: 2}
   - {fileID: 114858132321137682, guid: 528fb727ad18726458d7d9cc35b4ecc6, type: 2}
   - {fileID: 114858132321137682, guid: 1cca125446a7a7745983c71ffb0934a1, type: 2}
+  Dogs:
+  - {fileID: 114248212237381792, guid: 68ce86c1022b05e459f870fd440fa30b, type: 2}
+  - {fileID: 114247439660990076, guid: 9f06f644f80aff942a559526cac063d3, type: 2}
+  - {fileID: 114144916700559992, guid: 3ec085d335461cd4ba817eac6f5d4ff7, type: 2}

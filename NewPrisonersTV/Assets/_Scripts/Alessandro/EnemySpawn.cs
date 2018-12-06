@@ -36,7 +36,7 @@ public class EnemySpawn : MonoBehaviour
             {
                 if (spawnType == ENEMYTYPE.Random)
                 {
-                    int i = Random.Range((int)ENEMYTYPE.Bat,(int)ENEMYTYPE.Spider);
+                    int i = Random.Range((int)ENEMYTYPE.Bat,(int)ENEMYTYPE.Dog); // min = first enemy in enum, max = last enemy in enum
                     if (i == (int)ENEMYTYPE.Bat && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
                     {
                         StartCoroutine(SpawnBat());
@@ -52,6 +52,10 @@ public class EnemySpawn : MonoBehaviour
                     else if (i == (int)ENEMYTYPE.Spider && GMController.instance.GetSpidersCount() < GMController.instance.maxSpiders)
                     {
                         StartCoroutine(SpawnSpiders());
+                    }
+                    else if (i == (int)ENEMYTYPE.Dog && GMController.instance.GetDogsCount() < GMController.instance.maxDogs)
+                    {
+                        StartCoroutine(SpawnDog());
                     }
                 }
                 else if (spawnType == ENEMYTYPE.Bat && GMController.instance.GetBatsCount() < GMController.instance.maxBats)
@@ -69,6 +73,10 @@ public class EnemySpawn : MonoBehaviour
                 else if (spawnType == ENEMYTYPE.Spider && GMController.instance.GetSpidersCount() < GMController.instance.maxSpiders)
                 {
                     StartCoroutine(SpawnSpiders());
+                }
+                else if (spawnType == ENEMYTYPE.Dog && GMController.instance.GetDogsCount() < GMController.instance.maxDogs)
+                {
+                    StartCoroutine(SpawnDog());
                 }
             }
         }
@@ -146,5 +154,21 @@ public class EnemySpawn : MonoBehaviour
         spawnDone = true;
         yield return null;
     }
+    private IEnumerator SpawnDog()
+    {
+        spawnDone = false;
+        GMController.instance.AddDogsCount(); // add Dogs count 
+        anim.SetInteger("State", 1);
 
+        yield return new WaitForSeconds(0.2f);
+        GameObject newEnemy = Instantiate(enemyList.Dogs[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
+        GMController.instance.allEnemies.Add(newEnemy.GetComponent<_EnemyController>()); // add to enemies list
+        anim.SetInteger("State", 2);
+
+        yield return new WaitForSeconds(0.2f);
+        anim.SetInteger("State", 0);
+        timer = spawnTimer;
+        spawnDone = true;
+        yield return null;
+    }
 }

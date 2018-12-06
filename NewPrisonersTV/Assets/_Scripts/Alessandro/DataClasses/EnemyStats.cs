@@ -13,12 +13,14 @@ public class EnemyStats : ScriptableObject
     [Tooltip("View distance")] public float attackView;
     [Tooltip("view obstacle")] public LayerMask obstacleMask;
     [Tooltip("Movement speed")] public int speed;
-    [Tooltip("Movement speed")] public int attackValue;
+    [Tooltip("Chasing speed")] public float runSpeed;
+    [Tooltip("NavLink Speed")] public float jumpSpeed;
+    [Tooltip("Damage Value")] public int attackValue;
     [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
     [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
     //---------------------------------------------------------------------------------------
-    [BoxGroup("Jump between NavLinks")] public float jumpSpeed;
-
+    [BoxGroup("Bullets & Attacks LayerMask")] public LayerMask hitMask;
+    //---------------------------------------------------------------------------------------
     #region BATS
     [Range(0.5f, 3)]
     [BoxGroup("Bat Only")][Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
@@ -27,9 +29,8 @@ public class EnemyStats : ScriptableObject
     #endregion
     //---------------------------------------------------------------------------------------
     #region NINJA
-    [BoxGroup("Ninja Only")][Tooltip("Time in second needed between one shuriken and other shuriken")] public float ShurikenCooldown;
-    [BoxGroup("Ninja Only")] public LayerMask shurikenHitMask;
-    [BoxGroup("Ninja Only")] public int shurikenNumberofHits;
+    [BoxGroup("Ninja Only")] public float ShurikenCooldown;
+    [BoxGroup("Ninja Only")] public int shurikenNumberOfHits;
     [BoxGroup("Ninja Only")] public bool canBounce;
     [BoxGroup("Ninja Only")] public float shurikenLifeTime;
     [BoxGroup("Ninja Only")] public float shurikenSpeed;
@@ -46,8 +47,6 @@ public class EnemyStats : ScriptableObject
     #endregion
     //---------------------------------------------------------------------------------------
     #region KAMIKAZE & SPIDER
-    [BoxGroup("Kamikaze and Spider")] public LayerMask explosionMask;
-    [BoxGroup("Kamikaze and Spider")] public float runSpeed;
     [BoxGroup("Kamikaze and Spider")] public float bombsTimer;
     [BoxGroup("Kamikaze and Spider")] public float bombsXseconds;
     #endregion
@@ -56,4 +55,10 @@ public class EnemyStats : ScriptableObject
     [BoxGroup("Spider Only")] public int bombsOnDeath;
     #endregion
     //---------------------------------------------------------------------------------------
+    #region DOG
+    [BoxGroup("Dog Only")] public float triggerBiteDistance;
+    [BoxGroup("Dog Only")] public float biteRadius;
+    [BoxGroup("Dog Only")] public float biteCooldown;
+    [BoxGroup("Dog Only")] public float disengageTimer;
+    #endregion
 }

@@ -17,7 +17,7 @@ namespace AI.Actions
         {
             if (controller.m_EnemyController.playerSeen && controller.m_EnemyController.currentShurikenTimer <= 0)
             {
-                controller.m_EnemyController.shuriken.EmitBullet(controller.m_EnemyController.shurikenSpawn, controller.m_EnemyController.playerSeenIndex);
+                controller.m_EnemyController.shuriken.EmitBullet(controller.m_EnemyController.attackSpawn, controller.m_EnemyController.playerSeenIndex);
                 controller.m_EnemyController.currentShurikenTimer = controller.enemyStats.ShurikenCooldown;
                 controller.m_EnemyController.playerSeen = false;
             } 

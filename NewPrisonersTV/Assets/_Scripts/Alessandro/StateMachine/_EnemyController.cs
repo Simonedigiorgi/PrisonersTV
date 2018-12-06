@@ -4,6 +4,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 using UnityEngine.AI;
+using Character;
+
 namespace AI
 {
     public abstract class _EnemyController : MonoBehaviour
@@ -15,7 +17,7 @@ namespace AI
         [BoxGroup("Only for Enemies with NavAgent")] public Transform[] patrolPoints;
         [BoxGroup("Only for Enemies with NavAgent")] public bool randomNavPoints;
 
-        [BoxGroup("Ninja Shuriken SpawnPoint")] public Transform shurikenSpawn;
+        [BoxGroup("Attack SpawnPoint")] public Transform attackSpawn;
 
         [BoxGroup("Kamikaze or Spider Explosion Particle")] public EnemyExplosionParticle explosionParticle;
 
@@ -25,6 +27,7 @@ namespace AI
         //------------------------------------------------------------------
         [HideInInspector] public int currentDestinationCount = 0;
         [HideInInspector] public NavMeshAgent agent;
+        [HideInInspector] public NavMeshPath path;
         //------------------------------------------------------------------
         [HideInInspector] public bool hasDecalsOn;
         [HideInInspector] public int decalsNum;
@@ -68,6 +71,11 @@ namespace AI
         [HideInInspector] public float currentJumpTimer;
         [HideInInspector] public bool onGround;
         [HideInInspector] public NinjaShurikenParticle shuriken;
+        #endregion
+
+        #region DOG
+         public float currentBiteTimer;
+         public float currentDisengageTimer;
         #endregion
         //------------------------------------------------------------------
         //public Vector3 worldDeltaPosition;
@@ -134,7 +142,14 @@ namespace AI
             // set the new destination
             agent.destination = patrolPoints[currentDestinationCount].position;
         }
-
+        public void DamagePlayer(Collider2D hit)
+        {
+            _CharacterController playerHit = hit.GetComponent<_CharacterController>();
+            playerHit.currentLife -= m_EnemyStats.attackValue;
+            if (playerHit.currentLife <= 0)
+                playerHit.currentLife = 0;
+            GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
+        }
         //Flash coroutine called on hit with bullet
         //public IEnumerator Flash()
         //{

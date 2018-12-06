@@ -40,6 +40,7 @@ public class GMController : MonoBehaviour
     [BoxGroup("Enemy Settings")] public int maxNinja;
     [BoxGroup("Enemy Settings")] public int maxKamikaze; 
     [BoxGroup("Enemy Settings")] public int maxSpiders;
+    [BoxGroup("Enemy Settings")] public int maxDogs;
     #endregion
     //------------------------------------------------------------------
     // Needed for Singleton pattern 
@@ -72,6 +73,7 @@ public class GMController : MonoBehaviour
     private int currentNinja;
     private int currentKamikaze;
     private int currentSpiders;
+    private int currentDogs;
     #endregion
     //------------------------------------------------------------------
     #region STATIC VARIABLES
@@ -115,7 +117,7 @@ public class GMController : MonoBehaviour
             Destroy(gameObject);
         // Sum up scenes and enemies
         totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
-        maxEnemy = maxBats + maxNinja + maxKamikaze + maxSpiders;
+        maxEnemy = maxBats + maxNinja + maxKamikaze + maxSpiders + maxDogs; //sum if all enemy types
 
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
@@ -458,6 +460,21 @@ public class GMController : MonoBehaviour
     public void SubSpidersCount()
     {
         currentSpiders--;
+        SubEnemyCount();
+    }
+
+    public int GetDogsCount()
+    {
+        return currentDogs;
+    }
+    public void AddDogsCount()
+    {
+        currentDogs++;
+        AddEnemyCount();
+    }
+    public void SubDogsCount()
+    {
+        currentDogs--;
         SubEnemyCount();
     }
 

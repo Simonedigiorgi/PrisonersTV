@@ -848,7 +848,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnType
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
@@ -1020,6 +1020,11 @@ Prefab:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114589234308560596, guid: ad1269f12f946024ba6e933e846b45d1,
+        type: 2}
+      propertyPath: healAmount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad1269f12f946024ba6e933e846b45d1, type: 2}
   m_IsPrefabParent: 0
@@ -1121,7 +1126,7 @@ MonoBehaviour:
   m_CostModifier: -1
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
-  m_Area: 0
+  m_Area: 2
 --- !u!1 &600188730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1500,11 @@ Prefab:
       propertyPath: maxSpiders
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114802523139137974, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: maxDogs
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
   m_IsPrefabParent: 0
@@ -1511,7 +1521,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4314236432950052, guid: 110708e11db94b042982c161a9d17616, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.94
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4314236432950052, guid: 110708e11db94b042982c161a9d17616, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2703,7 +2713,7 @@ MonoBehaviour:
   m_CostModifier: -1
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
-  m_Area: 0
+  m_Area: 2
 --- !u!1 &1750087786
 GameObject:
   m_ObjectHideFlags: 0

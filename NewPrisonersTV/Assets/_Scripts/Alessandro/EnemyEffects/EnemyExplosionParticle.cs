@@ -16,7 +16,7 @@ public class EnemyExplosionParticle : MonoBehaviour
     private void Start()
     {
         // copy components
-        explosionMask = owner.m_EnemyStats.explosionMask;
+        explosionMask = owner.m_EnemyStats.hitMask;
         damage = owner.m_EnemyStats.attackValue;
     }
 

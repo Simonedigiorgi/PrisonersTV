@@ -16,7 +16,7 @@ namespace AI.Actions
 
         public void Life(EnemiesAIStateController controller)
         {
-            controller.m_EnemyController.agent.speed = 0;
+            controller.m_EnemyController.agent.isStopped = true;
             //enemy die
             if (controller.m_EnemyController.canExplode || controller.enemyStats.enemyLevel >= 2)
             {
