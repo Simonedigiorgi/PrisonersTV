@@ -1230,6 +1230,7 @@ MonoBehaviour:
   - {fileID: 4642255355477252}
   patrolPoints: []
   randomNavPoints: 0
+  checkPosition: {fileID: 0}
   attackSpawn: {fileID: 4849986402137350}
   explosionParticle: {fileID: 0}
   mine: {fileID: 0}
@@ -1245,7 +1246,7 @@ MonoBehaviour:
   col: {fileID: 0}
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
-  playerMesh: {fileID: 0}
+  thisMesh: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -1254,19 +1255,22 @@ MonoBehaviour:
   playerSeen: 0
   playerSeenIndex: 0
   playerPartSeen: {fileID: 0}
+  currentBulletTimer: 0
+  bullet: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
   endSwoopPosition: {x: 0, y: 0, z: 0}
   swoopCoroutineInExecution: 0
   startSwoopCR: 0
   currentExplosionTimer: 0
   canExplode: 0
-  currentShurikenTimer: 0
   startJumpPos: {x: 0, y: 0, z: 0}
   currentJumpTimer: 0
   onGround: 0
-  shuriken: {fileID: 0}
   currentBiteTimer: 0
   currentDisengageTimer: 0
+  currentBarrageShots: 0
+  isBarrageDone: 1
+  canBarrageCR: 0
 --- !u!114 &114399447058027550
 MonoBehaviour:
   m_ObjectHideFlags: 1

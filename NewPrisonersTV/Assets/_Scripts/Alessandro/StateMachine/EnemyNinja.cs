@@ -13,8 +13,8 @@ public class EnemyNinja : _EnemyController
     protected override void Start()
     {
         base.Start();
-        shuriken = attackParticle.GetComponent<NinjaShurikenParticle>();
-        currentShurikenTimer = m_EnemyStats.ShurikenCooldown;
+        bullet = attackParticle.GetComponent<EnemyBulletParticle>();
+        currentBulletTimer = m_EnemyStats.bulletCooldown;
         currentJumpTimer = m_EnemyStats.ninjaJumpCooldown;
     }   
 

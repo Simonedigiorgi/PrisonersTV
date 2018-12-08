@@ -16,13 +16,10 @@ namespace AI
         //------------------------------------------------------------------
         [BoxGroup("Only for Enemies with NavAgent")] public Transform[] patrolPoints;
         [BoxGroup("Only for Enemies with NavAgent")] public bool randomNavPoints;
-
+        [BoxGroup("GroundCheck Sentinel")] public Transform checkPosition;
         [BoxGroup("Attack SpawnPoint")] public Transform attackSpawn;
-
         [BoxGroup("Kamikaze or Spider Explosion Particle")] public EnemyExplosionParticle explosionParticle;
-
         [BoxGroup("Mine Particle Only for Spider and Kamikaze")] public MineParticle mine; 
-
         [BoxGroup("Attack particle (if needed)")] public ParticleSystem attackParticle;
         //------------------------------------------------------------------
         [HideInInspector] public int currentDestinationCount = 0;
@@ -41,17 +38,22 @@ namespace AI
         [HideInInspector] public Collider2D col;
         [HideInInspector] public SpriteRenderer mySpriteRender;
         [HideInInspector] public Transform thisTransform;
-        [HideInInspector] public Transform playerMesh; 
+        [HideInInspector] public Transform thisMesh; 
         //------------------------------------------------------------------
-        [HideInInspector] public int direction;
-        [HideInInspector] public int enemyMembership;
+        [HideInInspector] public int direction;                                // movement direction used for enemies without navmesh (1 = right, -1 = left)
+        [HideInInspector] public int enemyMembership;                          // number of player that last hit this enemy
         [HideInInspector] public bool isFlashing = false;
         [HideInInspector] public bool gotHit = false;
         //------------------------------------------------------------------
-        [HideInInspector] public bool startDieCoroutine = false;
-        [HideInInspector] public bool playerSeen = false;
-        [HideInInspector] public int playerSeenIndex;
-        [HideInInspector] public Transform playerPartSeen;
+        [HideInInspector] public bool startDieCoroutine = false;                // starts the death coroutine if true
+        [HideInInspector] public bool playerSeen = false;                       // true if a player is in sight
+        [HideInInspector] public int playerSeenIndex;                           // index of player seen
+        [HideInInspector] public int numRayHitPlayer;                           // used to check if all rays are not hitting the target
+        //------------------------------------------------------------------
+        #region BULLETS
+        [HideInInspector] public float currentBulletTimer;
+        [HideInInspector] public EnemyBulletParticle bullet;
+        #endregion
         //------------------------------------------------------------------
         #region BATS
         [HideInInspector] public Vector3 startSwoopPosition;
@@ -66,19 +68,22 @@ namespace AI
         #endregion
 
         #region NINJA
-        [HideInInspector] public float currentShurikenTimer;
         [HideInInspector] public Vector3 startJumpPos;
         [HideInInspector] public float currentJumpTimer;
         [HideInInspector] public bool onGround;
-        [HideInInspector] public NinjaShurikenParticle shuriken;
         #endregion
 
         #region DOG
-         public float currentBiteTimer;
-         public float currentDisengageTimer;
+        [HideInInspector] public float currentBiteTimer;
+        [HideInInspector] public float currentDisengageTimer;
         #endregion
-        //------------------------------------------------------------------
-        //public Vector3 worldDeltaPosition;
+
+        #region SENTINEL
+        [HideInInspector] public int currentBarrageShots;
+        [HideInInspector] public bool isBarrageDone = true;
+        [HideInInspector] public bool canBarrageCR = false;
+        #endregion
+        //------------------------------------------------------------------ 
 
         protected virtual void Awake()
         {
@@ -89,7 +94,7 @@ namespace AI
             animSpeed = enemyAnim.speed;
             agent = GetComponent<NavMeshAgent>();
             col = thisTransform.GetChild(0).GetComponent<Collider2D>();
-            playerMesh = enemyAnim.transform;
+            thisMesh = enemyAnim.transform;
         }
 
         protected virtual void Start()
@@ -125,7 +130,7 @@ namespace AI
         //------------------------------------------------------------------
         protected virtual void OnCollisionEnter2D(Collision2D collision){ }
         protected virtual void OnTriggerEnter2D(Collider2D collision){ }
-
+        //------------------------------------------------------------------
         public void SetNextPatrolPoint()
         {
             if (patrolPoints.Length > 0)
@@ -150,6 +155,42 @@ namespace AI
                 playerHit.currentLife = 0;
             GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
         }
+        public void RotateTowardDirection(Transform transform, int direction)
+        {
+            if (direction < 0)
+                transform.eulerAngles= new Vector3(0, 180, 0);
+            else
+                transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        public void MeshLookAtPlayerDir(int direction, float degrees)
+        {
+            if(direction < 0)
+                thisMesh.localEulerAngles = new Vector3(0, -degrees, 0);
+            else
+                thisMesh.localEulerAngles = new Vector3(0, degrees, 0); 
+        }
+        public IEnumerator Barrage()
+        {
+            canBarrageCR = false;
+            isBarrageDone = false;
+            while (currentBarrageShots > 0 )
+            {
+                bullet.EmitBullet(attackSpawn, thisMesh.forward);
+                currentBarrageShots--;
+                yield return new WaitForSeconds(m_EnemyStats.barrageTimer);
+            }
+            currentBulletTimer = m_EnemyStats.bulletCooldown;
+            currentBarrageShots = m_EnemyStats.numBarrageShots;
+            isBarrageDone = true;
+            yield return null;
+        }
+        public abstract IEnumerator Die();
+
+
+
+
+
+
         //Flash coroutine called on hit with bullet
         //public IEnumerator Flash()
         //{
@@ -169,11 +210,7 @@ namespace AI
         //    isFlashing = false;
         //    gotHit = false;
         //    yield return null; 
-        //}
-
-        // this coroutine was created to give the time at membership to change and for make shure the score is assigned right
-        public abstract IEnumerator Die();
-      
+        //}     
     }
 }
 

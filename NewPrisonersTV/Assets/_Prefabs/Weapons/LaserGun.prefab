@@ -420,7 +420,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   decalType: 0
-  maxDecals: 0
   damage: 30
   damageType: 03000000
   leaveDecal: 0
@@ -439,6 +438,7 @@ MonoBehaviour:
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}
+  currentDecal: {fileID: 0}
 --- !u!114 &114899569909042128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -479,12 +479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gun: {fileID: 198502772920582006}
   weapon: {fileID: 114410812245951184}
-  damageType: 
-  damage: 0
-  canBounce: 0
   membership: 0
-  decalPool: []
-  decalScale: {x: 0, y: 0, z: 0}
 --- !u!198 &198502772920582006
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3204,7 +3199,7 @@ ParticleSystem:
     textureMode: 0
     ribbonCount: 1
     worldSpace: 0
-    dieWithParticles: 0
+    dieWithParticles: 1
     sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
     inheritParticleColor: 1

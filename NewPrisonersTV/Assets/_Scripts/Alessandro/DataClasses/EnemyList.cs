@@ -10,6 +10,7 @@ public class EnemyList : ScriptableObject
     public _EnemyController[] Ninja;
     public _EnemyController[] Kamikaze;
     public _EnemyController[] Spider;
-    public _EnemyController[] Dogs; 
+    public _EnemyController[] Dog;
+    public _EnemyController[] Sentinel;
 }
 

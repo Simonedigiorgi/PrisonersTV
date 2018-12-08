@@ -704,7 +704,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &655805952
 GameObject:
@@ -1633,7 +1633,72 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4989890872566298, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562544395646270, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948911184386440, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948911184386440, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: isAlive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948911184386440, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: currentLife
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114948911184386440, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: animSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: currentState
+      value: 
+      objectReference: {fileID: 11400000, guid: 04751215d08f3624c97c154ccea865a1,
+        type: 2}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: inactiveState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: remainState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: lastActiveState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: characterStats
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: gameStartState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: defeatedState
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114817885106181184, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: m_CharacterController
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}

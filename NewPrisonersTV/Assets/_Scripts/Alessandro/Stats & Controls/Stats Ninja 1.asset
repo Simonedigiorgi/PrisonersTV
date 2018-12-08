@@ -27,16 +27,16 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 17664
+  bulletNumberOfHits: 0
+  canBulletBounce: 0
+  bulletCooldown: 3
+  bulletLifeTime: 2
+  bulletSpeed: 20
+  bulletGravity: 0
+  bulletRayLenght: 1
   swoopMoreSlowly: 0.5
   myStartDirection: 0
   sinusoidalMovement: 0
-  ShurikenCooldown: 3
-  shurikenNumberOfHits: 0
-  canBounce: 0
-  shurikenLifeTime: 2
-  shurikenSpeed: 20
-  shurikenGravity: 0
-  ShurikenRayLenght: 1
   ninjaJumpLenght: 5
   ninjaJumpHeight: 10
   ninjaJumpCooldown: 3
@@ -49,3 +49,7 @@ MonoBehaviour:
   biteRadius: 0
   biteCooldown: 0
   disengageTimer: 0
+  groundRayStart: {x: 0, y: 0}
+  groundRayDistance: 0
+  numBarrageShots: 0
+  barrageTimer: 0

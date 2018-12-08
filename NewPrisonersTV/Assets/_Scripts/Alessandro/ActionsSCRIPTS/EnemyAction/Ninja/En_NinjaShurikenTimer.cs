@@ -15,9 +15,9 @@ namespace AI.Actions
 
         public void Timer(EnemiesAIStateController controller)
         {
-            if (controller.m_EnemyController.currentShurikenTimer > 0)
+            if (controller.m_EnemyController.currentBulletTimer > 0)
             {
-                controller.m_EnemyController.currentShurikenTimer -= Time.deltaTime;  
+                controller.m_EnemyController.currentBulletTimer -= Time.deltaTime;  
             }
         }
     }

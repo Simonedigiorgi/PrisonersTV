@@ -27,7 +27,7 @@ public class EnemyBat : _EnemyController
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         //turn the direction if collide on wall
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Wall"))
         {
             direction *= -1;
         }

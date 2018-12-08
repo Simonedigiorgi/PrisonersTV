@@ -12,7 +12,7 @@ namespace Character
 
         [BoxGroup("Components")] public GameObject playerRightArm;                                  // Player's arm
         [BoxGroup("Components")] public GameObject playerLeftArm;                                   // Player's arm
-        [BoxGroup("Components")] public Transform TargetForEnemies;
+        [BoxGroup("Components")] public Transform TargetForEnemies;                                 // target for enemy sight and attacks
         [BoxGroup("Components")] public Weapon3D currentWeapon;
         [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;

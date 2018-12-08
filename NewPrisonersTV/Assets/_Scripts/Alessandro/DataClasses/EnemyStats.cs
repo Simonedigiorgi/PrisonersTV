@@ -19,7 +19,14 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
     [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
     //---------------------------------------------------------------------------------------
-    [BoxGroup("Bullets & Attacks LayerMask")] public LayerMask hitMask;
+    [BoxGroup("Bullets & Attacks")] public LayerMask hitMask;
+    [BoxGroup("Bullets & Attacks")] public int bulletNumberOfHits;
+    [BoxGroup("Bullets & Attacks")] public bool canBulletBounce;
+    [BoxGroup("Bullets & Attacks")] public float bulletCooldown;
+    [BoxGroup("Bullets & Attacks")] public float bulletLifeTime;
+    [BoxGroup("Bullets & Attacks")] public float bulletSpeed;
+    [BoxGroup("Bullets & Attacks")] public float bulletGravity;
+    [BoxGroup("Bullets & Attacks")] public float bulletRayLenght;
     //---------------------------------------------------------------------------------------
     #region BATS
     [Range(0.5f, 3)]
@@ -29,13 +36,6 @@ public class EnemyStats : ScriptableObject
     #endregion
     //---------------------------------------------------------------------------------------
     #region NINJA
-    [BoxGroup("Ninja Only")] public float ShurikenCooldown;
-    [BoxGroup("Ninja Only")] public int shurikenNumberOfHits;
-    [BoxGroup("Ninja Only")] public bool canBounce;
-    [BoxGroup("Ninja Only")] public float shurikenLifeTime;
-    [BoxGroup("Ninja Only")] public float shurikenSpeed;
-    [BoxGroup("Ninja Only")] public float shurikenGravity;
-    [BoxGroup("Ninja Only")] public float ShurikenRayLenght;
     [BoxGroup("Ninja Only")] public float ninjaJumpLenght;
     [BoxGroup("Ninja Only")] public float ninjaJumpHeight;
     [BoxGroup("Ninja Only")] public float ninjaJumpCooldown;
@@ -60,5 +60,11 @@ public class EnemyStats : ScriptableObject
     [BoxGroup("Dog Only")] public float biteRadius;
     [BoxGroup("Dog Only")] public float biteCooldown;
     [BoxGroup("Dog Only")] public float disengageTimer;
+    #endregion
+    //---------------------------------------------------------------------------------------
+    #region SENTINEL
+    [BoxGroup("Sentinel Only")] public float groundRayDistance;
+    [BoxGroup("Sentinel Only")] public int numBarrageShots;
+    [BoxGroup("Sentinel Only")] public float barrageTimer;
     #endregion
 }

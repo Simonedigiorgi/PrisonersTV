@@ -15,10 +15,10 @@ namespace AI.Actions
 
         public void Sight(EnemiesAIStateController controller)
         {
-            if (controller.m_EnemyController.playerSeen && controller.m_EnemyController.currentShurikenTimer <= 0)
+            if (controller.m_EnemyController.playerSeen && controller.m_EnemyController.currentBulletTimer <= 0)
             {
-                controller.m_EnemyController.shuriken.EmitBullet(controller.m_EnemyController.attackSpawn, controller.m_EnemyController.playerSeenIndex);
-                controller.m_EnemyController.currentShurikenTimer = controller.enemyStats.ShurikenCooldown;
+                controller.m_EnemyController.bullet.EmitBullet(controller.m_EnemyController.attackSpawn, controller.m_EnemyController.playerSeenIndex);
+                controller.m_EnemyController.currentBulletTimer = controller.enemyStats.bulletCooldown;
                 controller.m_EnemyController.playerSeen = false;
             } 
         }
