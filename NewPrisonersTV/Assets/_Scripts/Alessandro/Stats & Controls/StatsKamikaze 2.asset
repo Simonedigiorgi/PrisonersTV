@@ -15,6 +15,7 @@ MonoBehaviour:
   enemyLevel: 2
   points: 15
   attackView: 10
+  viewCheckFrequenzy: 0.2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
@@ -27,16 +28,16 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 1024
+  bulletNumberOfHits: 0
+  canBulletBounce: 0
+  bulletCooldown: 0
+  bulletLifeTime: 0
+  bulletSpeed: 0
+  bulletGravity: 0
+  bulletRayLenght: 0
   swoopMoreSlowly: 0.5
   myStartDirection: 0
   sinusoidalMovement: 0
-  ShurikenCooldown: 0
-  shurikenNumberOfHits: 0
-  canBounce: 0
-  shurikenLifeTime: 0
-  shurikenSpeed: 0
-  shurikenGravity: 0
-  ShurikenRayLenght: 0
   ninjaJumpLenght: 0
   ninjaJumpHeight: 0
   ninjaJumpCooldown: 0
@@ -49,3 +50,6 @@ MonoBehaviour:
   biteRadius: 0
   biteCooldown: 0
   disengageTimer: 0
+  groundRayDistance: 0
+  numBarrageShots: 0
+  barrageTimer: 0

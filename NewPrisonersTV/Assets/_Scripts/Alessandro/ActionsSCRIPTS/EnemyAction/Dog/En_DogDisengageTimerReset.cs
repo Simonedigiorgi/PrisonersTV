@@ -5,17 +5,17 @@ using StateMachine;
 
 namespace AI.Actions
 {
-    [CreateAssetMenu(menuName = "StateMachine/Actions/Enemy/DogDisengageTimerReser")] 
-    public class En_DogDisengageTimerReser : _Action
+    [CreateAssetMenu(menuName = "StateMachine/Actions/Enemy/DogDisengageTimerReset")] 
+    public class En_DogDisengageTimerReset : _Action
     {
         public override void Execute(EnemiesAIStateController controller) 
         {
             Timer(controller); 
         }
 
-        public void Timer(EnemiesAIStateController controller)
+        public void Timer(EnemiesAIStateController controller) 
         {          
-            controller.m_EnemyController.currentDisengageTimer = controller.enemyStats.disengageTimer;             
+            controller.m_EnemyController.currentDisengageTimer = controller.enemyStats.disengageTimer;              
         }
     }
 }

@@ -11,6 +11,7 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Enemy start level")] public int enemyLevel = 1;
     [Tooltip("Value off point earned by the player")] public int points;
     [Tooltip("View distance")] public float attackView;
+    [Tooltip("view check every...")] public float viewCheckFrequenzy;
     [Tooltip("view obstacle")] public LayerMask obstacleMask;
     [Tooltip("Movement speed")] public int speed;
     [Tooltip("Chasing speed")] public float runSpeed;

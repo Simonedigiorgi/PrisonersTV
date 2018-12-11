@@ -16,7 +16,7 @@ namespace AI.Actions
         public void Sight(EnemiesAIStateController controller)
         {
 
-            if (controller.enemyStats.enemyLevel == 3)
+            if (controller.enemyStats.enemyLevel == 3 && controller.m_EnemyController.currentViewTimer <= 0)
             {
                 if (!controller.m_EnemyController.playerSeen)
                 {
@@ -39,10 +39,9 @@ namespace AI.Actions
                             }
                         }                      
                     }
-                   
+                    controller.m_EnemyController.currentViewTimer = controller.enemyStats.viewCheckFrequenzy;
                 }
             }
         }
-
     }
 }

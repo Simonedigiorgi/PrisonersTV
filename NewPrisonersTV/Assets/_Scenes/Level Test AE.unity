@@ -848,7 +848,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnType
-      value: 7
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_StartPoint: {x: -4.4325104, y: 7.5685654, z: 0}
   m_EndPoint: {x: 6.985514, y: -0.5090617, z: 0}
   m_Width: 1
-  m_CostModifier: -1
+  m_CostModifier: -2
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
   m_Area: 0
@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_StartPoint: {x: 0.73, y: -3.857997, z: 0}
   m_EndPoint: {x: -1.1915216, y: 2.408801, z: 0}
   m_Width: 1
-  m_CostModifier: -1
+  m_CostModifier: -2
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
   m_Area: 2
@@ -1510,6 +1510,11 @@ Prefab:
       propertyPath: maxSentinel
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114802523139137974, guid: 4ff22fba14003184a9ffd9e30a6f1bea,
+        type: 2}
+      propertyPath: maxNinja
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ff22fba14003184a9ffd9e30a6f1bea, type: 2}
   m_IsPrefabParent: 0
@@ -1560,7 +1565,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnType
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
@@ -2715,7 +2720,7 @@ MonoBehaviour:
   m_StartPoint: {x: 0.73, y: -3.857997, z: 0}
   m_EndPoint: {x: -1.1915216, y: 2.408801, z: 0}
   m_Width: 1
-  m_CostModifier: -1
+  m_CostModifier: -2
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
   m_Area: 2
@@ -2860,7 +2865,7 @@ MonoBehaviour:
   m_StartPoint: {x: -4.300191, y: -0.6427784, z: 0}
   m_EndPoint: {x: 7.2980957, y: 7.696948, z: 0}
   m_Width: 1
-  m_CostModifier: -1
+  m_CostModifier: -2
   m_Bidirectional: 1
   m_AutoUpdatePosition: 0
   m_Area: 0

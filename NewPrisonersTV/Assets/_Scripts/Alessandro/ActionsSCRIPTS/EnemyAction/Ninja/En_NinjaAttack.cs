@@ -21,6 +21,8 @@ namespace AI.Actions
                 controller.m_EnemyController.currentBulletTimer = controller.enemyStats.bulletCooldown;
                 controller.m_EnemyController.playerSeen = false;
             } 
+            else
+                controller.m_EnemyController.playerSeen = false; 
         }
     }
 

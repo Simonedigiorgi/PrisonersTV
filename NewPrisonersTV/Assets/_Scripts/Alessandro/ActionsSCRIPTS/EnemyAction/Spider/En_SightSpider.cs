@@ -15,7 +15,7 @@ namespace AI.Actions
 
         public void Sight(EnemiesAIStateController controller)
         {
-            if (controller.enemyStats.enemyLevel >= 2)
+            if (controller.enemyStats.enemyLevel >= 2 &&  controller.m_EnemyController.currentViewTimer <= 0)
             {
                 for (int i = 0; i < GMController.instance.playerInfo.Length; i++) 
                 {       // check distance between players and enemy without Vector2.Distance
@@ -34,10 +34,8 @@ namespace AI.Actions
                             }
                         }
                      } 
-                     else
-                        controller.m_EnemyController.playerSeen = false; 
                 }
-                   
+                controller.m_EnemyController.currentViewTimer = controller.enemyStats.viewCheckFrequenzy;
             }
         }
     }

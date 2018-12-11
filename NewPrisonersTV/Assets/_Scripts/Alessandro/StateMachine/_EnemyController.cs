@@ -49,6 +49,7 @@ namespace AI
         [HideInInspector] public bool playerSeen = false;                       // true if a player is in sight
         [HideInInspector] public int playerSeenIndex;                           // index of player seen
         [HideInInspector] public int numRayHitPlayer;                           // used to check if all rays are not hitting the target
+        [HideInInspector] public float currentViewTimer;                        // search for enemy every...
         //------------------------------------------------------------------
         #region BULLETS
         [HideInInspector] public float currentBulletTimer;
@@ -95,6 +96,7 @@ namespace AI
             agent = GetComponent<NavMeshAgent>();
             col = thisTransform.GetChild(0).GetComponent<Collider2D>();
             thisMesh = enemyAnim.transform;
+            currentViewTimer = m_EnemyStats.viewCheckFrequenzy;
         }
 
         protected virtual void Start()
@@ -186,7 +188,7 @@ namespace AI
         }
         public abstract IEnumerator Die();
 
-
+        //------------------------------------------------------------------
 
 
 

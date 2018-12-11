@@ -13,7 +13,7 @@ public class GMController : MonoBehaviour
     #region EXPOSED VARIABLES
     public int startGameTimer;
     public float deathTimer = 0f;
-    public float slowdownTimerMultiplier;
+    public float slowdownTimerMultiplier;                                   // used to slow down the enemy spawn rate when the key is in game
     //------------------------------------------------------------------
     public GameObject[] playerPrefab;
     public Transform[] playerSpawnPoint;

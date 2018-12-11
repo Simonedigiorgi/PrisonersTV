@@ -15,10 +15,13 @@ MonoBehaviour:
   enemyLevel: 2
   points: 10
   attackView: 10
+  viewCheckFrequenzy: 0.2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256
   speed: 5
+  runSpeed: 0
+  jumpSpeed: 0
   attackValue: 30
   weakness:
   - type: 1
@@ -26,8 +29,31 @@ MonoBehaviour:
   resistance:
   - type: 0
     value: 3
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 0
+  bulletNumberOfHits: 0
+  canBulletBounce: 0
+  bulletCooldown: 0
+  bulletLifeTime: 0
+  bulletSpeed: 0
+  bulletGravity: 0
+  bulletRayLenght: 0
   swoopMoreSlowly: 2.571
   myStartDirection: 1
   sinusoidalMovement: 2
-  ShurikenCooldown: 0
+  ninjaJumpLenght: 0
+  ninjaJumpHeight: 0
+  ninjaJumpCooldown: 0
+  groundCheckRadius: 0
   explosionTimer: 0
+  bombsTimer: 0
+  bombsXseconds: 0
+  bombsOnDeath: 0
+  triggerBiteDistance: 0
+  biteRadius: 0
+  biteCooldown: 0
+  disengageTimer: 0
+  groundRayDistance: 0
+  numBarrageShots: 0
+  barrageTimer: 0
