@@ -7,11 +7,11 @@ public class HealStation : MonoBehaviour
 {
     public float coolDown;
     public int price;
-    [Range(1,3)]public int healAmount;
+    [Range(1,100)]public int healAmountPercentage;
 
     private float timer;
     private bool avaible = true;
-
+    private int healAmmount;
 	void Start ()
     {
         timer = coolDown;
@@ -38,7 +38,11 @@ public class HealStation : MonoBehaviour
         { 
             if (player.currentLife < player.m_CharStats.life)
             {
-                player.currentLife += healAmount;
+                healAmmount = healAmountPercentage * player.m_CharStats.life / 100;
+                player.currentLife += healAmountPercentage;
+                if (player.currentLife > player.m_CharStats.life)
+                    player.currentLife = player.m_CharStats.life;
+                Debug.Log(healAmmount + "  " + player.currentLife);
                 GMController.instance.playerInfo[player.playerNumber].score -= price; // subtract payment from score
                 GMController.instance.UI.UpdateScoreUI(player.playerNumber); // update score on UI
                 GMController.instance.UI.UpdateLifeUI(player.playerNumber);// update life on UI

@@ -21,7 +21,6 @@ public class GMController : MonoBehaviour
     public DecalDepot decalDepot;                                           // reference to the decal prefab list
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
-    public Transform[] enemyPatrolPoints;
     //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -191,6 +190,22 @@ public class GMController : MonoBehaviour
         if(canStartGameCD)
         {
             StartCoroutine(StartGameCD());
+        }
+
+        if (gameStart)
+        {   // update spawn timer for enemies
+            for (int i = 0; i < enemySpawns.Length; i++)
+            {
+                if (enemySpawns[i].GetTimer() > 0)
+                {
+                    enemySpawns[i].TimerCountDown(); 
+                }
+                else
+                {
+                    enemySpawns[i].SpawnEnemyCheck();
+                }
+
+            }
         }
     }
     //------------------------------------------------------------------

@@ -33,12 +33,13 @@ namespace AI
         //------------------------------------------------------------------
         [HideInInspector] public ENEMYTYPE enemyType;
         [HideInInspector] public int currentLife;
-        //------------------------------------------------------------------
+        //------------------------------------------------------------------  // COMPONENTS 
         [HideInInspector] public Rigidbody2D rb;
         [HideInInspector] public Collider2D col;
-        [HideInInspector] public SpriteRenderer mySpriteRender;
+        [HideInInspector] public SpriteRenderer mySpriteRender;// temp
         [HideInInspector] public Transform thisTransform;
-        [HideInInspector] public Transform thisMesh; 
+        [HideInInspector] public Transform thisMesh;
+        [HideInInspector] public EnemySpawn hisEnemySpawn;
         //------------------------------------------------------------------
         [HideInInspector] public int direction;                                // movement direction used for enemies without navmesh (1 = right, -1 = left)
         [HideInInspector] public int enemyMembership;                          // number of player that last hit this enemy
@@ -104,11 +105,7 @@ namespace AI
             if (agent != null)
             {
                 agent.speed = m_EnemyStats.speed;
-                if (patrolPoints.Length == 0)
-                {
-                    patrolPoints = new Transform[GMController.instance.enemyPatrolPoints.Length];
-                    patrolPoints = GMController.instance.enemyPatrolPoints;
-                }
+                SetPatrolList();
             }
         }
         //------------------------------------------------------------------
@@ -133,6 +130,32 @@ namespace AI
         protected virtual void OnCollisionEnter2D(Collision2D collision){ }
         protected virtual void OnTriggerEnter2D(Collider2D collision){ }
         //------------------------------------------------------------------
+        public void SetPatrolList()
+        {
+            if (patrolPoints.Length == 0)
+            {
+                if (enemyType == ENEMYTYPE.Dog)
+                {
+                    patrolPoints = new Transform[hisEnemySpawn.DogPoints.Length];
+                    patrolPoints = hisEnemySpawn.DogPoints;
+                }
+                else if(enemyType == ENEMYTYPE.Kamikaze)
+                {
+                    patrolPoints = new Transform[hisEnemySpawn.KamikazePoints.Length];
+                    patrolPoints = hisEnemySpawn.KamikazePoints;
+                }
+                else if(enemyType == ENEMYTYPE.Ninja)
+                {
+                    patrolPoints = new Transform[hisEnemySpawn.NinjaPoints.Length];
+                    patrolPoints = hisEnemySpawn.NinjaPoints;
+                }
+                else if (enemyType == ENEMYTYPE.Spider)
+                {
+                    patrolPoints = new Transform[hisEnemySpawn.SpiderPoints.Length];
+                    patrolPoints = hisEnemySpawn.SpiderPoints;
+                }
+            }
+        }
         public void SetNextPatrolPoint()
         {
             if (patrolPoints.Length > 0)
