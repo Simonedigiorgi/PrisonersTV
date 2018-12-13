@@ -108,7 +108,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
@@ -127,7 +127,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Kamikaze[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
@@ -146,7 +146,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Ninja[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
@@ -165,7 +165,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Spider[spawnLevel - 1].gameObject, transform.position, Quaternion.Euler(180,0,0));
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
@@ -184,7 +184,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Dog[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
@@ -203,7 +203,7 @@ public class EnemySpawn : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         GameObject newEnemy = Instantiate(enemyList.Sentinel[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
-        controller.hisEnemySpawn = thisSpawn; // add reference to this spawn
+        controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 

@@ -17,18 +17,21 @@ namespace AI.Actions
         public void Attack(EnemiesAIStateController controller)
         {
             // set the player as destination---------------------------------------------------------
-            controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
-
+            if (controller.m_EnemyController.currentViewTimer <= 0)
+            {
+                controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
+            }
             //change agent speed if is on NavLink----------------------------------------------------
             if (controller.m_EnemyController.agent.isOnOffMeshLink)
                 controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
-            // if the agent is closer than the stopping distance then stops itself
+            // USING REMAINING DISTANCE 
             else if (!controller.m_EnemyController.agent.isOnOffMeshLink && controller.m_EnemyController.agent.remainingDistance > controller.m_EnemyController.agent.stoppingDistance)
                 controller.m_EnemyController.agent.speed = controller.enemyStats.runSpeed;
-            else
+            else // if the agent is closer than the stopping distance then stops itself  
             {
-               // controller.m_EnemyController.agent.speed = 0; 
                 controller.m_EnemyController.agent.velocity = Vector3.zero;
+                controller.m_EnemyController.lookAtPlayer = new Vector3(GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position.x, controller.m_EnemyController.thisTransform.position.y, 0);
+                controller.m_EnemyController.thisTransform.LookAt(controller.m_EnemyController.lookAtPlayer);
             }
             //---------------------------------------------------------------------------------------
             // if the player is in reach the agent will attack 

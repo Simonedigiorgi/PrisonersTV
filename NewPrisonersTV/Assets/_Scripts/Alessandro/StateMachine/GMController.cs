@@ -194,17 +194,22 @@ public class GMController : MonoBehaviour
 
         if (gameStart)
         {   // update spawn timer for enemies
-            for (int i = 0; i < enemySpawns.Length; i++)
+            if (enemySpawns != null)
             {
-                if (enemySpawns[i].GetTimer() > 0)
+                for (int i = 0; i < enemySpawns.Length; i++)
                 {
-                    enemySpawns[i].TimerCountDown(); 
+                    if (enemySpawns[i].spawnType != ENEMYTYPE.None)
+                    {
+                        if (enemySpawns[i].GetTimer() > 0)
+                        {
+                            enemySpawns[i].TimerCountDown();
+                        }
+                        else
+                        {
+                            enemySpawns[i].SpawnEnemyCheck();
+                        }
+                    }
                 }
-                else
-                {
-                    enemySpawns[i].SpawnEnemyCheck();
-                }
-
             }
         }
     }

@@ -20,15 +20,18 @@ namespace AI.Actions
             else
                 controller.m_EnemyController.agent.speed = controller.enemyStats.speed;
             //---------------------------------------------------------------------------------------
-            // set first destination if needed
-            if (controller.m_EnemyController.agent.destination == null)
+            if (!controller.m_EnemyController.firstPatrolSet && controller.m_EnemyController.agent.destination != controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position)
+            {
                 controller.m_EnemyController.agent.destination = controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position;
+                controller.m_EnemyController.firstPatrolSet = true;
+                //Debug.Log(controller.m_EnemyController.agent.destination);
+            }
             //---------------------------------------------------------------------------------------
-            // check if has reached the next patrol point
-            if ((controller.m_EnemyController.thisTransform.position - controller.m_EnemyController.agent.destination).sqrMagnitude
+            // check if has reached the next patrol point  
+            if (controller.m_EnemyController.firstPatrolSet && (controller.m_EnemyController.agent.destination - controller.m_EnemyController.thisTransform.position).sqrMagnitude
                 <= controller.m_EnemyController.agent.stoppingDistance * controller.m_EnemyController.agent.stoppingDistance)
             {
-                controller.m_EnemyController.SetNextPatrolPoint();                                     
+                controller.m_EnemyController.SetNextPatrolPoint();
             }            
         }
     }

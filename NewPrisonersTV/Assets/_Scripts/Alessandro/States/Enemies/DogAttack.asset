@@ -20,6 +20,7 @@ MonoBehaviour:
   enterActions: []
   exitActions:
   - {fileID: 11400000, guid: 96a70dc3fbde5ff4cb9d34e08be72dd3, type: 2}
+  - {fileID: 11400000, guid: 9826b9943bf56b6408b2cac4fb34ff9e, type: 2}
   transitions:
   - decision:
     - {fileID: 11400000, guid: 77ec1a775b4d74e4895ed1ea8852b099, type: 2}

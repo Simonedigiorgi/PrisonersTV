@@ -48,6 +48,7 @@ namespace AI.Actions
                 if (controller.m_EnemyController.currentViewTimer <= 0)
                 {   // calculate path to player 
                     controller.m_EnemyController.agent.CalculatePath(controller.m_EnemyController.agent.destination, controller.m_EnemyController.path);
+                    controller.m_EnemyController.currentViewTimer = controller.enemyStats.viewCheckFrequenzy;
                 }
                 // if the player is unreachable it starts the disengage countdown
                 if (controller.m_EnemyController.path.status == UnityEngine.AI.NavMeshPathStatus.PathPartial)

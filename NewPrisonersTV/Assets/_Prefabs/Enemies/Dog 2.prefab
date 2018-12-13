@@ -1247,6 +1247,7 @@ MonoBehaviour:
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
   thisMesh: {fileID: 0}
+  hisEnemySpawn: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -1254,7 +1255,8 @@ MonoBehaviour:
   startDieCoroutine: 0
   playerSeen: 0
   playerSeenIndex: 0
-  playerPartSeen: {fileID: 0}
+  numRayHitPlayer: 0
+  currentViewTimer: 0
   currentBulletTimer: 0
   bullet: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
@@ -1380,7 +1382,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 2

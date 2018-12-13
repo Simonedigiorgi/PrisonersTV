@@ -1258,6 +1258,7 @@ MonoBehaviour:
   attackParticle: {fileID: 0}
   currentDestinationCount: 0
   agent: {fileID: 0}
+  firstPatrolSet: 0
   hasDecalsOn: 0
   decalsNum: 0
   animSpeed: 0
@@ -1268,6 +1269,7 @@ MonoBehaviour:
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
   thisMesh: {fileID: 0}
+  myEnemySpawn: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -1275,7 +1277,8 @@ MonoBehaviour:
   startDieCoroutine: 0
   playerSeen: 0
   playerSeenIndex: 0
-  playerPartSeen: {fileID: 0}
+  numRayHitPlayer: 0
+  currentViewTimer: 0
   currentBulletTimer: 0
   bullet: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
@@ -1289,6 +1292,7 @@ MonoBehaviour:
   onGround: 0
   currentBiteTimer: 0
   currentDisengageTimer: 0
+  lookAtPlayer: {x: 0, y: 0, z: 0}
   currentBarrageShots: 0
   isBarrageDone: 1
   canBarrageCR: 0
@@ -1380,9 +1384,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.8
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

@@ -25,6 +25,7 @@ namespace AI
         [HideInInspector] public int currentDestinationCount = 0;
         [HideInInspector] public NavMeshAgent agent;
         [HideInInspector] public NavMeshPath path;
+        [HideInInspector] public bool firstPatrolSet = false;
         //------------------------------------------------------------------
         [HideInInspector] public bool hasDecalsOn;
         [HideInInspector] public int decalsNum;
@@ -39,7 +40,7 @@ namespace AI
         [HideInInspector] public SpriteRenderer mySpriteRender;// temp
         [HideInInspector] public Transform thisTransform;
         [HideInInspector] public Transform thisMesh;
-        [HideInInspector] public EnemySpawn hisEnemySpawn;
+        [HideInInspector] public EnemySpawn myEnemySpawn;
         //------------------------------------------------------------------
         [HideInInspector] public int direction;                                // movement direction used for enemies without navmesh (1 = right, -1 = left)
         [HideInInspector] public int enemyMembership;                          // number of player that last hit this enemy
@@ -78,6 +79,7 @@ namespace AI
         #region DOG
         [HideInInspector] public float currentBiteTimer;
         [HideInInspector] public float currentDisengageTimer;
+        [HideInInspector] public Vector3 lookAtPlayer;
         #endregion
 
         #region SENTINEL
@@ -136,23 +138,23 @@ namespace AI
             {
                 if (enemyType == ENEMYTYPE.Dog)
                 {
-                    patrolPoints = new Transform[hisEnemySpawn.DogPoints.Length];
-                    patrolPoints = hisEnemySpawn.DogPoints;
+                    patrolPoints = new Transform[myEnemySpawn.DogPoints.Length];
+                    patrolPoints = myEnemySpawn.DogPoints;
                 }
                 else if(enemyType == ENEMYTYPE.Kamikaze)
                 {
-                    patrolPoints = new Transform[hisEnemySpawn.KamikazePoints.Length];
-                    patrolPoints = hisEnemySpawn.KamikazePoints;
+                    patrolPoints = new Transform[myEnemySpawn.KamikazePoints.Length];
+                    patrolPoints = myEnemySpawn.KamikazePoints;
                 }
                 else if(enemyType == ENEMYTYPE.Ninja)
                 {
-                    patrolPoints = new Transform[hisEnemySpawn.NinjaPoints.Length];
-                    patrolPoints = hisEnemySpawn.NinjaPoints;
+                    patrolPoints = new Transform[myEnemySpawn.NinjaPoints.Length];
+                    patrolPoints = myEnemySpawn.NinjaPoints;
                 }
                 else if (enemyType == ENEMYTYPE.Spider)
                 {
-                    patrolPoints = new Transform[hisEnemySpawn.SpiderPoints.Length];
-                    patrolPoints = hisEnemySpawn.SpiderPoints;
+                    patrolPoints = new Transform[myEnemySpawn.SpiderPoints.Length];
+                    patrolPoints = myEnemySpawn.SpiderPoints;
                 }
             }
         }
@@ -171,6 +173,7 @@ namespace AI
             }
             // set the new destination
             agent.destination = patrolPoints[currentDestinationCount].position;
+            //Debug.Log(currentDestinationCount + "    " + agent.destination);  
         }
         public void DamagePlayer(Collider2D hit)
         {
