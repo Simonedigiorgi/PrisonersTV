@@ -16,6 +16,7 @@ public class EnemyDog : _EnemyController
         path = new UnityEngine.AI.NavMeshPath(); 
         currentBiteTimer = m_EnemyStats.biteCooldown;
         currentDisengageTimer = m_EnemyStats.disengageTimer;
+        currentPathTimer = m_EnemyStats.pathCheckFrequenzy;
     }
 
     public override IEnumerator Die() 

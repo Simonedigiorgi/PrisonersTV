@@ -14,8 +14,10 @@ MonoBehaviour:
   life: 50
   enemyLevel: 2
   points: 10
-  attackView: 10
+  attackView: 15
+  chasingView: 20
   viewCheckFrequenzy: 0.2
+  pathCheckFrequenzy: 0.3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256

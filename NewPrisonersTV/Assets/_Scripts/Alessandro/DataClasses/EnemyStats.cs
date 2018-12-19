@@ -11,12 +11,14 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Enemy start level")] public int enemyLevel = 1;
     [Tooltip("Value off point earned by the player")] public int points;
     [Tooltip("View distance")] public float attackView;
+    [Tooltip("View distance while attacking target (used by: Dogs,Sentinels,Spiders)")] public float chasingView;
     [Tooltip("view check every...")] public float viewCheckFrequenzy;
+    [Tooltip("check path every... (Used by: Dogs,Spiders,Kamikaze)")] public float pathCheckFrequenzy;
     [Tooltip("view obstacle")] public LayerMask obstacleMask;
     [Tooltip("Movement speed")] public int speed;
     [Tooltip("Chasing speed")] public float runSpeed;
     [Tooltip("NavLink Speed")] public float jumpSpeed;
-    [Tooltip("Damage Value")] public int attackValue;
+    [Tooltip("Damage done to target")] public int attackValue; 
     [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
     [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
     //---------------------------------------------------------------------------------------

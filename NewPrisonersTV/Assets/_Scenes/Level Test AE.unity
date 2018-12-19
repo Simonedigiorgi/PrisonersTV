@@ -873,7 +873,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnType
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AgentTypeID: -1372625422
-  m_StartPoint: {x: -4.4325104, y: 7.5685654, z: 0}
+  m_StartPoint: {x: -6.303518, y: 2.4067383, z: 0}
   m_EndPoint: {x: 6.985514, y: -0.5090617, z: 0}
   m_Width: 1
   m_CostModifier: -1
@@ -1812,6 +1812,11 @@ Prefab:
       propertyPath: NinjaPoints.Array.data[3]
       value: 
       objectReference: {fileID: 776591372}
+    - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
+        type: 2}
+      propertyPath: thisSpawn
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 110708e11db94b042982c161a9d17616, type: 2}
   m_IsPrefabParent: 0
@@ -3191,7 +3196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AgentTypeID: -1372625422
   m_StartPoint: {x: -4.300191, y: -0.6427784, z: 0}
-  m_EndPoint: {x: 7.2980957, y: 7.696948, z: 0}
+  m_EndPoint: {x: 9.052644, y: 2.3751078, z: 0}
   m_Width: 1
   m_CostModifier: -1
   m_Bidirectional: 1

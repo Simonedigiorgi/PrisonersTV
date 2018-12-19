@@ -14,7 +14,8 @@ public class EnemyKamikaze : _EnemyController
     protected override void Start()
     {
         base.Start();
-        currentExplosionTimer = m_EnemyStats.explosionTimer;  
+        currentExplosionTimer = m_EnemyStats.explosionTimer;
+        currentPathTimer = m_EnemyStats.pathCheckFrequenzy;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

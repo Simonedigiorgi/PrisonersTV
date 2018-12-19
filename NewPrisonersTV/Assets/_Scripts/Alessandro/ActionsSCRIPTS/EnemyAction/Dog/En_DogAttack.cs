@@ -17,9 +17,10 @@ namespace AI.Actions
         public void Attack(EnemiesAIStateController controller)
         {
             // set the player as destination---------------------------------------------------------
-            if (controller.m_EnemyController.currentViewTimer <= 0)
+            if (controller.m_EnemyController.currentPathTimer <= 0 && controller.enemyStats.enemyLevel <= 2)
             {
                 controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
+                controller.m_EnemyController.currentPathTimer = controller.enemyStats.pathCheckFrequenzy;
             }
             //change agent speed if is on NavLink----------------------------------------------------
             if (controller.m_EnemyController.agent.isOnOffMeshLink)

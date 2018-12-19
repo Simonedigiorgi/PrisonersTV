@@ -26,6 +26,7 @@ namespace AI
         [HideInInspector] public NavMeshAgent agent;
         [HideInInspector] public NavMeshPath path;
         [HideInInspector] public bool firstPatrolSet = false;
+        [HideInInspector] public float currentPathTimer;
         //------------------------------------------------------------------
         [HideInInspector] public bool hasDecalsOn;
         [HideInInspector] public int decalsNum;
@@ -49,6 +50,7 @@ namespace AI
         //------------------------------------------------------------------
         [HideInInspector] public bool startDieCoroutine = false;                // starts the death coroutine if true
         [HideInInspector] public bool playerSeen = false;                       // true if a player is in sight
+        [HideInInspector] public RaycastHit2D[] lineCastHits;
         [HideInInspector] public int playerSeenIndex;                           // index of player seen
         [HideInInspector] public int numRayHitPlayer;                           // used to check if all rays are not hitting the target
         [HideInInspector] public float currentViewTimer;                        // search for enemy every...
@@ -93,15 +95,16 @@ namespace AI
         protected virtual void Awake()
         {
             thisTransform = this.transform;
+            rb = GetComponent<Rigidbody2D>(); 
             mySpriteRender = GetComponent<SpriteRenderer>();
-            rb = thisTransform.GetComponent<Rigidbody2D>(); 
-            currentLife = m_EnemyStats.life;
-            animSpeed = enemyAnim.speed;
             agent = GetComponent<NavMeshAgent>();
             col = thisTransform.GetChild(0).GetComponent<Collider2D>();
             thisMesh = enemyAnim.transform;
-            currentViewTimer = m_EnemyStats.viewCheckFrequenzy;
+
+            animSpeed = enemyAnim.speed;
+            currentLife = m_EnemyStats.life;
             playerSeenDistance = new TargetDistance[GMController.instance.playerInfo.Length];
+            lineCastHits = new RaycastHit2D[1];
         }
 
         protected virtual void Start()
@@ -111,6 +114,7 @@ namespace AI
                 agent.speed = m_EnemyStats.speed;
                 SetPatrolList();
             }
+            currentViewTimer = m_EnemyStats.viewCheckFrequenzy;
         }
         //------------------------------------------------------------------
         protected virtual void Update()

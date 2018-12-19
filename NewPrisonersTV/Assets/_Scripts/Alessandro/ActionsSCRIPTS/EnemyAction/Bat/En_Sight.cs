@@ -31,13 +31,11 @@ namespace AI.Actions
                     {   // if the target is in range and is alive 
                         if (controller.m_EnemyController.playerSeenDistance[i].distance <= (controller.enemyStats.attackView * controller.enemyStats.attackView)
                             && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.isAlive)
-                        {
-                            Vector2 rayDirection = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.TargetForEnemies.position - controller.m_EnemyController.thisTransform.position;
-
+                        {                           
                             for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
-                            {   // if at least one of the ray hits then get the aggro
-                                Debug.DrawRay(controller.m_EnemyController.raycastEyes[y].position, rayDirection, Color.red);
-                                if (!Physics2D.Raycast(controller.m_EnemyController.raycastEyes[y].position, rayDirection, (controller.m_EnemyController.playerSeenDistance[i].distance / controller.m_EnemyController.playerSeenDistance[i].distance), controller.enemyStats.obstacleMask))
+                            {   // if at least one of the ray hits then get the aggro                    
+                                Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, Color.red);
+                                if (Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, controller.m_EnemyController.lineCastHits, controller.enemyStats.obstacleMask) <= 0)
                                 {
                                     controller.m_EnemyController.playerSeen = true;
                                     controller.m_EnemyController.startSwoopPosition = controller.m_EnemyController.thisTransform.position;

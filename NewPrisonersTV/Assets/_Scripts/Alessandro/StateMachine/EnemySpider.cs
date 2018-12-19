@@ -10,6 +10,12 @@ public class EnemySpider : _EnemyController
         enemyType = ENEMYTYPE.Spider;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        currentPathTimer = m_EnemyStats.pathCheckFrequenzy;
+    }
+
     public override IEnumerator Die()
     {
         yield return new WaitForEndOfFrame();

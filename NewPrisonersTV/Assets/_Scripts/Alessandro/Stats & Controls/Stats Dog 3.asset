@@ -15,7 +15,9 @@ MonoBehaviour:
   enemyLevel: 3
   points: 10
   attackView: 10
+  chasingView: 20
   viewCheckFrequenzy: 0.2
+  pathCheckFrequenzy: 0.3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 16640

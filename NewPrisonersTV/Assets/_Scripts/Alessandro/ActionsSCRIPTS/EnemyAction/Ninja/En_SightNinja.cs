@@ -28,17 +28,15 @@ namespace AI.Actions
                 {   // if the target is in range and is alive 
                     if (controller.m_EnemyController.playerSeenDistance[i].distance <= (controller.enemyStats.attackView * controller.enemyStats.attackView)
                         && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.isAlive)
-                    {
-                         Vector2 rayDirection = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.TargetForEnemies.position - controller.m_EnemyController.thisTransform.position;
-                        
+                    {                        
                         for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
-                        {
-                            Debug.DrawRay(controller.m_EnemyController.raycastEyes[y].position, rayDirection, Color.red);
-                            if (!Physics2D.Raycast(controller.m_EnemyController.raycastEyes[y].position, rayDirection, (controller.m_EnemyController.playerSeenDistance[i].distance/controller.m_EnemyController.playerSeenDistance[i].distance), controller.enemyStats.obstacleMask))                          
+                        {                          
+                            Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, Color.red);
+                            if (Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, controller.m_EnemyController.lineCastHits, controller.enemyStats.obstacleMask) <= 0)
                             {
                                 controller.m_EnemyController.playerSeenIndex = controller.m_EnemyController.playerSeenDistance[i].targetIndex;
                                 controller.m_EnemyController.playerSeen = true;
-                            }
+                            }  
                         }
                     } 
                     else
