@@ -15,7 +15,7 @@ namespace AI.Actions
 
         public void BoolReset(EnemiesAIStateController controller)
         {
-            controller.m_EnemyController.firstPatrolSet = false;           
+            controller.m_EnemyController.firstPatrolSet = false;
         }
     }
 }

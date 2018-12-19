@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 198637910975072464}
   - component: {fileID: 199503215785822794}
   - component: {fileID: 114241746034184528}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -992,7 +992,7 @@ GameObject:
   - component: {fileID: 198807162440452742}
   - component: {fileID: 199783333418424312}
   - component: {fileID: 114242742476168848}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: 'Mine '
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -2094,12 +2094,14 @@ MonoBehaviour:
   - {fileID: 4393702555605354}
   patrolPoints: []
   randomNavPoints: 0
-  shurikenSpawn: {fileID: 0}
+  checkPosition: {fileID: 0}
+  attackSpawn: {fileID: 0}
   explosionParticle: {fileID: 114241746034184528}
   mine: {fileID: 114242742476168848}
   attackParticle: {fileID: 0}
   currentDestinationCount: 0
   agent: {fileID: 0}
+  firstPatrolSet: 0
   hasDecalsOn: 0
   decalsNum: 0
   animSpeed: 0
@@ -2109,7 +2111,8 @@ MonoBehaviour:
   col: {fileID: 0}
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
-  playerMesh: {fileID: 0}
+  thisMesh: {fileID: 0}
+  myEnemySpawn: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -2117,18 +2120,26 @@ MonoBehaviour:
   startDieCoroutine: 0
   playerSeen: 0
   playerSeenIndex: 0
-  playerPartSeen: {fileID: 0}
+  numRayHitPlayer: 0
+  currentViewTimer: 0
+  playerSeenDistance: []
+  currentBulletTimer: 0
+  bullet: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
   endSwoopPosition: {x: 0, y: 0, z: 0}
   swoopCoroutineInExecution: 0
   startSwoopCR: 0
   currentExplosionTimer: 0
   canExplode: 0
-  currentShurikenTimer: 0
   startJumpPos: {x: 0, y: 0, z: 0}
   currentJumpTimer: 0
   onGround: 0
-  shuriken: {fileID: 0}
+  currentBiteTimer: 0
+  currentDisengageTimer: 0
+  lookAtPlayer: {x: 0, y: 0, z: 0}
+  currentBarrageShots: 0
+  isBarrageDone: 1
+  canBarrageCR: 0
 --- !u!137 &137668576651244728
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

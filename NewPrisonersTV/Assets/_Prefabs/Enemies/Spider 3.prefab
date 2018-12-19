@@ -722,6 +722,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1582517443388142
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4945683100423866}
+  m_Layer: 11
+  m_Name: RayEye (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1607429381863292
 GameObject:
   m_ObjectHideFlags: 1
@@ -868,7 +883,7 @@ GameObject:
   - component: {fileID: 198637910975072464}
   - component: {fileID: 199503215785822794}
   - component: {fileID: 114241746034184528}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -951,6 +966,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1929379371389276
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4354167471408624}
+  m_Layer: 11
+  m_Name: RayEye
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1932290254978568
 GameObject:
   m_ObjectHideFlags: 1
@@ -992,7 +1022,7 @@ GameObject:
   - component: {fileID: 198807162440452742}
   - component: {fileID: 199783333418424312}
   - component: {fileID: 114242742476168848}
-  m_Layer: 12
+  m_Layer: 11
   m_Name: 'Mine '
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -1398,6 +1428,19 @@ Transform:
   m_Father: {fileID: 4894748218455658}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4354167471408624
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929379371389276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.31, y: 0, z: 0.084}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4393702555605354}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4383126584910634
 Transform:
   m_ObjectHideFlags: 1
@@ -1438,6 +1481,8 @@ Transform:
   m_Children:
   - {fileID: 4202690303976558}
   - {fileID: 4075809168189988}
+  - {fileID: 4354167471408624}
+  - {fileID: 4945683100423866}
   m_Father: {fileID: 4192284763908614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1925,6 +1970,20 @@ Transform:
   m_Father: {fileID: 4516611093768590}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4945683100423866
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1582517443388142}
+  m_LocalRotation: {x: 0.000000003615639, y: -0.000000014948979, z: -0.000000059604695,
+    w: 1}
+  m_LocalPosition: {x: -0.266, y: 0, z: 0.117}
+  m_LocalScale: {x: 1.0000004, y: 1.0000006, z: 1.0000007}
+  m_Children: []
+  m_Father: {fileID: 4393702555605354}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4966686058105534
 Transform:
   m_ObjectHideFlags: 1
@@ -2091,15 +2150,18 @@ MonoBehaviour:
   enemyAnim: {fileID: 95536570469795444}
   m_EnemyStats: {fileID: 11400000, guid: 083606af271b32e479dfc391913d17d3, type: 2}
   raycastEyes:
-  - {fileID: 4393702555605354}
+  - {fileID: 4354167471408624}
+  - {fileID: 4945683100423866}
   patrolPoints: []
   randomNavPoints: 0
-  shurikenSpawn: {fileID: 0}
+  checkPosition: {fileID: 0}
+  attackSpawn: {fileID: 0}
   explosionParticle: {fileID: 114241746034184528}
   mine: {fileID: 114242742476168848}
   attackParticle: {fileID: 0}
   currentDestinationCount: 0
   agent: {fileID: 0}
+  firstPatrolSet: 0
   hasDecalsOn: 0
   decalsNum: 0
   animSpeed: 0
@@ -2109,7 +2171,8 @@ MonoBehaviour:
   col: {fileID: 0}
   mySpriteRender: {fileID: 0}
   thisTransform: {fileID: 0}
-  playerMesh: {fileID: 0}
+  thisMesh: {fileID: 0}
+  myEnemySpawn: {fileID: 0}
   direction: 0
   enemyMembership: 0
   isFlashing: 0
@@ -2117,18 +2180,26 @@ MonoBehaviour:
   startDieCoroutine: 0
   playerSeen: 0
   playerSeenIndex: 0
-  playerPartSeen: {fileID: 0}
+  numRayHitPlayer: 0
+  currentViewTimer: 0
+  playerSeenDistance: []
+  currentBulletTimer: 0
+  bullet: {fileID: 0}
   startSwoopPosition: {x: 0, y: 0, z: 0}
   endSwoopPosition: {x: 0, y: 0, z: 0}
   swoopCoroutineInExecution: 0
   startSwoopCR: 0
   currentExplosionTimer: 0
   canExplode: 0
-  currentShurikenTimer: 0
   startJumpPos: {x: 0, y: 0, z: 0}
   currentJumpTimer: 0
   onGround: 0
-  shuriken: {fileID: 0}
+  currentBiteTimer: 0
+  currentDisengageTimer: 0
+  lookAtPlayer: {x: 0, y: 0, z: 0}
+  currentBarrageShots: 0
+  isBarrageDone: 1
+  canBarrageCR: 0
 --- !u!137 &137668576651244728
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -17,24 +17,31 @@ namespace AI.Actions
         {
             if (!controller.m_EnemyController.playerSeen && controller.enemyStats.enemyLevel >= 2 && controller.m_EnemyController.currentViewTimer <= 0)
             {
-                for (int i = 0; i < GMController.instance.playerInfo.Length; i++) 
-                {       // check distance between players and enemy without Vector2.Distance
-                     float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[i].playerController.TargetForEnemies.position).sqrMagnitude;
-                     if (rayDistance <= (controller.enemyStats.attackView * controller.enemyStats.attackView))
-                     {
-                         Vector2 rayDirection = GMController.instance.playerInfo[i].playerController.TargetForEnemies.position - controller.m_EnemyController.thisTransform.position;
+                // check distance between players and enemy
+                for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
+                    controller.m_EnemyController.playerSeenDistance[i] = new TargetDistance(i, (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[i].playerController.TargetForEnemies.position).sqrMagnitude);
+
+                System.Array.Sort(controller.m_EnemyController.playerSeenDistance);
+
+                // check if the target is in sight based on the distance (check first the closer one)
+                for (int i = 0; i < controller.m_EnemyController.playerSeenDistance.Length; i++)
+                {   // if the target is in range and is alive 
+                    if (controller.m_EnemyController.playerSeenDistance[i].distance <= (controller.enemyStats.attackView * controller.enemyStats.attackView)
+                        && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.isAlive)
+                    {
+                         Vector2 rayDirection = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.TargetForEnemies.position - controller.m_EnemyController.thisTransform.position;
                         
                         for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
                         {
                             Debug.DrawRay(controller.m_EnemyController.raycastEyes[y].position, rayDirection, Color.red);
-                            if (!Physics2D.Raycast(controller.m_EnemyController.raycastEyes[y].position, rayDirection, controller.enemyStats.attackView, controller.enemyStats.obstacleMask))                          
+                            if (!Physics2D.Raycast(controller.m_EnemyController.raycastEyes[y].position, rayDirection, (controller.m_EnemyController.playerSeenDistance[i].distance/controller.m_EnemyController.playerSeenDistance[i].distance), controller.enemyStats.obstacleMask))                          
                             {
-                                controller.m_EnemyController.playerSeenIndex = i;
+                                controller.m_EnemyController.playerSeenIndex = controller.m_EnemyController.playerSeenDistance[i].targetIndex;
                                 controller.m_EnemyController.playerSeen = true;
                             }
                         }
-                     } 
-                     else
+                    } 
+                    else
                         controller.m_EnemyController.playerSeen = false; 
                 }
                 controller.m_EnemyController.currentViewTimer = controller.enemyStats.viewCheckFrequenzy;

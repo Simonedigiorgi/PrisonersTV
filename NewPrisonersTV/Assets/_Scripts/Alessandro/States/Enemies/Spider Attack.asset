@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
   - {fileID: 11400000, guid: 1ab1b655da8f3c0459a9b8696bb6d45a, type: 2}
-  - {fileID: 11400000, guid: d48d4eb9ec087c640bf71ffd30c64500, type: 2}
   - {fileID: 11400000, guid: 9fa9e1f47359b2e4a8122b9b7ea6f904, type: 2}
+  - {fileID: 11400000, guid: d48d4eb9ec087c640bf71ffd30c64500, type: 2}
   enterActions: []
   exitActions:
   - {fileID: 11400000, guid: 9826b9943bf56b6408b2cac4fb34ff9e, type: 2}

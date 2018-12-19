@@ -15,10 +15,10 @@ namespace AI.Actions
 
         public void Attack(EnemiesAIStateController controller)
         {
-            if (controller.m_EnemyController.currentViewTimer <= 0)
-            {
+            //if (controller.m_EnemyController.currentViewTimer <= 0)
+            //{
                 controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
-            }            
+            //}             
 
             if (controller.m_EnemyController.agent.isOnOffMeshLink)
                controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;

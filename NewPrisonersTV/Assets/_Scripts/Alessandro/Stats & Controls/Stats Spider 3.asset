@@ -14,7 +14,7 @@ MonoBehaviour:
   life: 50
   enemyLevel: 3
   points: 10
-  attackView: 10
+  attackView: 20
   viewCheckFrequenzy: 0.2
   obstacleMask:
     serializedVersion: 2
@@ -44,7 +44,7 @@ MonoBehaviour:
   groundCheckRadius: 0
   explosionTimer: 0
   bombsTimer: 3
-  bombsXseconds: 2
+  bombsXseconds: 0.5
   bombsOnDeath: 5
   triggerBiteDistance: 0
   biteRadius: 0

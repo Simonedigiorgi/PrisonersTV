@@ -52,6 +52,7 @@ namespace AI
         [HideInInspector] public int playerSeenIndex;                           // index of player seen
         [HideInInspector] public int numRayHitPlayer;                           // used to check if all rays are not hitting the target
         [HideInInspector] public float currentViewTimer;                        // search for enemy every...
+        [HideInInspector] public TargetDistance[] playerSeenDistance;           // records player index and distance from the agent
         //------------------------------------------------------------------
         #region BULLETS
         [HideInInspector] public float currentBulletTimer;
@@ -100,6 +101,7 @@ namespace AI
             col = thisTransform.GetChild(0).GetComponent<Collider2D>();
             thisMesh = enemyAnim.transform;
             currentViewTimer = m_EnemyStats.viewCheckFrequenzy;
+            playerSeenDistance = new TargetDistance[GMController.instance.playerInfo.Length];
         }
 
         protected virtual void Start()

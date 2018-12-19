@@ -30,7 +30,6 @@ namespace AI.Actions
             {
                 controller.m_EnemyController.agent.destination = controller.m_EnemyController.patrolPoints[controller.m_EnemyController.currentDestinationCount].position;
                 controller.m_EnemyController.firstPatrolSet = true;
-                //Debug.Log(controller.m_EnemyController.agent.destination);
             }
             //---------------------------------------------------------------------------------------
             // check if has reached the next patrol point           
