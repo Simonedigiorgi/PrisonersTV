@@ -16,4 +16,4 @@ public enum DAMAGETYPE { Impact, Slash, Electric, Laser, Fire, Ice}
 
 public enum BULLETTYPE { None, Gun, CircularSaw, CrossBow, LaserGun, GranadeLauncher, Nailgun, Uzi, Shotgun, KnifeLauncher, Unicorn}
 
-
+public enum BONUSTYPE { None, EnemyLevel, NewWeapons}

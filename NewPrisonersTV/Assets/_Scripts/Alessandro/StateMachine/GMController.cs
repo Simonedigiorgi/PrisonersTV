@@ -21,6 +21,7 @@ public class GMController : MonoBehaviour
     public DecalDepot decalDepot;                                           // reference to the decal prefab list
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
+    public TensionBarStats tensionStats;
     //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -59,6 +60,12 @@ public class GMController : MonoBehaviour
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public UIManager3D UI;
     [HideInInspector] public BonusWeapon bonusWeapon;
+    [HideInInspector] public WeaponSpawn[] weaponSpawns;
+    [HideInInspector] public int currentTensionLevel = 0;
+    [HideInInspector] public int currentTensionMulti = 1;
+    [HideInInspector] public int currentTensionMax;
+    [HideInInspector] public int tensionThreshold;
+    [HideInInspector] public TensionBonus[] tensionBonus;
     //------------------------------------------------------------------
     #region ENEMIES/SPAWNS INFO
     [HideInInspector] public int maxEnemy; 
@@ -138,6 +145,11 @@ public class GMController : MonoBehaviour
             PlayerSetup();
             StartEnemyCount();
             CollectEnemySpawns();
+            CollectWeaponSpawns();
+            // set tension threshold and max bar dimension
+            currentTensionMax = (int)(tensionStats.standardBarCapacity * (1 + (tensionStats.multiXPlayer * (playerInfo.Length-1))));
+            tensionThreshold = currentTensionMax / tensionStats.barDivision;
+            TensionBonusSetup();
 
             // if the current level is not the first of the current game
             if (levelCount > 1)
@@ -264,6 +276,62 @@ public class GMController : MonoBehaviour
         levelCount++;
     }
 
+    public void TensionThresholdCheck()
+    {
+        for (int i = 1; i <= tensionStats.barDivision; i++)
+        {   //calculate various threshold steps
+            int currentThreshold = tensionThreshold * i;
+            //set the max threshold to the max bar capacity
+            if (currentThreshold > currentTensionMax)            
+                currentThreshold = currentTensionMax;           
+            //if the tension level is equal/superior the currentThreshold then activate bonus
+            if (currentTensionLevel >= currentThreshold)
+            { 
+                //activate bonus
+                for (int y = 0; y < tensionBonus.Length; y++)
+                {   // if the bonus is not already active and the tension and the threshold are right
+                    if (!tensionBonus[y].isActive && currentTensionMulti == tensionBonus[y].barLevel && tensionBonus[y].barThreshold == i)
+                    {
+                        TensionThresholdBonuses(y);
+                    }
+                }
+                // if the bar is full then increase the multiplier and reset the currentTensionLevel
+                if (currentTensionLevel >= currentTensionMax)
+                {
+                    if (currentTensionMulti < tensionStats.maxBarLevel)
+                    {
+                        currentTensionMulti++;
+                        currentTensionLevel = 0;
+                    }
+                }
+            }
+        }
+    }
+    private void TensionThresholdBonuses(int index)
+    {
+        if (tensionBonus[index].type == BONUSTYPE.EnemyLevel)
+        {
+            for (int i = 0; i < enemySpawns.Length; i++)
+            {
+                if (enemySpawns[i].spawnLevel < 3)
+                    enemySpawns[i].spawnLevel++;
+            }
+            tensionBonus[index].isActive = true;
+        }
+        else if(tensionBonus[index].type == BONUSTYPE.NewWeapons)
+        {
+            for (int i = 0; i < weaponSpawns.Length; i++)
+            {
+                weaponSpawns[i].weaponList = tensionBonus[index].newList;
+            }
+            tensionBonus[index].isActive = true;
+        }
+    }
+    private void TensionBonusSetup()
+    {   
+        tensionBonus = new TensionBonus[tensionStats.bonus.Length];        
+        System.Array.Copy(tensionStats.bonus, tensionBonus, tensionStats.bonus.Length);                    
+    }
     //------------------------------------------------------------------
     public void SetActive(bool state)
     {
@@ -308,9 +376,13 @@ public class GMController : MonoBehaviour
 
         }
     }
-    public void CollectEnemySpawns()
+    private void CollectEnemySpawns()
     {
         enemySpawns = FindObjectsOfType<EnemySpawn>();
+    }
+    private void CollectWeaponSpawns()
+    {
+        weaponSpawns = FindObjectsOfType<WeaponSpawn>();
     }
     public void SlowdownSpawns()
     {
@@ -347,14 +419,15 @@ public class GMController : MonoBehaviour
         playerSetupDone = true;
     }
     public void RewardOrder()
-    {
+    {  // create a temporary array to store scores
         int[] tempOrder = new int[playerRequired];
         for (int i = 0; i < tempOrder.Length; i++)
         {
             tempOrder[i] = playerInfo[i].score;
         }
-        System.Array.Sort(tempOrder);
-
+        // sort them in crescent order
+        System.Array.Sort(tempOrder); 
+        // compare the temp array scores with the players and assign reward in the right order
         for (int i = 0; i < tempOrder.Length; i++)
         {
             for (int y = 0; y < playerInfo.Length; y++)

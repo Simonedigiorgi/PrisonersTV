@@ -5,8 +5,8 @@ using AI;
 
 public class EnemySpawn : MonoBehaviour
 {
-    public ENEMYTYPE spawnType; 
-    [Range(1,3)]
+    public ENEMYTYPE spawnType;
+    [Range(1, 3)]
     public int spawnLevel;
     public float spawnTimer;
     public EnemyList enemyList;

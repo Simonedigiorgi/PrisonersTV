@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f547a51df6dae4b926b1242daa3915, type: 3}
+  m_Name: TensionBarStats
+  m_EditorClassIdentifier: 
+  maxBarLevel: 2
+  standardBarCapacity: 100
+  multiXPlayer: 0.5
+  barDivision: 2
+  movementTimer: 1
+  movementPoints: 1
+  actionsPoints: 1
+  enemyHitPoints: 5
+  enemyKillPoints: 10
+  standStillTimer: 1
+  standStillPoints: 1
+  playerHitPoints: 10
+  playerDeathPoints: 20
+  bonus:
+  - isActive: 0
+    barLevel: 1
+    barThreshold: 1
+    type: 2
+    newList: {fileID: 11400000, guid: ecd52db5e65ff934c99a84cdbe43840f, type: 2}
+  - isActive: 0
+    barLevel: 1
+    barThreshold: 2
+    type: 1
+    newList: {fileID: 0}
+  - isActive: 0
+    barLevel: 2
+    barThreshold: 1
+    type: 2
+    newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}
+  - isActive: 0
+    barLevel: 2
+    barThreshold: 2
+    type: 1
+    newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}

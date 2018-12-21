@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
   m_Name: Stats Spider 2
   m_EditorClassIdentifier: 
+  type: 5
   life: 50
   enemyLevel: 2
   points: 10

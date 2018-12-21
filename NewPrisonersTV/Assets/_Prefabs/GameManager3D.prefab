@@ -7892,6 +7892,7 @@ MonoBehaviour:
   decalDepot: {fileID: 11400000, guid: 7037daf46d7f74741af33d88eed8313b, type: 2}
   bulletPool: {fileID: 4006064854236664}
   bulletDepot: {fileID: 11400000, guid: af0cf8cbc017e974e8556c96add48015, type: 2}
+  tensionStats: {fileID: 11400000, guid: ba91922d1b616d74bb48e4113dbaf6b2, type: 2}
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}

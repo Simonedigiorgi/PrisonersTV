@@ -11,12 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17eb473d6bab59e44b1b24cc062e27c0, type: 3}
   m_Name: Stats Sentinel 2
   m_EditorClassIdentifier: 
+  type: 7
   life: 50
   enemyLevel: 2
   points: 10
   attackView: 20
   chasingView: 40
   viewCheckFrequenzy: 0.2
+  pathCheckFrequenzy: 0
   obstacleMask:
     serializedVersion: 2
     m_Bits: 256

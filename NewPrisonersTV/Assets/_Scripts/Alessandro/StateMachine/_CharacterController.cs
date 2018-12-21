@@ -135,6 +135,15 @@ namespace Character
             // transform.position = new Vector2(0, 0);
 
             DestroyCurrentWeapon();
+            //detract points from tension
+            GMController.instance.currentTensionLevel -= GMController.instance.tensionStats.playerDeathPoints;
+            if (GMController.instance.currentTensionLevel < 0 && GMController.instance.currentTensionMulti > 1)
+            {
+                GMController.instance.currentTensionMulti--;
+                GMController.instance.currentTensionLevel = GMController.instance.currentTensionMax;
+            }
+            else
+                GMController.instance.currentTensionLevel = 0;
             //reset score
             GMController.instance.playerInfo[playerNumber].score = 0; // reset score
             GMController.instance.UI.UpdateScoreUI(playerNumber); // update score on UI

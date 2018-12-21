@@ -6,68 +6,105 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(menuName = "Prototype/EnemyStats")]
 public class EnemyStats : ScriptableObject
 {
+    #region INSPECTOR BOOLEANS
+    private bool kamiSpiNinDog = false;
+    private bool ninSent = false;
+    private bool dogSpiKami = false;
+    private bool dogSentSpi = false;
+    private bool kamiAndSpider = false;
+    #endregion
+
+    [OnValueChanged("HideStuff")]
+    public ENEMYTYPE type;
     public int life;
     [Range(1, 3)]
     [Tooltip("Enemy start level")] public int enemyLevel = 1;
-    [Tooltip("Value off point earned by the player")] public int points;
+    [Tooltip("points earned by the player")] public int points;
     [Tooltip("View distance")] public float attackView;
-    [Tooltip("View distance while attacking target (used by: Dogs,Sentinels,Spiders)")] public float chasingView;
+    [ShowIf("dogSentSpi", true)] [Tooltip("View distance while attacking target")] public float chasingView;
     [Tooltip("view check every...")] public float viewCheckFrequenzy;
-    [Tooltip("check path every... (Used by: Dogs,Spiders,Kamikaze)")] public float pathCheckFrequenzy;
+    [ShowIf("dogSpiKami", true)] [Tooltip("check path every...")] public float pathCheckFrequenzy; 
     [Tooltip("view obstacle")] public LayerMask obstacleMask;
     [Tooltip("Movement speed")] public int speed;
-    [Tooltip("Chasing speed")] public float runSpeed;
-    [Tooltip("NavLink Speed")] public float jumpSpeed;
+    [ShowIf("dogSpiKami", true)] [Tooltip("Chasing speed")] public float runSpeed;
+    [ShowIf("kamiSpiNinDog", true)] [Tooltip("NavLink Speed")] public float jumpSpeed;
     [Tooltip("Damage done to target")] public int attackValue; 
     [Tooltip("Weakness")] public ResistanceAndWeakness[] weakness;
-    [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance;
+    [Tooltip("Resistance")] public ResistanceAndWeakness[] resistance; 
     //---------------------------------------------------------------------------------------
-    [BoxGroup("Bullets & Attacks")] public LayerMask hitMask;
-    [BoxGroup("Bullets & Attacks")] public int bulletNumberOfHits;
-    [BoxGroup("Bullets & Attacks")] public bool canBulletBounce;
-    [BoxGroup("Bullets & Attacks")] public float bulletCooldown;
-    [BoxGroup("Bullets & Attacks")] public float bulletLifeTime;
-    [BoxGroup("Bullets & Attacks")] public float bulletSpeed;
-    [BoxGroup("Bullets & Attacks")] public float bulletGravity;
-    [BoxGroup("Bullets & Attacks")] public float bulletRayLenght;
+    public LayerMask hitMask;
+    [ShowIf("ninSent", true)] public int bulletNumberOfHits;
+    [ShowIf("ninSent", true)] public bool canBulletBounce;
+    [ShowIf("ninSent", true)] public float bulletCooldown;
+    [ShowIf("ninSent", true)] public float bulletLifeTime;
+    [ShowIf("ninSent", true)] public float bulletSpeed;
+    [ShowIf("ninSent", true)] public float bulletGravity;
+    [ShowIf("ninSent", true)] public float bulletRayLenght;  
     //---------------------------------------------------------------------------------------
     #region BATS
-    [Range(0.5f, 3)]
-    [BoxGroup("Bat Only")][Tooltip("Time needed for the swoop")] public float swoopMoreSlowly;
-    [BoxGroup("Bat Only")] [Tooltip("Initial movement directions")] public STARTDIRECTION myStartDirection;
-    [BoxGroup("Bat Only")][Tooltip("Amplitude of sinusoidal movement")] public int sinusoidalMovement;
-    #endregion
+    [ShowIf("type", ENEMYTYPE.Bat)][Tooltip("Time needed for the swoop")] [Range(0.5f, 3)]
+    public float swoopMoreSlowly;
+    [ShowIf("type", ENEMYTYPE.Bat)][Tooltip("Initial movement directions")] 
+    public STARTDIRECTION myStartDirection;
+    [ShowIf("type", ENEMYTYPE.Bat)][Tooltip("Amplitude of sinusoidal movement")] 
+    public int sinusoidalMovement;
+    #endregion 
     //---------------------------------------------------------------------------------------
     #region NINJA
-    [BoxGroup("Ninja Only")] public float ninjaJumpLenght;
-    [BoxGroup("Ninja Only")] public float ninjaJumpHeight;
-    [BoxGroup("Ninja Only")] public float ninjaJumpCooldown;
-    [BoxGroup("Ninja Only")] public float groundCheckRadius;
+    [ShowIf("type", ENEMYTYPE.Ninja)]
+    public float ninjaJumpLenght;
+    [ShowIf("type", ENEMYTYPE.Ninja)]
+    public float ninjaJumpHeight;
+    [ShowIf("type", ENEMYTYPE.Ninja)]
+    public float ninjaJumpCooldown;
+    [ShowIf("type", ENEMYTYPE.Ninja)]
+    public float groundCheckRadius;
     #endregion
     //---------------------------------------------------------------------------------------
     #region KAMIKAZE
-    [BoxGroup("Kamikaze Only")] public float explosionTimer;
+    [ShowIf("type", ENEMYTYPE.Kamikaze)]
+    public float explosionTimer;
     #endregion
     //---------------------------------------------------------------------------------------
     #region KAMIKAZE & SPIDER
-    [BoxGroup("Kamikaze and Spider")] public float bombsTimer;
-    [BoxGroup("Kamikaze and Spider")] public float bombsXseconds;
+    [ShowIf("kamiAndSpider", true)]
+    public float bombsTimer; 
+    [ShowIf("kamiAndSpider", true)]
+    public float bombsXseconds;
     #endregion
     //---------------------------------------------------------------------------------------
     #region SPIDER
-    [BoxGroup("Spider Only")] public int bombsOnDeath;
+    [ShowIf("type", ENEMYTYPE.Spider)]
+    public int bombsOnDeath;
     #endregion
     //---------------------------------------------------------------------------------------
     #region DOG
-    [BoxGroup("Dog Only")] public float triggerBiteDistance;
-    [BoxGroup("Dog Only")] public float biteRadius;
-    [BoxGroup("Dog Only")] public float biteCooldown;
-    [BoxGroup("Dog Only")] public float disengageTimer;
+    [ShowIf("type", ENEMYTYPE.Dog)]
+    public float triggerBiteDistance;
+    [ShowIf("type", ENEMYTYPE.Dog)]
+    public float biteRadius;
+    [ShowIf("type", ENEMYTYPE.Dog)]
+    public float biteCooldown;
+    [ShowIf("type", ENEMYTYPE.Dog)]
+    public float disengageTimer;
     #endregion
     //---------------------------------------------------------------------------------------
     #region SENTINEL
-    [BoxGroup("Sentinel Only")] public float groundRayDistance;
-    [BoxGroup("Sentinel Only")] public int numBarrageShots;
-    [BoxGroup("Sentinel Only")] public float barrageTimer;
+    [ShowIf("type", ENEMYTYPE.Sentinel)]
+    public float groundRayDistance;
+    [ShowIf("type", ENEMYTYPE.Sentinel)]
+    public int numBarrageShots;
+    [ShowIf("type", ENEMYTYPE.Sentinel)]
+    public float barrageTimer;
     #endregion
+
+    
+    private void HideStuff()
+    {
+        kamiAndSpider = (type == ENEMYTYPE.Kamikaze || type == ENEMYTYPE.Spider); 
+        dogSentSpi = (type == ENEMYTYPE.Dog || type == ENEMYTYPE.Sentinel || type == ENEMYTYPE.Spider);
+        dogSpiKami = (type == ENEMYTYPE.Kamikaze || type == ENEMYTYPE.Dog || type == ENEMYTYPE.Spider);
+        ninSent = (type == ENEMYTYPE.Ninja || type == ENEMYTYPE.Sentinel);
+        kamiSpiNinDog = (type == ENEMYTYPE.Kamikaze || type == ENEMYTYPE.Dog || type == ENEMYTYPE.Spider || type == ENEMYTYPE.Ninja);
+    }
 }
