@@ -91,6 +91,7 @@ public class PerforationBullet : MonoBehaviour
         enemyHit.enemyMembership = playerNumber;
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
+        GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension
     }
     public virtual void ShootPerf(Transform spawnPoint)
     {

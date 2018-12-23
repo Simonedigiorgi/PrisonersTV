@@ -160,6 +160,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         enemyHit.enemyMembership = membership;
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
+        GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension
     }
     protected virtual void DamageDealer(Collider2D[] Hit)
     {
@@ -172,6 +173,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
             enemyHit.enemyMembership = membership;
             enemyHit.currentLife -= tempDmg;
             enemyHit.gotHit = true;
+            GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension
         }
         Debug.Log("boom");
     }

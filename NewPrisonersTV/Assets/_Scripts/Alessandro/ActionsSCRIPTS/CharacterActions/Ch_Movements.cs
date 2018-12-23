@@ -16,14 +16,14 @@ namespace Character.Actions
         public void Move(CharacterStateController controller)
         {
             // Move inputs
-            float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
+            controller.m_CharacterController.moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
 
             // Movements
-            if (moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2
+            if (controller.m_CharacterController.moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2
             {
                     controller.m_CharacterController.rb.velocity = new Vector2(controller.m_CharacterController.m_CharStats.speed, controller.m_CharacterController.rb.velocity.y);
             }
-            else if (moveInput <= -controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash) // Move left if "x" axis is lower -0.2
+            else if (controller.m_CharacterController.moveInput <= -controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash) // Move left if "x" axis is lower -0.2
             {
                     controller.m_CharacterController.rb.velocity = new Vector2(-controller.m_CharacterController.m_CharStats.speed, controller.m_CharacterController.rb.velocity.y);
             }
@@ -33,9 +33,9 @@ namespace Character.Actions
             }
 
             // Flip the player direction
-            if (!controller.m_CharacterController.facingRight && moveInput < 0)
+            if (!controller.m_CharacterController.facingRight && controller.m_CharacterController.moveInput < 0)
                 controller.m_CharacterController.PlayerFlip();
-            else if (controller.m_CharacterController.facingRight && moveInput > 0)
+            else if (controller.m_CharacterController.facingRight && controller.m_CharacterController.moveInput > 0)
                 controller.m_CharacterController.PlayerFlip();           
         }
     }

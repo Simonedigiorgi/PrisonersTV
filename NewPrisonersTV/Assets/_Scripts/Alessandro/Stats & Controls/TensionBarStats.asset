@@ -30,18 +30,30 @@ MonoBehaviour:
     barThreshold: 1
     type: 2
     newList: {fileID: 11400000, guid: ecd52db5e65ff934c99a84cdbe43840f, type: 2}
+    lowGradeRate: 0.33
+    midGradeRate: 0.33
+    specialGradeRate: 0.33
   - isActive: 0
     barLevel: 1
     barThreshold: 2
     type: 1
     newList: {fileID: 0}
+    lowGradeRate: 0
+    midGradeRate: 0
+    specialGradeRate: 0
   - isActive: 0
     barLevel: 2
     barThreshold: 1
     type: 2
     newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}
+    lowGradeRate: 0.33
+    midGradeRate: 0.33
+    specialGradeRate: 0.33
   - isActive: 0
     barLevel: 2
     barThreshold: 2
     type: 1
     newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}
+    lowGradeRate: 0
+    midGradeRate: 0
+    specialGradeRate: 0

@@ -20,6 +20,7 @@ namespace Character.Actions
             {
                 controller.m_CharacterController.extraJumps--;
                 controller.m_CharacterController.rb.velocity = Vector2.up * controller.m_CharacterController.m_CharStats.jump;
+                GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
             }
             
         }

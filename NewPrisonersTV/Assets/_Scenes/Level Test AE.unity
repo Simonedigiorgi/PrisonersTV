@@ -878,7 +878,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnLevel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
@@ -1710,7 +1710,7 @@ Prefab:
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}
       propertyPath: spawnLevel
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114299606768539254, guid: 110708e11db94b042982c161a9d17616,
         type: 2}

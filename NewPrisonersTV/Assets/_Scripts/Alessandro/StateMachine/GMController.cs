@@ -52,7 +52,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level, if false pause the game, skips updates and sets the players to inactive
     [HideInInspector] public bool inGame = false;                            // true when in a level scene, enables the state change to the currentState
 
-    [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene
+    [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene  
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup ---------------------------------------
@@ -61,8 +61,8 @@ public class GMController : MonoBehaviour
     [HideInInspector] public UIManager3D UI;
     [HideInInspector] public BonusWeapon bonusWeapon;
     [HideInInspector] public WeaponSpawn[] weaponSpawns;
-    [HideInInspector] public int currentTensionLevel = 0;
-    [HideInInspector] public int currentTensionMulti = 1;
+    public int currentTensionLevel = 0;
+    public int currentTensionMulti = 1;
     [HideInInspector] public int currentTensionMax;
     [HideInInspector] public int tensionThreshold;
     [HideInInspector] public TensionBonus[] tensionBonus;
@@ -275,9 +275,21 @@ public class GMController : MonoBehaviour
     {
         levelCount++;
     }
-
-    public void TensionThresholdCheck()
+    public void LowerTensionCheck(int newTension)
     {
+        //detract points from tension
+        currentTensionLevel -= newTension;
+        if (currentTensionLevel < 0 && instance.currentTensionMulti > 1)
+        {
+            currentTensionMulti--;
+            currentTensionLevel = currentTensionMax;
+        }
+        else if (currentTensionLevel < 0)
+            currentTensionLevel = 0;
+    }
+    public void TensionThresholdCheck(int newTension)
+    {   // add tension points to current level
+        currentTensionLevel += newTension;
         for (int i = 1; i <= tensionStats.barDivision; i++)
         {   //calculate various threshold steps
             int currentThreshold = tensionThreshold * i;
@@ -323,6 +335,9 @@ public class GMController : MonoBehaviour
             for (int i = 0; i < weaponSpawns.Length; i++)
             {
                 weaponSpawns[i].weaponList = tensionBonus[index].newList;
+                weaponSpawns[i].NewRates(tensionBonus[index].lowGradeRate, tensionBonus[index].midGradeRate, tensionBonus[index].specialGradeRate);
+                weaponSpawns[i].Sliderproportion();
+                weaponSpawns[i].ReorderRates();
             }
             tensionBonus[index].isActive = true;
         }

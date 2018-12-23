@@ -116,6 +116,7 @@ public class EnemyBulletParticle : MonoBehaviour
         if (playerHit.currentLife <= 0)
             playerHit.currentLife = 0;
         GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
+        GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension
     }
 
     protected virtual void Update()

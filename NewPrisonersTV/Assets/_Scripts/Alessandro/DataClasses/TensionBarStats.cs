@@ -29,7 +29,7 @@ public class TensionBarStats : ScriptableObject
     [BoxGroup("Decrements")] [Tooltip("points taken when player get hit")]
     public int playerHitPoints;
     [BoxGroup("Decrements")] [Tooltip("points taken when player dies")]
-    public int playerDeathPoints;
+    public int playerDeathPoints; 
 
     [BoxGroup("Threshold Bonuses")]
     [TableMatrix(DrawElementMethod = "DrawBonusClass", ResizableColumns = false, RowHeight = 30)]

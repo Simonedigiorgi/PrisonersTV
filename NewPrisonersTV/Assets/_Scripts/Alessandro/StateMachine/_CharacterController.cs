@@ -40,6 +40,10 @@ namespace Character
 
         [HideInInspector] public bool canExit = false;                                              // if true ends the level
         [HideInInspector] public bool canGetReward = false;                                         // true if the player already choose the reward
+
+        [HideInInspector] public float moveInput;                                                   // records the movement magnitude;
+        [HideInInspector] public float tensionUpTimer;                                              // when it reaches 0 will add movement points to tension
+        [HideInInspector] public float tensionDownTimer;                                            // when it reaches 0 will sub movement points to tension
         //---------------------------------------------------------------------------------------
         void Awake()
         {
@@ -47,6 +51,8 @@ namespace Character
             currentLife = m_CharStats.life;
             isAlive = true;
             animSpeed = playerAnim.speed;
+            tensionUpTimer = GMController.instance.tensionStats.movementTimer;
+            tensionDownTimer = GMController.instance.tensionStats.standStillTimer;
         }
 
         private void Update()
@@ -76,7 +82,8 @@ namespace Character
                         weapon.hand = playerRightArm.transform.GetChild(0).gameObject; 
 
                         weapon.weaponMembership = playerNumber;
-                        weapon.GrabAndDestroy(this); 
+                        weapon.GrabAndDestroy(this);
+                        GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
                     }
                 }
                 if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
@@ -135,15 +142,7 @@ namespace Character
             // transform.position = new Vector2(0, 0);
 
             DestroyCurrentWeapon();
-            //detract points from tension
-            GMController.instance.currentTensionLevel -= GMController.instance.tensionStats.playerDeathPoints;
-            if (GMController.instance.currentTensionLevel < 0 && GMController.instance.currentTensionMulti > 1)
-            {
-                GMController.instance.currentTensionMulti--;
-                GMController.instance.currentTensionLevel = GMController.instance.currentTensionMax;
-            }
-            else
-                GMController.instance.currentTensionLevel = 0;
+            GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerDeathPoints);// sub tension
             //reset score
             GMController.instance.playerInfo[playerNumber].score = 0; // reset score
             GMController.instance.UI.UpdateScoreUI(playerNumber); // update score on UI

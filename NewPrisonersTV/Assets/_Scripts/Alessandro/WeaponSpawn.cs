@@ -17,13 +17,13 @@ public class WeaponSpawnRate
 public class WeaponSpawn : MonoBehaviour
 {
     public float spawnTimer;
-    public bool totalRandom;
+    public bool totalRandom;                // if true will ignore all rates
     [Range(0, 1)] public float lowGradeRate;
     [Range(0, 1)] public float midGradeRate;
     [Range(0, 1)] public float specialGradeRate;
     public WeaponList weaponList;
 
-    private Weapon3D currentWeapon;
+    private Weapon3D currentWeapon;         // last weapon spawned from here
     private Animator anim;
     private float timer;
     private bool spawnDone = true;          // used to know if the spawn CR is completed
@@ -37,13 +37,24 @@ public class WeaponSpawn : MonoBehaviour
     { 
         anim = GetComponent<Animator>();
         ResetTimer();
+        Sliderproportion();
+        ReorderRates();
+    }
 
+    public void NewRates(float low, float mid, float special)
+    {
+        lowGradeRate = low;
+        midGradeRate = mid;
+        specialGradeRate = special;
+    }
+    public void Sliderproportion()
+    {
         if (lowGradeRate > 0)
             divide++;
         if (midGradeRate > 0)
             divide++;
-        if (specialGradeRate > 0)        
-            divide++;      
+        if (specialGradeRate > 0)
+            divide++;
 
         // fix slider proportions 
         float sum = lowGradeRate + midGradeRate + specialGradeRate;
@@ -51,26 +62,29 @@ public class WeaponSpawn : MonoBehaviour
         {
             float difference = sum - 1;
 
-            if(lowGradeRate > 0)
+            if (lowGradeRate > 0)
                 lowGradeRate -= difference / divide;
-            if(midGradeRate > 0)
+            if (midGradeRate > 0)
                 midGradeRate -= difference / divide;
-            if(specialGradeRate > 0)
+            if (specialGradeRate > 0)
                 specialGradeRate -= difference / divide;
         }
-        else if(sum < 1)
+        else if (sum < 1)
         {
             float difference = 1 - sum;
 
-            if(lowGradeRate > 0)
+            if (lowGradeRate > 0)
                 lowGradeRate += difference / divide;
-            if(midGradeRate > 0) 
+            if (midGradeRate > 0)
                 midGradeRate += difference / divide;
-            if(specialGradeRate > 0)
+            if (specialGradeRate > 0)
                 specialGradeRate += difference / divide;
         }
+    }
+    public void ReorderRates()
+    {
         // find bigger, medium and lower rates between the sliders
-        float bigger = Mathf.Max(lowGradeRate,midGradeRate,specialGradeRate);
+        float bigger = Mathf.Max(lowGradeRate, midGradeRate, specialGradeRate);
 
         if (bigger == lowGradeRate)
         {
@@ -84,7 +98,7 @@ public class WeaponSpawn : MonoBehaviour
             {
                 mediumRate = new WeaponSpawnRate(specialGradeRate, weaponList.Special);
                 lowerRate = new WeaponSpawnRate(midGradeRate, weaponList.MidGrade);
-            }           
+            }
         }
         else if (bigger == midGradeRate)
         {
@@ -115,7 +129,6 @@ public class WeaponSpawn : MonoBehaviour
             }
         }
     }
-
 
     void Update()
     {

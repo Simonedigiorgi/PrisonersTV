@@ -24,7 +24,8 @@ public class EnemyNinja : _EnemyController
 
         GMController.instance.playerInfo[enemyMembership].score += m_EnemyStats.points; // add points to player
         GMController.instance.UI.UpdateScoreUI(enemyMembership);//Update score on UI
-        if(GMController.instance.GetNinjaCount() == GMController.instance.maxNinja)  // if the ninja count is at max then restart the timer of all spawns to give some time between the kill and the new spawn
+        GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyKillPoints);// add tension
+        if (GMController.instance.GetNinjaCount() == GMController.instance.maxNinja)  // if the ninja count is at max then restart the timer of all spawns to give some time between the kill and the new spawn
         {
             for (int i = 0; i < GMController.instance.enemySpawns.Length; i++)
             {
