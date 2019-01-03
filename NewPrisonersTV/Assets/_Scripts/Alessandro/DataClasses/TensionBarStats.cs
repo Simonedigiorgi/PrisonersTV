@@ -6,10 +6,11 @@ using Sirenix.OdinInspector;
 [CreateAssetMenu(menuName = "Prototype/TensionBarStats")]
 public class TensionBarStats : ScriptableObject
 {
-    public int maxBarLevel;
+    public int maxBarMulti;  
     public int standardBarCapacity;
     public float multiXPlayer;
-    public int barDivision = 1;  
+    public int barDivision = 1;
+    public int[] scoreMultiXLevel;
 
     [BoxGroup("Increments")] [Tooltip("timer for movementPoints")]
     public float movementTimer;

@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class UIManager3D : MonoBehaviour
 {
+    public Transform tensionBarUI;
     public Transform objective;
     public Text objectiveText;
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
@@ -24,16 +25,20 @@ public class UIManager3D : MonoBehaviour
     Text[] hammo;                                                                                   //UI player hammo text
     Text[] score;
     Text[] playerContinue;
+    Text tensionMultiUI;
+    RectTransform tensionLevelUI;
+    float tensionLevelLenght;
     SpriteRenderer[] lifeBar;                                                                       //the lifeBar on player
     StandaloneInputModule inputModule;
     Camera mainCamera;
-     
+  
     void Start ()
     {
         mainCamera = Camera.main;
 
         if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
         {
+            tensionBarUI.gameObject.SetActive(true);
             //actualWeapon = new Weapon3D[GMController.instance.GetPlayerNum()];
             playerHand = new GameObject[GMController.instance.GetPlayerNum()];
             hammo = new Text[GMController.instance.GetPlayerNum()];
@@ -41,7 +46,11 @@ public class UIManager3D : MonoBehaviour
             playerContinue = new Text[GMController.instance.GetPlayerNum()];
             lifeBar = new SpriteRenderer[GMController.instance.GetPlayerNum()];
             inputModule = eventSystem.GetComponent<StandaloneInputModule>();
-
+            // set the tension bar
+            tensionMultiUI = tensionBarUI.GetChild(1).GetChild(0).GetComponent<Text>();
+            tensionLevelUI = tensionBarUI.GetChild(0).GetComponent<RectTransform>();
+            tensionLevelLenght = tensionLevelUI.rect.width;
+            tensionLevelUI.sizeDelta = new Vector2(0, tensionLevelUI.rect.height);
             //Get the components and sets/enables UI for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
@@ -104,7 +113,7 @@ public class UIManager3D : MonoBehaviour
     {
         // percentage of current life 
         float percentageOfLife = GMController.instance.playerInfo[player].playerController.currentLife * 100 / GMController.instance.playerInfo[player].playerController.m_CharStats.life;
-        //Rescale and Recolor life bar
+        //Recolor life bar
         if (percentageOfLife > 75)
         {
             lifeBar[player].color = Color.green;
@@ -123,6 +132,18 @@ public class UIManager3D : MonoBehaviour
         }
         // change the lifebar proportions to match the life %
         lifeBar[player].transform.localScale = new Vector3((percentageOfLife / 100 * 15), 2.5f, 0);
+    }
+    public void UpdateTensionBar()
+    {
+        float percentageOfTension = GMController.instance.currentTensionLevel * 100 / GMController.instance.currentTensionMax;
+        if (tensionLevelUI.rect.width <= tensionLevelLenght) 
+            tensionLevelUI.sizeDelta = new Vector2((percentageOfTension / 100 * tensionLevelLenght), tensionLevelUI.rect.height);
+        if(tensionLevelUI.rect.width > tensionLevelLenght)
+            tensionLevelUI.sizeDelta = new Vector2(tensionLevelLenght, tensionLevelUI.rect.height);
+    }
+    public void UpdateTensionMulti()
+    {
+        tensionMultiUI.text = GMController.instance.currentTensionMulti +"x";
     }
     public void SetContinueText(int player)
     {

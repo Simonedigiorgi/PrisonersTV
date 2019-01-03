@@ -92,7 +92,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         }
         if (tempDmg < 0)
             tempDmg = 0;
-        Debug.Log(tempDmg + "  " + enemyHit.currentLife);
+        //Debug.Log(tempDmg + "  " + enemyHit.currentLife);
     }
 
     protected void CheckBulletLife(RaycastHit2D hit, int i)

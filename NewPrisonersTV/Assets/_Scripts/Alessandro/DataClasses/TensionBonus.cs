@@ -3,8 +3,8 @@ using Sirenix.OdinInspector;
 [System.Serializable]
 public class TensionBonus
 {
-    [HideInInspector] public bool isActive;
-    public int barLevel;
+    [HideInInspector] public bool isActive; 
+    public int barMulti;
     public int barThreshold;
     public BONUSTYPE type;
 
@@ -23,15 +23,30 @@ public class TensionBonus
     public TensionBonus()
     {
         isActive = false;
-        barLevel = 1;
+        barMulti = 1;
         barThreshold = 1;
         type = BONUSTYPE.None; 
     }
     public TensionBonus(int level, int threshold, BONUSTYPE bonus)
     {
         isActive = false;
-        barLevel = level;
+        barMulti = level;
         barThreshold = threshold; 
         type = bonus;
+    }
+    public TensionBonus(TensionBonus t)
+    {
+        isActive = false;
+        barMulti = t.barMulti;
+        barThreshold = t.barThreshold;
+        type = t.type;
+
+        if(t.type == BONUSTYPE.NewWeapons)
+        {
+            newList = t.newList;
+            lowGradeRate = t.lowGradeRate;
+            midGradeRate = t.midGradeRate;
+            specialGradeRate = t.specialGradeRate;
+        }
     }
 }

@@ -11,10 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f547a51df6dae4b926b1242daa3915, type: 3}
   m_Name: TensionBarStats
   m_EditorClassIdentifier: 
-  maxBarLevel: 2
+  maxBarMulti: 2
   standardBarCapacity: 100
   multiXPlayer: 0.5
   barDivision: 2
+  scoreMultiXLevel: 0100000002000000
   movementTimer: 1
   movementPoints: 1
   actionsPoints: 1
@@ -26,7 +27,7 @@ MonoBehaviour:
   playerDeathPoints: 20
   bonus:
   - isActive: 0
-    barLevel: 1
+    barMulti: 1
     barThreshold: 1
     type: 2
     newList: {fileID: 11400000, guid: ecd52db5e65ff934c99a84cdbe43840f, type: 2}
@@ -34,7 +35,7 @@ MonoBehaviour:
     midGradeRate: 0.33
     specialGradeRate: 0.33
   - isActive: 0
-    barLevel: 1
+    barMulti: 1
     barThreshold: 2
     type: 1
     newList: {fileID: 0}
@@ -42,7 +43,7 @@ MonoBehaviour:
     midGradeRate: 0
     specialGradeRate: 0
   - isActive: 0
-    barLevel: 2
+    barMulti: 2
     barThreshold: 1
     type: 2
     newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}
@@ -50,7 +51,7 @@ MonoBehaviour:
     midGradeRate: 0.33
     specialGradeRate: 0.33
   - isActive: 0
-    barLevel: 2
+    barMulti: 2
     barThreshold: 2
     type: 1
     newList: {fileID: 11400000, guid: 38f55daecaa179b42ae86353ffa1d72a, type: 2}

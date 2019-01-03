@@ -56,16 +56,16 @@ public class GMController : MonoBehaviour
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup ---------------------------------------
-    [HideInInspector] public bool playerSetupDone = false;
+    [HideInInspector] public bool playerSetupDone = false; 
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public UIManager3D UI;
     [HideInInspector] public BonusWeapon bonusWeapon;
-    [HideInInspector] public WeaponSpawn[] weaponSpawns;
-    public int currentTensionLevel = 0;
-    public int currentTensionMulti = 1;
-    [HideInInspector] public int currentTensionMax;
-    [HideInInspector] public int tensionThreshold;
-    [HideInInspector] public TensionBonus[] tensionBonus;
+    [HideInInspector] public WeaponSpawn[] weaponSpawns;                      // list of weapon spawns
+    [HideInInspector] public int currentTensionLevel = 0;                     // tension bar fill level
+    [HideInInspector] public int currentTensionMulti = 1;                     // tension bar multiplier
+    [HideInInspector] public int currentTensionMax;                           // max tension bar capacity
+    [HideInInspector] public int tensionThreshold;                            // number of segments in the bar
+    [HideInInspector] public TensionBonus[] tensionBonus;                     // list of bonus to apply at each threshold
     //------------------------------------------------------------------
     #region ENEMIES/SPAWNS INFO
     [HideInInspector] public int maxEnemy; 
@@ -138,7 +138,7 @@ public class GMController : MonoBehaviour
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
             bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
-            DecrescentScoreOrder = new int[playerRequired];
+            DecrescentScoreOrder = new int[playerRequired]; 
             playerInfo = new PlayerInfo[playerRequired];
 
             //spawn players and add them to the current playerInfo list, collect spawn and enemy info
@@ -275,21 +275,38 @@ public class GMController : MonoBehaviour
     {
         levelCount++;
     }
+
     public void LowerTensionCheck(int newTension)
     {
+        int tensionDifference = 0;
         //detract points from tension
-        currentTensionLevel -= newTension;
-        if (currentTensionLevel < 0 && instance.currentTensionMulti > 1)
+        if ((currentTensionLevel - newTension) >= 0)
+            currentTensionLevel -= newTension;
+        else if (instance.currentTensionMulti > 1)
         {
             currentTensionMulti--;
-            currentTensionLevel = currentTensionMax;
+            tensionDifference = currentTensionLevel - newTension;
+            currentTensionLevel = currentTensionMax + tensionDifference;
+            Debug.Log("tension diff  " + tensionDifference + " tenLevel  "+ currentTensionLevel ); 
+            UI.UpdateTensionMulti(); 
         }
         else if (currentTensionLevel < 0)
-            currentTensionLevel = 0;
+            currentTensionLevel = 0; 
+        UI.UpdateTensionBar();
     }
     public void TensionThresholdCheck(int newTension)
-    {   // add tension points to current level
-        currentTensionLevel += newTension;
+    {   
+        // used to temporary store the extra points when the bar is full
+        int tensionDifference = 0;
+        // add tension points to current level
+        if((currentTensionLevel + newTension) > currentTensionMax)
+        {
+            tensionDifference = (currentTensionLevel + newTension) - currentTensionMax;
+            currentTensionLevel = currentTensionMax; 
+        }
+        else
+            currentTensionLevel += newTension;
+
         for (int i = 1; i <= tensionStats.barDivision; i++)
         {   //calculate various threshold steps
             int currentThreshold = tensionThreshold * i;
@@ -298,29 +315,35 @@ public class GMController : MonoBehaviour
                 currentThreshold = currentTensionMax;           
             //if the tension level is equal/superior the currentThreshold then activate bonus
             if (currentTensionLevel >= currentThreshold)
-            { 
+            {
                 //activate bonus
                 for (int y = 0; y < tensionBonus.Length; y++)
                 {   // if the bonus is not already active and the tension and the threshold are right
-                    if (!tensionBonus[y].isActive && currentTensionMulti == tensionBonus[y].barLevel && tensionBonus[y].barThreshold == i)
+                    if (!tensionBonus[y].isActive && currentTensionMulti == tensionBonus[y].barMulti && tensionBonus[y].barThreshold == i)
                     {
                         TensionThresholdBonuses(y);
                     }
                 }
-                // if the bar is full then increase the multiplier and reset the currentTensionLevel
-                if (currentTensionLevel >= currentTensionMax)
-                {
-                    if (currentTensionMulti < tensionStats.maxBarLevel)
-                    {
-                        currentTensionMulti++;
-                        currentTensionLevel = 0;
-                    }
-                }
             }
         }
+        currentTensionLevel += tensionDifference;
+        // if the bar is full then increase the multiplier and add the difference to the currentTensionLevel
+        if (currentTensionLevel >= currentTensionMax)
+        {
+            if (currentTensionMulti < tensionStats.maxBarMulti)
+            {
+                currentTensionMulti++;
+                tensionDifference = currentTensionLevel - currentTensionMax;
+                currentTensionLevel = tensionDifference;
+                UI.UpdateTensionMulti();
+            }
+            else 
+                currentTensionLevel = currentTensionMax;   
+        }
+        UI.UpdateTensionBar();   
     }
     private void TensionThresholdBonuses(int index)
-    {
+    {   // give the bonus based on the type
         if (tensionBonus[index].type == BONUSTYPE.EnemyLevel)
         {
             for (int i = 0; i < enemySpawns.Length; i++)
@@ -345,7 +368,10 @@ public class GMController : MonoBehaviour
     private void TensionBonusSetup()
     {   
         tensionBonus = new TensionBonus[tensionStats.bonus.Length];        
-        System.Array.Copy(tensionStats.bonus, tensionBonus, tensionStats.bonus.Length);                    
+        for (int i = 0; i < tensionBonus.Length; i++)
+        {
+            tensionBonus[i] = new TensionBonus(tensionStats.bonus[i]);   
+        }
     }
     //------------------------------------------------------------------
     public void SetActive(bool state)

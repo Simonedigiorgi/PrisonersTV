@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDown: 5
   price: 10
-  healAmount: 1
+  healAmountPercentage: 1
 --- !u!212 &212339240196671692
 SpriteRenderer:
   m_ObjectHideFlags: 1
