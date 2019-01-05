@@ -10,6 +10,7 @@ public class Weapon3D : MonoBehaviour
 {
     public Animator anim;
     public Image weaponIcon;
+    public MeshRenderer mesh;
 
     protected AudioSource source;                                                                               // Get the Audiosource component
     protected BoxCollider2D coll;
@@ -35,8 +36,8 @@ public class Weapon3D : MonoBehaviour
     [BoxGroup("Behaviour")] public bool leaveDecal;
     [BoxGroup("Behaviour")] public bool canPerforate;
     [BoxGroup("Behaviour")] public bool canBounce;
+    [BoxGroup("Behaviour")] public bool autoFire;                                                          // Has autofire     
 
-    [BoxGroup("Kind of weapon")] public bool autoFire;                                                          // Has autofire     
 
     [BoxGroup("Sounds")] public AudioClip shootSound;                                                           // Shoot sound
     [BoxGroup("Sounds")] [Range(0.1f, 1f)] public float shootVolume;                                            // Shoot volume
@@ -63,11 +64,11 @@ public class Weapon3D : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         source = GetComponent<AudioSource>();
         coll = transform.GetChild(0).GetComponent<BoxCollider2D>();
-        collTrigger = GetComponent<BoxCollider2D>();        
+        collTrigger = GetComponent<BoxCollider2D>();
     }
 
     // Shoot method
-    public virtual void Shoot(GameObject spawnPoint)
+    public virtual void Shoot(GameObject spawnPoint) 
     {
         if (perfBullet == BULLETTYPE.None) // if the perf bullet tag is none force the perforation option to false
             canPerforate = false;
@@ -100,6 +101,8 @@ public class Weapon3D : MonoBehaviour
             // Set autofire to false to avoid the annoying sound loop
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
+            // destroy this weapon and eneable the base one
+            GMController.instance.playerInfo[weaponMembership].playerController.EnableBaseWeapon();
         }
     }
 

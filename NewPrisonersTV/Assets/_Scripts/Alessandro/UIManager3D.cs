@@ -82,8 +82,11 @@ public class UIManager3D : MonoBehaviour
                 }
                 else if(playerHand[i].transform.childCount > 0)
                 {
-                    hammo[i].gameObject.SetActive(true);              
-                    hammo[i].text = GMController.instance.playerInfo[i].playerController.currentWeapon.bullets.ToString();
+                    hammo[i].gameObject.SetActive(true);  
+                    if (GMController.instance.playerInfo[i].playerController.currentWeapon != null)
+                        hammo[i].text = GMController.instance.playerInfo[i].playerController.currentWeapon.bullets.ToString();
+                    else
+                        hammo[i].text = "∞"; 
                 }
                 //set hammo text position
                 hammo[i].transform.position = mainCamera.WorldToScreenPoint(GMController.instance.playerInfo[i].player.transform.position);

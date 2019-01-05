@@ -385,10 +385,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   weaponIcon: {fileID: 114016769918838440}
+  mesh: {fileID: 23195096467662238}
   bullet: {fileID: 114883193646130596}
   perfBullet: 0
   fireRate: 0.3
-  bullets: 500
+  bullets: 20
   bulletsIfReward: 25
   numberOfHits: 5
   rayLenght: 1

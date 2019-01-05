@@ -14,7 +14,6 @@ MonoBehaviour:
   LowGrade:
   - {fileID: 114657363032142488, guid: 69d90ceac7d0fe941916455a7fdb60ab, type: 2}
   - {fileID: 114362995058347940, guid: b8d95ea0c298f9247bf7be4c1b589cd9, type: 2}
-  - {fileID: 114107782104601910, guid: 39ae3874f362cf84d9c9074a151e8580, type: 2}
   - {fileID: 114107782104601910, guid: 72899832f6fccfd4cbfe826cd8a6b340, type: 2}
   MidGrade:
   - {fileID: 114107782104601910, guid: 915d58d0b4b56984ab5cb8a8629c10f3, type: 2}

@@ -15,14 +15,19 @@ namespace Character.Actions
 
         public void Shoot(CharacterStateController controller)
         {
-            // IF YOU GOT THE WEAPON
+            // IF YOU GOT A NEW WEAPON
             if (controller.m_CharacterController.currentWeapon != null)
             {          
-                controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerRightArm);       
+                controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerRightArm, true);       
             }
             else
-            { // Disable arm layer 
-                controller.m_CharacterController.playerAnim.SetLayerWeight(1, 0);
+            {   
+                // Disable arm layer 
+                //controller.m_CharacterController.playerAnim.SetLayerWeight(1, 0);
+
+                //Use the BaseWeapon
+                controller.m_CharacterController.WeaponControl(controller.m_CharacterController.playerRightArm, false);
+
             }                  
         }
     }

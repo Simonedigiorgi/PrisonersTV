@@ -9,11 +9,10 @@ namespace Character
     {
 
         [BoxGroup("Animator")] public Animator playerAnim;                                          // Get the Player Animators
-
+        [BoxGroup("Components")] public Weapon3D baseWeapon;
         [BoxGroup("Components")] public GameObject playerRightArm;                                  // Player's arm
         [BoxGroup("Components")] public GameObject playerLeftArm;                                   // Player's arm
         [BoxGroup("Components")] public Transform TargetForEnemies;                                 // target for enemy sight and attacks
-        [BoxGroup("Components")] public Weapon3D currentWeapon;
         [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;
         [BoxGroup("Components")] public CharacterStats m_CharStats;
@@ -22,6 +21,7 @@ namespace Character
         [BoxGroup("Rules")] public float respawnTime;
         //---------------------------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;                                                    // Rigidbody component
+        [HideInInspector] public Weapon3D currentWeapon;
 
         [HideInInspector] public bool facingRight;                                                  // Player flip facing
         [HideInInspector] public bool isInDash;                                                     // Check if the player is in dash
@@ -61,7 +61,7 @@ namespace Character
             {
                 if (startDeathCR)
                 {
-                    StartCoroutine(Death());
+                    StartCoroutine(Death()); 
                 }
             }
         }
@@ -123,6 +123,7 @@ namespace Character
                 transform.position = spawnPoint.position;
                 isAlive = true;
                 currentLife = m_CharStats.life;
+                EnableBaseWeapon();
                 GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
                 GMController.instance.UI.SetContinueText(playerNumber); // set continue text if needed
                 canRespawn = false;
@@ -160,12 +161,29 @@ namespace Character
                     hasKey = false;
                     GMController.instance.canSpawnKey = true;
                     GMController.instance.SlowdownSpawns();
-                }                 
-                Destroy(first);
-                currentWeapon = null;
+                }
+
+                if (first == baseWeapon.gameObject)  
+                {
+                    //hide the base weapon instead of destroying it
+                    baseWeapon.transform.parent = null;
+                    baseWeapon.mesh.enabled = false;
+                }
+                else
+                {
+                    Destroy(first); 
+                    currentWeapon = null; 
+                }
             }
         }
-
+        public void EnableBaseWeapon()
+        {
+            if(currentWeapon!= null)
+                Destroy(currentWeapon.gameObject);
+            baseWeapon.transform.parent = playerRightArm.transform.GetChild(0).transform;
+            baseWeapon.transform.position = baseWeapon.transform.parent.position;
+            baseWeapon.mesh.enabled = true;
+        }
         public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)
         {
             Vector3 position = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);           
@@ -179,7 +197,10 @@ namespace Character
             Transform armObject;
             if (arm.transform.GetChild(0).GetChild(0).GetChild(2) != null)
             {
-                armObject = arm.transform.GetChild(0).GetChild(0).GetChild(2);
+                if(currentWeapon != null)
+                    armObject = arm.transform.GetChild(0).GetChild(0).GetChild(2);
+                else
+                    armObject = arm.transform.GetChild(0).GetChild(0).GetChild(1);
                 armObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             }
         }
@@ -228,13 +249,20 @@ namespace Character
                 playerRightArm.transform.GetChild(0).GetChild(0).transform.position = playerRightArm.transform.GetChild(0).transform.position;
             }
         }
+        public void CallShoot(GameObject arm, Weapon3D weapon)
+        {
+            // decide if it has to shoot from base weapon or not
+            weapon.Shoot(arm.transform.GetChild(1).gameObject);
 
-        public void WeaponControl(GameObject arm)
+            //CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+            //shake.ShakeCamera(1.2f, .2f);
+        }
+        public void WeaponControl(GameObject arm, bool hasWeapon)
         {
             // Set arm layer active
             playerAnim.SetLayerWeight(1, 1);
             // Enable The rotation of joystick
-            if (m_ControlConfig.moveArmWithRightStick)
+            if (m_ControlConfig.moveArmWithRightStick)  
             {
                 JoyRotation(m_ControlConfig.RightHorizontal, m_ControlConfig.RightVertical);
             }
@@ -242,34 +270,36 @@ namespace Character
             {
                 JoyRotation(m_ControlConfig.LeftHorizontal, m_ControlConfig.LeftVertical);
             }
-
-            // Shoot condition
-            if (currentWeapon.autoFire == false)
+            
+            if (hasWeapon)
             {
-                if (Input.GetButtonDown(m_ControlConfig.shootInput.ToString()) && currentWeapon.isGrabbed)
-                {
-                    currentWeapon.Shoot(arm.transform.GetChild(1).gameObject);
+                // Shoot condition equipped weapon
+                if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.shootInput.ToString()))
+                    CallShoot(arm, currentWeapon);
+                if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.shootInput.ToString()))
+                    CallShoot(arm, currentWeapon);
 
-                    CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-                    //shake.ShakeCamera(1.2f, .2f);
-                }
+                // Flip the weapon when equipped
+                if (facingRight && currentWeapon.isGrabbed)
+                    currentWeapon.transform.localEulerAngles = new Vector3(180, 0, 0);
+                else if (facingRight == false && currentWeapon.isGrabbed)
+                    currentWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
-            if (currentWeapon.autoFire)
-            {
-                if (Input.GetButton(m_ControlConfig.shootInput.ToString()) && currentWeapon.isGrabbed)
-                {
-                    currentWeapon.Shoot(arm.transform.GetChild(1).gameObject);
+            else
+            { 
+                // Shoot condition base weapon
+                if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.shootInput.ToString()))
+                    CallShoot(arm, baseWeapon);
+                else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.shootInput.ToString()))
+                    CallShoot(arm, baseWeapon);  
 
-                    CameraShake shake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-                    //shake.ShakeCamera(1.2f, .2f);
-                }
+                // Flip the weapon when equipped
+                if (facingRight)
+                    baseWeapon.transform.localEulerAngles = new Vector3(180, 0, 0);
+                else if (facingRight == false)
+                    baseWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
 
-            // Flip the weapon when equipped
-            if (facingRight && currentWeapon.isGrabbed)
-                currentWeapon.transform.localEulerAngles = new Vector3(180, 0, 0);
-            else if (facingRight == false && currentWeapon.isGrabbed)
-                currentWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
 
             // Rotation of Muzz effect
             if (m_ControlConfig.moveArmWithRightStick)

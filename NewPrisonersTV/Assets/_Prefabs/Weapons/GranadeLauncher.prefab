@@ -437,10 +437,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 95567468272257914}
   weaponIcon: {fileID: 114295884658603818}
+  mesh: {fileID: 23192528706674536}
   bullet: {fileID: 114907904616063916}
   perfBullet: 0
   fireRate: 0.5
-  bullets: 500
+  bullets: 50
   bulletsIfReward: 25
   numberOfHits: 3
   rayLenght: 1
@@ -451,7 +452,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2304
   decalType: 0
-  maxDecals: 0
   damage: 50
   damageType: 0400000000000000
   leaveDecal: 0
@@ -470,6 +470,7 @@ MonoBehaviour:
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}
+  currentDecal: {fileID: 0}
 --- !u!114 &114295884658603818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -510,12 +511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Gun: {fileID: 198001733141761156}
   weapon: {fileID: 114123907714630554}
-  damageType: 
-  damage: 0
-  canBounce: 0
   membership: 0
-  decalPool: []
-  decalScale: {x: 0, y: 0, z: 0}
   explosionMask:
     serializedVersion: 2
     m_Bits: 2048

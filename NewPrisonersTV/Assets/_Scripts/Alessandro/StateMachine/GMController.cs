@@ -287,7 +287,7 @@ public class GMController : MonoBehaviour
             currentTensionMulti--;
             tensionDifference = currentTensionLevel - newTension;
             currentTensionLevel = currentTensionMax + tensionDifference;
-            Debug.Log("tension diff  " + tensionDifference + " tenLevel  "+ currentTensionLevel ); 
+           // Debug.Log("tension diff  " + tensionDifference + " tenLevel  "+ currentTensionLevel ); 
             UI.UpdateTensionMulti(); 
         }
         else if (currentTensionLevel < 0)

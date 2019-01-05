@@ -42,6 +42,8 @@ public class Shotgun3D : Weapon3D
             // Set autofire to false to avoid the annoying sound loop
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
+            // destroy this weapon and eneable the base one
+            GMController.instance.playerInfo[weaponMembership].playerController.EnableBaseWeapon();
         }
     }
 }
