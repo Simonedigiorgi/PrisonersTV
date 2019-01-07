@@ -275,7 +275,7 @@ public class GMController : MonoBehaviour
     {
         levelCount++;
     }
-
+      
     public void LowerTensionCheck(int newTension)
     {
         int tensionDifference = 0;
@@ -288,11 +288,12 @@ public class GMController : MonoBehaviour
             tensionDifference = currentTensionLevel - newTension;
             currentTensionLevel = currentTensionMax + tensionDifference;
            // Debug.Log("tension diff  " + tensionDifference + " tenLevel  "+ currentTensionLevel ); 
-            UI.UpdateTensionMulti(); 
+            UI.UpdateTensionMulti();// update UI
+            UI.ChangeAllThresholUIColor(); // update UI color
         }
         else if (currentTensionLevel < 0)
             currentTensionLevel = 0; 
-        UI.UpdateTensionBar();
+        UI.UpdateTensionBar(); // update UI
     }
     public void TensionThresholdCheck(int newTension)
     {   
@@ -322,7 +323,8 @@ public class GMController : MonoBehaviour
                     if (!tensionBonus[y].isActive && currentTensionMulti == tensionBonus[y].barMulti && tensionBonus[y].barThreshold == i)
                     {
                         TensionThresholdBonuses(y);
-                    }
+                        UI.ChangeThresholdUIColor(i-1);   // change the color of the UI element
+                    }                  
                 }
             }
         }
@@ -335,12 +337,13 @@ public class GMController : MonoBehaviour
                 currentTensionMulti++;
                 tensionDifference = currentTensionLevel - currentTensionMax;
                 currentTensionLevel = tensionDifference;
-                UI.UpdateTensionMulti();
+                UI.UpdateTensionMulti();// update UI
+                UI.ResetThresholdUIColor(); // update UI color
             }
             else 
                 currentTensionLevel = currentTensionMax;   
         }
-        UI.UpdateTensionBar();   
+        UI.UpdateTensionBar();   // update UI
     }
     private void TensionThresholdBonuses(int index)
     {   // give the bonus based on the type

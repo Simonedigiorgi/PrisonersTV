@@ -5,9 +5,23 @@ using UnityEngine.UI;
 using Character;
 using UnityEngine.EventSystems;
 
+public class TensionBarElement
+{
+    public Transform transform;
+    public Image image;
+    public bool[] isActive; //records if is active for each multiplier level of the bar 
+
+    public TensionBarElement(GameObject element)
+    {
+        transform = element.transform;
+        image = element.GetComponent<Image>();
+        isActive = new bool[GMController.instance.tensionStats.maxBarMulti];
+    }
+}
 public class UIManager3D : MonoBehaviour
 {
-    public Transform tensionBarUI;
+    public Transform tensionBarUI;         // reference to all the tension bar UI component
+    public Transform tensionThresholdsUI; // reference to threshold UI element
     public Transform objective;
     public Text objectiveText;
     [Tooltip("The horizontal distance of the UI hammo text to the player")] public float hammoHorizontalOffset;
@@ -28,6 +42,7 @@ public class UIManager3D : MonoBehaviour
     Text tensionMultiUI;
     RectTransform tensionLevelUI;
     float tensionLevelLenght;
+    TensionBarElement[] ThresholdUIList;
     SpriteRenderer[] lifeBar;                                                                       //the lifeBar on player
     StandaloneInputModule inputModule;
     Camera mainCamera;
@@ -39,6 +54,7 @@ public class UIManager3D : MonoBehaviour
         if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
         {
             tensionBarUI.gameObject.SetActive(true);
+            ThresholdUIList = new TensionBarElement[GMController.instance.tensionStats.barDivision];
             //actualWeapon = new Weapon3D[GMController.instance.GetPlayerNum()];
             playerHand = new GameObject[GMController.instance.GetPlayerNum()];
             hammo = new Text[GMController.instance.GetPlayerNum()];
@@ -49,8 +65,9 @@ public class UIManager3D : MonoBehaviour
             // set the tension bar
             tensionMultiUI = tensionBarUI.GetChild(1).GetChild(0).GetComponent<Text>();
             tensionLevelUI = tensionBarUI.GetChild(0).GetComponent<RectTransform>();
-            tensionLevelLenght = tensionLevelUI.rect.width;
-            tensionLevelUI.sizeDelta = new Vector2(0, tensionLevelUI.rect.height);
+            tensionLevelLenght = tensionLevelUI.rect.width;  // record the initial bar lenght
+            tensionLevelUI.sizeDelta = new Vector2(0, tensionLevelUI.rect.height);// resize the bar to look empty
+            SetBarThresholds(); // create and set to position the thresholds UI
             //Get the components and sets/enables UI for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
@@ -107,7 +124,7 @@ public class UIManager3D : MonoBehaviour
         }
   
     }
-
+     
     public void UpdateScoreUI(int player)
     {
         score[player].text = "P" + (player + 1) + " Score: " + GMController.instance.playerInfo[player].score.ToString();
@@ -136,18 +153,6 @@ public class UIManager3D : MonoBehaviour
         // change the lifebar proportions to match the life %
         lifeBar[player].transform.localScale = new Vector3((percentageOfLife / 100 * 15), 2.5f, 0);
     }
-    public void UpdateTensionBar()
-    {
-        float percentageOfTension = GMController.instance.currentTensionLevel * 100 / GMController.instance.currentTensionMax;
-        if (tensionLevelUI.rect.width <= tensionLevelLenght) 
-            tensionLevelUI.sizeDelta = new Vector2((percentageOfTension / 100 * tensionLevelLenght), tensionLevelUI.rect.height);
-        if(tensionLevelUI.rect.width > tensionLevelLenght)
-            tensionLevelUI.sizeDelta = new Vector2(tensionLevelLenght, tensionLevelUI.rect.height);
-    }
-    public void UpdateTensionMulti()
-    {
-        tensionMultiUI.text = GMController.instance.currentTensionMulti +"x";
-    }
     public void SetContinueText(int player)
     {
         if (!GMController.instance.playerInfo[player].playerController.isAlive)
@@ -160,6 +165,57 @@ public class UIManager3D : MonoBehaviour
         }
     }
 
+    public void UpdateTensionBar()
+    {
+        float percentageOfTension = GMController.instance.currentTensionLevel * 100 / GMController.instance.currentTensionMax;
+        if (tensionLevelUI.rect.width <= tensionLevelLenght) 
+            tensionLevelUI.sizeDelta = new Vector2((percentageOfTension / 100 * tensionLevelLenght), tensionLevelUI.rect.height);
+        if(tensionLevelUI.rect.width > tensionLevelLenght)
+            tensionLevelUI.sizeDelta = new Vector2(tensionLevelLenght, tensionLevelUI.rect.height);
+    }
+    public void UpdateTensionMulti()
+    {
+        tensionMultiUI.text = GMController.instance.currentTensionMulti +"x";
+    }
+
+    public void ChangeThresholdUIColor(int index)
+    {
+        // when the threshold is reached for the first time sets the color to red and set it active
+        ThresholdUIList[index].image.color = Color.red;
+        ThresholdUIList[index].isActive[GMController.instance.currentTensionMulti - 1] = true;
+    }
+    public void ChangeAllThresholUIColor()
+    {
+        // for all the UI elements when going back to a previous multiplier level sets the color to red
+        for (int i = 0; i < ThresholdUIList.Length; i++)
+        {
+            ThresholdUIList[i].image.color = Color.red;
+        }
+    }
+    public void ResetThresholdUIColor()
+    {
+        // for all the UI elements if they are not active in the current bar multiplier then sets the color to white
+        for (int i = 0; i < ThresholdUIList.Length; i++)
+        {
+            if (!ThresholdUIList[i].isActive[GMController.instance.currentTensionMulti - 1])
+            {
+                ThresholdUIList[i].image.color = Color.white;
+            }
+        }      
+    }
+
+    private void SetBarThresholds()
+    {
+        // create and set the threshold UI components in the right position
+        float tensionThreshold = tensionLevelLenght / GMController.instance.tensionStats.barDivision;
+        for (int i = 0; i < GMController.instance.tensionStats.barDivision; i++)
+        {
+            ThresholdUIList[i] = new TensionBarElement(Instantiate(tensionThresholdsUI.gameObject, tensionBarUI));
+            float currentThresholdPosition = tensionThreshold * (i+1); 
+            ThresholdUIList[i].transform.localPosition = new Vector2(tensionBarUI.GetChild(0).transform.localPosition.x + currentThresholdPosition, 0);
+            ThresholdUIList[i].transform.gameObject.SetActive(true);  
+        }
+    }
     private IEnumerator ShowResults()
     {
        GMController.instance.canResultCR = true;    
