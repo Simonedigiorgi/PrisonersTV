@@ -405,7 +405,7 @@ Transform:
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &238432042
 MonoBehaviour:
@@ -493,7 +493,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -227.8, y: -137.8, z: 42.2}
 --- !u!108 &296915511
 Light:
@@ -4588,7 +4588,7 @@ Transform:
   - {fileID: 1907745398}
   - {fileID: 1750087787}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &737830274
 Prefab:
@@ -4637,6 +4637,10 @@ Prefab:
         type: 2}
       propertyPath: life
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4061767963005278, guid: 1a94798ab697d054697981bb20b43cd5, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1a94798ab697d054697981bb20b43cd5, type: 2}
@@ -13311,7 +13315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1897936534
 Prefab:
@@ -13715,7 +13719,7 @@ ParticleSystem:
   lengthInSec: 0.25
   simulationSpeed: 1
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -13765,7 +13769,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1510732847
+  randomSeed: -727589463
   InitialModule:
     serializedVersion: 3
     enabled: 1
