@@ -33,8 +33,8 @@ public class Nailgun3D : Weapon3D
                 // Shoot sound
                 source.PlayOneShot(shootSound, shootVolume);
 
-                if (anim != null)
-                    anim.SetTrigger("Shoot");
+               if (muzzle != null)
+                   muzzle.Emit(Random.Range(minParticles, maxParticles));
             }
         }
         else if (bullets == 0)

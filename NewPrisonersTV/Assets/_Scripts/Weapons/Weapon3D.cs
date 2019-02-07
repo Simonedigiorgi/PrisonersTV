@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Weapon3D : MonoBehaviour
 {
-    public Animator anim;
+    public ParticleSystem muzzle;
     public Image weaponIcon;
     public MeshRenderer mesh;
 
@@ -59,12 +59,33 @@ public class Weapon3D : MonoBehaviour
     [HideInInspector] public PerforationBullet currentDepot;
     [HideInInspector] public DecalHandler currentDecal;
 
+    #region PARTICLE SYSTEM
+    private Transform muzzleT;                              // reference to the muzzle particle transform
+    private ParticleSystem.MainModule psMain;               // reference to the main module of the particle, used to change color
+    private ParticleSystem.EmissionModule emission;         // reference to the emission module, used to get the burst info and replicate the emission
+    protected int minParticles;                               // max particle in burst
+    protected int maxParticles;                               // min particle in burst
+    #endregion
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         source = GetComponent<AudioSource>();
         coll = transform.GetChild(0).GetComponent<BoxCollider2D>();
         collTrigger = GetComponent<BoxCollider2D>();
+        if (muzzle != null)
+            GetParticleInfo();
+    }
+
+    protected void GetParticleInfo()                                                 // get particle burst info to replicate the emission when needed
+    {
+        //Get Particle Burst Info
+        muzzleT = muzzle.transform;
+        emission = muzzle.emission;
+        ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
+        emission.GetBursts(bursts);
+        minParticles = bursts[0].minCount;
+        maxParticles = bursts[0].maxCount;
     }
 
     // Shoot method
@@ -92,8 +113,8 @@ public class Weapon3D : MonoBehaviour
                 // Shoot sound
                 source.PlayOneShot(shootSound, shootVolume);
 
-                if (anim != null)
-                    anim.SetTrigger("Shoot");
+                if (muzzle != null)
+                    muzzle.Emit(Random.Range(minParticles,maxParticles));
             }
         }
         else if (bullets == 0)

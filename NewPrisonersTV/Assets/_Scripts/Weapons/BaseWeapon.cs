@@ -14,6 +14,8 @@ public class BaseWeapon : Weapon3D
         weaponMembership = player.playerNumber;
         bullet.membership = weaponMembership;
         bullet.transform.parent = null;
+        if (muzzle != null)
+            GetParticleInfo();
     }
     public override void Shoot(GameObject spawnPoint)
     {
@@ -36,8 +38,8 @@ public class BaseWeapon : Weapon3D
             // Shoot sound
             source.PlayOneShot(shootSound, shootVolume);
 
-            if (anim != null)
-                anim.SetTrigger("Shoot");          
+            if (muzzle != null)
+                muzzle.Emit(Random.Range(minParticles, maxParticles));
         }      
     }
 }
