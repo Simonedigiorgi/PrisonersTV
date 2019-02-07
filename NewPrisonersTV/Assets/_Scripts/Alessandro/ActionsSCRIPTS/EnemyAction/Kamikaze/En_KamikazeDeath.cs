@@ -19,10 +19,9 @@ namespace AI.Actions
             controller.m_EnemyController.agent.isStopped = true;
             //enemy die
             if (controller.m_EnemyController.canExplode || controller.enemyStats.enemyLevel >= 2)
-            {
-                controller.m_EnemyController.explosionParticle.Explosion(controller.m_EnemyController.thisTransform.position);
-            }
-            controller.m_EnemyController.startDieCoroutine = true;                             
+                controller.m_EnemyController.enemyAnim.SetTrigger("Explosion");
+            else
+                controller.m_EnemyController.startDieCoroutine = true;
         }
     }
 }

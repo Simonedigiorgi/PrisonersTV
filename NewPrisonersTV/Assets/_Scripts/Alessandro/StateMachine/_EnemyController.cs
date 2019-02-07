@@ -44,7 +44,7 @@ namespace AI
         [HideInInspector] public EnemySpawn myEnemySpawn;
         //------------------------------------------------------------------
         [HideInInspector] public int direction;                                // movement direction used for enemies without navmesh (1 = right, -1 = left)
-        [HideInInspector] public int enemyMembership;                          // number of player that last hit this enemy
+        [HideInInspector] public int enemyMembership;                     // number of player that last hit this enemy
         [HideInInspector] public bool isFlashing = false;
         [HideInInspector] public bool gotHit = false;
         //------------------------------------------------------------------
@@ -100,7 +100,7 @@ namespace AI
             agent = GetComponent<NavMeshAgent>();
             col = thisTransform.GetChild(0).GetComponent<Collider2D>();
             thisMesh = enemyAnim.transform;
-
+            enemyMembership = -1;// check later
             animSpeed = enemyAnim.speed;
             currentLife = m_EnemyStats.life;
             playerSeenDistance = new TargetDistance[GMController.instance.playerInfo.Length];
@@ -219,33 +219,32 @@ namespace AI
             isBarrageDone = true;
             yield return null;
         }
-        public abstract IEnumerator Die();
-
+        public abstract IEnumerator Die();       
         //------------------------------------------------------------------
 
 
 
 
-        //Flash coroutine called on hit with bullet
-        //public IEnumerator Flash()
-        //{
-        //    isFlashing = true;
-        //    mySpriteRender.color = Color.clear;
-        //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
-        //    mySpriteRender.color = Color.white;
-        //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
-        //    mySpriteRender.color = Color.clear;
-        //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
-        //    mySpriteRender.color = Color.white;
-        //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
-        //    mySpriteRender.color = Color.clear;
-        //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
-        //    mySpriteRender.color = Color.white;
+            //Flash coroutine called on hit with bullet
+            //public IEnumerator Flash()
+            //{
+            //    isFlashing = true;
+            //    mySpriteRender.color = Color.clear;
+            //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
+            //    mySpriteRender.color = Color.white;
+            //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
+            //    mySpriteRender.color = Color.clear;
+            //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
+            //    mySpriteRender.color = Color.white;
+            //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
+            //    mySpriteRender.color = Color.clear;
+            //    yield return new WaitForSeconds(m_EnemyStats.flashingSpeed);
+            //    mySpriteRender.color = Color.white;
 
-        //    isFlashing = false;
-        //    gotHit = false;
-        //    yield return null; 
-        //}     
+            //    isFlashing = false;
+            //    gotHit = false;
+            //    yield return null; 
+            //}     
     }
 }
 
