@@ -8582,11 +8582,9 @@ MonoBehaviour:
   easyScenes:
   - Level Test AE
   mediumScenes:
-  - Level Test AE 3
-  - Level Test AE 4
+  - Level Test AE 1
   hardScenes:
-  - Level Test AE 5
-  - Level Test AE 6
+  - Level Test AE 2
   maxBats: 5
   maxNinja: 1
   maxKamikaze: 5
