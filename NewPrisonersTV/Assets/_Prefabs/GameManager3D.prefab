@@ -8577,8 +8577,8 @@ MonoBehaviour:
   key: {fileID: 1972455539571672}
   keySpawn: {fileID: 4321403602274498}
   maxEasyScenes: 1
-  maxMediumScenes: 2
-  maxHardScenes: 2
+  maxMediumScenes: 1
+  maxHardScenes: 1
   easyScenes:
   - Level Test AE
   mediumScenes:
