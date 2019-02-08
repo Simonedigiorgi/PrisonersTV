@@ -251,7 +251,21 @@ public class UIManager3D : MonoBehaviour
        
         yield return null; 
     }
+    public void RewardSelection()
+    {     
+        for (int i = 0; i < GMController.instance.bonusWeapon.rewardButtons.Length; i++)
+        {
+            if (GMController.instance.bonusWeapon.rewardButtons[i].RewardButton != null && GMController.instance.bonusWeapon.rewardButtons[i].RewardButton == eventSystem.currentSelectedGameObject)
+            {
+                GMController.instance.AddWeaponReward(GMController.instance.lastPlayerThatChooseReward, GMController.instance.bonusWeapon.bonusPool[GMController.instance.bonusWeapon.rewardButtons[i].PoolIndex]);
+                GMController.instance.bonusWeapon.rewardButtons[i].ButtonT.parent = null;
+                Destroy(GMController.instance.bonusWeapon.rewardButtons[i].RewardButton);
+                eventSystem.SetSelectedGameObject(GMController.instance.bonusWeapon.panel.GetChild(0).gameObject, new BaseEventData(eventSystem));
 
+                break;
+            }
+        }    
+    }
     public void ChangeInputModule(CharacterControlConfig player)
     {      
         inputModule.horizontalAxis = player.LeftHorizontal.ToString();

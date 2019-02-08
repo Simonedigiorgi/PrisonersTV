@@ -184,6 +184,11 @@ namespace Character
             baseWeapon.transform.position = baseWeapon.transform.parent.position;
             baseWeapon.mesh.enabled = true;
         }
+        public void SetupBaseWeapon()
+        {
+            baseWeapon.weaponMembership = playerNumber;// give the right ownership to the weapon
+            baseWeapon.bullet.membership = playerNumber;// give the right ownership to the bullet
+        }
         public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)
         {
             Vector3 position = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);           

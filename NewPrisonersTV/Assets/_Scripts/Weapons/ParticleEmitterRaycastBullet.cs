@@ -157,7 +157,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
         // check damage type and enemy resistance                 
         int tempDmg = damage;
         CheckDmg(enemyHit, tempDmg);
-        enemyHit.enemyMembership = membership;
+        enemyHit.enemyOwnership = membership;
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension
@@ -170,7 +170,7 @@ public class ParticleEmitterRaycastBullet : MonoBehaviour
             // check damage type and enemy resistance                 
             int tempDmg = damage;
             CheckDmg(enemyHit, tempDmg);
-            enemyHit.enemyMembership = membership;
+            enemyHit.enemyOwnership = membership;
             enemyHit.currentLife -= tempDmg;
             enemyHit.gotHit = true;
             GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension

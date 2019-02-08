@@ -88,7 +88,7 @@ public class PerforationBullet : MonoBehaviour
         if (perfPool[i].numberOfHits <= 0 && leaveDecal)
             currentDecal.PlaceDecal(perfPool[i].bullet.transform, enemyHit);
 
-        enemyHit.enemyMembership = playerNumber;
+        enemyHit.enemyOwnership = playerNumber;
         enemyHit.currentLife -= tempDmg;
         enemyHit.gotHit = true;
         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyHitPoints); //add tension

@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
 
             //Substract enemy life
             _EnemyController enemyHit = collision.gameObject.GetComponent<_EnemyController>();
-            enemyHit.enemyMembership = membership;
+            enemyHit.enemyOwnership = membership;
             enemyHit.currentLife -= damage;
 
             if (destroyOnEnemyCollision)

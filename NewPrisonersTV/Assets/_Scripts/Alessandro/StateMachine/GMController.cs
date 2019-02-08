@@ -108,7 +108,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
     [HideInInspector] public bool canChooseReward = false;                           // if true enables the reward script
     [HideInInspector] public bool readyForNextLevel = false;                         // if true allow to skip to the next level
-    [HideInInspector] public int[] DecrescentScoreOrder;                             // list of players from the one with less score to the one with top score 
+     public int[] CrescentScoreOrder;                                // list of players from the one with less score to the one with top score 
     [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
     #endregion
@@ -138,7 +138,7 @@ public class GMController : MonoBehaviour
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
             bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
-            DecrescentScoreOrder = new int[playerRequired]; 
+            CrescentScoreOrder = new int[playerRequired]; 
             playerInfo = new PlayerInfo[playerRequired];
 
             //spawn players and add them to the current playerInfo list, collect spawn and enemy info
@@ -457,6 +457,7 @@ public class GMController : MonoBehaviour
             playerInfo[i] = new PlayerInfo(player, player.GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
 
             playerInfo[i].playerController.playerNumber = i;
+            playerInfo[i].playerController.SetupBaseWeapon();
             bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
             decalPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player decal pool
         }
@@ -478,7 +479,7 @@ public class GMController : MonoBehaviour
             {
                 if (playerInfo[y].score == tempOrder[i])
                 {
-                    DecrescentScoreOrder[i] = playerInfo[y].playerController.playerNumber;
+                    CrescentScoreOrder[i] = playerInfo[y].playerController.playerNumber;
                 }
             }
         }

@@ -15,11 +15,13 @@ public class BonusWeapon : MonoBehaviour
     public Sprite unknownIcon;
 
     [HideInInspector] public Weapon3D[] bonusPool;
-
+    [HideInInspector] public RewardButtonData[] rewardButtons;
+    
     void Awake ()
     {
         bonusPool = new Weapon3D[poolSize];
-	}
+        rewardButtons = new RewardButtonData[poolSize];
+    }
 	
 	public void RewardPool()
     {
@@ -55,10 +57,7 @@ public class BonusWeapon : MonoBehaviour
     void ButtonCreation( int i, Sprite icon)
     {
         Button currentButton = Instantiate(button, panel);
-        currentButton.GetComponent<Image>().sprite = icon;
-        currentButton.gameObject.SetActive(true);
-        currentButton.GetComponent<Reward>().poolIndex = i;
-    }
 
-   
+        rewardButtons[i] = new RewardButtonData(i, currentButton.gameObject, icon);
+    }  
 }

@@ -15,7 +15,6 @@ namespace AI.Actions
 
         public void Move(EnemiesAIStateController controller)
         {
-            Debug.Log("jump"); // TEST
             controller.m_EnemyController.agent.velocity = Vector3.zero;
             controller.m_EnemyController.agent.enabled = false;
             controller.m_EnemyController.rb.AddRelativeForce((controller.m_EnemyController.thisTransform.forward * controller.enemyStats.ninjaJumpLenght) + (Vector3.up * controller.enemyStats.ninjaJumpHeight), ForceMode2D.Impulse);

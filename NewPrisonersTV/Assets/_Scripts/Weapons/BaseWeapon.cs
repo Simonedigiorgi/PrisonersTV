@@ -11,8 +11,8 @@ public class BaseWeapon : Weapon3D
     protected override void Awake()
     {
         source = GetComponent<AudioSource>();
-        weaponMembership = player.playerNumber;
-        bullet.membership = weaponMembership;
+       // weaponMembership = player.playerNumber;
+        //bullet.membership = weaponMembership;
         bullet.transform.parent = null;
         if (muzzle != null)
             GetParticleInfo();
@@ -40,6 +40,6 @@ public class BaseWeapon : Weapon3D
 
             if (muzzle != null)
                 muzzle.Emit(Random.Range(minParticles, maxParticles));
-        }      
+        }
     }
 }
