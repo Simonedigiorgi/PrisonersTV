@@ -53,7 +53,7 @@ public class MineParticle : MonoBehaviour
             for (int i = 0; i < numParticlesAlive; i++)
             {    
                 bool alreadyExploded = false;
-                if (mines[i].remainingLifetime <= 0.1 && !alreadyExploded)
+                if (mines[i].remainingLifetime <= 0.1f && !alreadyExploded)
                 {
                     //Debug.Log("enter");
                     owner.explosionParticle.Explosion(mines[i].position);
@@ -64,9 +64,9 @@ public class MineParticle : MonoBehaviour
             // Apply the particle changes to the particle system
             thisParticle.SetParticles(mines, numParticlesAlive);
 
-            // destroy when the explosion fades
+            // destroy when the last explosion fades and the owner is dead
             if (owner == null && thisParticle.particleCount == 0)
-                Destroy(gameObject);
+                Destroy(gameObject); 
         }
     }
 

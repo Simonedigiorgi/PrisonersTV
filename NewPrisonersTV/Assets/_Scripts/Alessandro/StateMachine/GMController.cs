@@ -88,6 +88,7 @@ public class GMController : MonoBehaviour
     private static int playerRequired;                                              // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
+    public int LevelCount { get { return levelCount; } }
 
     // copy of the lists of scenes used for the pool
     private static List<string> currentEasyScenes;
@@ -95,6 +96,7 @@ public class GMController : MonoBehaviour
     private static List<string> currentHardScenes;
 
     private int totalScenes;                                                         // sum of all scenes needed for the game mode
+    public int TotalScenes { get { return totalScenes; } }
 
     private static int[] playersTotalScore;                                          // record the sum of all level scores for each player in the current game
     private static Weapon3D[] weaponRewardFromLastLevel;                             // record the rewards choosen in the last level
@@ -113,6 +115,7 @@ public class GMController : MonoBehaviour
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
     #endregion
     //------------------------------------------------------------------
+
     void Awake() 
     {
         //Singleton
@@ -137,7 +140,7 @@ public class GMController : MonoBehaviour
 
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
-            bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
+            bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>(); 
             CrescentScoreOrder = new int[playerRequired]; 
             playerInfo = new PlayerInfo[playerRequired];
 
@@ -267,10 +270,6 @@ public class GMController : MonoBehaviour
         playerRequired = num;
     }
 
-    public int GetLevelCount()
-    {
-        return levelCount;
-    }
     public void AddLevelCount()
     {
         levelCount++;
@@ -502,7 +501,7 @@ public class GMController : MonoBehaviour
     {
         AddLevelCount();
         // easy difficulty
-        if (GetLevelCount() <= maxEasyScenes)
+        if (levelCount <= maxEasyScenes)
         {
             int i = Random.Range(0, currentEasyScenes.Count);
             string level = currentEasyScenes[i];
@@ -510,7 +509,7 @@ public class GMController : MonoBehaviour
             SceneManager.LoadScene(level);
         }
         // medium difficulty
-        else if (GetLevelCount() > maxEasyScenes && GetLevelCount() <= (totalScenes - maxHardScenes))
+        else if (levelCount > maxEasyScenes && levelCount <= (totalScenes - maxHardScenes))
         {
             int i = Random.Range(0, currentMediumScenes.Count);
             string level = currentMediumScenes[i];
@@ -518,12 +517,17 @@ public class GMController : MonoBehaviour
             SceneManager.LoadScene(level);
         }
         // hard difficulty
-        else if (GetLevelCount() > (totalScenes - maxHardScenes) && GetLevelCount() <= totalScenes)
+        else if (levelCount > (totalScenes - maxHardScenes) && levelCount <= totalScenes)
         {
             int i = Random.Range(0, currentHardScenes.Count);
             string level = currentHardScenes[i];
             currentHardScenes.RemoveAt(i);
             SceneManager.LoadScene(level);
+        }
+        else
+        {
+            currentMode = GAMEMODE.Menu;
+            SceneManager.LoadScene(0);
         }
 
     }

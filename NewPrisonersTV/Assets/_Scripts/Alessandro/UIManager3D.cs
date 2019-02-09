@@ -244,11 +244,16 @@ public class UIManager3D : MonoBehaviour
             yield return null;
        }
        // preparation for the rewards, set the player order, activates the reward panel and generate the reward pool
-        GMController.instance.RewardOrder(); 
-        rewardPanel.SetActive(true);
-        resultsPanel.SetActive(false);
-        GMController.instance.bonusWeapon.RewardPool();
-       
+       if (GMController.instance.LevelCount+1 < GMController.instance.TotalScenes)
+       {
+            GMController.instance.RewardOrder();
+            rewardPanel.SetActive(true);
+            resultsPanel.SetActive(false);
+            GMController.instance.bonusWeapon.RewardPool();
+       }
+       else
+            GMController.instance.readyForNextLevel = true;
+
         yield return null; 
     }
     public void RewardSelection()

@@ -29,7 +29,6 @@ namespace AI.Actions
                     if (controller.m_EnemyController.playerSeenDistance[i].distance <= (controller.enemyStats.attackView * controller.enemyStats.attackView)
                         && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.isAlive)
                     {
-                        Debug.Log("see");  
                         for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
                         {                       
                             Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenDistance[i].targetIndex].playerController.TargetForEnemies.position, Color.red);

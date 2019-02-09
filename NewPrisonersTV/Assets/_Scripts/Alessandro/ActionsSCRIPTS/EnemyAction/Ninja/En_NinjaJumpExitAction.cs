@@ -19,6 +19,7 @@ namespace AI.Actions
             ////Pull agent towards character 
             //if (controller.m_EnemyController.worldDeltaPosition.magnitude > controller.m_EnemyController.agent.radius) 
             //    controller.m_EnemyController.agent.nextPosition = controller.m_EnemyController.playerMesh.position + 0.9f * controller.m_EnemyController.worldDeltaPosition;                                     
+            controller.m_EnemyController.rb.velocity = Vector2.zero; 
             controller.m_EnemyController.agent.enabled = true; 
         }
     }

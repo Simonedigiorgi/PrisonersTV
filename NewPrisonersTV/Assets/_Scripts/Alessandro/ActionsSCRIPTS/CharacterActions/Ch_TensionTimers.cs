@@ -21,7 +21,6 @@ namespace Character.Actions
             {
                 controller.m_CharacterController.tensionUpTimer = GMController.instance.tensionStats.movementTimer;
                 GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.movementPoints); // add tension points for action
-                Debug.Log("add tension movement");  
             } 
 
             if (controller.m_CharacterController.tensionDownTimer > 0 && Mathf.Abs(controller.m_CharacterController.moveInput) < Mathf.Abs(controller.m_CharacterController.m_CharStats.joypadDeathZone))
@@ -30,7 +29,6 @@ namespace Character.Actions
             {
                 controller.m_CharacterController.tensionDownTimer = GMController.instance.tensionStats.standStillTimer;
                 GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.standStillPoints); // sub tension
-                Debug.Log("sub tension movement");
             }
         }
 

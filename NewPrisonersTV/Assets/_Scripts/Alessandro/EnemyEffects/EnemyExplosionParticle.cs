@@ -10,27 +10,29 @@ public class EnemyExplosionParticle : MonoBehaviour
     public ParticleSystem thisParticle;
     public ParticleSystem mine;
 
+    private ParticleSystem.EmissionModule emission;
     private LayerMask explosionMask;
     private int damage;
+    private int min;
+    private int max;
 
     private void Start()
     {
         // copy components
         explosionMask = owner.m_EnemyStats.hitMask;
         damage = owner.m_EnemyStats.attackValue;
+        // get the particle burst info
+        emission = thisParticle.emission;
+        ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
+        emission.GetBursts(bursts);
+        min = bursts[0].minCount;
+        max = bursts[0].maxCount;
+        transform.parent = null;
     }
 
     public void Explosion(Vector2 position)
-    {
-        // get the particle burst info
-        var emission = thisParticle.emission; 
-        ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
-        emission.GetBursts(bursts);
-        int min = bursts[0].minCount;
-        int max = bursts[0].maxCount;
-
-        // emit particle
-        transform.parent = null;
+    {       
+       // emit particle       
         transform.position = position;
         thisParticle.Emit(Random.Range(min, max));
        
@@ -45,13 +47,12 @@ public class EnemyExplosionParticle : MonoBehaviour
             GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
             GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension
         }
-        //Debug.Log("boom");
     }
 
-    private void Update()
+    private void Update()  
     {
-        // destroy when the explosion fades
-        if (owner == null && mine == null && thisParticle.particleCount == 0)
+        // destroy when the last explosion fades and the owner is dead
+        if (owner == null && mine == null && thisParticle.particleCount == 0)  
             Destroy(gameObject);
     }
 }

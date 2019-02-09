@@ -75,7 +75,7 @@ namespace AI
 
         #region NINJA
         [HideInInspector] public Vector3 startJumpPos;
-        [HideInInspector] public float currentJumpTimer;
+        [HideInInspector] public float currentJumpTimer;  
         [HideInInspector] public bool onGround;
         #endregion
 

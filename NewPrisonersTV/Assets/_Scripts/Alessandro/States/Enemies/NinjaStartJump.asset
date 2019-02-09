@@ -9,24 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
-  m_Name: NinjaJump
+  m_Name: NinjaStartJump
   m_EditorClassIdentifier: 
   actions:
-  - {fileID: 11400000, guid: af566d331a0564a498e65e6839cc40e8, type: 2}
   - {fileID: 11400000, guid: dee58dd635f77ae4197fb593062f020a, type: 2}
-  - {fileID: 11400000, guid: f145301ed692aa0469ef886e3dc88d4e, type: 2}
-  - {fileID: 11400000, guid: 8769af8238c389841a089035f662ef98, type: 2}
-  - {fileID: 11400000, guid: 9fa9e1f47359b2e4a8122b9b7ea6f904, type: 2}
-  enterActions: []
-  exitActions:
-  - {fileID: 11400000, guid: 5eb7f4ab60764c240b03854cca53d080, type: 2}
+  enterActions:
+  - {fileID: 11400000, guid: c2a84507a312b4e43bfc897d5b5c2169, type: 2}
+  exitActions: []
   transitions:
-  - decision:
-    - {fileID: 11400000, guid: 035352a5bccb2b649bc9dd306916cff4, type: 2}
-    trueState: {fileID: 11400000, guid: ffe1c72ef871702419c533cf38288a00, type: 2}
-    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
   - decision:
     - {fileID: 11400000, guid: d78773cab02ef6b46967f814c49fd827, type: 2}
     trueState: {fileID: 11400000, guid: 58a4f2025eff23542af7844b2d5b107f, type: 2}
+    falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
+  - decision:
+    - {fileID: 11400000, guid: e161d7d3e749e004294a4028324f2a1f, type: 2}
+    trueState: {fileID: 11400000, guid: d81bc7eb79668df4fbf6cd4f929ce6e6, type: 2}
     falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
   sceneGizmosColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
