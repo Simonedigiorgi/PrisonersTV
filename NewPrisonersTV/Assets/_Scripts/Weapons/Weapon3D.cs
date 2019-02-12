@@ -52,7 +52,7 @@ public class Weapon3D : MonoBehaviour
     [HideInInspector] public bool isGrabbed;                                                                    // The weapon is grabbed
     protected float lastShot = 0.0f;                                                                              // Need to be always at 0;
 
-    [HideInInspector] public int weaponMembership;                                                                                       // Grabbed on player1 or player2
+    [HideInInspector] public int weaponOwnership;                                                                 // Grabbed on player1 or player2
     [HideInInspector] public WeaponSpawn currentSpawn;
     [HideInInspector] public bool isReward = false;
 
@@ -60,7 +60,6 @@ public class Weapon3D : MonoBehaviour
     [HideInInspector] public DecalHandler currentDecal;
 
     #region PARTICLE SYSTEM
-    private Transform muzzleT;                              // reference to the muzzle particle transform
     private ParticleSystem.MainModule psMain;               // reference to the main module of the particle, used to change color
     private ParticleSystem.EmissionModule emission;         // reference to the emission module, used to get the burst info and replicate the emission
     protected int minParticles;                               // max particle in burst
@@ -80,7 +79,6 @@ public class Weapon3D : MonoBehaviour
     protected void GetParticleInfo()                                                 // get particle burst info to replicate the emission when needed
     {
         //Get Particle Burst Info
-        muzzleT = muzzle.transform;
         emission = muzzle.emission;
         ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
         emission.GetBursts(bursts);
@@ -123,7 +121,7 @@ public class Weapon3D : MonoBehaviour
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
             // destroy this weapon and eneable the base one
-            GMController.instance.playerInfo[weaponMembership].playerController.EnableBaseWeapon();
+            GMController.instance.playerInfo[weaponOwnership].playerController.EnableBaseWeapon();
         }
     }
 
@@ -150,7 +148,7 @@ public class Weapon3D : MonoBehaviour
         player.currentWeapon = GetComponent<Weapon3D>();
         if (bullet != null)
         {
-            bullet.membership = weaponMembership;
+            bullet.membership = weaponOwnership;
             bullet.transform.parent = null;
         }
         if (!isReward)

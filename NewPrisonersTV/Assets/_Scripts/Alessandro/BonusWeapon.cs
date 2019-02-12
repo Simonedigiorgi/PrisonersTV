@@ -50,7 +50,7 @@ public class BonusWeapon : MonoBehaviour
                 ButtonCreation(i, unknownIcon);
             }
         }
-        GMController.instance.UI.eventSystem.SetSelectedGameObject(panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.UI.eventSystem));
+        GMController.instance.eventSystem.SetSelectedGameObject(panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.eventSystem)); 
         GMController.instance.canChooseReward = true;
     }
 

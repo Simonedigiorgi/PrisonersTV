@@ -8322,7 +8322,7 @@ MonoBehaviour:
   emptyVolume: 0.1
   hand: {fileID: 0}
   isGrabbed: 0
-  weaponMembership: 0
+  weaponOwnership: 0
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}
@@ -8386,7 +8386,7 @@ MonoBehaviour:
   emptyVolume: 0.1
   hand: {fileID: 0}
   isGrabbed: 0
-  weaponMembership: 0
+  weaponOwnership: 0
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}
@@ -8670,6 +8670,7 @@ MonoBehaviour:
   bulletPool: {fileID: 4006064854236664}
   bulletDepot: {fileID: 11400000, guid: af0cf8cbc017e974e8556c96add48015, type: 2}
   tensionStats: {fileID: 11400000, guid: ba91922d1b616d74bb48e4113dbaf6b2, type: 2}
+  keyboardConfig: {fileID: 11400000, guid: 27e17beb4b1132d439985c976937a10e, type: 2}
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -8693,6 +8694,7 @@ MonoBehaviour:
   canStartGameCD: 0
   gameStart: 0
   inGame: 0
+  gameCDEnded: 0
   m_MainCamera: {fileID: 0}
   playerSetupDone: 0
   currentGameTime: 0
@@ -8712,9 +8714,10 @@ MonoBehaviour:
   canResultCR: 1
   canChooseReward: 0
   readyForNextLevel: 0
-  DecrescentScoreOrder: 
+  CrescentScoreOrder: 
   lastPlayerThatChooseReward: 0
   rewardIndex: 0
+  numbOfJoysticks: 0
 --- !u!114 &114808938804017134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8757,7 +8760,7 @@ MonoBehaviour:
   emptyVolume: 0.1
   hand: {fileID: 0}
   isGrabbed: 0
-  weaponMembership: 0
+  weaponOwnership: 0
   currentSpawn: {fileID: 0}
   isReward: 0
   currentDepot: {fileID: 0}

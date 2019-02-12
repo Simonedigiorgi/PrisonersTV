@@ -13,6 +13,7 @@ TagManager:
   - Key
   - Exit
   - EnemySpawn
+  - EventSystem
   layers:
   - Default
   - TransparentFX

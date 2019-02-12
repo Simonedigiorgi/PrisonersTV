@@ -10,7 +10,7 @@ namespace Character.Decisions
     {
         public override bool Decide(GMStateController controller)
         {
-            if (GMController.instance.GetGameMode() == GAMEMODE.Story && GMController.instance.inGame) 
+            if (GMController.instance.CurrentMode == GAMEMODE.Story && GMController.instance.inGame) 
                 return true;           
             else
                 return false;

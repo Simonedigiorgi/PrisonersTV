@@ -16,7 +16,7 @@ namespace GM.Actions
 
         private void PauseGame(GMStateController controller)
         {
-            if (!GMController.instance.gameEnded)
+            if (!GMController.instance.gameEnded && GMController.instance.gameCDEnded) 
             {
                 for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
                 {

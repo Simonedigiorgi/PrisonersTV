@@ -18,7 +18,7 @@ namespace GM.Actions
         {
             for (int i = 0; i < controller.m_GM.playerInfo.Length; i++)
             {
-                if (controller.m_GM.playerInfo[i].playerController.isAlive)
+                if (controller.m_GM.playerInfo[i].playerController.isAlive) // move to player later
                 {
                     // Player life
                     if (controller.m_GM.playerInfo[i].playerController.currentLife <= 0)

@@ -23,7 +23,7 @@ namespace GM.Actions
                 // set the current player controls in the Input Module
                 if (!GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].playerController.canGetReward)
                 {
-                    GMController.instance.UI.ChangeInputModule(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].playerController.m_ControlConfig);
+                    GMController.instance.ChangeInputModule(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].playerController.m_ControlConfig);
                     GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].playerController.canGetReward = true;
                 }
                         

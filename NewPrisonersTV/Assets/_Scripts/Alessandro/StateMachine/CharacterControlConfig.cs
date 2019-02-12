@@ -17,4 +17,5 @@ public class CharacterControlConfig : ScriptableObject
     public BUTTONS respawnInput;
     public BUTTONS pauseInput;
     public bool moveArmWithRightStick;
+
 }

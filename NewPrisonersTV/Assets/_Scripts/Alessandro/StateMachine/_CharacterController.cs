@@ -81,7 +81,7 @@ namespace Character
                     {
                         weapon.hand = playerRightArm.transform.GetChild(0).gameObject; 
 
-                        weapon.weaponMembership = playerNumber;
+                        weapon.weaponOwnership = playerNumber;
                         weapon.GrabAndDestroy(this);
                         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
                     }
@@ -93,7 +93,7 @@ namespace Character
                     {
                         key.hand = playerRightArm.transform.GetChild(0).gameObject;
 
-                        key.weaponMembership = playerNumber;
+                        key.weaponOwnership = playerNumber;
                         key.GrabAndDestroy(this);
                         hasKey = true;
                     }
@@ -186,7 +186,7 @@ namespace Character
         }
         public void SetupBaseWeapon()
         {
-            baseWeapon.weaponMembership = playerNumber;// give the right ownership to the weapon
+            baseWeapon.weaponOwnership = playerNumber;// give the right ownership to the weapon
             baseWeapon.bullet.membership = playerNumber;// give the right ownership to the bullet
         }
         public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)

@@ -7,6 +7,7 @@ using StateMachine;
 using Character;
 using AI;
 using Sirenix.OdinInspector;
+using UnityEngine.EventSystems;
 
 public class GMController : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class GMController : MonoBehaviour
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
     public TensionBarStats tensionStats;
+    public CharacterControlConfig keyboardConfig;
     //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -31,14 +33,14 @@ public class GMController : MonoBehaviour
     [BoxGroup("Max levels per difficulty")] public int maxEasyScenes;
     [BoxGroup("Max levels per difficulty")] public int maxMediumScenes;
     [BoxGroup("Max levels per difficulty")] public int maxHardScenes;
-    
+
     [BoxGroup("List of all levels")] public List<string> easyScenes;
     [BoxGroup("List of all levels")] public List<string> mediumScenes;
     [BoxGroup("List of all levels")] public List<string> hardScenes;
 
     [BoxGroup("Enemy Settings")] public int maxBats;
     [BoxGroup("Enemy Settings")] public int maxNinja;
-    [BoxGroup("Enemy Settings")] public int maxKamikaze; 
+    [BoxGroup("Enemy Settings")] public int maxKamikaze;
     [BoxGroup("Enemy Settings")] public int maxSpiders;
     [BoxGroup("Enemy Settings")] public int maxDogs;
     [BoxGroup("Enemy Settings")] public int maxSentinel;
@@ -51,12 +53,13 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool canStartGameCD = false;                    // start game countdown coroutine
     [HideInInspector] public bool gameStart = false;                         // start players and everithing else in the level, if false pause the game, skips updates and sets the players to inactive
     [HideInInspector] public bool inGame = false;                            // true when in a level scene, enables the state change to the currentState
+    [HideInInspector] public bool gameCDEnded = false;
 
     [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene  
     [HideInInspector] public Camera m_MainCamera;
 
     // Needed for game mode setup ---------------------------------------
-    [HideInInspector] public bool playerSetupDone = false; 
+    [HideInInspector] public bool playerSetupDone = false;
     [HideInInspector] public float currentGameTime;
     [HideInInspector] public UIManager3D UI;
     [HideInInspector] public BonusWeapon bonusWeapon;
@@ -68,8 +71,8 @@ public class GMController : MonoBehaviour
     [HideInInspector] public TensionBonus[] tensionBonus;                     // list of bonus to apply at each threshold
     //------------------------------------------------------------------
     #region ENEMIES/SPAWNS INFO
-    [HideInInspector] public int maxEnemy; 
-   
+    [HideInInspector] public int maxEnemy;
+
     [HideInInspector] public EnemySpawn[] enemySpawns;
     [HideInInspector] public List<_EnemyController> allEnemies;
 
@@ -85,10 +88,15 @@ public class GMController : MonoBehaviour
     #endregion
     //------------------------------------------------------------------
     #region STATIC VARIABLES
-    private static int playerRequired;                                              // number of players for the current game mode
+    private static int playersRequired;                                              // number of players for the current game mode
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
+    private static CharacterControlConfig[] playersInputConfig;
+
+    public int PlayersRequired { get { return playersRequired; } set { playersRequired = value; } }
+    public GAMEMODE CurrentMode { get { return currentMode; } set { currentMode = value; } }
     public int LevelCount { get { return levelCount; } }
+    public CharacterControlConfig[] PlayersInputConfig { get { return playersInputConfig; } set { playersInputConfig = value; } } 
 
     // copy of the lists of scenes used for the pool
     private static List<string> currentEasyScenes;
@@ -115,10 +123,12 @@ public class GMController : MonoBehaviour
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
     #endregion
     //------------------------------------------------------------------
-
+    public int numbOfJoysticks; // temp
+    StandaloneInputModule inputModule;
+    public EventSystem eventSystem;
     void Awake() 
     {
-        //Singleton
+        #region SINGLETON
         //Check if instance already exists
         if (instance == null)
             instance = this;
@@ -126,23 +136,35 @@ public class GMController : MonoBehaviour
         //If instance already exists and it's not this:
         else if (instance != this)
             Destroy(gameObject);
+        #endregion
+        
         // Sum up scenes and enemies
         totalScenes = maxEasyScenes + maxMediumScenes + maxHardScenes;
-        maxEnemy = maxBats + maxNinja + maxKamikaze + maxSpiders + maxDogs + maxSentinel; //sum if all enemy types
-
+        maxEnemy = maxBats + maxNinja + maxKamikaze + maxSpiders + maxDogs + maxSentinel; //sum if all enemy types       
+         
         //Get all the players required for the current game mode
         if (currentMode != GAMEMODE.Menu)
         {
             inGame = true;
             // if the total score array doesn't exist the initialize one
             if (playersTotalScore == null)
-                playersTotalScore = new int[playerRequired];
+                playersTotalScore = new int[playersRequired];
 
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
-            bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>(); 
-            CrescentScoreOrder = new int[playerRequired]; 
-            playerInfo = new PlayerInfo[playerRequired];
+            bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
+            eventSystem = UI.eventSystem;
+            inputModule = eventSystem.GetComponent<StandaloneInputModule>();
+            CrescentScoreOrder = new int[playersRequired]; 
+            playerInfo = new PlayerInfo[playersRequired];
+
+            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+                    numbOfJoysticks++;
+            }
+            if (numbOfJoysticks == 0)
+                playersInputConfig[0] = keyboardConfig;
 
             //spawn players and add them to the current playerInfo list, collect spawn and enemy info
             PlayerSetup();
@@ -165,13 +187,25 @@ public class GMController : MonoBehaviour
             }
             else
             {
-                weaponRewardFromLastLevel = new Weapon3D[playerRequired];
+                weaponRewardFromLastLevel = new Weapon3D[playersRequired];
             }
         }
 
         // refill the scene pool and reset total scores, weaponRewards
         if(currentMode == GAMEMODE.Menu)
         {
+            eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
+            inputModule = eventSystem.GetComponent<StandaloneInputModule>();
+            // controller detection
+            // Debug.Log(Input.GetJoystickNames().Length);
+            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+                    numbOfJoysticks++;
+            }
+            if (numbOfJoysticks == 0)
+                ChangeInputModule(keyboardConfig);
+
             inGame = false;
             currentEasyScenes = new List<string>(); 
             for (int i = 0; i < easyScenes.Count; i++)
@@ -201,8 +235,8 @@ public class GMController : MonoBehaviour
     }
 
     private void Update()
-    {
-        if(canStartGameCD)
+    {      
+        if (canStartGameCD)
         {
             StartCoroutine(StartGameCD());
         }
@@ -235,7 +269,7 @@ public class GMController : MonoBehaviour
         rewardWeapon.isReward = true;
         rewardWeapon.bullets = rewardWeapon.bulletsIfReward;
         rewardWeapon.hand = playerInfo[playerNumber].playerController.playerRightArm.transform.GetChild(0).gameObject;
-        rewardWeapon.weaponMembership = playerNumber;
+        rewardWeapon.weaponOwnership = playerNumber;
         rewardWeapon.GrabAndDestroy(playerInfo[playerNumber].playerController);
     }
     public void AddWeaponReward(int playerNumber, Weapon3D weapon)
@@ -250,25 +284,7 @@ public class GMController : MonoBehaviour
     public void AddPlayersTotalScore(int i, int score)
     {
         playersTotalScore[i] += score;
-    }
-
-    public GAMEMODE GetGameMode()
-    {
-        return currentMode;
-    }   
-    public void SetGameMode(GAMEMODE mode)
-    {
-        currentMode = mode;
-    }
-
-    public int GetPlayerNum()
-    {
-        return playerRequired;
-    }
-    public void SetPlayersRequired(int num)
-    {
-        playerRequired = num;
-    }
+    }  
 
     public void AddLevelCount()
     {
@@ -375,6 +391,14 @@ public class GMController : MonoBehaviour
             tensionBonus[i] = new TensionBonus(tensionStats.bonus[i]);   
         }
     }
+
+    public void ChangeInputModule(CharacterControlConfig player)
+    {
+        inputModule.horizontalAxis = player.LeftHorizontal.ToString();
+        inputModule.verticalAxis = player.LeftVertical.ToString();
+        inputModule.submitButton = player.interactInput.ToString();
+        inputModule.cancelButton = player.shootInput.ToString();
+    }
     //------------------------------------------------------------------
     public void SetActive(bool state)
     {
@@ -449,13 +473,15 @@ public class GMController : MonoBehaviour
 
     private void PlayerSetup()
     {
-        for (int i = 0; i < playerRequired; i++)
+        for (int i = 0; i < playersRequired; i++)
         {
             GameObject player = Instantiate(playerPrefab[i], playerSpawnPoint[i].position, playerSpawnPoint[i].rotation);
             player.SetActive(true);
             playerInfo[i] = new PlayerInfo(player, player.GetComponent<_CharacterController>(), playerSpawnPoint[i], 0);
 
             playerInfo[i].playerController.playerNumber = i;
+            playerInfo[i].playerController.m_ControlConfig = playersInputConfig[i];
+            Debug.Log(playersInputConfig[i].name);  
             playerInfo[i].playerController.SetupBaseWeapon();
             bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
             decalPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player decal pool
@@ -464,7 +490,7 @@ public class GMController : MonoBehaviour
     }
     public void RewardOrder()
     {  // create a temporary array to store scores
-        int[] tempOrder = new int[playerRequired];
+        int[] tempOrder = new int[playersRequired];
         for (int i = 0; i < tempOrder.Length; i++)
         {
             tempOrder[i] = playerInfo[i].score;
@@ -492,8 +518,8 @@ public class GMController : MonoBehaviour
         {
             UI.objectiveText.text = "Game Starts in " + (startGameTimer-i);
             yield return new WaitForSeconds(1);
-        } 
-
+        }
+        gameCDEnded = true;
         gameStart = true;
         yield return null; 
     }

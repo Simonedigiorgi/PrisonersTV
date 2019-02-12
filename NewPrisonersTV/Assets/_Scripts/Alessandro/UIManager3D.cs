@@ -44,24 +44,23 @@ public class UIManager3D : MonoBehaviour
     float tensionLevelLenght;
     TensionBarElement[] ThresholdUIList;
     SpriteRenderer[] lifeBar;                                                                       //the lifeBar on player
-    StandaloneInputModule inputModule;
+    
     Camera mainCamera;
   
     void Start ()
     {
         mainCamera = Camera.main;
 
-        if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
+        if (GMController.instance.CurrentMode != GAMEMODE.Menu)
         {
             tensionBarUI.gameObject.SetActive(true);
             ThresholdUIList = new TensionBarElement[GMController.instance.tensionStats.barDivision];
             //actualWeapon = new Weapon3D[GMController.instance.GetPlayerNum()];
-            playerHand = new GameObject[GMController.instance.GetPlayerNum()];
-            hammo = new Text[GMController.instance.GetPlayerNum()];
-            score = new Text[GMController.instance.GetPlayerNum()];
-            playerContinue = new Text[GMController.instance.GetPlayerNum()];
-            lifeBar = new SpriteRenderer[GMController.instance.GetPlayerNum()];
-            inputModule = eventSystem.GetComponent<StandaloneInputModule>();
+            playerHand = new GameObject[GMController.instance.PlayersRequired]; 
+            hammo = new Text[GMController.instance.PlayersRequired];
+            score = new Text[GMController.instance.PlayersRequired];
+            playerContinue = new Text[GMController.instance.PlayersRequired];
+            lifeBar = new SpriteRenderer[GMController.instance.PlayersRequired];          
             // set the tension bar
             tensionMultiUI = tensionBarUI.GetChild(1).GetChild(0).GetComponent<Text>();
             tensionLevelUI = tensionBarUI.GetChild(0).GetComponent<RectTransform>();
@@ -85,7 +84,7 @@ public class UIManager3D : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (GMController.instance.GetGameMode() != GAMEMODE.Menu)
+        if (GMController.instance.CurrentMode != GAMEMODE.Menu)
         {
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {        
@@ -114,7 +113,7 @@ public class UIManager3D : MonoBehaviour
 
                 #endregion                       
             }
-            if (GMController.instance.GetGameMode() == GAMEMODE.Story)
+            if (GMController.instance.CurrentMode == GAMEMODE.Story)
             {
                 if (GMController.instance.gameStart)
                     objectiveText.text = "Remaining Time: " + (int)GMController.instance.currentGameTime;
@@ -256,26 +255,20 @@ public class UIManager3D : MonoBehaviour
 
         yield return null; 
     }
-    public void RewardSelection()
+    public void RewardSelection() // move to gm
     {     
         for (int i = 0; i < GMController.instance.bonusWeapon.rewardButtons.Length; i++)
         {
-            if (GMController.instance.bonusWeapon.rewardButtons[i].RewardButton != null && GMController.instance.bonusWeapon.rewardButtons[i].RewardButton == eventSystem.currentSelectedGameObject)
+            if (GMController.instance.bonusWeapon.rewardButtons[i].RewardButton != null && GMController.instance.bonusWeapon.rewardButtons[i].RewardButton == GMController.instance.eventSystem.currentSelectedGameObject)
             {
                 GMController.instance.AddWeaponReward(GMController.instance.lastPlayerThatChooseReward, GMController.instance.bonusWeapon.bonusPool[GMController.instance.bonusWeapon.rewardButtons[i].PoolIndex]);
                 GMController.instance.bonusWeapon.rewardButtons[i].ButtonT.parent = null;
                 Destroy(GMController.instance.bonusWeapon.rewardButtons[i].RewardButton);
-                eventSystem.SetSelectedGameObject(GMController.instance.bonusWeapon.panel.GetChild(0).gameObject, new BaseEventData(eventSystem));
+                GMController.instance.eventSystem.SetSelectedGameObject(GMController.instance.bonusWeapon.panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.eventSystem));
 
                 break;
             }
         }    
     }
-    public void ChangeInputModule(CharacterControlConfig player)
-    {      
-        inputModule.horizontalAxis = player.LeftHorizontal.ToString();
-        inputModule.verticalAxis = player.LeftVertical.ToString();
-        inputModule.submitButton = player.interactInput.ToString();
-        inputModule.cancelButton = player.shootInput.ToString();
-    }
+   
 }
