@@ -70,8 +70,8 @@ public class UIManager3D : MonoBehaviour
             //Get the components and sets/enables UI for all the players
             for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
             {
-                playerHand[i] = GMController.instance.playerInfo[i].playerController.playerRightArm.transform.GetChild(0).gameObject;
-                lifeBar[i] = GMController.instance.playerInfo[i].player.transform.GetChild(3).GetComponent<SpriteRenderer>();
+                playerHand[i] = GMController.instance.playerInfo[i].PlayerController.playerRightArm.transform.GetChild(0).gameObject;
+                lifeBar[i] = GMController.instance.playerInfo[i].Player.transform.GetChild(3).GetComponent<SpriteRenderer>();
                 playerContinue[i] = playerUI[i].transform.GetChild(0).GetComponent<Text>();
                 hammo[i] = playerUI[i].transform.GetChild(1).GetComponent<Text>();
                 score[i] = playerUI[i].transform.GetChild(2).GetComponent<Text>();
@@ -99,14 +99,14 @@ public class UIManager3D : MonoBehaviour
                 else if(playerHand[i].transform.childCount > 0)
                 {
                     hammo[i].gameObject.SetActive(true);  
-                    if (GMController.instance.playerInfo[i].playerController.currentWeapon != null)
-                        hammo[i].text = GMController.instance.playerInfo[i].playerController.currentWeapon.bullets.ToString();
+                    if (GMController.instance.playerInfo[i].PlayerController.currentWeapon != null)
+                        hammo[i].text = GMController.instance.playerInfo[i].PlayerController.currentWeapon.bullets.ToString();
                     else
                         hammo[i].text = "∞"; 
                 }
                 //set hammo text position
-                hammo[i].transform.position = mainCamera.WorldToScreenPoint(GMController.instance.playerInfo[i].player.transform.position);
-                if (GMController.instance.playerInfo[i].playerController.facingRight)
+                hammo[i].transform.position = mainCamera.WorldToScreenPoint(GMController.instance.playerInfo[i].Player.transform.position);
+                if (GMController.instance.playerInfo[i].PlayerController.facingRight)
                     hammo[i].transform.position += new Vector3(hammoHorizontalOffset, hammoVerticalOffset, 0);
                 else
                     hammo[i].transform.position += new Vector3(-hammoHorizontalOffset, hammoVerticalOffset, 0);
@@ -126,12 +126,12 @@ public class UIManager3D : MonoBehaviour
      
     public void UpdateScoreUI(int player)
     {
-        score[player].text = "P" + (player + 1) + " Score: " + GMController.instance.playerInfo[player].score.ToString();
+        score[player].text = "P" + (player + 1) + " Score: " + GMController.instance.playerInfo[player].Score.ToString();
     }
     public void UpdateLifeUI(int player)
     {
         // percentage of current life 
-        float percentageOfLife = GMController.instance.playerInfo[player].playerController.currentLife * 100 / GMController.instance.playerInfo[player].playerController.m_CharStats.life;
+        float percentageOfLife = GMController.instance.playerInfo[player].PlayerController.currentLife * 100 / GMController.instance.playerInfo[player].PlayerController.m_CharStats.life;
         //Recolor life bar
         if (percentageOfLife > 75)
         {
@@ -154,7 +154,7 @@ public class UIManager3D : MonoBehaviour
     }
     public void SetContinueText(int player)
     {
-        if (!GMController.instance.playerInfo[player].playerController.isAlive)
+        if (!GMController.instance.playerInfo[player].PlayerController.isAlive)
         {
             playerContinue[player].gameObject.SetActive(true);
         }
@@ -222,7 +222,7 @@ public class UIManager3D : MonoBehaviour
        for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
        {
           float scoreTemp = 0;
-          while (scoreTemp < GMController.instance.playerInfo[i].score)
+          while (scoreTemp < GMController.instance.playerInfo[i].Score)
           {
                 yield return null;
                 scoreTemp += Time.unscaledDeltaTime * resultSpeedMulti;         
@@ -233,8 +233,8 @@ public class UIManager3D : MonoBehaviour
                 }
           }
 
-          GMController.instance.AddPlayersTotalScore(i, GMController.instance.playerInfo[i].score);         
-          resultsUI[i].text = "P" + (i + 1) + " Score: " + GMController.instance.playerInfo[i].score + "\n" 
+          GMController.instance.AddPlayersTotalScore(i, GMController.instance.playerInfo[i].Score);         
+          resultsUI[i].text = "P" + (i + 1) + " Score: " + GMController.instance.playerInfo[i].Score + "\n" 
                             + "Total Score: " + GMController.instance.GetPlayerTotalScore(i);           
        }
        while(!Input.anyKeyDown)

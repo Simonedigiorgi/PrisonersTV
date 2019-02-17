@@ -25,11 +25,11 @@ public class DecalHandler : MonoBehaviour
         if (GMController.instance.gameStart && poolReady)
         {
             // get the player weapon if needed
-            if (GMController.instance.playerInfo[playerNumber].playerController.currentWeapon != null &&
-                GMController.instance.playerInfo[playerNumber].playerController.currentWeapon.decalType == type &&
+            if (GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon != null &&
+                GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon.decalType == type &&
                 playerWeapon == null)
             {
-                playerWeapon = GMController.instance.playerInfo[playerNumber].playerController.currentWeapon;
+                playerWeapon = GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon;
             }
 
             // assign this depot to the weapon

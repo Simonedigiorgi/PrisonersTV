@@ -10,7 +10,7 @@ namespace Character.Decisions
     {
         public override bool Decide(EnemiesAIStateController controller)
         {
-            if (!controller.m_EnemyController.playerSeen || !GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.isAlive)
+            if (!controller.m_EnemyController.playerSeen || !GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.isAlive)
                 return true;
             else
                 return false;

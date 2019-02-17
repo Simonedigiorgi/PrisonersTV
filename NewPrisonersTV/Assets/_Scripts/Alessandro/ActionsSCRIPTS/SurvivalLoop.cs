@@ -20,13 +20,13 @@ namespace GM.Actions
 
             for (int i = 0; i < controller.m_GM.playerInfo.Length; i++)
             {
-                if (controller.m_GM.playerInfo[i].playerController.isAlive)
+                if (controller.m_GM.playerInfo[i].PlayerController.isAlive)
                 {
                     // Player life
-                    if (controller.m_GM.playerInfo[i].playerController.currentLife <= 0)
+                    if (controller.m_GM.playerInfo[i].PlayerController.currentLife <= 0)
                     {
-                        controller.m_GM.playerInfo[i].playerController.currentLife = 0;
-                        controller.m_GM.playerInfo[i].playerController.isAlive = false;
+                        controller.m_GM.playerInfo[i].PlayerController.currentLife = 0;
+                        controller.m_GM.playerInfo[i].PlayerController.isAlive = false;
                         GMController.instance.UI.SetContinueText(i); // set continue text if needed
                     }
                 }

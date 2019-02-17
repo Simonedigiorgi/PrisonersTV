@@ -17,14 +17,14 @@ namespace AI.Actions
         {
             if (controller.m_EnemyController.currentViewTimer <= 0)
             { // check distance between target and enemy without Vector2.Distance
-                float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position).sqrMagnitude;
-                if (rayDistance <= (controller.enemyStats.chasingView * controller.enemyStats.chasingView) && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.isAlive)
+                float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position).sqrMagnitude;
+                if (rayDistance <= (controller.enemyStats.chasingView * controller.enemyStats.chasingView) && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.isAlive)
                 {
                     controller.m_EnemyController.numRayHitPlayer = 0;                  
                     for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
                     {
-                        Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, Color.red);                  
-                        if(Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position,controller.m_EnemyController.lineCastHits ,controller.enemyStats.obstacleMask) <= 0)
+                        Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position, Color.red);                  
+                        if(Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position,controller.m_EnemyController.lineCastHits ,controller.enemyStats.obstacleMask) <= 0)
                         {
                             controller.m_EnemyController.numRayHitPlayer++;   
                         }

@@ -19,7 +19,7 @@ namespace AI.Actions
             // set the player as destination---------------------------------------------------------
             if (controller.m_EnemyController.currentPathTimer <= 0 && controller.enemyStats.enemyLevel <= 2)
             {
-                controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
+                controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].Player.transform.position;
                 controller.m_EnemyController.currentPathTimer = controller.enemyStats.pathCheckFrequenzy;
             }
             //change agent speed if is on NavLink----------------------------------------------------
@@ -31,12 +31,12 @@ namespace AI.Actions
             else // if the agent is closer than the stopping distance then stops itself  
             {
                 controller.m_EnemyController.agent.velocity = Vector3.zero;
-                controller.m_EnemyController.lookAtPlayer = new Vector3(GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position.x, controller.m_EnemyController.thisTransform.position.y, 0);
+                controller.m_EnemyController.lookAtPlayer = new Vector3(GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].Player.transform.position.x, controller.m_EnemyController.thisTransform.position.y, 0);
                 controller.m_EnemyController.thisTransform.LookAt(controller.m_EnemyController.lookAtPlayer);
             }
             //---------------------------------------------------------------------------------------
             // if the player is in reach the agent will attack 
-            float biteDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position).sqrMagnitude;
+            float biteDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].Player.transform.position).sqrMagnitude;
             if (biteDistance <= (controller.enemyStats.triggerBiteDistance * controller.enemyStats.triggerBiteDistance) && controller.m_EnemyController.currentBiteTimer <= 0)
             {
                 controller.m_EnemyController.enemyAnim.SetTrigger("Bite"); 

@@ -20,13 +20,13 @@ namespace GM.Actions
             {
                 for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
                 {
-                    if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
+                    if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
                     {
                         GMController.instance.gameStart = false;                                        // pause the scripts
 
                         Time.timeScale = 0;
                     }
-                    else if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].playerController.m_ControlConfig.pauseInput.ToString()))
+                    else if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
                     {
                         GMController.instance.gameStart = true;
 

@@ -145,7 +145,7 @@ namespace Character
             DestroyCurrentWeapon();
             GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerDeathPoints);// sub tension
             //reset score
-            GMController.instance.playerInfo[playerNumber].score = 0; // reset score
+            GMController.instance.playerInfo[playerNumber].Score = 0; // reset score
             GMController.instance.UI.UpdateScoreUI(playerNumber); // update score on UI
             rb.isKinematic = false;
             canRespawn = true;

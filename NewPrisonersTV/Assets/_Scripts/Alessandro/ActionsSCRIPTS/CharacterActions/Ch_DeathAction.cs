@@ -18,7 +18,7 @@ namespace Character.Actions
             if (GMController.instance.gameStart)
             {
                 //Call the Respawn method
-                controller.m_CharacterController.PlayerRespawn(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].playerSpawnPoint);
+                controller.m_CharacterController.PlayerRespawn(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].PlayerSpawnPoint);
             }
         }
 

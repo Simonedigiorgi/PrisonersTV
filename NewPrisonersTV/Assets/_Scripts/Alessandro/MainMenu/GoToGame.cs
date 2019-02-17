@@ -18,7 +18,7 @@ public class GoToGame : MonoBehaviour
         {
             modality[i].playerNumber = playerNumber;
         }
-        GMController.instance.PlayersInputConfig = new CharacterControlConfig[playerNumber];
+        GMController.instance.PlayersInputConfig = new ConfigInUse[playerNumber];
         //Debug.Log(GMController.instance.PlayersInputConfig.Length);
         buttons.SetActive(false);
     }

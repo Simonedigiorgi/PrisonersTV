@@ -47,11 +47,11 @@ public class PerforationBullet : MonoBehaviour
     {
         if (GMController.instance.gameStart && magazineReady)
         {
-            if (GMController.instance.playerInfo[playerNumber].playerController.currentWeapon != null && 
-                GMController.instance.playerInfo[playerNumber].playerController.currentWeapon.perfBullet == type &&
+            if (GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon != null && 
+                GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon.perfBullet == type &&
                 playerWeapon == null)
             {
-                playerWeapon = GMController.instance.playerInfo[playerNumber].playerController.currentWeapon;
+                playerWeapon = GMController.instance.playerInfo[playerNumber].PlayerController.currentWeapon;
             }
 
             if(playerWeapon != null)

@@ -18,14 +18,14 @@ namespace AI.Actions
         {
             if (controller.enemyStats.enemyLevel <= 2 && controller.m_EnemyController.currentViewTimer <= 0)
             {
-                float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position).sqrMagnitude;
-                if (rayDistance <= (controller.enemyStats.chasingView * controller.enemyStats.chasingView) && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.isAlive)
+                float rayDistance = (controller.m_EnemyController.thisTransform.position - GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position).sqrMagnitude;
+                if (rayDistance <= (controller.enemyStats.chasingView * controller.enemyStats.chasingView) && GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.isAlive)
                 {
                     controller.m_EnemyController.numRayHitPlayer = 0;                     
                     for (int y = 0; y < controller.m_EnemyController.raycastEyes.Length; y++)
                     {
-                        Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, Color.red);
-                        if (Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.TargetForEnemies.position, controller.m_EnemyController.lineCastHits, controller.enemyStats.obstacleMask) <= 0)
+                        Debug.DrawLine(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position, Color.red);
+                        if (Physics2D.LinecastNonAlloc(controller.m_EnemyController.raycastEyes[y].position, GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.TargetForEnemies.position, controller.m_EnemyController.lineCastHits, controller.enemyStats.obstacleMask) <= 0)
                         {
                             controller.m_EnemyController.numRayHitPlayer++;
                         }
@@ -46,11 +46,11 @@ namespace AI.Actions
             {                             
                 if (controller.m_EnemyController.currentPathTimer <= 0)
                 {   // assign path to agent and calculate path to player   
-                    controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].player.transform.position;
+                    controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].Player.transform.position;
                     controller.m_EnemyController.agent.CalculatePath(controller.m_EnemyController.agent.destination, controller.m_EnemyController.path);
                     
                     // check if the target is still alive
-                    if(!GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].playerController.isAlive)
+                    if(!GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].PlayerController.isAlive)
                         controller.m_EnemyController.playerSeen = false;
                     // reset path timer
                     controller.m_EnemyController.currentPathTimer = controller.enemyStats.pathCheckFrequenzy;

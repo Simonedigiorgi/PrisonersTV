@@ -25,7 +25,7 @@ public class ChooseModality : MonoBehaviour
         }
         else
         {           
-            GMController.instance.PlayersInputConfig[0] = controllerAssignment.playersConfig[0];
+            GMController.instance.PlayersInputConfig[0]= new ConfigInUse(GMController.instance.SelectedInputConfig[0]); 
             GMController.instance.NextLevel();
         }
     }

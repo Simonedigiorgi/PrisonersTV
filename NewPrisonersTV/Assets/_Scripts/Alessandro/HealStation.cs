@@ -34,7 +34,7 @@ public class HealStation : MonoBehaviour
 
     public void UseStation(_CharacterController player)
     {
-        if (avaible && GMController.instance.playerInfo[player.playerNumber].score >= price)
+        if (avaible && GMController.instance.playerInfo[player.playerNumber].Score >= price)
         { 
             if (player.currentLife < player.m_CharStats.life)
             {
@@ -43,7 +43,7 @@ public class HealStation : MonoBehaviour
                 if (player.currentLife > player.m_CharStats.life)
                     player.currentLife = player.m_CharStats.life;
                 Debug.Log(healAmmount + "  " + player.currentLife);
-                GMController.instance.playerInfo[player.playerNumber].score -= price; // subtract payment from score
+                GMController.instance.playerInfo[player.playerNumber].Score -= price; // subtract payment from score
                 GMController.instance.UI.UpdateScoreUI(player.playerNumber); // update score on UI
                 GMController.instance.UI.UpdateLifeUI(player.playerNumber);// update life on UI
                 Debug.Log("cured");

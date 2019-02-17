@@ -22,7 +22,7 @@ public class ShotgunParticleBullet : ParticleEmitterRaycastBullet
             transform.position = spawnPoint.position;
             dir = spawnPoint.position + spawnPoint.right;
             // set the lower bullet on a straight line 
-            if (GMController.instance.playerInfo[membership].playerController.facingRight)
+            if (GMController.instance.playerInfo[membership].PlayerController.facingRight)
                 dir -= transform.up * offset * i; 
             else
                 dir += transform.up * offset * i;

@@ -2,10 +2,17 @@
 using Character;
 public class PlayerInfo
 {
-    public GameObject player;
-    public _CharacterController playerController;
-    public Transform playerSpawnPoint;
-    public int score;
+    private GameObject player;
+    private _CharacterController playerController;
+    private Transform playerSpawnPoint;
+    private int score;
+    private int controllerNumber;
+
+    public GameObject Player { get { return player; } }
+    public _CharacterController PlayerController { get { return playerController; } }
+    public Transform PlayerSpawnPoint { get { return playerSpawnPoint; } }
+    public int Score { get { return score; } set { score = value; } }
+    public int ControllerNumber { get { return controllerNumber; } set { controllerNumber = value; } }
 
     public PlayerInfo(GameObject Player, _CharacterController PlayerController, Transform PlayerSpawnPoint, int Score)
     {

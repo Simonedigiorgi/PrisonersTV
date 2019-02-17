@@ -36,7 +36,7 @@ public class EnemyBulletParticle : MonoBehaviour
 
         // emission
         transform.position = spawnPoint.position;
-        Vector3 targetDir = GMController.instance.playerInfo[i].playerController.TargetForEnemies.position - transform.position;
+        Vector3 targetDir = GMController.instance.playerInfo[i].PlayerController.TargetForEnemies.position - transform.position;
         Vector2 dir = Vector3.RotateTowards(spawnPoint.position, targetDir, 360f, 0); 
         transform.rotation = Quaternion.LookRotation(dir);
         thisParticle.Emit(1);

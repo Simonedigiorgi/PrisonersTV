@@ -71,7 +71,7 @@ public class EnemyBat : _EnemyController
     {
         yield return new WaitForEndOfFrame();
 
-        GMController.instance.playerInfo[enemyOwnership].score += (m_EnemyStats.points * GMController.instance.tensionStats.scoreMultiXLevel[GMController.instance.currentTensionMulti - 1]); // add points to player
+        GMController.instance.playerInfo[enemyOwnership].Score += (m_EnemyStats.points * GMController.instance.tensionStats.scoreMultiXLevel[GMController.instance.currentTensionMulti - 1]); // add points to player
         GMController.instance.UI.UpdateScoreUI(enemyOwnership);//Update score on UI
         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyKillPoints);// add tension
         if (GMController.instance.GetBatsCount() == GMController.instance.maxBats)  // if the bat count is at max then restart the timer of all spawns to give some time between the kill and the new spawn

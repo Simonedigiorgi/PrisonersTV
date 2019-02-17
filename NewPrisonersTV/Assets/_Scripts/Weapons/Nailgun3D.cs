@@ -43,7 +43,7 @@ public class Nailgun3D : Weapon3D
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
             // destroy this weapon and eneable the base one
-            GMController.instance.playerInfo[weaponOwnership].playerController.EnableBaseWeapon();
+            GMController.instance.playerInfo[weaponOwnership].PlayerController.EnableBaseWeapon();
         }
     }
 }

@@ -31,7 +31,7 @@ public class EnemyKamikaze : _EnemyController
         yield return new WaitForEndOfFrame();
         if (enemyOwnership >= 0)
         {
-            GMController.instance.playerInfo[enemyOwnership].score += (m_EnemyStats.points * GMController.instance.tensionStats.scoreMultiXLevel[GMController.instance.currentTensionMulti - 1]); // add points to player
+            GMController.instance.playerInfo[enemyOwnership].Score += (m_EnemyStats.points * GMController.instance.tensionStats.scoreMultiXLevel[GMController.instance.currentTensionMulti - 1]); // add points to player
             GMController.instance.UI.UpdateScoreUI(enemyOwnership);//Update score on UI 
         }
         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.enemyKillPoints); // add tension

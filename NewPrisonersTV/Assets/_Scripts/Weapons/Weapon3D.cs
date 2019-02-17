@@ -121,7 +121,7 @@ public class Weapon3D : MonoBehaviour
             autoFire = false;
             source.PlayOneShot(emptySound, emptyVolume);
             // destroy this weapon and eneable the base one
-            GMController.instance.playerInfo[weaponOwnership].playerController.EnableBaseWeapon();
+            GMController.instance.playerInfo[weaponOwnership].PlayerController.EnableBaseWeapon(); 
         }
     }
 
