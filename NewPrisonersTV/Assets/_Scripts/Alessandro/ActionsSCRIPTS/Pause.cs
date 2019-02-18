@@ -20,21 +20,45 @@ namespace GM.Actions
             {
                 for (int i = 0; i < GMController.instance.playerInfo.Length; i++)
                 {
-                    if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString()+ 
-                                                                               (GMController.instance.playerInfo[i].ControllerNumber+1)+ 
-                                                                               GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString())) 
+                    // CONTROLLER
+                    if (GMController.instance.playerInfo[i].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
                     {
-                        GMController.instance.gameStart = false;                                        // pause the scripts
+                        if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString() +
+                                                                               (GMController.instance.playerInfo[i].ControllerIndex + 1) +
+                                                                               GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
+                        {
+                            GMController.instance.gameStart = false;                                        // pause the scripts
 
-                        Time.timeScale = 0;
+                            Time.timeScale = 0;
+                        }
+                        else 
+                        if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString() +
+                                                                                         (GMController.instance.playerInfo[i].ControllerIndex + 1) +
+                                                                                         GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
+                        {
+                            GMController.instance.gameStart = true;
+
+                            Time.timeScale = 1;
+                        }
                     }
-                    else if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString() +
-                                                                                     (GMController.instance.playerInfo[i].ControllerNumber+1) +
-                                                                                     GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
+                    // KEYBOARD/MOUSE
+                    else
                     {
-                        GMController.instance.gameStart = true;
+                        if (GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString() +
+                                                                              GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
+                        {
+                            GMController.instance.gameStart = false;                                        // pause the scripts
 
-                        Time.timeScale = 1;
+                            Time.timeScale = 0;
+                        }
+                        else
+                       if (!GMController.instance.gameStart && Input.GetButtonDown(GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.controller.ToString() +
+                                                                                        GMController.instance.playerInfo[i].PlayerController.m_ControlConfig.pauseInput.ToString()))
+                        {
+                            GMController.instance.gameStart = true;
+
+                            Time.timeScale = 1;
+                        }
                     }
                 }
             }

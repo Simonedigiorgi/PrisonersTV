@@ -13,7 +13,7 @@ public class GoToGame : MonoBehaviour
     public void SetNumber()
     {
         modalityPanel.SetActive(true);
-        GMController.instance.eventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(GMController.instance.eventSystem));
+        GMController.instance.CurrentEventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
         for (int i = 0; i < modality.Length; i++)
         {
             modality[i].playerNumber = playerNumber;
@@ -27,6 +27,6 @@ public class GoToGame : MonoBehaviour
     {
         modalityPanel.SetActive(false);
         buttons.SetActive(true); 
-        GMController.instance.eventSystem.SetSelectedGameObject(buttons.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.eventSystem));
+        GMController.instance.CurrentEventSystem.SetSelectedGameObject(buttons.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
     }
 }

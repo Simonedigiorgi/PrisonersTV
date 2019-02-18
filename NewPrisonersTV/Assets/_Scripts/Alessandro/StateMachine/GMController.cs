@@ -23,9 +23,9 @@ public class GMController : MonoBehaviour
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
     public TensionBarStats tensionStats;
-    public ConfigInUse keyboardConfig;
-    public CharacterControlConfig[] allJ1Configs;                           // all controls configuration avaible for joystick 1
-    public CharacterControlConfig[] allJ2Configs;                           // all controls configuration avaible for joystick 2
+    [SerializeField] private ConfigInUse keyboardConfig;
+    public ConfigInUse KeyboardConfig { get { return keyboardConfig; } }
+    public CharacterControlConfig[] allJConfigs;                           // all controls configuration avaible for joystick 1
     //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -125,19 +125,26 @@ public class GMController : MonoBehaviour
     [HideInInspector] public bool canResultCR = true;                                // if false starts the result coroutine
     [HideInInspector] public bool canChooseReward = false;                           // if true enables the reward script
     [HideInInspector] public bool readyForNextLevel = false;                         // if true allow to skip to the next level
-     public int[] CrescentScoreOrder;                                // list of players from the one with less score to the one with top score 
+    [HideInInspector] public int[] CrescentScoreOrder;                                // list of players from the one with less score to the one with top score 
     [HideInInspector] public int lastPlayerThatChooseReward;                         // records the last player number that choose a weapon reward
     [HideInInspector] public int rewardIndex = 0;                                    // used for choosing rewards
     #endregion
     //------------------------------------------------------------------
-    // temp
-    public int numbOfJoysticks; 
-    StandaloneInputModule inputModule;
-    public EventSystem eventSystem;
+    #region CONTROLLERS VARIABLES
 
-    public int[] actualControllersOrder; // real index of the connected controllers
+    private StandaloneInputModule inputModule;
+    private EventSystem currentEventSystem;
+    private int numbOfJoysticks;  // real number of controller connected and actual lenght of actualControllersOrder array
+
+    public EventSystem CurrentEventSystem { get { return currentEventSystem; } }
+    public int NumbOfJoysticks { get { return numbOfJoysticks; } }
+
+    private int[] actualControllersOrder; // real index of the connected controllers
+    public int[] ActualControllersOrder { get { return actualControllersOrder; } }
     public int lastControllerAssigned = -1;
 
+    #endregion
+    //------------------------------------------------------------------
     void Awake() 
     {
         #region SINGLETON
@@ -158,9 +165,7 @@ public class GMController : MonoBehaviour
         if (currentMode != GAMEMODE.Menu)
         {
             inGame = true;
-            //check if controller get connected/disconnected
-           StartCoroutine(ControllerCheck());
-
+           
             // if the total score array doesn't exist the initialize one
             if (playersTotalScore == null)
                 playersTotalScore = new int[playersRequired];
@@ -168,8 +173,8 @@ public class GMController : MonoBehaviour
             // GETS THE REQUIRED COMPONENTS FOR THIS MODE
             UI = FindObjectOfType<UIManager3D>();
             bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
-            eventSystem = UI.eventSystem;
-            inputModule = eventSystem.GetComponent<StandaloneInputModule>();
+            currentEventSystem = UI.eventSystem;
+            inputModule = currentEventSystem.GetComponent<StandaloneInputModule>();
             CrescentScoreOrder = new int[playersRequired]; 
             playerInfo = new PlayerInfo[playersRequired];                     
 
@@ -182,6 +187,9 @@ public class GMController : MonoBehaviour
             currentTensionMax = (int)(tensionStats.standardBarCapacity * (1 + (tensionStats.multiXPlayer * (playerInfo.Length-1))));
             tensionThreshold = currentTensionMax / tensionStats.barDivision;
             TensionBonusSetup();
+
+            //check if controller get connected/disconnected, MUST BE CALLED AFTER THE PLAYER SETUP
+            StartCoroutine(ControllerCheck());
 
             // if the current level is not the first of the current game
             if (levelCount > 1)
@@ -201,15 +209,15 @@ public class GMController : MonoBehaviour
         // refill the scene pool and reset total scores, weaponRewards
         if(currentMode == GAMEMODE.Menu)
         {
-            eventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
-            inputModule = eventSystem.GetComponent<StandaloneInputModule>(); 
+            currentEventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
+            inputModule = currentEventSystem.GetComponent<StandaloneInputModule>(); 
            
             // if there are no inputs selected then assign defaults
             if (selectedInputConfig == null)
             {
                 selectedInputConfig = new CharacterControlConfig[playersRequired];
-                selectedInputConfig[0] = allJ1Configs[0];
-                selectedInputConfig[1] = allJ2Configs[0];
+                selectedInputConfig[0] = allJConfigs[0];
+                selectedInputConfig[1] = allJConfigs[1];
             }
             //check if controller get connected/disconnected
             StartCoroutine(MenuInputCheck());
@@ -399,42 +407,6 @@ public class GMController : MonoBehaviour
             tensionBonus[i] = new TensionBonus(tensionStats.bonus[i]);   
         }
     }
-
-    public void ChangeInputModule(CharacterControlConfig player, int index)
-    {
-        if (index != -1)
-        {
-            inputModule.horizontalAxis = player.controller.ToString() + index + player.LeftHorizontal.ToString();
-            inputModule.verticalAxis = player.controller.ToString() + index + player.LeftVertical.ToString();
-            inputModule.submitButton = player.controller.ToString() + index + player.interactInput.ToString();
-            inputModule.cancelButton = player.controller.ToString() + index + player.shootInput.ToString();
-        }
-        else
-        {
-            inputModule.horizontalAxis = player.controller.ToString() + player.LeftHorizontal.ToString();
-            inputModule.verticalAxis = player.controller.ToString() + player.LeftVertical.ToString();
-            inputModule.submitButton = player.controller.ToString() + player.interactInput.ToString();
-            inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
-        }
-    }
-   
-    public bool CheckInputControls(CharacterControlConfig player,int index) 
-    {
-        if (index != -1)
-        {
-            return (inputModule.horizontalAxis == player.controller.ToString() + index + player.LeftHorizontal.ToString() &&
-                  inputModule.verticalAxis == player.controller.ToString() + index + player.LeftVertical.ToString() &&
-                  inputModule.submitButton == player.controller.ToString() + index + player.interactInput.ToString() &&
-                  inputModule.cancelButton == player.controller.ToString() + index + player.shootInput.ToString());
-        }
-        else
-        {
-            return (inputModule.horizontalAxis == player.controller.ToString() + player.LeftHorizontal.ToString() &&
-                 inputModule.verticalAxis == player.controller.ToString() + player.LeftVertical.ToString() &&
-                 inputModule.submitButton == player.controller.ToString() + player.interactInput.ToString() &&
-                 inputModule.cancelButton == player.controller.ToString() + player.shootInput.ToString());
-        }
-    }
     //------------------------------------------------------------------
     public void SetActive(bool state)
     {
@@ -518,7 +490,7 @@ public class GMController : MonoBehaviour
             playerInfo[i].PlayerController.playerNumber = i;
             // assign controller config
             playerInfo[i].PlayerController.m_ControlConfig = playersInputConfig[i].PlayerInputConfig;
-            playerInfo[i].ControllerNumber = playersInputConfig[i].ControllerNumber; 
+            playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex; 
   
             playerInfo[i].PlayerController.SetupBaseWeapon();
             bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
@@ -547,132 +519,7 @@ public class GMController : MonoBehaviour
             }
         }
     }
-    public IEnumerator MenuInputCheck() 
-    {
-        while (true)
-        {
-            // controller detection, if there are joystick plugged in
-            Debug.Log(Input.GetJoystickNames().Length);
-            actualControllersOrder = new int[Input.GetJoystickNames().Length];
-            numbOfJoysticks = 0;
-            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
-            {
-                Debug.Log(Input.GetJoystickNames()[i]);
-                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
-                {
-                    actualControllersOrder[numbOfJoysticks] = i; 
-                    numbOfJoysticks++;
-                }
-            }
 
-            if (currentMode == GAMEMODE.Menu)
-            {
-                if (numbOfJoysticks == 0)
-                {
-                    ChangeInputModule(keyboardConfig.PlayerInputConfig,-1);
-                    keyboardInUse = true;
-                }
-                else
-                {
-                    ChangeInputModule(allJ1Configs[0], actualControllersOrder[0]+1);
-                    keyboardInUse = false; 
-                }
-            }
-            yield return new WaitForSeconds(2); 
-        }
-    }
-    public IEnumerator ControllerCheck()
-    {
-        while(true)
-        {
-
-            // controller detection, if there are joystick plugged in
-            //Debug.Log(Input.GetJoystickNames().Length);
-            numbOfJoysticks = 0;
-            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
-            {
-               // Debug.Log(Input.GetJoystickNames()[i]);
-                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
-                    numbOfJoysticks++;
-            }           
-          
-            if (currentMode != GAMEMODE.Menu)
-            {
-                if(playersRequired == 1)
-                {
-                    //if there are no joystick plugged in assign keyboard to the only player                   
-                    if (numbOfJoysticks == 0 && playerInfo != null)
-                    {
-                        playerInfo[0].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
-                        playerInfo[0].ControllerNumber = -1;
-                        keyboardInUse = true;
-                    }
-                    else if (numbOfJoysticks != 0 && playerInfo != null && playerInfo[0].PlayerController.m_ControlConfig == keyboardConfig.PlayerInputConfig)
-                    {
-                        playerInfo[0].PlayerController.m_ControlConfig = playersInputConfig[0].PlayerInputConfig;
-                        playerInfo[0].ControllerNumber = playersInputConfig[0].ControllerNumber;
-                    }
-                }
-                else
-                {
-                    // if there are enough controllers for all the players check if someone was using keyboard and move controls to joystick instead
-                    if (numbOfJoysticks >= playersRequired)
-                    {
-                        for (int y = 0; y < Input.GetJoystickNames().Length; y++)
-                        {
-                            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[y]))   
-                            {
-                                int keyboardUser = 0;
-                                bool assigned = false;
-                                for (int x = 0; x < playersInputConfig.Length; x++)
-                                {
-                                    if (playersInputConfig[x] != null)
-                                    {
-                                        if (playersInputConfig[x].ControllerNumber == y)
-                                            assigned = true;
-                                        if (playersInputConfig[x].PlayerInputConfig == keyboardConfig.PlayerInputConfig)
-                                            keyboardUser = x;
-                                    }
-                                }
-                                if (!assigned)
-                                {
-                                    playersInputConfig[keyboardUser].ControllerNumber = y;
-                                    playersInputConfig[keyboardUser].PlayerInputConfig = selectedInputConfig[keyboardUser];
-                                    keyboardInUse = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    // if there are noth enough controllers connected and the keyboard was noth assigned 
-                    // find the first player without a controller and assign keyboard
-                    else if (!keyboardInUse)
-                    {
-                        for (int i = 0; i < playersInputConfig.Length; i++)
-                        {
-                            bool assigned = false;
-                            for (int y = 0; y < Input.GetJoystickNames().Length; y++)
-                            {
-                                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[y]) && playersInputConfig[i].ControllerNumber == y)
-                                {
-                                    assigned = true;                                   
-                                }
-
-                            }
-                            if (!assigned)
-                            {
-                                playersInputConfig[i].ControllerNumber = -1;
-                                playersInputConfig[i].PlayerInputConfig = selectedInputConfig[i];
-                                keyboardInUse = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            yield return new WaitForSeconds(2);
-        }
-    }
     public IEnumerator StartGameCD()
     {
         // game start countdown
@@ -720,6 +567,199 @@ public class GMController : MonoBehaviour
         }
 
     }
+    //------------------------------------------------------------------
+    #region CONTROLLERS
+
+    public void ChangeInputModule(CharacterControlConfig player, int index)
+    {
+        if (index != -1)
+        {
+            inputModule.horizontalAxis = player.controller.ToString() + index + player.LeftHorizontal.ToString();
+            inputModule.verticalAxis = player.controller.ToString() + index + player.LeftVertical.ToString();
+            inputModule.submitButton = player.controller.ToString() + index + player.interactInput.ToString();
+            inputModule.cancelButton = player.controller.ToString() + index + player.shootInput.ToString();
+        }
+        else
+        {
+            inputModule.horizontalAxis = player.controller.ToString() + player.LeftHorizontal.ToString();
+            inputModule.verticalAxis = player.controller.ToString() + player.LeftVertical.ToString();
+            inputModule.submitButton = player.controller.ToString() + player.interactInput.ToString();
+            inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
+        }
+    }
+    public bool CheckInputControls(CharacterControlConfig player,int index) 
+    {
+        if (index != -1)
+        {
+            return (inputModule.horizontalAxis == player.controller.ToString() + index + player.LeftHorizontal.ToString() &&
+                  inputModule.verticalAxis == player.controller.ToString() + index + player.LeftVertical.ToString() &&
+                  inputModule.submitButton == player.controller.ToString() + index + player.interactInput.ToString() &&
+                  inputModule.cancelButton == player.controller.ToString() + index + player.shootInput.ToString());
+        }
+        else
+        {
+            return (inputModule.horizontalAxis == player.controller.ToString() + player.LeftHorizontal.ToString() &&
+                 inputModule.verticalAxis == player.controller.ToString() + player.LeftVertical.ToString() &&
+                 inputModule.submitButton == player.controller.ToString() + player.interactInput.ToString() &&
+                 inputModule.cancelButton == player.controller.ToString() + player.shootInput.ToString());
+        }
+    }
+
+    public IEnumerator MenuInputCheck() 
+    {
+        while (true)
+        {
+            // controller detection, if there are joystick plugged in
+            //Debug.Log(Input.GetJoystickNames().Length);
+            actualControllersOrder = new int[Input.GetJoystickNames().Length];
+            numbOfJoysticks = 0;
+            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                //Debug.Log(Input.GetJoystickNames()[i]);
+                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+                {
+                    actualControllersOrder[numbOfJoysticks] = i; 
+                    numbOfJoysticks++;
+                }
+            }
+
+            if (currentMode == GAMEMODE.Menu)
+            {
+                if (numbOfJoysticks == 0)
+                {
+                    ChangeInputModule(keyboardConfig.PlayerInputConfig, keyboardConfig.ControllerIndex);
+                    keyboardInUse = true;
+                }
+                else
+                {
+                    ChangeInputModule(allJConfigs[0], actualControllersOrder[0]+1);
+                    keyboardInUse = false; 
+                }
+            }
+            yield return new WaitForSeconds(1); 
+        }
+    }
+    public IEnumerator ControllerCheck() //MUST BE CALLED AFTER THE PLAYER SETUP
+    {
+        // substitute the keyboard in player config with the corresponding selected config
+        for (int i = 0; i < playersInputConfig.Length; i++)
+        {
+            if(playersInputConfig[i].ControllerIndex == keyboardConfig.ControllerIndex)
+            {
+                playersInputConfig[i].PlayerInputConfig = selectedInputConfig[i];
+                playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber;
+                playersInputConfig[i].ControllerNumber = playersRequired - 1;
+                break;
+            }
+        }
+
+        while(true)
+        {
+            Debug.Log(keyboardInUse); 
+            // controller detection, if there are joystick plugged in
+            actualControllersOrder = new int[Input.GetJoystickNames().Length];
+            
+            numbOfJoysticks = 0;
+            for (int i = 0; i < Input.GetJoystickNames().Length; i++)
+            {
+                if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+                {
+                    actualControllersOrder[numbOfJoysticks] = i;                 
+                    numbOfJoysticks++;
+                }
+            }
+
+            // if there are controllers
+            if (numbOfJoysticks > 0)
+            {
+                // update controller index in the player input config and player info
+                for (int i = 0; i < playersInputConfig.Length; i++)
+                {
+                    for (int y = 0; y < numbOfJoysticks; y++)
+                    {
+                        if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y])
+                        {
+                            playersInputConfig[i].ControllerIndex = actualControllersOrder[y];
+                            if (playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)
+                                playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
+                        }
+                    }
+                    // if there are less controller than needed set to default the controller number of the inactive players
+                    if (numbOfJoysticks-1 < i && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)// CHECK LATER
+                    {
+                        playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber; 
+                    }
+                   
+                }
+            }
+            
+
+            if (currentMode != GAMEMODE.Menu)
+            {
+                if(playersRequired == 1)
+                {
+                    //if there are no joystick plugged in assign keyboard to the only player                   
+                    if (numbOfJoysticks == 0 && !keyboardInUse)
+                    { 
+                        playerInfo[playersRequired - 1].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
+                        playerInfo[playersRequired - 1].ControllerIndex = keyboardConfig.ControllerIndex;
+                        keyboardInUse = true;
+                    }
+                    else if (numbOfJoysticks > 0 && playerInfo[playersRequired - 1].ControllerIndex == keyboardConfig.ControllerIndex)
+                    {                      
+                        playerInfo[playersRequired - 1].PlayerController.m_ControlConfig = playersInputConfig[playersRequired - 1].PlayerInputConfig;
+                        playerInfo[playersRequired - 1].ControllerIndex = playersInputConfig[playersRequired - 1].ControllerIndex;
+                        keyboardInUse = false;
+                    }
+
+                }            
+                else  
+                {                 
+                    // if there are enough controllers for all the players check if someone was using keyboard and move controls to joystick instead
+                    if (numbOfJoysticks >= playersRequired)
+                    {
+                        if (keyboardInUse)
+                        {
+                            for (int i = 0; i < playerInfo.Length; i++)
+                            {
+                                if (playerInfo[i].ControllerIndex == keyboardConfig.ControllerIndex)
+                                {
+                                    playerInfo[i].PlayerController.m_ControlConfig = playersInputConfig[i].PlayerInputConfig;
+                                    playerInfo[i].ControllerIndex = actualControllersOrder[playersInputConfig[i].ControllerNumber];
+                                    keyboardInUse = false;
+                                }
+                            }
+                        }
+                    }
+                    // if there are not enough controllers connected and the keyboard was not assigned 
+                    else 
+                    {                                           
+                        if (!keyboardInUse)  
+                        {
+                            if (numbOfJoysticks >= 1)
+                            {
+                                playerInfo[numbOfJoysticks].ControllerIndex = keyboardConfig.ControllerIndex;
+                                playerInfo[numbOfJoysticks].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
+                                keyboardInUse = true;
+                            }
+                            else
+                            {
+                                playerInfo[0].ControllerIndex = keyboardConfig.ControllerIndex;
+                                playerInfo[0].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
+                                keyboardInUse = true;
+                            }
+                        }                        
+                    }
+                }
+
+                
+            }
+              
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    #endregion
     //------------------------------------------------------------------
     #region EnemyCount Get/Set
 

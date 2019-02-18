@@ -16,31 +16,7 @@ public class AssignPlayerController : MonoBehaviour
         {
             playerButtons[i].SetActive(true);
         }
-        GMController.instance.eventSystem.SetSelectedGameObject(playerButtons[0], new BaseEventData(GMController.instance.eventSystem));        
-    }
-   
-    private void AssignControllerNumber(int i)
-    {
-        Debug.Log(Input.GetJoystickNames().Length);
-        for (int j = 0; j < Input.GetJoystickNames().Length; j++)
-        {
-            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[j]))
-            {
-                Debug.Log(Input.GetJoystickNames()); 
-                bool assigned = false;
-                for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
-                {
-                    if (GMController.instance.PlayersInputConfig[x] != null &&
-                        GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
-                        assigned = true;
-                }
-                if (!assigned)
-                {
-                    GMController.instance.PlayersInputConfig[i].ControllerNumber = j;
-                    break;
-                }
-            }
-        }
+        GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[0], new BaseEventData(GMController.instance.CurrentEventSystem));        
     }
 
     public void AssignConfig() 
@@ -48,44 +24,47 @@ public class AssignPlayerController : MonoBehaviour
         for (int i = 0; i < GMController.instance.PlayersRequired; i++)
         {
             // the selected button index is equal to the player index in game
-            if (GMController.instance.eventSystem.currentSelectedGameObject == playerButtons[i])
+            if (GMController.instance.CurrentEventSystem.currentSelectedGameObject == playerButtons[i])
             {
 
-                if (GMController.instance.CheckInputControls(GMController.instance.keyboardConfig.PlayerInputConfig,-1))
+                if (GMController.instance.CheckInputControls(GMController.instance.KeyboardConfig.PlayerInputConfig, GMController.instance.KeyboardConfig.ControllerIndex)) 
                 {
-                    GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.keyboardConfig.PlayerInputConfig);
-                    GMController.instance.PlayersInputConfig[i].ControllerNumber = -1;
+                    GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.KeyboardConfig.PlayerInputConfig);
+                    GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.KeyboardConfig.ControllerIndex;
+                    GMController.instance.PlayersInputConfig[i].ControllerNumber = GMController.instance.KeyboardConfig.ControllerNumber;
                     keyboardUser = 1;
                 }
                 else 
                 {   // search for a configuration matching the input module config and assign it to player
+                    bool found = false;
                     for (int y = 0; y < GMController.instance.SelectedInputConfig.Length; y++)
                     {
-                        for (int j = 0; j < Input.GetJoystickNames().Length; j++)
+                        for (int j = 0; j < GMController.instance.NumbOfJoysticks; j++)
                         {
-                            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[j]))
+                           
+                            if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y],j+1))
                             {
-                                if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y],j+1))
-                                {
-                                    GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);                 
-                                    bool assigned = false;
-                                    for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
-                                    {
-                                        if (GMController.instance.PlayersInputConfig[x] != null &&
-                                            GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
-                                            assigned = true;
-                                    }
-                                    if (!assigned)
-                                    {
-                                        GMController.instance.PlayersInputConfig[i].ControllerNumber = j;
-                                        GMController.instance.lastControllerAssigned = j;
-                                        break;
-                                    }
-                                }
-                               
-                            }
+                                 GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);
+                                 bool assigned = false;
+                                 for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
+                                 {
+                                     if (GMController.instance.PlayersInputConfig[x] != null &&
+                                         GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
+                                         assigned = true;
+                                 }
+                                 if (!assigned)
+                                 {
+                                     GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.ActualControllersOrder[j];
+                                     GMController.instance.PlayersInputConfig[i].ControllerNumber = j; 
+                                     Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() +"  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[y].ToString());  
+                                     GMController.instance.lastControllerAssigned = j;
+                                     found = true;
+                                     break;
+                                 }
+                            }                          
                         }
-                       
+                        if (found)
+                            break;
                     }                  
                 }
                                             
@@ -95,22 +74,17 @@ public class AssignPlayerController : MonoBehaviour
                 {
                     if (playerButtons[y].activeSelf)
                     {
-                        GMController.instance.eventSystem.SetSelectedGameObject(playerButtons[y], new BaseEventData(GMController.instance.eventSystem));
+                        GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[y], new BaseEventData(GMController.instance.CurrentEventSystem));
                         break;
                     }
                 }
                 // give menu control to the next player
                 if (assignmentTurn < GMController.instance.PlayersRequired)
                 {
-                    for (int y = 0; y < GMController.instance.actualControllersOrder.Length; y++)
+                    if(GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned] < GMController.instance.NumbOfJoysticks - 1)
                     {
-                        if(GMController.instance.actualControllersOrder[y] == GMController.instance.lastControllerAssigned && GMController.instance.actualControllersOrder[y]< GMController.instance.actualControllersOrder.Length-1)
-                        {
-                            GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.actualControllersOrder[y+1]+1); 
-                            break;
-                        }
+                        GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
                     }
-                    
                 }
                 break;
             }
@@ -121,9 +95,9 @@ public class AssignPlayerController : MonoBehaviour
             GMController.instance.NextLevel(); 
         }
 
-        if (GMController.instance.numbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
+        if (GMController.instance.NumbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
         {           
-            GMController.instance.ChangeInputModule(GMController.instance.keyboardConfig.PlayerInputConfig,-1);
+            GMController.instance.ChangeInputModule(GMController.instance.KeyboardConfig.PlayerInputConfig, GMController.instance.KeyboardConfig.ControllerIndex);
             GMController.instance.KeyboardInUse = true;                     
         }
     }

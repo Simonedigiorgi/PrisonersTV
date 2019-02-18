@@ -5,15 +5,27 @@ using UnityEngine;
 public class ConfigInUse : IEquatable<ConfigInUse>
 {
     [SerializeField] private CharacterControlConfig playerInputConfig;
-    [SerializeField] private int controllerNumber; // real index of the controller in use
+    [SerializeField] private int controllerIndex; // real index in the unity static array of the controller in use 
+    [SerializeField] private int controllerNumber;// real real order of the controller attached, used to mantain control of the selected player
+
+    private int defaultNumber = -100;
 
     public CharacterControlConfig PlayerInputConfig { get { return playerInputConfig; } set { playerInputConfig = value; } }
+    public int ControllerIndex { get { return controllerIndex; } set { controllerIndex = value; } }
     public int ControllerNumber { get { return controllerNumber; } set { controllerNumber = value; } }
+    public int DefaultNumber { get { return defaultNumber; } }
 
     public ConfigInUse(CharacterControlConfig playerConf)
     {
         playerInputConfig = playerConf;
-        controllerNumber = -100;
+        controllerIndex = defaultNumber;
+        controllerNumber = defaultNumber;
+    }
+
+    public void DefaultController()
+    {
+        controllerIndex = defaultNumber;
+        controllerNumber = defaultNumber;
     }
 
     public bool Equals(ConfigInUse other)

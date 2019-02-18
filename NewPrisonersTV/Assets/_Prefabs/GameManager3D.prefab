@@ -8673,13 +8673,11 @@ MonoBehaviour:
   keyboardConfig:
     playerInputConfig: {fileID: 11400000, guid: 27e17beb4b1132d439985c976937a10e,
       type: 2}
+    controllerIndex: -1
     controllerNumber: -1
-  allJ1Configs:
+  allJConfigs:
   - {fileID: 11400000, guid: 0d088b24e7a2c9e4e8d8c8f26be0f297, type: 2}
   - {fileID: 11400000, guid: 76894f54e7da7364aad1defdee0b75c3, type: 2}
-  allJ2Configs:
-  - {fileID: 11400000, guid: 4277a8be0a3933a44a6ecc19180e9620, type: 2}
-  - {fileID: 11400000, guid: bab1de7a028da424c8bf6750fa495483, type: 2}
   gameTimer: 100
   keySpawnTime: 90
   key: {fileID: 1972455539571672}
@@ -8728,6 +8726,9 @@ MonoBehaviour:
   rewardIndex: 0
   numbOfJoysticks: 0
   eventSystem: {fileID: 0}
+  actualControllersOrder: 
+  oldControllerOrder: 
+  lastControllerAssigned: -1
 --- !u!114 &114808938804017134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8890,7 +8891,7 @@ MonoBehaviour:
   groundCheck: {fileID: 1388345411682282}
   playerCollider: {fileID: 61009034355861944}
   m_CharStats: {fileID: 11400000, guid: b342c0454d45e2a4fb0a908edbcbfffd, type: 2}
-  m_ControlConfig: {fileID: 11400000, guid: 4277a8be0a3933a44a6ecc19180e9620, type: 2}
+  m_ControlConfig: {fileID: 0}
   respawnTime: 3
   rb: {fileID: 0}
   currentWeapon: {fileID: 0}

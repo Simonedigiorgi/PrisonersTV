@@ -16,7 +16,7 @@ namespace Character
         [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;
         [BoxGroup("Components")] public CharacterStats m_CharStats;
-        [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;     
+        [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;
 
         [BoxGroup("Rules")] public float respawnTime;
         //---------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace Character
         [HideInInspector] public bool facingRight;                                                  // Player flip facing
         [HideInInspector] public bool isInDash;                                                     // Check if the player is in dash
         [HideInInspector] public bool isGrounded;                                                   // Is the Player on ground?   
-        [HideInInspector] public bool isAlive ;                                                     // Is player still Alive?
+        [HideInInspector] public bool isAlive;                                                     // Is player still Alive?
         [HideInInspector] public bool canRespawn;                                                   // Indicates if the players can respawn
         [HideInInspector] public bool startDeathCR;                                                 // If true can start the death coroutine
 
@@ -61,7 +61,7 @@ namespace Character
             {
                 if (startDeathCR)
                 {
-                    StartCoroutine(Death()); 
+                    StartCoroutine(Death());
                 }
             }
         }
@@ -70,51 +70,24 @@ namespace Character
         {
             if (isAlive)
             {
-                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.interactInput.ToString()))
+                // if CONTROLLER
+                if (GMController.instance.playerInfo[playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
                 {
-                    collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
+                    TriggerStayInputs(collision, m_ControlConfig.controller.ToString() +
+                                                 (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
+                                                 m_ControlConfig.interactInput.ToString());
                 }
-                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.interactInput.ToString()))
+                else// if KEYBOARD/MOUSE
                 {
-                    Weapon3D weapon = collision.GetComponent<Weapon3D>();
-                    if (!weapon.isGrabbed)
-                    {
-                        weapon.hand = playerRightArm.transform.GetChild(0).gameObject; 
-
-                        weapon.weaponOwnership = playerNumber;
-                        weapon.GrabAndDestroy(this);
-                        GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
-                    }
-                }
-                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.interactInput.ToString()))
-                {
-                    Weapon3D key = collision.GetComponent<Weapon3D>();
-                    if (!key.isGrabbed)
-                    {
-                        key.hand = playerRightArm.transform.GetChild(0).gameObject;
-
-                        key.weaponOwnership = playerNumber;
-                        key.GrabAndDestroy(this);
-                        hasKey = true;
-                    }
-                }
-                if (collision.CompareTag("Exit") &&  hasKey)
-                {
-                    //GMController.instance.NextLevel();
-                    canExit = true;
+                    TriggerStayInputs(collision, m_ControlConfig.controller.ToString() +
+                                                 m_ControlConfig.interactInput.ToString());
                 }
             }
         }
 
         public void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.CompareTag("Exit") )
+            if (collision.CompareTag("Exit"))
             {
                 canExit = false;
             }
@@ -122,20 +95,75 @@ namespace Character
         //---------------------------------------------------------------------------------------
         #region METHODS
 
+        private void TriggerStayInputs (Collider2D collision, string command)
+        {
+            if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(command))
+            {
+                collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
+            }
+            if (collision.CompareTag("Weapon") && Input.GetButtonDown(command))
+            {
+                Weapon3D weapon = collision.GetComponent<Weapon3D>();
+                if (!weapon.isGrabbed)
+                {
+                    weapon.hand = playerRightArm.transform.GetChild(0).gameObject;
+
+                    weapon.weaponOwnership = playerNumber;
+                    weapon.GrabAndDestroy(this);
+                    GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
+                }
+            }
+            if (collision.CompareTag("Key") && Input.GetButtonDown(command))
+            {
+                Weapon3D key = collision.GetComponent<Weapon3D>();
+                if (!key.isGrabbed)
+                {
+                    key.hand = playerRightArm.transform.GetChild(0).gameObject;
+
+                    key.weaponOwnership = playerNumber;
+                    key.GrabAndDestroy(this);
+                    hasKey = true;
+                }
+            }
+            if (collision.CompareTag("Exit") && hasKey)
+            {
+                //GMController.instance.NextLevel();
+                canExit = true;
+            }
+        }
+
         public void PlayerRespawn(Transform spawnPoint)
         {
-            if (Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                    (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                    m_ControlConfig.respawnInput.ToString()) && canRespawn)
+            //if CONTROLLER
+            if (GMController.instance.playerInfo[playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
             {
-                transform.position = spawnPoint.position;
-                isAlive = true;
-                currentLife = m_CharStats.life;
-                EnableBaseWeapon();
-                GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
-                GMController.instance.UI.SetContinueText(playerNumber); // set continue text if needed
-                canRespawn = false;
+                if (Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                   (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
+                                   m_ControlConfig.respawnInput.ToString()) && canRespawn)
+                {
+                    RespawnInstructions(spawnPoint);
+                }
             }
+            else//if KEYBOARD/MOUSE
+            { 
+
+                if (Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                   m_ControlConfig.respawnInput.ToString()) && canRespawn)
+                {
+                    RespawnInstructions(spawnPoint);
+                }
+            }
+           
+        }
+        private void RespawnInstructions(Transform spawnPoint)
+        {
+            transform.position = spawnPoint.position;
+            isAlive = true;
+            currentLife = m_CharStats.life;
+            EnableBaseWeapon();
+            GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
+            GMController.instance.UI.SetContinueText(playerNumber); // set continue text if needed
+            canRespawn = false;
         }
 
         public IEnumerator Death()
@@ -274,30 +302,67 @@ namespace Character
         {
             // Set arm layer active
             playerAnim.SetLayerWeight(1, 1);
-            // Enable The rotation of joystick
-            if (m_ControlConfig.moveArmWithRightStick)  
-            {
-                JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightVertical.ToString());
+
+            // CONTROLLER
+            if (GMController.instance.playerInfo[playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
+            {   
+                // Enable The rotation of joystick
+                if (m_ControlConfig.moveArmWithRightStick)
+                {
+                    JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) + m_ControlConfig.RightVertical.ToString());
+                }
+                else if (!m_ControlConfig.moveArmWithRightStick)
+                {
+                    JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) + m_ControlConfig.LeftVertical.ToString());
+                }
             }
-            else if (!m_ControlConfig.moveArmWithRightStick)
+            // KEYBOARD/MOUSE
+            else
             {
-                JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftVertical.ToString());
+                // Enable The rotation of joystick
+                if (m_ControlConfig.moveArmWithRightStick)
+                {
+                    JoyRotation(m_ControlConfig.controller.ToString() + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + m_ControlConfig.RightVertical.ToString());
+                }
+                else if (!m_ControlConfig.moveArmWithRightStick)
+                {  
+                    JoyRotation(m_ControlConfig.controller.ToString() + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + m_ControlConfig.LeftVertical.ToString());
+                }
             }
-            
+
             if (hasWeapon)
             {
-                // Shoot condition equipped weapon
-                if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.shootInput.ToString()))
+                // CONTROLLER
+                if (GMController.instance.playerInfo[playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
                 {
-                    CallShoot(arm, currentWeapon);
+                    // Shoot condition equipped weapon
+                    if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                       (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, currentWeapon);
+                    }
+                    if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                                       (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, currentWeapon);
+                    }
                 }
-                if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.shootInput.ToString()))
+                // KEYBOARD/MOUSE
+                else
                 {
-                    CallShoot(arm, currentWeapon);
+                    // Shoot condition equipped weapon
+                    if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, currentWeapon);
+                    }
+                    if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, currentWeapon);
+                    }
                 }
 
                 // Flip the weapon when equipped
@@ -308,18 +373,37 @@ namespace Character
             }
             else
             {
-                // Shoot condition base weapon
-                if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
-                                                          (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                //If CONTROLLER
+                if (GMController.instance.playerInfo[playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
+                {   
+                    // Shoot condition base weapon
+                    if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                          (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
                                                            m_ControlConfig.shootInput.ToString()))
-                {
-                    CallShoot(arm, baseWeapon);
+                    {
+                        CallShoot(arm, baseWeapon);
+                    }
+                    else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                       (GMController.instance.playerInfo[playerNumber].ControllerIndex + 1) +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, baseWeapon);
+                    }
                 }
-                else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
-                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
-                                                                   m_ControlConfig.shootInput.ToString()))
-                {
-                    CallShoot(arm, baseWeapon); 
+                else // if KEYBOARD/MOUSE
+                { 
+                    // Shoot condition base weapon
+                    if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                           m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, baseWeapon);
+                    }
+                    else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                       m_ControlConfig.shootInput.ToString()))
+                    {
+                        CallShoot(arm, baseWeapon);
+                    }
+
                 }
 
                 // Flip the weapon when equipped
@@ -330,15 +414,15 @@ namespace Character
             }
 
 
-            // Rotation of Muzz effect
-            if (m_ControlConfig.moveArmWithRightStick)
-            {
-                armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightVertical.ToString(), arm);
-            }
-            else if (!m_ControlConfig.moveArmWithRightStick)
-            {
-                armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftVertical.ToString(), arm);
-            }
+            //// Rotation of Muzz effect
+            //if (m_ControlConfig.moveArmWithRightStick)
+            //{
+            //    armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex+1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex+1) + m_ControlConfig.RightVertical.ToString(), arm);
+            //}
+            //else if (!m_ControlConfig.moveArmWithRightStick)
+            //{
+            //    armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex+1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex+1) + m_ControlConfig.LeftVertical.ToString(), arm);
+            //}
             return;
         }
 

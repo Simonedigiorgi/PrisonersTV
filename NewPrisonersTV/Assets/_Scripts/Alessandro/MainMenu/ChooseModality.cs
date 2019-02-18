@@ -26,10 +26,12 @@ public class ChooseModality : MonoBehaviour
         else
         {           
             GMController.instance.PlayersInputConfig[0] = new ConfigInUse(GMController.instance.SelectedInputConfig[0]);
-            if(GMController.instance.numbOfJoysticks == 0)
-                GMController.instance.PlayersInputConfig[0].ControllerNumber = 0;
+            if (GMController.instance.NumbOfJoysticks == 0)
+                GMController.instance.PlayersInputConfig[0].ControllerIndex = 0;              
             else
-                GMController.instance.PlayersInputConfig[0].ControllerNumber = GMController.instance.actualControllersOrder[0];
+                GMController.instance.PlayersInputConfig[0].ControllerIndex = GMController.instance.ActualControllersOrder[0];
+              
+            GMController.instance.PlayersInputConfig[0].ControllerNumber = 0;
 
             GMController.instance.NextLevel();
         }

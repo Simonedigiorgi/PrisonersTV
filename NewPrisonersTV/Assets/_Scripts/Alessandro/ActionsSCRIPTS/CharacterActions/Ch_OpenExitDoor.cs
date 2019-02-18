@@ -15,14 +15,31 @@ namespace Character.Actions
 
         public void OpenDoor(CharacterStateController controller)
         {
-            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() + 
-                                    (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber+1) +
-                                    controller.m_CharacterController.m_ControlConfig.interactInput.ToString()) && controller.m_CharacterController.canExit)
+            // CONTROLLER
+            if (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
             {
-                GMController.instance.gameEnded = true;
-                GMController.instance.gameStart = false;
-                GMController.instance.canResultCR = false;
-                Time.timeScale = 0;
+                if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
+                                    (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerIndex + 1) +
+                                    controller.m_CharacterController.m_ControlConfig.interactInput.ToString()) && controller.m_CharacterController.canExit)
+                {
+                    GMController.instance.gameEnded = true;
+                    GMController.instance.gameStart = false;
+                    GMController.instance.canResultCR = false;
+                    Time.timeScale = 0;
+                }
+            }
+            // KEYBOARD/MOUSE
+            else
+            {
+                if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
+                                      controller.m_CharacterController.m_ControlConfig.interactInput.ToString()) && controller.m_CharacterController.canExit)
+                {
+                    GMController.instance.gameEnded = true;
+                    GMController.instance.gameStart = false;
+                    GMController.instance.canResultCR = false;
+                    Time.timeScale = 0;
+                }
+
             }
         }
 

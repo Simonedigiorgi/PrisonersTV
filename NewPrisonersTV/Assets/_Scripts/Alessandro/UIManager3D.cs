@@ -259,12 +259,12 @@ public class UIManager3D : MonoBehaviour
     {     
         for (int i = 0; i < GMController.instance.bonusWeapon.rewardButtons.Length; i++)
         {
-            if (GMController.instance.bonusWeapon.rewardButtons[i].RewardButton != null && GMController.instance.bonusWeapon.rewardButtons[i].RewardButton == GMController.instance.eventSystem.currentSelectedGameObject)
-            {
+            if (GMController.instance.bonusWeapon.rewardButtons[i].RewardButton != null && GMController.instance.bonusWeapon.rewardButtons[i].RewardButton == GMController.instance.CurrentEventSystem.currentSelectedGameObject)
+            { 
                 GMController.instance.AddWeaponReward(GMController.instance.lastPlayerThatChooseReward, GMController.instance.bonusWeapon.bonusPool[GMController.instance.bonusWeapon.rewardButtons[i].PoolIndex]);
                 GMController.instance.bonusWeapon.rewardButtons[i].ButtonT.parent = null;
                 Destroy(GMController.instance.bonusWeapon.rewardButtons[i].RewardButton);
-                GMController.instance.eventSystem.SetSelectedGameObject(GMController.instance.bonusWeapon.panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.eventSystem));
+                GMController.instance.CurrentEventSystem.SetSelectedGameObject(GMController.instance.bonusWeapon.panel.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
 
                 break;
             }
