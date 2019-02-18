@@ -23,12 +23,14 @@ namespace GM.Actions
                 // set the current player controls in the Input Module
                 if (!GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.canGetReward)
                 {
-                    GMController.instance.ChangeInputModule(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig);
+                    GMController.instance.ChangeInputModule(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig, (GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].ControllerNumber+1));
                     GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.canGetReward = true;
                 }
                         
                 // if the players press the interact button then the next one can choose
-                if(Input.GetButtonDown(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.interactInput.ToString()))
+                if(Input.GetButtonDown(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.controller.ToString() +
+                                      (GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].ControllerNumber+1) + 
+                                       GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.interactInput.ToString()))
                 {
                     GMController.instance.lastPlayerThatChooseReward = GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex];
                     GMController.instance.UI.RewardSelection(); 

@@ -70,11 +70,15 @@ namespace Character
         {
             if (isAlive)
             {
-                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
+                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.interactInput.ToString()))
                 {
                     collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
                 }
-                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
+                if (collision.CompareTag("Weapon") && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
                     if (!weapon.isGrabbed)
@@ -86,7 +90,9 @@ namespace Character
                         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
                     }
                 }
-                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.interactInput.ToString()))
+                if (collision.CompareTag("Key") && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.interactInput.ToString()))
                 {
                     Weapon3D key = collision.GetComponent<Weapon3D>();
                     if (!key.isGrabbed)
@@ -118,7 +124,9 @@ namespace Character
 
         public void PlayerRespawn(Transform spawnPoint)
         {
-            if (Input.GetButtonDown(m_ControlConfig.respawnInput.ToString()) && canRespawn)
+            if (Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                    (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                    m_ControlConfig.respawnInput.ToString()) && canRespawn)
             {
                 transform.position = spawnPoint.position;
                 isAlive = true;
@@ -189,9 +197,9 @@ namespace Character
             baseWeapon.weaponOwnership = playerNumber;// give the right ownership to the weapon
             baseWeapon.bullet.membership = playerNumber;// give the right ownership to the bullet
         }
-        public void armRotation(HORIZONTAL h, VERTICAL v, GameObject arm)
+        public void armRotation(string h, string v, GameObject arm)
         {
-            Vector3 position = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);           
+            Vector3 position = new Vector3(Input.GetAxis(h), Input.GetAxis(v), 0);           
 
             float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
 
@@ -230,9 +238,9 @@ namespace Character
         }
 
         // Rotate the Joystick of 360°
-        public void JoyRotation(HORIZONTAL h, VERTICAL v)
+        public void JoyRotation(string h, string v)
         {
-            Vector3 joyPosition = new Vector3(Input.GetAxis(h.ToString()), Input.GetAxis(v.ToString()), 0);
+            Vector3 joyPosition = new Vector3(Input.GetAxis(h), Input.GetAxis(v), 0);
 
             float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
             playerAnim.SetFloat("Arm", angle);
@@ -269,20 +277,28 @@ namespace Character
             // Enable The rotation of joystick
             if (m_ControlConfig.moveArmWithRightStick)  
             {
-                JoyRotation(m_ControlConfig.RightHorizontal, m_ControlConfig.RightVertical);
+                JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightVertical.ToString());
             }
             else if (!m_ControlConfig.moveArmWithRightStick)
             {
-                JoyRotation(m_ControlConfig.LeftHorizontal, m_ControlConfig.LeftVertical);
+                JoyRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftVertical.ToString());
             }
             
             if (hasWeapon)
             {
                 // Shoot condition equipped weapon
-                if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.shootInput.ToString()))
+                if (!currentWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.shootInput.ToString()))
+                {
                     CallShoot(arm, currentWeapon);
-                if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.shootInput.ToString()))
+                }
+                if (currentWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.shootInput.ToString()))
+                {
                     CallShoot(arm, currentWeapon);
+                }
 
                 // Flip the weapon when equipped
                 if (facingRight && currentWeapon.isGrabbed)
@@ -291,12 +307,20 @@ namespace Character
                     currentWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
             else
-            { 
+            {
                 // Shoot condition base weapon
-                if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.shootInput.ToString()))
+                if (baseWeapon.autoFire && Input.GetButton(m_ControlConfig.controller.ToString() +
+                                                          (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                           m_ControlConfig.shootInput.ToString()))
+                {
                     CallShoot(arm, baseWeapon);
-                else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.shootInput.ToString()))
-                    CallShoot(arm, baseWeapon);  
+                }
+                else if (!baseWeapon.autoFire && Input.GetButtonDown(m_ControlConfig.controller.ToString() +
+                                                                   (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) +
+                                                                   m_ControlConfig.shootInput.ToString()))
+                {
+                    CallShoot(arm, baseWeapon); 
+                }
 
                 // Flip the weapon when equipped
                 if (facingRight)
@@ -309,11 +333,11 @@ namespace Character
             // Rotation of Muzz effect
             if (m_ControlConfig.moveArmWithRightStick)
             {
-                armRotation(m_ControlConfig.RightHorizontal, m_ControlConfig.RightVertical, arm);
+                armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.RightVertical.ToString(), arm);
             }
             else if (!m_ControlConfig.moveArmWithRightStick)
             {
-                armRotation(m_ControlConfig.LeftHorizontal, m_ControlConfig.LeftVertical, arm);
+                armRotation(m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftHorizontal.ToString(), m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerNumber+1) + m_ControlConfig.LeftVertical.ToString(), arm);
             }
             return;
         }

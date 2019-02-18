@@ -16,7 +16,9 @@ namespace Character.Actions
         public void DoubleJump(CharacterStateController controller)
         {
             // Jump Input
-            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()) && controller.m_CharacterController.extraJumps > 0)
+            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
+                                    (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber+1) + 
+                                    controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()) && controller.m_CharacterController.extraJumps > 0)
             {
                 controller.m_CharacterController.extraJumps--;
                 controller.m_CharacterController.rb.velocity = Vector2.up * controller.m_CharacterController.m_CharStats.jump;

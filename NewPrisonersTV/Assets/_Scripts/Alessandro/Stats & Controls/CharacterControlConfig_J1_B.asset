@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fac1c45c44743e4da872eaeede1133a, type: 3}
   m_Name: CharacterControlConfig_J1_B
   m_EditorClassIdentifier: 
+  controller: 0
   LeftHorizontal: 0
   LeftVertical: 0
-  RightHorizontal: 2
-  RightVertical: 2
+  RightHorizontal: 1
+  RightVertical: 1
   shootInput: 2
   jumpInput: 0
   interactInput: 1
-  respawnInput: 8
-  pauseInput: 10
-  moveArmWithRightStick: 0
-  controllerNumber: 0
+  respawnInput: 4
+  pauseInput: 5
+  moveArmWithRightStick: 1

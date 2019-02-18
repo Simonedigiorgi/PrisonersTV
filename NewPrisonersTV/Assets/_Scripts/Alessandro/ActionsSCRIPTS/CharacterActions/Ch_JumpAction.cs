@@ -17,8 +17,11 @@ namespace Character.Actions
         {
             controller.m_CharacterController.extraJumps = controller.m_CharacterController.m_CharStats.extraJumpValue;
             // Jump Input
-            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()))
+            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
+                                    (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber+1) +
+                                    controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()))
             {
+                Debug.Log(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber);
                 controller.m_CharacterController.rb.velocity = Vector2.up * controller.m_CharacterController.m_CharStats.jump;
                 GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
             }

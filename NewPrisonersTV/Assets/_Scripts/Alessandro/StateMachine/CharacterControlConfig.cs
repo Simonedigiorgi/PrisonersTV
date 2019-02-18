@@ -7,6 +7,7 @@ public class CharacterControlConfig : ScriptableObject
 {
     [Header("Character Buttons")]
     [Space(10)]
+    public TYPEOFINPUT controller;
     public HORIZONTAL LeftHorizontal;                                           // Get Horiziontal
     public VERTICAL LeftVertical;                                             // Get Vertical
     public HORIZONTAL RightHorizontal;                                           // Get Horiziontal

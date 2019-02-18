@@ -90,11 +90,11 @@ public class GMController : MonoBehaviour
     #endregion
     //------------------------------------------------------------------
     #region STATIC VARIABLES
-    private static int playersRequired = 4;                                         // number of players for the current game mode
+    private static int playersRequired = 2;                                         // number of players for the current game mode 
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
     private static ConfigInUse[] playersInputConfig;                                // controls configurations to assign to each player in order
-    private static CharacterControlConfig[] selectedInputConfig;                    // controls configurations selected for each controller
+    private static CharacterControlConfig[] selectedInputConfig;                    // controls configurations selected for each controller (used pre-game)
     private static bool keyboardInUse;                                              // true if a player is using keyboard
 
     // copy of the lists of scenes used for the pool
@@ -134,6 +134,9 @@ public class GMController : MonoBehaviour
     public int numbOfJoysticks; 
     StandaloneInputModule inputModule;
     public EventSystem eventSystem;
+
+    public int[] actualControllersOrder; // real index of the connected controllers
+    public int lastControllerAssigned = -1;
 
     void Awake() 
     {
@@ -397,19 +400,40 @@ public class GMController : MonoBehaviour
         }
     }
 
-    public void ChangeInputModule(CharacterControlConfig player)
+    public void ChangeInputModule(CharacterControlConfig player, int index)
     {
-        inputModule.horizontalAxis = player.LeftHorizontal.ToString();
-        inputModule.verticalAxis = player.LeftVertical.ToString();
-        inputModule.submitButton = player.interactInput.ToString();
-        inputModule.cancelButton = player.shootInput.ToString();
+        if (index != -1)
+        {
+            inputModule.horizontalAxis = player.controller.ToString() + index + player.LeftHorizontal.ToString();
+            inputModule.verticalAxis = player.controller.ToString() + index + player.LeftVertical.ToString();
+            inputModule.submitButton = player.controller.ToString() + index + player.interactInput.ToString();
+            inputModule.cancelButton = player.controller.ToString() + index + player.shootInput.ToString();
+        }
+        else
+        {
+            inputModule.horizontalAxis = player.controller.ToString() + player.LeftHorizontal.ToString();
+            inputModule.verticalAxis = player.controller.ToString() + player.LeftVertical.ToString();
+            inputModule.submitButton = player.controller.ToString() + player.interactInput.ToString();
+            inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
+        }
     }
-    public bool CheckInputControls(CharacterControlConfig player)
+   
+    public bool CheckInputControls(CharacterControlConfig player,int index) 
     {
-        return (inputModule.horizontalAxis == player.LeftHorizontal.ToString() &&
-                  inputModule.verticalAxis == player.LeftVertical.ToString() &&
-                  inputModule.submitButton == player.interactInput.ToString() &&
-                  inputModule.cancelButton == player.shootInput.ToString());
+        if (index != -1)
+        {
+            return (inputModule.horizontalAxis == player.controller.ToString() + index + player.LeftHorizontal.ToString() &&
+                  inputModule.verticalAxis == player.controller.ToString() + index + player.LeftVertical.ToString() &&
+                  inputModule.submitButton == player.controller.ToString() + index + player.interactInput.ToString() &&
+                  inputModule.cancelButton == player.controller.ToString() + index + player.shootInput.ToString());
+        }
+        else
+        {
+            return (inputModule.horizontalAxis == player.controller.ToString() + player.LeftHorizontal.ToString() &&
+                 inputModule.verticalAxis == player.controller.ToString() + player.LeftVertical.ToString() &&
+                 inputModule.submitButton == player.controller.ToString() + player.interactInput.ToString() &&
+                 inputModule.cancelButton == player.controller.ToString() + player.shootInput.ToString());
+        }
     }
     //------------------------------------------------------------------
     public void SetActive(bool state)
@@ -529,24 +553,28 @@ public class GMController : MonoBehaviour
         {
             // controller detection, if there are joystick plugged in
             Debug.Log(Input.GetJoystickNames().Length);
+            actualControllersOrder = new int[Input.GetJoystickNames().Length];
             numbOfJoysticks = 0;
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
                 Debug.Log(Input.GetJoystickNames()[i]);
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+                {
+                    actualControllersOrder[numbOfJoysticks] = i; 
                     numbOfJoysticks++;
+                }
             }
 
             if (currentMode == GAMEMODE.Menu)
             {
                 if (numbOfJoysticks == 0)
                 {
-                    ChangeInputModule(keyboardConfig.PlayerInputConfig);
+                    ChangeInputModule(keyboardConfig.PlayerInputConfig,-1);
                     keyboardInUse = true;
                 }
                 else
                 {
-                    ChangeInputModule(allJ1Configs[0]);
+                    ChangeInputModule(allJ1Configs[0], actualControllersOrder[0]+1);
                     keyboardInUse = false; 
                 }
             }
@@ -559,11 +587,11 @@ public class GMController : MonoBehaviour
         {
 
             // controller detection, if there are joystick plugged in
-            Debug.Log(Input.GetJoystickNames().Length);
+            //Debug.Log(Input.GetJoystickNames().Length);
             numbOfJoysticks = 0;
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
-                Debug.Log(Input.GetJoystickNames()[i]);
+               // Debug.Log(Input.GetJoystickNames()[i]);
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
                     numbOfJoysticks++;
             }           
@@ -576,6 +604,7 @@ public class GMController : MonoBehaviour
                     if (numbOfJoysticks == 0 && playerInfo != null)
                     {
                         playerInfo[0].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
+                        playerInfo[0].ControllerNumber = -1;
                         keyboardInUse = true;
                     }
                     else if (numbOfJoysticks != 0 && playerInfo != null && playerInfo[0].PlayerController.m_ControlConfig == keyboardConfig.PlayerInputConfig)

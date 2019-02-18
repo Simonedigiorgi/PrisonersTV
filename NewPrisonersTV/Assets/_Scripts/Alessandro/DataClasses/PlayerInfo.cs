@@ -6,7 +6,7 @@ public class PlayerInfo
     private _CharacterController playerController;
     private Transform playerSpawnPoint;
     private int score;
-    private int controllerNumber;
+    private int controllerNumber; // real index of the controller in use
 
     public GameObject Player { get { return player; } }
     public _CharacterController PlayerController { get { return playerController; } }

@@ -15,7 +15,9 @@ namespace Character.Actions
 
         public void OpenDoor(CharacterStateController controller)
         {
-            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.interactInput.ToString()) && controller.m_CharacterController.canExit)
+            if (Input.GetButtonDown(controller.m_CharacterController.m_ControlConfig.controller.ToString() + 
+                                    (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber+1) +
+                                    controller.m_CharacterController.m_ControlConfig.interactInput.ToString()) && controller.m_CharacterController.canExit)
             {
                 GMController.instance.gameEnded = true;
                 GMController.instance.gameStart = false;

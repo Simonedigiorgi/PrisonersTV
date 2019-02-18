@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConfigInUse : IEquatable<ConfigInUse>
 {
     [SerializeField] private CharacterControlConfig playerInputConfig;
-    [SerializeField] private int controllerNumber;
+    [SerializeField] private int controllerNumber; // real index of the controller in use
 
     public CharacterControlConfig PlayerInputConfig { get { return playerInputConfig; } set { playerInputConfig = value; } }
     public int ControllerNumber { get { return controllerNumber; } set { controllerNumber = value; } }

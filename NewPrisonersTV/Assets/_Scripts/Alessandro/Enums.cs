@@ -1,12 +1,11 @@
 ﻿
-public enum HORIZONTAL {J1_Horizontal, J2_Horizontal, J1_Horizontal_R, J2_Horizontal_R, KM_Horizontal,  KM_LeftRight};
+public enum HORIZONTAL {_Horizontal, _Horizontal_R, _LeftRight};
 
-public enum VERTICAL { J1_Vertical, J2_Vertical, J1_Vertical_R, J2_Vertical_R, KM_Vertical, KM_UpDown};
+public enum VERTICAL { _Vertical, _Vertical_R, _UpDown};
 
-public enum BUTTONS { J1_Button_A, J1_Button_B, J1_Button_X, J1_Button_Y,
-                      J2_Button_A, J2_Button_B, J2_Button_X, J2_Button_Y,
-                      J1_Start, J2_Start, J1_Pause, J2_Pause, 
-                      KM_Jump, KM_Shoot, KM_Dodge, KM_Headbutt, KM_Pause, KM_Start, KM_Interact };   
+public enum BUTTONS { _Button_A, _Button_B, _Button_X, _Button_Y, _Start,_Pause, _Jump, _Shoot, _Dodge, _Headbutt, _Interact };    
+
+public enum TYPEOFINPUT { J, KM}
 
 public enum GAMEMODE { Menu, Story, Survival, Boss};
 

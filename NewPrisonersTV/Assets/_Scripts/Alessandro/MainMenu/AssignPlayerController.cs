@@ -22,21 +22,21 @@ public class AssignPlayerController : MonoBehaviour
     private void AssignControllerNumber(int i)
     {
         Debug.Log(Input.GetJoystickNames().Length);
-        for (int y = 0; y < Input.GetJoystickNames().Length; y++)
+        for (int j = 0; j < Input.GetJoystickNames().Length; j++)
         {
-            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[y]))
+            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[j]))
             {
                 Debug.Log(Input.GetJoystickNames()); 
                 bool assigned = false;
                 for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
                 {
                     if (GMController.instance.PlayersInputConfig[x] != null &&
-                        GMController.instance.PlayersInputConfig[x].ControllerNumber == y)
+                        GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
                         assigned = true;
                 }
                 if (!assigned)
                 {
-                    GMController.instance.PlayersInputConfig[i].ControllerNumber = y;
+                    GMController.instance.PlayersInputConfig[i].ControllerNumber = j;
                     break;
                 }
             }
@@ -51,7 +51,7 @@ public class AssignPlayerController : MonoBehaviour
             if (GMController.instance.eventSystem.currentSelectedGameObject == playerButtons[i])
             {
 
-                if (GMController.instance.CheckInputControls(GMController.instance.keyboardConfig.PlayerInputConfig))
+                if (GMController.instance.CheckInputControls(GMController.instance.keyboardConfig.PlayerInputConfig,-1))
                 {
                     GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.keyboardConfig.PlayerInputConfig);
                     GMController.instance.PlayersInputConfig[i].ControllerNumber = -1;
@@ -61,14 +61,31 @@ public class AssignPlayerController : MonoBehaviour
                 {   // search for a configuration matching the input module config and assign it to player
                     for (int y = 0; y < GMController.instance.SelectedInputConfig.Length; y++)
                     {
-                        if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y]))
+                        for (int j = 0; j < Input.GetJoystickNames().Length; j++)
                         {
-                            GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);
-                            // assign controller index to the configuration to identify what joystick use it
-                            if (GMController.instance.numbOfJoysticks > 0)
-                                AssignControllerNumber(i); 
-                            break;
+                            if (!string.IsNullOrEmpty(Input.GetJoystickNames()[j]))
+                            {
+                                if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y],j+1))
+                                {
+                                    GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);                 
+                                    bool assigned = false;
+                                    for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
+                                    {
+                                        if (GMController.instance.PlayersInputConfig[x] != null &&
+                                            GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
+                                            assigned = true;
+                                    }
+                                    if (!assigned)
+                                    {
+                                        GMController.instance.PlayersInputConfig[i].ControllerNumber = j;
+                                        GMController.instance.lastControllerAssigned = j;
+                                        break;
+                                    }
+                                }
+                               
+                            }
                         }
+                       
                     }                  
                 }
                                             
@@ -83,8 +100,18 @@ public class AssignPlayerController : MonoBehaviour
                     }
                 }
                 // give menu control to the next player
-                if(assignmentTurn < GMController.instance.PlayersRequired)
-                    GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser]);
+                if (assignmentTurn < GMController.instance.PlayersRequired)
+                {
+                    for (int y = 0; y < GMController.instance.actualControllersOrder.Length; y++)
+                    {
+                        if(GMController.instance.actualControllersOrder[y] == GMController.instance.lastControllerAssigned && GMController.instance.actualControllersOrder[y]< GMController.instance.actualControllersOrder.Length-1)
+                        {
+                            GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.actualControllersOrder[y+1]+1); 
+                            break;
+                        }
+                    }
+                    
+                }
                 break;
             }
         }
@@ -96,7 +123,7 @@ public class AssignPlayerController : MonoBehaviour
 
         if (GMController.instance.numbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
         {           
-            GMController.instance.ChangeInputModule(GMController.instance.keyboardConfig.PlayerInputConfig);
+            GMController.instance.ChangeInputModule(GMController.instance.keyboardConfig.PlayerInputConfig,-1);
             GMController.instance.KeyboardInUse = true;                     
         }
     }

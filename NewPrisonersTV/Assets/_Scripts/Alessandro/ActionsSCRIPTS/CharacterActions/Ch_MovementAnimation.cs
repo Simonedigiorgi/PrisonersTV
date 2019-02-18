@@ -15,7 +15,9 @@ namespace Character.Actions
 
         public void MoveAnim(CharacterStateController controller)
         {      
-            float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
+            float moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
+                                            (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerNumber+1) +
+                                            controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
             controller.m_CharacterController.playerAnim.SetFloat("Forward", Mathf.Abs(moveInput));
         }
 
