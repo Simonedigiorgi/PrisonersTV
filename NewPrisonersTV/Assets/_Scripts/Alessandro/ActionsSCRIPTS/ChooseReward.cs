@@ -27,32 +27,14 @@ namespace GM.Actions
                     GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.canGetReward = true;
                 }
 
-                // CONTROLLER
-                if (GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
+                // if the players press the interact button then the next one can choose
+                if (Input.GetButtonDown(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.InputCompiler(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.interactInput.ToString())))
                 {
-                    // if the players press the interact button then the next one can choose
-                    if (Input.GetButtonDown(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.controller.ToString() +
-                                          (GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].ControllerIndex + 1) +
-                                           GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.interactInput.ToString()))
-                    {
-                        GMController.instance.lastPlayerThatChooseReward = GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex];
-                        GMController.instance.UI.RewardSelection();
-                        GMController.instance.rewardIndex++;
-                    }
+                    GMController.instance.lastPlayerThatChooseReward = GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex];
+                    GMController.instance.UI.RewardSelection();
+                    GMController.instance.rewardIndex++;
                 }
-                // KEYBOARD/MOUSE
-                else
-                {
-                    // if the players press the interact button then the next one can choose
-                    if (Input.GetButtonDown(GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.controller.ToString() +
-                                           GMController.instance.playerInfo[GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex]].PlayerController.m_ControlConfig.interactInput.ToString()))
-                    {
-                        GMController.instance.lastPlayerThatChooseReward = GMController.instance.CrescentScoreOrder[GMController.instance.rewardIndex];
-                        GMController.instance.UI.RewardSelection();
-                        GMController.instance.rewardIndex++;
-                    }
-                }
-                
+
             }
             else if(GMController.instance.canChooseReward && GMController.instance.rewardIndex >= GMController.instance.CrescentScoreOrder.Length)
             {

@@ -13,22 +13,10 @@ namespace Character.Actions
             MoveAnim(controller);
         }
 
-        public void MoveAnim(CharacterStateController controller)
+        public void MoveAnim(CharacterStateController controller) 
         {
-            float moveInput;
-            // CONTROLLER
-            if (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerIndex != GMController.instance.KeyboardConfig.ControllerIndex)
-            {
-                moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
-                                            (GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerIndex + 1) +
-                                            controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
-            }
-            // KEYBOARD/MOUSE   
-            else
-            {
-                moveInput = Input.GetAxis(controller.m_CharacterController.m_ControlConfig.controller.ToString() +
-                                           controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString());
-            }
+            // LATER try to substitute with the move input in the character controller
+            float moveInput = Input.GetAxis(controller.m_CharacterController.InputCompiler(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString()));
             controller.m_CharacterController.playerAnim.SetFloat("Forward", Mathf.Abs(moveInput));
         }
 
