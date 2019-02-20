@@ -1971,7 +1971,6 @@ MonoBehaviour:
   - {fileID: 1944968459}
   - {fileID: 1211891666}
   - {fileID: 532188852}
-  keyboardUser: 0
 --- !u!114 &1354422567
 MonoBehaviour:
   m_ObjectHideFlags: 0

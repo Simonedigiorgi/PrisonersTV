@@ -7,8 +7,36 @@ using UnityEngine.UI;
 public class AssignPlayerController : MonoBehaviour
 {
     public GameObject[] playerButtons;
-    public int keyboardUser = 0;
+    private int keyboardUser = 0;
     private int assignmentTurn = 0; // is equal to the index of the player that has to choose
+    private bool isWaiting = false;
+
+    private void Update()
+    {
+        if (isWaiting)
+            StartCoroutine(WaitForControllers());
+    }
+
+    IEnumerator WaitForControllers()
+    {
+        isWaiting = false;
+        GMController.instance.CurrentEventSystem.currentInputModule.DeactivateModule();
+        Debug.Log("INSERT CONTROLLER");
+
+        yield return new WaitUntil(() => GMController.instance.NumbOfJoysticks >= assignmentTurn);
+
+        GMController.instance.CurrentEventSystem.currentInputModule.ActivateModule(); 
+        for (int y = 0; y < playerButtons.Length; y++)
+        {
+            if (playerButtons[y].activeSelf)
+            {
+                GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[y], new BaseEventData(GMController.instance.CurrentEventSystem));
+                break;
+            }
+        }
+        GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
+        Debug.Log("CONTROLLER INSERTED");
+    }
 
     public void ActivateButtons(int playerNumber)
     {
@@ -18,13 +46,13 @@ public class AssignPlayerController : MonoBehaviour
         }
         GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[0], new BaseEventData(GMController.instance.CurrentEventSystem));        
     }
-
+   
     public void AssignConfig() 
     {     
         for (int i = 0; i < GMController.instance.PlayersRequired; i++)
         {
             // the selected button index is equal to the player index in game
-            if (GMController.instance.CurrentEventSystem.currentSelectedGameObject == playerButtons[i])
+            if (GMController.instance.CurrentEventSystem.currentSelectedGameObject == playerButtons[i]) 
             {
 
                 if (GMController.instance.CheckInputControls(GMController.instance.KeyboardConfig.PlayerInputConfig, GMController.instance.KeyboardConfig.ControllerIndex)) 
@@ -42,7 +70,7 @@ public class AssignPlayerController : MonoBehaviour
                         for (int j = 0; j < GMController.instance.NumbOfJoysticks; j++)
                         {
                            
-                            if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y],j+1))
+                            if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y], GMController.instance.ActualControllersOrder[j]+1))
                             {
                                  GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);
                                  bool assigned = false;
@@ -52,7 +80,7 @@ public class AssignPlayerController : MonoBehaviour
                                          GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
                                          assigned = true;
                                  }
-                                 if (!assigned)
+                                 if (!assigned) 
                                  {
                                      GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.ActualControllersOrder[j];
                                      GMController.instance.PlayersInputConfig[i].ControllerNumber = j; 
@@ -78,27 +106,34 @@ public class AssignPlayerController : MonoBehaviour
                         break;
                     }
                 }
-                // give menu control to the next player
-                if (assignmentTurn < GMController.instance.PlayersRequired)
-                {
-                    if(GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned] < GMController.instance.NumbOfJoysticks - 1)
-                    {
-                        GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
-                    }
-                }
-                break;
+              
+                break; 
+            }
+        }
+        // give menu control to the next player
+        if (assignmentTurn < GMController.instance.PlayersRequired)
+        {
+            // if there are enough controller for the next player NEED CHECK 
+            if (GMController.instance.NumbOfJoysticks > GMController.instance.lastControllerAssigned + 1 && GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned] < GMController.instance.NumbOfJoysticks - 1)
+            {
+                GMController.instance.ChangeInputModule(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser], GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
+            }
+            else if (GMController.instance.NumbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
+            {
+                GMController.instance.ChangeInputModule(GMController.instance.KeyboardConfig.PlayerInputConfig, GMController.instance.KeyboardConfig.ControllerIndex);
+                GMController.instance.KeyboardInUse = true;
+            }
+            else // if there are not enough controllers and the keyboard was assigned
+            {
+                isWaiting = true;
             }
         }
         // if all the players are done then starts the game
-        if(assignmentTurn == GMController.instance.PlayersRequired)
+        else if (assignmentTurn == GMController.instance.PlayersRequired)
         {
             GMController.instance.NextLevel(); 
         }
-
-        if (GMController.instance.NumbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
-        {           
-            GMController.instance.ChangeInputModule(GMController.instance.KeyboardConfig.PlayerInputConfig, GMController.instance.KeyboardConfig.ControllerIndex);
-            GMController.instance.KeyboardInUse = true;                     
-        }
+       
+       
     }
 }

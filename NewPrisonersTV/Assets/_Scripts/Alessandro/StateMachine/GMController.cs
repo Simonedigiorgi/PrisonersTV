@@ -135,6 +135,7 @@ public class GMController : MonoBehaviour
     private StandaloneInputModule inputModule;
     private EventSystem currentEventSystem;
     private int numbOfJoysticks;  // real number of controller connected and actual lenght of actualControllersOrder array
+    private bool isControllerIndexPresent; // used to check if the index is used by one of the controllers connected
 
     public EventSystem CurrentEventSystem { get { return currentEventSystem; } }
     public int NumbOfJoysticks { get { return numbOfJoysticks; } }
@@ -587,6 +588,7 @@ public class GMController : MonoBehaviour
             inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
         }
     }
+    
     public bool CheckInputControls(CharacterControlConfig player,int index) 
     {
         if (index != -1)
@@ -610,12 +612,10 @@ public class GMController : MonoBehaviour
         while (true)
         {
             // controller detection, if there are joystick plugged in
-            //Debug.Log(Input.GetJoystickNames().Length);
             actualControllersOrder = new int[Input.GetJoystickNames().Length];
             numbOfJoysticks = 0;
             for (int i = 0; i < Input.GetJoystickNames().Length; i++)
             {
-                //Debug.Log(Input.GetJoystickNames()[i]);
                 if (!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
                 {
                     actualControllersOrder[numbOfJoysticks] = i; 
@@ -632,6 +632,7 @@ public class GMController : MonoBehaviour
                 }
                 else
                 {
+                    // give proper menu controls later
                     ChangeInputModule(allJConfigs[0], actualControllersOrder[0]+1);
                     keyboardInUse = false; 
                 }
@@ -656,7 +657,7 @@ public class GMController : MonoBehaviour
         while(true)
         {
             Debug.Log(keyboardInUse); 
-            // controller detection, if there are joystick plugged in
+            // controller detection, if there are joysticks plugged in
             actualControllersOrder = new int[Input.GetJoystickNames().Length];
             
             numbOfJoysticks = 0;
@@ -668,13 +669,14 @@ public class GMController : MonoBehaviour
                     numbOfJoysticks++;
                 }
             }
-
+           
             // if there are controllers
             if (numbOfJoysticks > 0)
             {
                 // update controller index in the player input config and player info
                 for (int i = 0; i < playersInputConfig.Length; i++)
                 {
+                    isControllerIndexPresent = false;
                     for (int y = 0; y < numbOfJoysticks; y++)
                     {
                         if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y])
@@ -683,9 +685,11 @@ public class GMController : MonoBehaviour
                             if (playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)
                                 playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
                         }
+                        if(playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex == actualControllersOrder[y])
+                            isControllerIndexPresent = true;
                     }
-                    // if there are less controller than needed set to default the controller number of the inactive players
-                    if (numbOfJoysticks-1 < i && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)// CHECK LATER
+                    // if there are less controller than needed set to default the controller number of the inactive players 
+                    if (numbOfJoysticks < playersRequired && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex && !isControllerIndexPresent)
                     {
                         playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber; 
                     }
