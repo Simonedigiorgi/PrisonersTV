@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fac1c45c44743e4da872eaeede1133a, type: 3}
+  m_Name: CharacterControlConfig_KM_Menu
+  m_EditorClassIdentifier: 
+  controller: 1
+  LeftHorizontal: 2
+  LeftVertical: 2
+  RightHorizontal: 0
+  RightVertical: 0
+  shootInput: 7
+  jumpInput: 10
+  interactInput: 6
+  respawnInput: 4
+  pauseInput: 5
+  moveArmWithRightStick: 1

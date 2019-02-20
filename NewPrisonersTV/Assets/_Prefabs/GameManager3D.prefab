@@ -8670,6 +8670,8 @@ MonoBehaviour:
   bulletPool: {fileID: 4006064854236664}
   bulletDepot: {fileID: 11400000, guid: af0cf8cbc017e974e8556c96add48015, type: 2}
   tensionStats: {fileID: 11400000, guid: ba91922d1b616d74bb48e4113dbaf6b2, type: 2}
+  keyboardMenu: {fileID: 11400000, guid: 8cbe06ae374dd8643977deaf311fd0d1, type: 2}
+  JConfigInMenu: {fileID: 11400000, guid: 7b526e2ab4824fb4f9e41ca9fa240313, type: 2}
   keyboardConfig:
     playerInputConfig: {fileID: 11400000, guid: 27e17beb4b1132d439985c976937a10e,
       type: 2}
@@ -8724,10 +8726,6 @@ MonoBehaviour:
   CrescentScoreOrder: 
   lastPlayerThatChooseReward: 0
   rewardIndex: 0
-  numbOfJoysticks: 0
-  eventSystem: {fileID: 0}
-  actualControllersOrder: 
-  oldControllerOrder: 
   lastControllerAssigned: -1
 --- !u!114 &114808938804017134
 MonoBehaviour:

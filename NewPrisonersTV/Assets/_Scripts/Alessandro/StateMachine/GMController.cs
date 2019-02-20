@@ -23,9 +23,10 @@ public class GMController : MonoBehaviour
     public Transform bulletPool;                                            // reference to the bullet pool parent obj
     public BulletDepot bulletDepot;                                         // reference to the bullet prefab list
     public TensionBarStats tensionStats;
-    [SerializeField] private ConfigInUse keyboardConfig;
-    public ConfigInUse KeyboardConfig { get { return keyboardConfig; } }
-    public CharacterControlConfig[] allJConfigs;                           // all controls configuration avaible for joystick 1
+    [BoxGroup("Input Settings")] public CharacterControlConfig keyboardMenu;
+    [BoxGroup("Input Settings")] public CharacterControlConfig JConfigInMenu;
+    [BoxGroup("Input Settings")] [SerializeField] private ConfigInUse keyboardConfig;                   // config used when playing with keyboard
+    [BoxGroup("Input Settings")] public CharacterControlConfig[] allJConfigs;                           // all controls configuration avaible for joysticks
     //------------------------------------------------------------------
     [BoxGroup("Story Settings")] public float gameTimer;
     [BoxGroup("Story Settings")] public float keySpawnTime;
@@ -93,8 +94,8 @@ public class GMController : MonoBehaviour
     private static int playersRequired = 2;                                         // number of players for the current game mode 
     private static GAMEMODE currentMode = GAMEMODE.Menu;                            // current game mode, is Menu by default
     private static int levelCount = 0;
-    private static ConfigInUse[] playersInputConfig;                                // controls configurations to assign to each player in order
-    private static CharacterControlConfig[] selectedInputConfig;                    // controls configurations selected for each controller (used pre-game)
+    private static ConfigInUse[] playersInputConfig;                                // controls configurations to assign to each player in order (ex: playerInputConfig 1 = player 1 even if is using controller 2)
+    private static CharacterControlConfig[] selectedInputConfig;                    // controls configurations selected for each controller(ex: controller 1 = selected config 1 even if is moving player 2)
     private static bool keyboardInUse;                                              // true if a player is using keyboard
 
     // copy of the lists of scenes used for the pool
@@ -137,6 +138,7 @@ public class GMController : MonoBehaviour
     private int numbOfJoysticks;  // real number of controller connected and actual lenght of actualControllersOrder array
     private bool isControllerIndexPresent; // used to check if the index is used by one of the controllers connected
 
+    public ConfigInUse KeyboardConfig { get { return keyboardConfig; } }   
     public EventSystem CurrentEventSystem { get { return currentEventSystem; } }
     public int NumbOfJoysticks { get { return numbOfJoysticks; } }
 
@@ -627,13 +629,13 @@ public class GMController : MonoBehaviour
             {
                 if (numbOfJoysticks == 0)
                 {
-                    ChangeInputModule(keyboardConfig.PlayerInputConfig, keyboardConfig.ControllerIndex);
+                    ChangeInputModule(keyboardMenu, keyboardConfig.ControllerIndex);
                     keyboardInUse = true;
                 }
                 else
                 {
                     // give proper menu controls later
-                    ChangeInputModule(allJConfigs[0], actualControllersOrder[0]+1);
+                    ChangeInputModule(JConfigInMenu, actualControllersOrder[0]+1);
                     keyboardInUse = false; 
                 }
             }
@@ -642,12 +644,12 @@ public class GMController : MonoBehaviour
     }
     public IEnumerator ControllerCheck() //MUST BE CALLED AFTER THE PLAYER SETUP
     {
-        // substitute the keyboard in player config with the corresponding selected config
+        // substitute the keyboard in player config with the corresponding selected config 
         for (int i = 0; i < playersInputConfig.Length; i++)
         {
             if(playersInputConfig[i].ControllerIndex == keyboardConfig.ControllerIndex)
             {
-                playersInputConfig[i].PlayerInputConfig = selectedInputConfig[i];
+                playersInputConfig[i].PlayerInputConfig = selectedInputConfig[playersRequired - 1];
                 playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber;
                 playersInputConfig[i].ControllerNumber = playersRequired - 1;
                 break;
