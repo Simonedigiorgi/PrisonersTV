@@ -130,10 +130,10 @@ namespace Character
         {
             if (Input.GetButtonDown(InputCompiler(m_ControlConfig.respawnInput.ToString())) && canRespawn)
             {
+                EnableBaseWeapon();  
                 transform.position = spawnPoint.position;
                 isAlive = true;
                 currentLife = m_CharStats.life;
-                EnableBaseWeapon();
                 GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
                 GMController.instance.UI.SetContinueText(playerNumber); // set continue text if needed
                 canRespawn = false;
