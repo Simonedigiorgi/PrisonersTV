@@ -16,7 +16,7 @@ namespace Character.Actions
         public void Move(CharacterStateController controller)
         {
             // Move inputs 
-            controller.m_CharacterController.moveInput = Input.GetAxis(controller.m_CharacterController.InputCompiler(controller.m_CharacterController.m_ControlConfig.LeftHorizontal.ToString()));
+            controller.m_CharacterController.moveInput = Input.GetAxis(controller.m_CharacterController.inputMapping.LeftHorizontal);
 
             // Movements
             if (controller.m_CharacterController.moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2

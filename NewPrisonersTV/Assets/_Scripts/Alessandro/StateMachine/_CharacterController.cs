@@ -16,8 +16,7 @@ namespace Character
         [BoxGroup("Components")] public GameObject groundCheck;                                     // Player ground collider
         [BoxGroup("Components")] public Collider2D playerCollider;
         [BoxGroup("Components")] public CharacterStats m_CharStats;
-        [BoxGroup("Components")] public CharacterControlConfig m_ControlConfig;
-
+        [BoxGroup("Components")] public CharacterControlMapping inputMapping;
         [BoxGroup("Rules")] public float respawnTime;
         //---------------------------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;                                                    // Rigidbody component
@@ -26,7 +25,7 @@ namespace Character
         [HideInInspector] public bool facingRight;                                                  // Player flip facing
         [HideInInspector] public bool isInDash;                                                     // Check if the player is in dash
         [HideInInspector] public bool isGrounded;                                                   // Is the Player on ground?   
-        [HideInInspector] public bool isAlive;                                                     // Is player still Alive?
+        [HideInInspector] public bool isAlive;                                                      // Is player still Alive?
         [HideInInspector] public bool canRespawn;                                                   // Indicates if the players can respawn
         [HideInInspector] public bool startDeathCR;                                                 // If true can start the death coroutine
 
@@ -44,6 +43,7 @@ namespace Character
         [HideInInspector] public float moveInput;                                                   // records the movement magnitude;
         [HideInInspector] public float tensionUpTimer;                                              // when it reaches 0 will add movement points to tension
         [HideInInspector] public float tensionDownTimer;                                            // when it reaches 0 will sub movement points to tension
+
         //---------------------------------------------------------------------------------------
         void Awake()
         {
@@ -70,11 +70,11 @@ namespace Character
         {
             if (isAlive)
             {          
-                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(InputCompiler(m_ControlConfig.interactInput.ToString())))
+                if (collision.CompareTag("EnergyDispenser") && canHeal && Input.GetButtonDown(inputMapping.interactInput))
                 {
                     collision.GetComponent<HealStation>().UseStation(GetComponent<_CharacterController>());
                 }
-                if (collision.CompareTag("Weapon") && Input.GetButtonDown(InputCompiler(m_ControlConfig.interactInput.ToString())))
+                if (collision.CompareTag("Weapon") && Input.GetButtonDown(inputMapping.interactInput))
                 {
                     Weapon3D weapon = collision.GetComponent<Weapon3D>();
                     if (!weapon.isGrabbed)
@@ -86,7 +86,7 @@ namespace Character
                         GMController.instance.TensionThresholdCheck(GMController.instance.tensionStats.actionsPoints); // add tension points for action
                     }
                 }
-                if (collision.CompareTag("Key") && Input.GetButtonDown(InputCompiler(m_ControlConfig.interactInput.ToString())))
+                if (collision.CompareTag("Key") && Input.GetButtonDown(inputMapping.interactInput))
                 {
                     Weapon3D key = collision.GetComponent<Weapon3D>();
                     if (!key.isGrabbed)
@@ -100,7 +100,6 @@ namespace Character
                 }
                 if (collision.CompareTag("Exit") && hasKey)
                 {
-                    //GMController.instance.NextLevel();
                     canExit = true;
                 }
             }
@@ -114,21 +113,11 @@ namespace Character
             }
         }
         //---------------------------------------------------------------------------------------
-        #region METHODS
-        // uset to convert input based on the controller type (joystick or K/M)
-        public string InputCompiler(string input)
-        {
-            // KEYBOARD/MOUSE
-            if (GMController.instance.playerInfo[playerNumber].ControllerIndex == GMController.instance.KeyboardConfig.ControllerIndex)
-                return (m_ControlConfig.controller.ToString() + input);
-            //CONTROLLER
-            else
-                return (m_ControlConfig.controller.ToString() + (GMController.instance.playerInfo[playerNumber].ControllerIndex+1) + input);
-        }       
+        #region METHODS      
 
         public void PlayerRespawn(Transform spawnPoint)
         {
-            if (Input.GetButtonDown(InputCompiler(m_ControlConfig.respawnInput.ToString())) && canRespawn)
+            if (Input.GetButtonDown(inputMapping.respawnInput) && canRespawn)
             {
                 EnableBaseWeapon();  
                 transform.position = spawnPoint.position;
@@ -279,23 +268,23 @@ namespace Character
             playerAnim.SetLayerWeight(1, 1);
 
             // Enable The rotation of joystick
-            if (m_ControlConfig.moveArmWithRightStick)
+            if (inputMapping.moveArmWithRightStick)
             {
-                JoyRotation(InputCompiler(m_ControlConfig.RightHorizontal.ToString()), InputCompiler(m_ControlConfig.RightVertical.ToString()));
+                JoyRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
             }
-            else if (!m_ControlConfig.moveArmWithRightStick)
+            else if (!inputMapping.moveArmWithRightStick)
             {
-                JoyRotation(InputCompiler(m_ControlConfig.LeftHorizontal.ToString()), InputCompiler(m_ControlConfig.LeftVertical.ToString()));
+                JoyRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
             }
 
             if (hasWeapon)
             {
                 // Shoot condition equipped weapon
-                if (!currentWeapon.autoFire && Input.GetButtonDown(InputCompiler(m_ControlConfig.shootInput.ToString())))
+                if (!currentWeapon.autoFire && Input.GetButtonDown(inputMapping.shootInput))
                 {
                     CallShoot(arm, currentWeapon);
                 }
-                if (currentWeapon.autoFire && Input.GetButton(InputCompiler(m_ControlConfig.shootInput.ToString())))
+                else if (currentWeapon.autoFire && Input.GetButton(inputMapping.shootInput))
                 {
                     CallShoot(arm, currentWeapon);
                 }
@@ -309,11 +298,11 @@ namespace Character
             else
             {
                 // Shoot condition base weapon
-                if (baseWeapon.autoFire && Input.GetButton(InputCompiler(m_ControlConfig.shootInput.ToString())))
+                if (baseWeapon.autoFire && Input.GetButton(inputMapping.shootInput))
                 {
                     CallShoot(arm, baseWeapon);
                 }
-                else if (!baseWeapon.autoFire && Input.GetButtonDown(InputCompiler(m_ControlConfig.shootInput.ToString())))
+                else if (!baseWeapon.autoFire && Input.GetButtonDown(inputMapping.shootInput))
                 {
                     CallShoot(arm, baseWeapon);
                 }
@@ -327,13 +316,13 @@ namespace Character
 
 
             // Rotation of Muzz effect
-            if (m_ControlConfig.moveArmWithRightStick)
+            if (inputMapping.moveArmWithRightStick)
             {
-                armRotation(InputCompiler(m_ControlConfig.RightHorizontal.ToString()), InputCompiler(m_ControlConfig.RightVertical.ToString()), arm);
+                armRotation(inputMapping.RightHorizontal, inputMapping.RightVertical, arm);
             }
-            else if (!m_ControlConfig.moveArmWithRightStick)
+            else if (!inputMapping.moveArmWithRightStick)
             {
-                armRotation(InputCompiler(m_ControlConfig.LeftHorizontal.ToString()), InputCompiler(m_ControlConfig.LeftVertical.ToString()), arm); 
+                armRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical, arm); 
             }
             return;
         }

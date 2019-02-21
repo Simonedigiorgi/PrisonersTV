@@ -42,7 +42,7 @@ public class AssignPlayerController : MonoBehaviour
             }
         }
         GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[first], new BaseEventData(GMController.instance.CurrentEventSystem));
-        GMController.instance.ChangeInputModule(GMController.instance.JConfigInMenu/*SelectedInputConfig[assignmentTurn - keyboardUser]*/, GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
+        GMController.instance.ChangeInputModule(GMController.instance.JConfigInMenu, GMController.instance.ActualControllersOrder[GMController.instance.lastControllerAssigned + 1] + 1);
         Debug.Log("CONTROLLER INSERTED");
     }
 
@@ -68,6 +68,7 @@ public class AssignPlayerController : MonoBehaviour
                     GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.KeyboardConfig.PlayerInputConfig);
                     GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.KeyboardConfig.ControllerIndex;
                     GMController.instance.PlayersInputConfig[i].ControllerNumber = GMController.instance.KeyboardConfig.ControllerNumber;
+                    GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.KM;
                     keyboardUser = 1;
                 }
                 else   
@@ -75,40 +76,9 @@ public class AssignPlayerController : MonoBehaviour
                     GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser]);//NEED CHECK
                     GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.ActualControllersOrder[assignmentTurn - keyboardUser];
                     GMController.instance.PlayersInputConfig[i].ControllerNumber = assignmentTurn-keyboardUser;
-                    Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() + "  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser].ToString());
-                    GMController.instance.lastControllerAssigned = assignmentTurn - keyboardUser;
-
-                    // search for a configuration matching the input module config and assign it to player
-                    //bool found = false;
-                    //for (int y = 0; y < GMController.instance.SelectedInputConfig.Length; y++)
-                    //{
-                    //    for (int j = 0; j < GMController.instance.NumbOfJoysticks; j++)
-                    //    {
-
-                    //        if (GMController.instance.CheckInputControls(GMController.instance.SelectedInputConfig[y], GMController.instance.ActualControllersOrder[j]+1))
-                    //        {
-                    //             GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[y]);//NEED CHECK
-                    //             bool assigned = false;
-                    //             for (int x = 0; x < GMController.instance.PlayersInputConfig.Length; x++)
-                    //             {
-                    //                 if (GMController.instance.PlayersInputConfig[x] != null &&
-                    //                     GMController.instance.PlayersInputConfig[x].ControllerNumber == j)
-                    //                     assigned = true;
-                    //             }
-                    //             if (!assigned) 
-                    //             {
-                    //                 GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.ActualControllersOrder[j];
-                    //                 GMController.instance.PlayersInputConfig[i].ControllerNumber = j; 
-                    //                 Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() +"  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[y].ToString());  
-                    //                 GMController.instance.lastControllerAssigned = j;
-                    //                 found = true;
-                    //                 break;
-                    //             }
-                    //        }                          
-                    //    }
-                    //    if (found)
-                    //        break;
-                    //}                  
+                    GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.J;
+                    //Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() + "  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser].ToString());
+                    GMController.instance.lastControllerAssigned = assignmentTurn - keyboardUser;                   
                 }
 
                 assignmentTurn++;

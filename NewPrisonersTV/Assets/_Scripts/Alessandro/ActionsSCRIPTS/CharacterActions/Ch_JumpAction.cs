@@ -17,7 +17,7 @@ namespace Character.Actions
         {
             controller.m_CharacterController.extraJumps = controller.m_CharacterController.m_CharStats.extraJumpValue;
             // Jump Input
-                if (Input.GetButtonDown(controller.m_CharacterController.InputCompiler(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString())))
+                if (Input.GetButtonDown(controller.m_CharacterController.inputMapping.jumpInput))
                 {
                     Debug.Log(GMController.instance.playerInfo[controller.m_CharacterController.playerNumber].ControllerIndex);
                     controller.m_CharacterController.rb.velocity = Vector2.up * controller.m_CharacterController.m_CharStats.jump;

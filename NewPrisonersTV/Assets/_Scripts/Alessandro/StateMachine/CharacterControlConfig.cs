@@ -8,12 +8,12 @@ public class CharacterControlConfig : ScriptableObject
     [Header("Character Buttons")]
     [Space(10)]
     public TYPEOFINPUT controller;
-    public HORIZONTAL LeftHorizontal;                                           // Get Horiziontal
-    public VERTICAL LeftVertical;                                             // Get Vertical
-    public HORIZONTAL RightHorizontal;                                           // Get Horiziontal
-    public VERTICAL RightVertical;                                             // Get Vertical
-    public BUTTONS shootInput;                         // Player1_Button X || Player2_Button X (Shoot with you weapon)
-    public BUTTONS jumpInput;                          // Player1_Button A || Player2_Button A
+    public HORIZONTAL LeftHorizontal;                                          
+    public VERTICAL LeftVertical;                                          
+    public HORIZONTAL RightHorizontal;                                         
+    public VERTICAL RightVertical;                                            
+    public BUTTONS shootInput;                         
+    public BUTTONS jumpInput;                          
     public BUTTONS interactInput; 
     public BUTTONS respawnInput;
     public BUTTONS pauseInput;

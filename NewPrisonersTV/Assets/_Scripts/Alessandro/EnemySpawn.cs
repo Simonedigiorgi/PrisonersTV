@@ -104,15 +104,15 @@ public class EnemySpawn : MonoBehaviour
         spawnDone = false;
         GMController.instance.AddBatsCount(); // add bats count
         anim.SetInteger("State",1);
-
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Bat[spawnLevel-1].gameObject,transform.position,Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;
@@ -123,15 +123,15 @@ public class EnemySpawn : MonoBehaviour
         spawnDone = false;
         GMController.instance.AddKamikazeCount(); // add kamikaze count
         anim.SetInteger("State", 1);
-
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Kamikaze[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;
@@ -143,14 +143,15 @@ public class EnemySpawn : MonoBehaviour
         GMController.instance.AddNinjaCount(); // add ninja count
         anim.SetInteger("State", 1);
 
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Ninja[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;
@@ -162,14 +163,15 @@ public class EnemySpawn : MonoBehaviour
         GMController.instance.AddSpidersCount(); // add Spider count 
         anim.SetInteger("State", 1);
 
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Spider[spawnLevel - 1].gameObject, transform.position, Quaternion.Euler(180,0,0));
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;
@@ -181,14 +183,15 @@ public class EnemySpawn : MonoBehaviour
         GMController.instance.AddDogsCount(); // add Dogs count 
         anim.SetInteger("State", 1);
 
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Dog[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;
@@ -200,14 +203,15 @@ public class EnemySpawn : MonoBehaviour
         GMController.instance.AddSentinelCount(); // add sentinel count 
         anim.SetInteger("State", 1);
 
-        yield return new WaitForSeconds(0.2f);
+        WaitForSeconds delay = new WaitForSeconds(0.2f);
+        yield return delay;
         GameObject newEnemy = Instantiate(enemyList.Sentinel[spawnLevel - 1].gameObject, transform.position, Quaternion.identity);
         _EnemyController controller = newEnemy.GetComponent<_EnemyController>();
         controller.myEnemySpawn = thisSpawn; // add reference to this spawn
         GMController.instance.allEnemies.Add(controller); // add to enemies list
         anim.SetInteger("State", 2);
 
-        yield return new WaitForSeconds(0.2f);
+        yield return delay;
         anim.SetInteger("State", 0);
         timer = spawnTimer;
         spawnDone = true;

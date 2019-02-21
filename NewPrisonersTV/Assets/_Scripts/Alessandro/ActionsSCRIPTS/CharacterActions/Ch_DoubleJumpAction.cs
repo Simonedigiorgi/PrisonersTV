@@ -16,7 +16,7 @@ namespace Character.Actions
         public void DoubleJump(CharacterStateController controller)
         {
             // Jump Input
-            if (Input.GetButtonDown(controller.m_CharacterController.InputCompiler(controller.m_CharacterController.m_ControlConfig.jumpInput.ToString()))
+            if (Input.GetButtonDown(controller.m_CharacterController.inputMapping.jumpInput)
                                     && controller.m_CharacterController.extraJumps > 0)
             {
                 controller.m_CharacterController.extraJumps--;

@@ -208,11 +208,12 @@ namespace AI
         {
             canBarrageCR = false;
             isBarrageDone = false;
+            WaitForSeconds delay = new WaitForSeconds(m_EnemyStats.barrageTimer);
             while (currentBarrageShots > 0 )
             {
                 bullet.EmitBullet(attackSpawn, thisMesh.forward);
                 currentBarrageShots--;
-                yield return new WaitForSeconds(m_EnemyStats.barrageTimer);
+                yield return delay;
             }
             currentBulletTimer = m_EnemyStats.bulletCooldown;
             currentBarrageShots = m_EnemyStats.numBarrageShots;

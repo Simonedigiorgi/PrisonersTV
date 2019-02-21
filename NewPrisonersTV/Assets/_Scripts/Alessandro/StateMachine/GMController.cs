@@ -492,9 +492,18 @@ public class GMController : MonoBehaviour
 
             playerInfo[i].PlayerController.playerNumber = i;
             // assign controller config
-            playerInfo[i].PlayerController.m_ControlConfig = playersInputConfig[i].PlayerInputConfig;
-            playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex; 
-  
+            // if last time was used a joypad 
+            if (playersInputConfig[i].LastUsed == TYPEOFINPUT.J)
+            {
+                playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
+                playerInfo[i].PlayerController.inputMapping = new CharacterControlMapping(playersInputConfig[i].PlayerInputConfig, playerInfo[i].ControllerIndex);
+            }
+            else// if last time was used a keyboard
+            {
+                playerInfo[i].ControllerIndex = keyboardConfig.ControllerIndex;
+                playerInfo[i].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[i].ControllerIndex);
+            }          
+   
             playerInfo[i].PlayerController.SetupBaseWeapon();
             bulletPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player bullet pool
             decalPool.transform.GetChild(i).gameObject.SetActive(true);// activate the player decal pool
@@ -527,10 +536,11 @@ public class GMController : MonoBehaviour
     {
         // game start countdown
         canStartGameCD = false;
+        WaitForSeconds delay = new WaitForSeconds(1);
         for (int i = 0; i < startGameTimer; i++)
         {
             UI.objectiveText.text = "Game Starts in " + (startGameTimer-i);
-            yield return new WaitForSeconds(1);
+            yield return delay;
         }
         gameCDEnded = true;
         gameStart = true;
@@ -590,7 +600,14 @@ public class GMController : MonoBehaviour
             inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
         }
     }
-    
+    public void ChangeInputModule(CharacterControlMapping player)
+    {
+        inputModule.horizontalAxis = player.LeftHorizontal;
+        inputModule.verticalAxis = player.LeftVertical;
+        inputModule.submitButton = player.interactInput;
+        inputModule.cancelButton = player.shootInput;     
+    }
+
     public bool CheckInputControls(CharacterControlConfig player,int index) 
     {
         if (index != -1)
@@ -611,6 +628,7 @@ public class GMController : MonoBehaviour
 
     public IEnumerator MenuInputCheck() 
     {
+        WaitForSeconds delay = new WaitForSeconds(1);
         while (true)
         {
             // controller detection, if there are joystick plugged in
@@ -639,15 +657,16 @@ public class GMController : MonoBehaviour
                     keyboardInUse = false; 
                 }
             }
-            yield return new WaitForSeconds(1); 
+            yield return delay; 
         }
     }
     public IEnumerator ControllerCheck() //MUST BE CALLED AFTER THE PLAYER SETUP
     {
-        // substitute the keyboard in player config with the corresponding selected config 
+        // substitute the keyboard in player config with the corresponding selected config
+        // needed once per game mode
         for (int i = 0; i < playersInputConfig.Length; i++)
         {
-            if(playersInputConfig[i].ControllerIndex == keyboardConfig.ControllerIndex)
+            if (playersInputConfig[i].ControllerIndex == keyboardConfig.ControllerIndex)
             {
                 playersInputConfig[i].PlayerInputConfig = selectedInputConfig[playersRequired - 1];
                 playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber;
@@ -656,7 +675,8 @@ public class GMController : MonoBehaviour
             }
         }
 
-        while(true)
+        WaitForSeconds delay = new WaitForSeconds(1);
+        while (true)
         {
             Debug.Log(keyboardInUse); 
             // controller detection, if there are joysticks plugged in
@@ -670,98 +690,92 @@ public class GMController : MonoBehaviour
                     actualControllersOrder[numbOfJoysticks] = i;                 
                     numbOfJoysticks++;
                 }
-            }
-           
-            // if there are controllers
-            if (numbOfJoysticks > 0)
-            {
-                // update controller index in the player input config and player info
-                for (int i = 0; i < playersInputConfig.Length; i++)
-                {
-                    isControllerIndexPresent = false;
-                    for (int y = 0; y < numbOfJoysticks; y++)
-                    {
-                        if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y])
-                        {
-                            playersInputConfig[i].ControllerIndex = actualControllersOrder[y];
-                            if (playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)
-                                playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
-                        }
-                        if(playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex == actualControllersOrder[y])
-                            isControllerIndexPresent = true;
-                    }
-                    // if there are less controller than needed set to default the controller number of the inactive players 
-                    if (numbOfJoysticks < playersRequired && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex && !isControllerIndexPresent)
-                    {
-                        playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber; 
-                    }
-                   
-                }
-            }
-            
+            }                                  
 
-            if (currentMode != GAMEMODE.Menu)
+            if (currentMode != GAMEMODE.Menu) 
             {
-                if(playersRequired == 1)
+                // if there are controllers
+                if (numbOfJoysticks > 0)
+                {
+                    // update controller index in the player input config and player info
+                    for (int i = 0; i < playersInputConfig.Length; i++)
+                    {
+                        isControllerIndexPresent = false;
+                        for (int y = 0; y < numbOfJoysticks; y++)
+                        {
+                            // if the current player config controller is plugged in and the real index isn't matching then update it 
+                            if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y])
+                            {
+                                playersInputConfig[i].ControllerIndex = actualControllersOrder[y];
+                                // if the current controller plugged in is for a player that was using a keyboard then apply the joystick config
+                                if (playerInfo[i].ControllerIndex == keyboardConfig.ControllerIndex)// NEED CHECK
+                                {
+                                    playersInputConfig[i].LastUsed = TYPEOFINPUT.J;
+                                    keyboardInUse = false;
+                                }
+                                playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
+                                playerInfo[i].PlayerController.inputMapping = new CharacterControlMapping(playersInputConfig[i].PlayerInputConfig, playerInfo[i].ControllerIndex);
+                                isControllerIndexPresent = true;
+                                break;
+                            }
+                            // if the current controller is matching the index then it means that is actually plugged in 
+                            else if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex == actualControllersOrder[y])
+                            {
+                                isControllerIndexPresent = true;
+                                break;
+                            }
+                        }
+                        // if there are less controller than needed set to default the controller index of the inactive players 
+                        if (numbOfJoysticks < playersRequired && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex && !isControllerIndexPresent)
+                        {
+                            playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber;
+                            playersInputConfig[i].LastUsed = TYPEOFINPUT.J;
+                        }
+
+                    }
+                }
+
+                if (playersRequired == 1)// NEED CHECK
                 {
                     //if there are no joystick plugged in assign keyboard to the only player                   
                     if (numbOfJoysticks == 0 && !keyboardInUse)
                     { 
-                        playerInfo[playersRequired - 1].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
                         playerInfo[playersRequired - 1].ControllerIndex = keyboardConfig.ControllerIndex;
+                        playerInfo[playersRequired - 1].PlayerController.inputMapping =  new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[playersRequired - 1].ControllerIndex);
+                        playersInputConfig[playersRequired - 1].LastUsed = TYPEOFINPUT.KM;
                         keyboardInUse = true;
                     }
                     else if (numbOfJoysticks > 0 && playerInfo[playersRequired - 1].ControllerIndex == keyboardConfig.ControllerIndex)
                     {                      
-                        playerInfo[playersRequired - 1].PlayerController.m_ControlConfig = playersInputConfig[playersRequired - 1].PlayerInputConfig;
                         playerInfo[playersRequired - 1].ControllerIndex = playersInputConfig[playersRequired - 1].ControllerIndex;
+                        playerInfo[playersRequired - 1].PlayerController.inputMapping = new CharacterControlMapping(playersInputConfig[playersRequired - 1].PlayerInputConfig, playerInfo[playersRequired - 1].ControllerIndex);
+                        playersInputConfig[playersRequired - 1].LastUsed = TYPEOFINPUT.J;
                         keyboardInUse = false;
                     }
 
                 }            
                 else  
-                {                 
-                    // if there are enough controllers for all the players check if someone was using keyboard and move controls to joystick instead
-                    if (numbOfJoysticks >= playersRequired)
+                {                                             
+                    if (!keyboardInUse && numbOfJoysticks < playersRequired)
                     {
-                        if (keyboardInUse)
+                        if (numbOfJoysticks >= 1)
                         {
-                            for (int i = 0; i < playerInfo.Length; i++)
-                            {
-                                if (playerInfo[i].ControllerIndex == keyboardConfig.ControllerIndex)
-                                {
-                                    playerInfo[i].PlayerController.m_ControlConfig = playersInputConfig[i].PlayerInputConfig;
-                                    playerInfo[i].ControllerIndex = actualControllersOrder[playersInputConfig[i].ControllerNumber];
-                                    keyboardInUse = false;
-                                }
-                            }
+                            playerInfo[numbOfJoysticks].ControllerIndex = keyboardConfig.ControllerIndex;
+                            playerInfo[numbOfJoysticks].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[numbOfJoysticks].ControllerIndex);
+                            playersInputConfig[numbOfJoysticks].LastUsed = TYPEOFINPUT.KM;
+                            keyboardInUse = true;
                         }
-                    }
-                    // if there are not enough controllers connected and the keyboard was not assigned 
-                    else 
-                    {                                           
-                        if (!keyboardInUse)  
+                        else
                         {
-                            if (numbOfJoysticks >= 1)
-                            {
-                                playerInfo[numbOfJoysticks].ControllerIndex = keyboardConfig.ControllerIndex;
-                                playerInfo[numbOfJoysticks].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
-                                keyboardInUse = true;
-                            }
-                            else
-                            {
-                                playerInfo[0].ControllerIndex = keyboardConfig.ControllerIndex;
-                                playerInfo[0].PlayerController.m_ControlConfig = keyboardConfig.PlayerInputConfig;
-                                keyboardInUse = true;
-                            }
-                        }                        
-                    }
-                }
-
-                
-            }
-              
-            yield return new WaitForSeconds(1);
+                            playerInfo[0].ControllerIndex = keyboardConfig.ControllerIndex;
+                            playerInfo[0].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[0].ControllerIndex);
+                            playersInputConfig[0].LastUsed = TYPEOFINPUT.KM;
+                            keyboardInUse = true;
+                        }
+                    }                   
+                }                
+            }              
+            yield return delay;
         }
     }
 

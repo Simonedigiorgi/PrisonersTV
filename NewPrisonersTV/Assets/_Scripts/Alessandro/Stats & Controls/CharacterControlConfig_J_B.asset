@@ -21,4 +21,4 @@ MonoBehaviour:
   interactInput: 3
   respawnInput: 4
   pauseInput: 5
-  moveArmWithRightStick: 1
+  moveArmWithRightStick: 0

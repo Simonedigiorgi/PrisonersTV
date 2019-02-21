@@ -125,6 +125,7 @@ public class EditInputManager : MonoBehaviour
         }
         serializedObject.ApplyModifiedProperties();
     }
+
     private static void JoystickConfigSetup(int joyNumb)
     {
         AddAxis(new InputAxis()
