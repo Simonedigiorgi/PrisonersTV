@@ -178,7 +178,11 @@ public class GMController : MonoBehaviour
             bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
             currentEventSystem = UI.eventSystem;
             inputModule = currentEventSystem.GetComponent<StandaloneInputModule>();
-            CrescentScoreOrder = new int[playersRequired]; 
+            CrescentScoreOrder = new int[playersRequired];
+            for (int i = 0; i < CrescentScoreOrder.Length; i++)
+            {
+                CrescentScoreOrder[i] = -1;  
+            }
             playerInfo = new PlayerInfo[playersRequired];                     
 
             //spawn players and add them to the current playerInfo list, collect spawn and enemy info
@@ -524,9 +528,11 @@ public class GMController : MonoBehaviour
         {
             for (int y = 0; y < playerInfo.Length; y++)
             {
-                if (playerInfo[y].Score == tempOrder[i])
+                // if the player score match the score in the temp order list and was not already put in the crescent order list
+                if (playerInfo[y].Score == tempOrder[i] && System.Array.IndexOf(CrescentScoreOrder, playerInfo[y].PlayerController.playerNumber) == -1)
                 {
-                    CrescentScoreOrder[i] = playerInfo[y].PlayerController.playerNumber;
+                    CrescentScoreOrder[i] = playerInfo[y].PlayerController.playerNumber;  
+                    break;
                 }
             }
         }
