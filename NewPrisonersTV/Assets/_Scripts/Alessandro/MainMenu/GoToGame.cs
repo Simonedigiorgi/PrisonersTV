@@ -6,11 +6,14 @@ using UnityEngine.EventSystems;
 public class GoToGame : MonoBehaviour
 {
     public int playerNumber;
-    public GameObject buttons;
+    public GameObject playerModePanel;
     public GameObject modalityPanel;
+    public GameObject assignmentPanel;
     public ChooseModality[] modality;
 
-    public void SetNumber()
+    AssignPlayerController assignment;
+
+    public void SetNumberSP()
     {
         modalityPanel.SetActive(true);
         GMController.instance.CurrentEventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
@@ -19,14 +22,26 @@ public class GoToGame : MonoBehaviour
             modality[i].playerNumber = playerNumber;
         }
         GMController.instance.PlayersInputConfig = new ConfigInUse[playerNumber];
-        //Debug.Log(GMController.instance.PlayersInputConfig.Length);
-        buttons.SetActive(false);
-    }
 
+        playerModePanel.SetActive(false);
+    }
+    public void SetNumberCoop()
+    {
+        GMController.instance.PlayersInputConfig = new ConfigInUse[playerNumber];
+
+        assignment = assignmentPanel.GetComponent<AssignPlayerController>();
+        GMController.instance.controllerCheckNeeded = false;
+        assignmentPanel.SetActive(true);
+        assignment.playerNumber = playerNumber;
+        assignment.ActivateButtons(playerNumber);
+
+        GMController.instance.CurrentEventSystem.SetSelectedGameObject(assignment.playerButtons[0], new BaseEventData(GMController.instance.CurrentEventSystem));
+        playerModePanel.SetActive(false);
+    }
     public void BackToMenu()
     {
         modalityPanel.SetActive(false);
-        buttons.SetActive(true); 
-        GMController.instance.CurrentEventSystem.SetSelectedGameObject(buttons.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
+        playerModePanel.SetActive(true); 
+        GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerModePanel.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
     }
 }

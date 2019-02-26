@@ -352,7 +352,7 @@ RectTransform:
   m_Children:
   - {fileID: 1635052628}
   m_Father: {fileID: 591319225}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -853,8 +853,8 @@ RectTransform:
   - {fileID: 181883069}
   - {fileID: 810909806}
   - {fileID: 121689604}
-  - {fileID: 215743454}
   - {fileID: 1354422569}
+  - {fileID: 215743454}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -975,8 +975,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  buttons: {fileID: 810909805}
+  playerModePanel: {fileID: 810909805}
   modalityPanel: {fileID: 215743453}
+  assignmentPanel: {fileID: 1354422565}
   modality:
   - {fileID: 1759393181}
   - {fileID: 1348664002}
@@ -1021,7 +1022,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 655805954}
-        m_MethodName: SetNumber
+        m_MethodName: SetNumberSP
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1448,8 +1449,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 2
-  buttons: {fileID: 810909805}
+  playerModePanel: {fileID: 810909805}
   modalityPanel: {fileID: 215743453}
+  assignmentPanel: {fileID: 1354422565}
   modality:
   - {fileID: 1759393181}
   - {fileID: 1348664002}
@@ -1494,7 +1496,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1110852298}
-        m_MethodName: SetNumber
+        m_MethodName: SetNumberCoop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1971,6 +1973,13 @@ MonoBehaviour:
   - {fileID: 1944968459}
   - {fileID: 1211891666}
   - {fileID: 532188852}
+  playerModePanel: {fileID: 810909805}
+  modalityPanel: {fileID: 215743453}
+  modality:
+  - {fileID: 1759393181}
+  - {fileID: 1348664002}
+  - {fileID: 1291199189}
+  playerNumber: 0
 --- !u!114 &1354422567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2016,7 +2025,7 @@ RectTransform:
   m_Children:
   - {fileID: 315757923}
   m_Father: {fileID: 591319225}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2498,8 +2507,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
-  buttons: {fileID: 810909805}
+  playerModePanel: {fileID: 810909805}
   modalityPanel: {fileID: 215743453}
+  assignmentPanel: {fileID: 0}
   modality: []
 --- !u!114 &1659623320
 MonoBehaviour:

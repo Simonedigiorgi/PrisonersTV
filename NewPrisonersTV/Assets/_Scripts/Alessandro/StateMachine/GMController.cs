@@ -137,14 +137,17 @@ public class GMController : MonoBehaviour
     private EventSystem currentEventSystem;
     private int numbOfJoysticks;  // real number of controller connected and actual lenght of actualControllersOrder array
     private bool isControllerIndexPresent; // used to check if the index is used by one of the controllers connected
+    private int[] actualControllersOrder; // real index of the connected controllers
+    private int lastControllerAssigned = -1;
 
     public ConfigInUse KeyboardConfig { get { return keyboardConfig; } }   
     public EventSystem CurrentEventSystem { get { return currentEventSystem; } }
     public int NumbOfJoysticks { get { return numbOfJoysticks; } }
-
-    private int[] actualControllersOrder; // real index of the connected controllers
+    public StandaloneInputModule InputModule { get { return inputModule; } }
     public int[] ActualControllersOrder { get { return actualControllersOrder; } }
-    public int lastControllerAssigned = -1;
+    public int LastControllerAssigned { get { return lastControllerAssigned; } set { lastControllerAssigned = value; } }
+
+    [HideInInspector] public bool controllerCheckNeeded = true;
 
     #endregion
     //------------------------------------------------------------------
@@ -506,6 +509,7 @@ public class GMController : MonoBehaviour
             {
                 playerInfo[i].ControllerIndex = keyboardConfig.ControllerIndex;
                 playerInfo[i].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[i].ControllerIndex);
+                keyboardInUse = true;
             }          
    
             playerInfo[i].PlayerController.SetupBaseWeapon();
@@ -649,7 +653,7 @@ public class GMController : MonoBehaviour
                 }
             }
 
-            if (currentMode == GAMEMODE.Menu)
+            if (currentMode == GAMEMODE.Menu && controllerCheckNeeded)
             {
                 if (numbOfJoysticks == 0)
                 {
