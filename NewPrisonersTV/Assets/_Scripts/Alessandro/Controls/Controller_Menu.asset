@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fac1c45c44743e4da872eaeede1133a, type: 3}
-  m_Name: CharacterControlConfig_J_Menu
+  m_Name: Controller_Menu
   m_EditorClassIdentifier: 
   controller: 0
   LeftHorizontal: 0
@@ -21,4 +21,7 @@ MonoBehaviour:
   interactInput: 1
   respawnInput: 4
   pauseInput: 5
+  dodgeInput: 12
+  headbuttInput: 11
   moveArmWithRightStick: 0
+  buttonDescription: []

@@ -9,16 +9,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fac1c45c44743e4da872eaeede1133a, type: 3}
-  m_Name: CharacterControlConfig_J_B
+  m_Name: Keyboard_Menu
   m_EditorClassIdentifier: 
-  controller: 0
-  LeftHorizontal: 0
-  LeftVertical: 0
-  RightHorizontal: 1
-  RightVertical: 1
-  shootInput: 0
-  jumpInput: 2
-  interactInput: 3
+  controller: 1
+  LeftHorizontal: 2
+  LeftVertical: 2
+  RightHorizontal: 0
+  RightVertical: 0
+  shootInput: 7
+  jumpInput: 10
+  interactInput: 6
   respawnInput: 4
   pauseInput: 5
-  moveArmWithRightStick: 0
+  dodgeInput: 12
+  headbuttInput: 11
+  moveArmWithRightStick: 1
+  buttonDescription: []

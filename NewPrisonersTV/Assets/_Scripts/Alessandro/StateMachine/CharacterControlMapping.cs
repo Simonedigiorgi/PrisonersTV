@@ -10,6 +10,8 @@ public class CharacterControlMapping
     public string interactInput;
     public string respawnInput;
     public string pauseInput;
+    public string dodgeInput;
+    public string headbuttInput;
     public bool moveArmWithRightStick;
 
     public CharacterControlMapping(CharacterControlConfig input, int index)
@@ -25,6 +27,8 @@ public class CharacterControlMapping
             interactInput = input.controller.ToString() + (index + 1) + input.interactInput;
             respawnInput = input.controller.ToString() + (index + 1) + input.respawnInput;
             pauseInput = input.controller.ToString() + (index + 1) + input.pauseInput;
+            dodgeInput = input.controller.ToString() + (index + 1) + input.dodgeInput;
+            headbuttInput = input.controller.ToString() + (index + 1) + input.headbuttInput;
         }
         else
         {
@@ -37,6 +41,8 @@ public class CharacterControlMapping
             interactInput = input.controller.ToString() + input.interactInput;
             respawnInput = input.controller.ToString() + input.respawnInput;
             pauseInput = input.controller.ToString() + input.pauseInput;
+            dodgeInput = input.controller.ToString() + input.dodgeInput;
+            headbuttInput = input.controller.ToString() + input.headbuttInput;
         }
         moveArmWithRightStick = input.moveArmWithRightStick;
     }

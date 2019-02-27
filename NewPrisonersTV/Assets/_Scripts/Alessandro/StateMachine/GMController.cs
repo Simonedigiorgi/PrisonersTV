@@ -133,17 +133,18 @@ public class GMController : MonoBehaviour
     //------------------------------------------------------------------
     #region CONTROLLERS VARIABLES
 
-    private StandaloneInputModule inputModule;
+    private CustomInputModule inputModule;
     private EventSystem currentEventSystem;
     private int numbOfJoysticks;  // real number of controller connected and actual lenght of actualControllersOrder array
     private bool isControllerIndexPresent; // used to check if the index is used by one of the controllers connected
     private int[] actualControllersOrder; // real index of the connected controllers
     private int lastControllerAssigned = -1;
+    private int firstInactivePlayer = -1;  // index of the first player without controller
 
     public ConfigInUse KeyboardConfig { get { return keyboardConfig; } }   
     public EventSystem CurrentEventSystem { get { return currentEventSystem; } }
     public int NumbOfJoysticks { get { return numbOfJoysticks; } }
-    public StandaloneInputModule InputModule { get { return inputModule; } }
+    public CustomInputModule InputModule { get { return inputModule; } }
     public int[] ActualControllersOrder { get { return actualControllersOrder; } }
     public int LastControllerAssigned { get { return lastControllerAssigned; } set { lastControllerAssigned = value; } }
 
@@ -180,7 +181,7 @@ public class GMController : MonoBehaviour
             UI = FindObjectOfType<UIManager3D>();
             bonusWeapon = UI.rewardPanel.GetComponent<BonusWeapon>();
             currentEventSystem = UI.eventSystem;
-            inputModule = currentEventSystem.GetComponent<StandaloneInputModule>();
+            inputModule = currentEventSystem.GetComponent<CustomInputModule>();
             CrescentScoreOrder = new int[playersRequired];
             for (int i = 0; i < CrescentScoreOrder.Length; i++)
             {
@@ -220,14 +221,14 @@ public class GMController : MonoBehaviour
         if(currentMode == GAMEMODE.Menu)
         {
             currentEventSystem = GameObject.FindWithTag("EventSystem").GetComponent<EventSystem>();
-            inputModule = currentEventSystem.GetComponent<StandaloneInputModule>(); 
+            inputModule = currentEventSystem.GetComponent<CustomInputModule>(); 
            
             // if there are no inputs selected then assign defaults
             if (selectedInputConfig == null)
             {
                 selectedInputConfig = new CharacterControlConfig[playersRequired];
-                selectedInputConfig[0] = allJConfigs[0];
-                selectedInputConfig[1] = allJConfigs[1];
+                //selectedInputConfig[0] = allJConfigs[0];
+                //selectedInputConfig[1] = allJConfigs[1];
             }
             //check if controller get connected/disconnected
             StartCoroutine(MenuInputCheck());
@@ -601,6 +602,8 @@ public class GMController : MonoBehaviour
             inputModule.verticalAxis = player.controller.ToString() + index + player.LeftVertical.ToString();
             inputModule.submitButton = player.controller.ToString() + index + player.interactInput.ToString();
             inputModule.cancelButton = player.controller.ToString() + index + player.shootInput.ToString();
+            inputModule.alternativeButton1 = player.controller.ToString() + index + player.dodgeInput.ToString();
+            inputModule.alternativeButton2 = player.controller.ToString() + index + player.headbuttInput.ToString();
         }
         else
         {
@@ -608,6 +611,8 @@ public class GMController : MonoBehaviour
             inputModule.verticalAxis = player.controller.ToString() + player.LeftVertical.ToString();
             inputModule.submitButton = player.controller.ToString() + player.interactInput.ToString();
             inputModule.cancelButton = player.controller.ToString() + player.shootInput.ToString();
+            inputModule.alternativeButton1 = player.controller.ToString() + player.dodgeInput.ToString();
+            inputModule.alternativeButton2 = player.controller.ToString() + player.headbuttInput.ToString();
         }
     }
     public void ChangeInputModule(CharacterControlMapping player)
@@ -615,7 +620,9 @@ public class GMController : MonoBehaviour
         inputModule.horizontalAxis = player.LeftHorizontal;
         inputModule.verticalAxis = player.LeftVertical;
         inputModule.submitButton = player.interactInput;
-        inputModule.cancelButton = player.shootInput;     
+        inputModule.cancelButton = player.shootInput;
+        inputModule.alternativeButton1 = player.dodgeInput;
+        inputModule.alternativeButton2 = player.headbuttInput;
     }
 
     public bool CheckInputControls(CharacterControlConfig player,int index) 
@@ -655,17 +662,11 @@ public class GMController : MonoBehaviour
 
             if (currentMode == GAMEMODE.Menu && controllerCheckNeeded)
             {
-                if (numbOfJoysticks == 0)
-                {
+                if (numbOfJoysticks == 0)                
                     ChangeInputModule(keyboardMenu, keyboardConfig.ControllerIndex);
-                    keyboardInUse = true;
-                }
-                else
-                {
-                    // give proper menu controls later
-                    ChangeInputModule(JConfigInMenu, actualControllersOrder[0]+1);
-                    keyboardInUse = false; 
-                }
+                
+                else                
+                    ChangeInputModule(JConfigInMenu, actualControllersOrder[0]+1);                
             }
             yield return delay; 
         }
@@ -687,8 +688,7 @@ public class GMController : MonoBehaviour
 
         WaitForSeconds delay = new WaitForSeconds(1);
         while (true)
-        {
-            Debug.Log(keyboardInUse); 
+        { 
             // controller detection, if there are joysticks plugged in
             actualControllersOrder = new int[Input.GetJoystickNames().Length];
             
@@ -704,6 +704,7 @@ public class GMController : MonoBehaviour
 
             if (currentMode != GAMEMODE.Menu) 
             {
+                firstInactivePlayer = -1;
                 // if there are controllers
                 if (numbOfJoysticks > 0)
                 {
@@ -714,7 +715,7 @@ public class GMController : MonoBehaviour
                         for (int y = 0; y < numbOfJoysticks; y++)
                         {
                             // if the current player config controller is plugged in and the real index isn't matching then update it 
-                            if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y])
+                            if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex != actualControllersOrder[y]) 
                             {
                                 playersInputConfig[i].ControllerIndex = actualControllersOrder[y];
                                 // if the current controller plugged in is for a player that was using a keyboard then apply the joystick config
@@ -731,6 +732,14 @@ public class GMController : MonoBehaviour
                             // if the current controller is matching the index then it means that is actually plugged in 
                             else if (playersInputConfig[i].ControllerNumber == y && playersInputConfig[i].ControllerIndex == actualControllersOrder[y])
                             {
+                                // if the current controller plugged in is for a player that was using a keyboard then apply the joystick config
+                                if (playerInfo[i].ControllerIndex == keyboardConfig.ControllerIndex)
+                                {
+                                    playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex;
+                                    playerInfo[i].PlayerController.inputMapping = new CharacterControlMapping(playersInputConfig[i].PlayerInputConfig, playerInfo[i].ControllerIndex);
+                                    playersInputConfig[i].LastUsed = TYPEOFINPUT.J;
+                                    keyboardInUse = false;
+                                }
                                 isControllerIndexPresent = true;
                                 break;
                             }
@@ -738,10 +747,22 @@ public class GMController : MonoBehaviour
                         // if there are less controller than needed set to default the controller index of the inactive players 
                         if (numbOfJoysticks < playersRequired && playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex && !isControllerIndexPresent)
                         {
+                            if (firstInactivePlayer == -1) firstInactivePlayer = i;
                             playerInfo[i].ControllerIndex = playersInputConfig[i].ControllerIndex = playersInputConfig[i].DefaultNumber;
                             playersInputConfig[i].LastUsed = TYPEOFINPUT.J;
                         }
 
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < playersInputConfig.Length; i++)
+                    {
+                        if (playerInfo[i].ControllerIndex != keyboardConfig.ControllerIndex)
+                        {
+                            firstInactivePlayer = i;
+                            break;
+                        }
                     }
                 }
 
@@ -767,22 +788,12 @@ public class GMController : MonoBehaviour
                 else  
                 {                                             
                     if (!keyboardInUse && numbOfJoysticks < playersRequired)
-                    {
-                        if (numbOfJoysticks >= 1)
-                        {
-                            playerInfo[numbOfJoysticks].ControllerIndex = keyboardConfig.ControllerIndex;
-                            playerInfo[numbOfJoysticks].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[numbOfJoysticks].ControllerIndex);
-                            playersInputConfig[numbOfJoysticks].LastUsed = TYPEOFINPUT.KM;
-                            keyboardInUse = true;
-                        }
-                        else
-                        {
-                            playerInfo[0].ControllerIndex = keyboardConfig.ControllerIndex;
-                            playerInfo[0].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[0].ControllerIndex);
-                            playersInputConfig[0].LastUsed = TYPEOFINPUT.KM;
-                            keyboardInUse = true;
-                        }
-                    }                   
+                    {                       
+                        playerInfo[firstInactivePlayer].ControllerIndex = keyboardConfig.ControllerIndex;
+                        playerInfo[firstInactivePlayer].PlayerController.inputMapping = new CharacterControlMapping(keyboardConfig.PlayerInputConfig, playerInfo[firstInactivePlayer].ControllerIndex);
+                        playersInputConfig[numbOfJoysticks].LastUsed = TYPEOFINPUT.KM; 
+                        keyboardInUse = true;
+                    }
                 }                
             }              
             yield return delay;

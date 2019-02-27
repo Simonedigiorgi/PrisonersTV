@@ -264,6 +264,34 @@ public class EditInputManager : MonoBehaviour
             joyNum = joyNumb,
 
         });
+        AddAxis(new InputAxis()
+        {
+            name = "J" + joyNumb + "_RB",
+            positiveButton = "joystick " + joyNumb + " button 5",
+            gravity = 1000,
+            dead = 0.001f,
+            sensitivity = 1000f,
+            snap = false,
+            invert = false,
+            type = AxisType.KeyOrMouseButton,
+            axis = 1,
+            joyNum = joyNumb,
+
+        });
+        AddAxis(new InputAxis()
+        {
+            name = "J" + joyNumb + "_LB",
+            positiveButton = "joystick " + joyNumb + " button 4",
+            gravity = 1000,
+            dead = 0.001f,
+            sensitivity = 1000f,
+            snap = false,
+            invert = false,
+            type = AxisType.KeyOrMouseButton,
+            axis = 1,
+            joyNum = joyNumb,
+
+        });
     }
     private static void KeyboardConfigSetup()
     {
@@ -354,7 +382,27 @@ public class EditInputManager : MonoBehaviour
         AddAxis(new InputAxis()
         {
             name = "KM_Interact",
+            positiveButton = "f",
+            gravity = 1000,
+            dead = 0.001f,
+            sensitivity = 1000f,
+            type = AxisType.KeyOrMouseButton,
+            axis = 1
+        });
+        AddAxis(new InputAxis()
+        {
+            name = "KM_RB",
             positiveButton = "e",
+            gravity = 1000,
+            dead = 0.001f,
+            sensitivity = 1000f,
+            type = AxisType.KeyOrMouseButton,
+            axis = 1
+        });
+        AddAxis(new InputAxis()
+        {
+            name = "KM_LB",
+            positiveButton = "q",
             gravity = 1000,
             dead = 0.001f,
             sensitivity = 1000f,

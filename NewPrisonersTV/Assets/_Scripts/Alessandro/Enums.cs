@@ -3,7 +3,7 @@ public enum HORIZONTAL {_Horizontal, _Horizontal_R, _LeftRight};
 
 public enum VERTICAL { _Vertical, _Vertical_R, _UpDown};
 
-public enum BUTTONS { _Button_A, _Button_B, _Button_X, _Button_Y, _Start,_Pause, _Jump, _Shoot, _Dodge, _Headbutt, _Interact };    
+public enum BUTTONS { _Button_A, _Button_B, _Button_X, _Button_Y, _Start,_Pause, _Jump, _Shoot, _Dodge, _Headbutt, _Interact, _RB, _LB };    
 
 public enum TYPEOFINPUT { J, KM}
 

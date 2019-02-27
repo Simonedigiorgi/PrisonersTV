@@ -19,9 +19,6 @@ public class ChooseModality : MonoBehaviour
 
         if (playerNumber > 1)
         {
-            //controllerAssignment.gameObject.SetActive(true);
-            //controllerAssignment.ActivateButtons(playerNumber);
-            //modalityPanel.SetActive(false);
             GMController.instance.NextLevel();
         }
         else

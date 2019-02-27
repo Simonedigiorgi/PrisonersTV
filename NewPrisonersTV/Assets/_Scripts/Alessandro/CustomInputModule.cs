@@ -5,6 +5,9 @@ using UnityEngine.EventSystems;
 
 public class CustomInputModule : StandaloneInputModule
 {
+    public string alternativeButton1;
+    public string alternativeButton2;
+
     //variable to hold current settings
     private bool isMouseInputActive = false;
 
