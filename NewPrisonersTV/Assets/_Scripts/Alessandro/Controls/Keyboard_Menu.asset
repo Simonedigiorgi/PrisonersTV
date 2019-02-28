@@ -16,7 +16,7 @@ MonoBehaviour:
   LeftVertical: 2
   RightHorizontal: 0
   RightVertical: 0
-  shootInput: 7
+  shootInput: 13
   jumpInput: 10
   interactInput: 6
   respawnInput: 4

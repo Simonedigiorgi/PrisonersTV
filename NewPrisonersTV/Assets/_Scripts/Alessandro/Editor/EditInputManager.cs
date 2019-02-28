@@ -409,6 +409,16 @@ public class EditInputManager : MonoBehaviour
             type = AxisType.KeyOrMouseButton,
             axis = 1
         });
+        AddAxis(new InputAxis()
+        {
+            name = "KM_Esc",
+            positiveButton = "escape",
+            gravity = 1000,
+            dead = 0.001f,
+            sensitivity = 1000f,
+            type = AxisType.KeyOrMouseButton,
+            axis = 1
+        });
     }
 
     [MenuItem("Custom Input/Setup Input Manager")]

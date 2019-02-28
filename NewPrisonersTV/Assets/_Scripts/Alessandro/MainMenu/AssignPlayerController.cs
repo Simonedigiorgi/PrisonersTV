@@ -14,6 +14,7 @@ public class InterfaceButtonDescription
 public class AssignPlayerController : MonoBehaviour
 {
     public GameObject[] playerButtons;
+    public Text[] playerControllerText; 
     public GameObject playerModePanel;
     public GameObject modalityPanel;
     public ChooseModality[] modality;
@@ -32,18 +33,16 @@ public class AssignPlayerController : MonoBehaviour
         if (isWaiting)
             StartCoroutine(WaitForControllers());
 
+        // if the cancel button or the "escape" key is pressed reset variables and return to main menu
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown(GMController.instance.InputModule.cancelButton))
         {
             // disable panel
             playerModePanel.SetActive(true);
 
-            keyboardUser = 0;
-            assignmentTurn = 0;
-            isWaiting = false; 
+            ResetAssignment();
 
-            GMController.instance.controllerCheckNeeded = true;
             GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerModePanel.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); 
         }
         // change button configuration
         if (Input.GetButtonDown(GMController.instance.InputModule.alternativeButton1))
@@ -65,7 +64,24 @@ public class AssignPlayerController : MonoBehaviour
             ChangeButtonIcons();
         }
     }
+    public void ResetAssignment()
+    {
+        // reset variables
+        keyboardUser = 0;
+        assignmentTurn = 0;
+        isWaiting = false;
 
+        GMController.instance.KeyboardInUse = false;
+        GMController.instance.LastControllerAssigned = -1;
+
+        for (int i = 0; i < playerNumber; i++)
+        {
+            playerButtons[i].SetActive(false);
+            playerControllerText[i].gameObject.SetActive(false);
+        }
+
+        GMController.instance.controllerCheckNeeded = true;
+    }
     public void ChangeButtonIcons()
     {
         config.text = GMController.instance.allJConfigs[configIndex].name;
@@ -81,6 +97,7 @@ public class AssignPlayerController : MonoBehaviour
     IEnumerator WaitForControllers()
     {
         isWaiting = false;
+
         for (int y = 0; y < playerButtons.Length; y++)
         {
             if (playerButtons[y].activeSelf)
@@ -90,7 +107,7 @@ public class AssignPlayerController : MonoBehaviour
         }
         Debug.Log("INSERT CONTROLLER");
 
-        yield return new WaitUntil(() => GMController.instance.NumbOfJoysticks >= assignmentTurn || assignmentTurn == 0);
+        yield return new WaitUntil(() => GMController.instance.NumbOfJoysticks >= assignmentTurn); 
 
         int first = -1;
         for (int y = 0; y < playerButtons.Length; y++)
@@ -113,6 +130,9 @@ public class AssignPlayerController : MonoBehaviour
         for (int i = 0; i < playerNumber; i++)
         {
             playerButtons[i].SetActive(true);
+            playerButtons[i].GetComponent<Button>().interactable = true;
+            playerControllerText[i].gameObject.SetActive(true);
+            playerControllerText[i].text = "Controller " + (i+1) + " - ";
         }
         GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[0], new BaseEventData(GMController.instance.CurrentEventSystem));
     }
@@ -135,6 +155,7 @@ public class AssignPlayerController : MonoBehaviour
                     GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.KM;
                     keyboardUser = 1;
                     GMController.instance.KeyboardInUse = true;
+                    playerControllerText[GMController.instance.PlayersRequired - 1].text = "Controller " + (GMController.instance.PlayersRequired) + " - P" + (i+1);
                 }
                 else   
                 {
@@ -145,7 +166,9 @@ public class AssignPlayerController : MonoBehaviour
                     GMController.instance.PlayersInputConfig[i].ControllerNumber = assignmentTurn-keyboardUser;
                     GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.J;
                     //Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() + "  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser].ToString());
-                    GMController.instance.LastControllerAssigned = assignmentTurn - keyboardUser;                   
+                    GMController.instance.LastControllerAssigned = assignmentTurn - keyboardUser;
+                    playerControllerText[assignmentTurn - keyboardUser].text = "Controller " + (assignmentTurn - keyboardUser + 1) + " - P" + (i+1);  
+
                 }
 
                 assignmentTurn++;
@@ -157,7 +180,7 @@ public class AssignPlayerController : MonoBehaviour
                         GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerButtons[y], new BaseEventData(GMController.instance.CurrentEventSystem));
                         break;
                     }
-                }
+                } 
               
                 break; 
             }
@@ -166,17 +189,18 @@ public class AssignPlayerController : MonoBehaviour
         if (assignmentTurn < GMController.instance.PlayersRequired)
         {
             configIndex = 0;
-            // if there are enough controller for the next player NEED CHECK 
-            if (GMController.instance.NumbOfJoysticks > GMController.instance.LastControllerAssigned + 1 && GMController.instance.ActualControllersOrder[GMController.instance.LastControllerAssigned] < GMController.instance.NumbOfJoysticks - 1)
+            // if there are enough controller for the next player NEED CHECK  
+            if (GMController.instance.NumbOfJoysticks > GMController.instance.LastControllerAssigned + 1)
             {
                 GMController.instance.ChangeInputModule(GMController.instance.JConfigInMenu, GMController.instance.ActualControllersOrder[GMController.instance.LastControllerAssigned + 1] + 1);
             }
+            // if there are not enough controllers and the keyboard was NOT assigned
             else if (GMController.instance.NumbOfJoysticks < GMController.instance.PlayersRequired && !GMController.instance.KeyboardInUse)
             {
                 GMController.instance.ChangeInputModule(GMController.instance.keyboardMenu, GMController.instance.KeyboardConfig.ControllerIndex);
-                GMController.instance.KeyboardInUse = true;
             }
-            else // if there are not enough controllers and the keyboard was assigned
+            // if there are not enough controllers and the keyboard was assigned 
+            else
             {
                 isWaiting = true;
             }

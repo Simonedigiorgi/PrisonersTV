@@ -40,6 +40,9 @@ public class GoToGame : MonoBehaviour
     }
     public void BackToMenu()
     {
+        // need to reset variables from AssignPlayerController
+        assignment = assignmentPanel.GetComponent<AssignPlayerController>();
+        assignment.ResetAssignment();
         modalityPanel.SetActive(false);
         playerModePanel.SetActive(true); 
         GMController.instance.CurrentEventSystem.SetSelectedGameObject(playerModePanel.transform.GetChild(0).gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
