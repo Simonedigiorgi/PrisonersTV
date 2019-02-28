@@ -224,12 +224,9 @@ public class GMController : MonoBehaviour
             inputModule = currentEventSystem.GetComponent<CustomInputModule>(); 
            
             // if there are no inputs selected then assign defaults
-            if (selectedInputConfig == null)
-            {
-                selectedInputConfig = new CharacterControlConfig[playersRequired];
-                //selectedInputConfig[0] = allJConfigs[0];
-                //selectedInputConfig[1] = allJConfigs[1];
-            }
+            if (selectedInputConfig == null)           
+                selectedInputConfig = new CharacterControlConfig[playersRequired];     
+
             //check if controller get connected/disconnected
             StartCoroutine(MenuInputCheck());
 

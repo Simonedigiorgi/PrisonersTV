@@ -1814,7 +1814,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 655805954}
-        m_MethodName: SetNumberSP
+        m_MethodName: SetNumber
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2498,7 +2498,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1110852298}
-        m_MethodName: SetNumberCoop
+        m_MethodName: SetNumber
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3142,7 +3142,6 @@ MonoBehaviour:
   gameMode: 3
   controllerAssignment: {fileID: 1354422566}
   modalityPanel: {fileID: 215743453}
-  playerNumber: 0
 --- !u!114 &1291199190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3384,7 +3383,6 @@ MonoBehaviour:
   gameMode: 2
   controllerAssignment: {fileID: 1354422566}
   modalityPanel: {fileID: 215743453}
-  playerNumber: 0
 --- !u!1 &1350905188
 GameObject:
   m_ObjectHideFlags: 0
@@ -3518,7 +3516,6 @@ MonoBehaviour:
     buttonIcon: {fileID: 1063550644}
   - buttonFunctionality: {fileID: 1202900429}
     buttonIcon: {fileID: 2111917513}
-  playerNumber: 0
 --- !u!114 &1354422567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4416,7 +4413,6 @@ MonoBehaviour:
   gameMode: 1
   controllerAssignment: {fileID: 1354422566}
   modalityPanel: {fileID: 215743453}
-  playerNumber: 0
 --- !u!1 &1797693446
 GameObject:
   m_ObjectHideFlags: 0

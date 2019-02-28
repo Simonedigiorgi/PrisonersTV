@@ -21,8 +21,6 @@ public class AssignPlayerController : MonoBehaviour
     public Text config;
     public InterfaceButtonDescription[] configButtons;
 
-    [HideInInspector] public int playerNumber;
-
     private int keyboardUser = 0;
     private int assignmentTurn = 0; // is equal to the index of the player that has to choose
     private bool isWaiting = false;
@@ -74,7 +72,7 @@ public class AssignPlayerController : MonoBehaviour
         GMController.instance.KeyboardInUse = false;
         GMController.instance.LastControllerAssigned = -1;
 
-        for (int i = 0; i < playerNumber; i++)
+        for (int i = 0; i < GMController.instance.PlayersRequired; i++)
         {
             playerButtons[i].SetActive(false);
             playerControllerText[i].gameObject.SetActive(false);
@@ -164,8 +162,7 @@ public class AssignPlayerController : MonoBehaviour
                     GMController.instance.PlayersInputConfig[i] = new ConfigInUse(GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser]);//NEED CHECK
                     GMController.instance.PlayersInputConfig[i].ControllerIndex = GMController.instance.ActualControllersOrder[assignmentTurn - keyboardUser];
                     GMController.instance.PlayersInputConfig[i].ControllerNumber = assignmentTurn-keyboardUser;
-                    GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.J;
-                    //Debug.Log(GMController.instance.PlayersInputConfig[i].ControllerNumber.ToString() + "  " + GMController.instance.PlayersInputConfig[i].ControllerIndex.ToString() + " " + GMController.instance.SelectedInputConfig[assignmentTurn - keyboardUser].ToString());
+                    GMController.instance.PlayersInputConfig[i].LastUsed = TYPEOFINPUT.J;                   
                     GMController.instance.LastControllerAssigned = assignmentTurn - keyboardUser;
                     playerControllerText[assignmentTurn - keyboardUser].text = "Controller " + (assignmentTurn - keyboardUser + 1) + " - P" + (i+1);  
 
@@ -209,16 +206,10 @@ public class AssignPlayerController : MonoBehaviour
         else if (assignmentTurn == GMController.instance.PlayersRequired)
         {
             modalityPanel.SetActive(true);
-            GMController.instance.CurrentEventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));
-            for (int i = 0; i < modality.Length; i++)
-            {
-                modality[i].playerNumber = playerNumber;
-            }
+            GMController.instance.CurrentEventSystem.SetSelectedGameObject(modality[0].gameObject, new BaseEventData(GMController.instance.CurrentEventSystem));      
 
             GMController.instance.controllerCheckNeeded = true;
             gameObject.SetActive(false); 
-        }
-       
-       
+        }            
     }
 }
