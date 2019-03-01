@@ -21,7 +21,7 @@ MonoBehaviour:
   interactInput: 10
   respawnInput: 4
   pauseInput: 5
-  dodgeInput: 0
-  headbuttInput: 0
+  dodgeInput: 8
+  headbuttInput: 9
   moveArmWithRightStick: 1
   buttonDescription: []

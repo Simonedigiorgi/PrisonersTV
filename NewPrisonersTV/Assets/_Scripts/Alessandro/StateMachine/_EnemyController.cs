@@ -184,11 +184,14 @@ namespace AI
         public void DamagePlayer(Collider2D hit)
         {
             _CharacterController playerHit = hit.GetComponent<_CharacterController>();
-            playerHit.currentLife -= m_EnemyStats.attackValue;
-            if (playerHit.currentLife <= 0)
-                playerHit.currentLife = 0;
-            GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
-            GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension 
+            if (!playerHit.isInDash) 
+            {
+                playerHit.currentLife -= m_EnemyStats.attackValue;
+                if (playerHit.currentLife <= 0)
+                    playerHit.currentLife = 0;
+                GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
+                GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension 
+            }
         }
         public void RotateTowardDirection(Transform transform, int direction)
         {

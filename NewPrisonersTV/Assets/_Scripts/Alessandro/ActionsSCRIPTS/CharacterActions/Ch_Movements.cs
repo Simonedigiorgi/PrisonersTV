@@ -19,15 +19,15 @@ namespace Character.Actions
             controller.m_CharacterController.moveInput = Input.GetAxis(controller.m_CharacterController.inputMapping.LeftHorizontal);
 
             // Movements
-            if (controller.m_CharacterController.moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash)// Move right if "x" axis is over 0.2
+            if (controller.m_CharacterController.moveInput >= controller.m_CharacterController.m_CharStats.joypadDeathZone)// Move right if "x" axis is over 0.2
             {
                     controller.m_CharacterController.rb.velocity = new Vector2(controller.m_CharacterController.m_CharStats.speed, controller.m_CharacterController.rb.velocity.y);
             }
-            else if (controller.m_CharacterController.moveInput <= -controller.m_CharacterController.m_CharStats.joypadDeathZone && !controller.m_CharacterController.isInDash) // Move left if "x" axis is lower -0.2
+            else if (controller.m_CharacterController.moveInput <= -controller.m_CharacterController.m_CharStats.joypadDeathZone) // Move left if "x" axis is lower -0.2
             {
                     controller.m_CharacterController.rb.velocity = new Vector2(-controller.m_CharacterController.m_CharStats.speed, controller.m_CharacterController.rb.velocity.y);
             }
-            else if (!controller.m_CharacterController.isInDash)// If is not in Dash
+            else
             {
                     controller.m_CharacterController.rb.velocity = new Vector2(0, controller.m_CharacterController.rb.velocity.y);
             }

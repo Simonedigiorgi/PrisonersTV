@@ -21,6 +21,7 @@ namespace Character
         //---------------------------------------------------------------------------------------
         [HideInInspector] public Rigidbody2D rb;                                                    // Rigidbody component
         [HideInInspector] public Weapon3D currentWeapon;
+        [HideInInspector] public Transform playerT;
 
         [HideInInspector] public bool facingRight;                                                  // Player flip facing
         [HideInInspector] public bool isInDash;                                                     // Check if the player is in dash
@@ -41,18 +42,24 @@ namespace Character
         [HideInInspector] public bool canGetReward = false;                                         // true if the player already choose the reward
 
         [HideInInspector] public float moveInput;                                                   // records the movement magnitude;
+        [HideInInspector] public float currentDashTimer;
         [HideInInspector] public float tensionUpTimer;                                              // when it reaches 0 will add movement points to tension
         [HideInInspector] public float tensionDownTimer;                                            // when it reaches 0 will sub movement points to tension
+
+        Vector3 aimPosition;
+        float aimAngle;
 
         //---------------------------------------------------------------------------------------
         void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            playerT = transform;
             currentLife = m_CharStats.life;
             isAlive = true;
             animSpeed = playerAnim.speed;
             tensionUpTimer = GMController.instance.tensionStats.movementTimer;
             tensionDownTimer = GMController.instance.tensionStats.standStillTimer;
+            currentDashTimer = m_CharStats.dashTimer;
         }
 
         private void Update()
@@ -120,7 +127,7 @@ namespace Character
             if (Input.GetButtonDown(inputMapping.respawnInput) && canRespawn)
             {
                 EnableBaseWeapon();  
-                transform.position = spawnPoint.position;
+                playerT.position = spawnPoint.position;
                 isAlive = true;
                 currentLife = m_CharStats.life;
                 GMController.instance.UI.UpdateLifeUI(playerNumber); // update life on UI
@@ -189,26 +196,6 @@ namespace Character
             baseWeapon.weaponOwnership = playerNumber;// give the right ownership to the weapon
             baseWeapon.bullet.membership = playerNumber;// give the right ownership to the bullet
         }
-        public void armRotation(string h, string v, GameObject arm)
-        {
-            Vector3 position = new Vector3(Input.GetAxis(h), Input.GetAxis(v), 0);           
-
-            float angle = Mathf.Atan2(position.y, position.x) * Mathf.Rad2Deg;
-
-            if (angle == 0 && facingRight)
-                angle = 180;
-
-            // Get the arm component on weapon
-            Transform armObject;
-            if (arm.transform.GetChild(0).GetChild(0).GetChild(2) != null)
-            {
-                if(currentWeapon != null)
-                    armObject = arm.transform.GetChild(0).GetChild(0).GetChild(2);
-                else
-                    armObject = arm.transform.GetChild(0).GetChild(0).GetChild(1);
-                armObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            }
-        }
 
         // Flip the player face method
         public void PlayerFlip()
@@ -232,14 +219,29 @@ namespace Character
         // Rotate the Joystick of 360°
         public void JoyRotation(string h, string v)
         {
-            Vector3 joyPosition = new Vector3(Input.GetAxis(h), Input.GetAxis(v), 0);
+            aimPosition = new Vector3(Input.GetAxis(h), Input.GetAxis(v), 0);
 
-            float angle = Mathf.Atan2(joyPosition.y, joyPosition.x) * Mathf.Rad2Deg;
-            playerAnim.SetFloat("Arm", angle);
-            if (angle == 0 && facingRight)
-                angle = 180;
-            playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            aimAngle = Mathf.Atan2(aimPosition.y, aimPosition.x) * Mathf.Rad2Deg;
+
+            playerAnim.SetFloat("Arm", aimAngle);
+
+            if (aimAngle == 0 && facingRight)
+                aimAngle = 180;
+
+            playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, aimAngle));
         }
+        public void MouseRotation(string h, string v)
+        {
+            aimPosition = Input.mousePosition - GMController.instance.m_MainCamera.WorldToScreenPoint(playerT.position);
+
+            aimAngle = Mathf.Atan2(aimPosition.y, aimPosition.x) * Mathf.Rad2Deg;
+
+            playerAnim.SetFloat("Arm", aimAngle);
+            if (aimAngle == 0 && facingRight)
+                aimAngle = 180;
+
+            playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, aimAngle));
+        }       
 
         public void SwapArm(bool direction)
         {
@@ -267,14 +269,21 @@ namespace Character
             // Set arm layer active
             playerAnim.SetLayerWeight(1, 1);
 
-            // Enable The rotation of joystick
-            if (inputMapping.moveArmWithRightStick)
+            if (GMController.instance.PlayersInputConfig[playerNumber].LastUsed == TYPEOFINPUT.J)
             {
-                JoyRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
+                // Enable The rotation of joystick
+                if (inputMapping.moveArmWithRightStick)
+                {
+                    JoyRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
+                }
+                else if (!inputMapping.moveArmWithRightStick)
+                {
+                    JoyRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
+                }
             }
-            else if (!inputMapping.moveArmWithRightStick)
+            else
             {
-                JoyRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
+                MouseRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
             }
 
             if (hasWeapon)
@@ -314,17 +323,7 @@ namespace Character
                     baseWeapon.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
 
-
-            // Rotation of Muzz effect
-            if (inputMapping.moveArmWithRightStick)
-            {
-                armRotation(inputMapping.RightHorizontal, inputMapping.RightVertical, arm);
-            }
-            else if (!inputMapping.moveArmWithRightStick)
-            {
-                armRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical, arm); 
-            }
-            return;
+            return; 
         }
 
         #endregion

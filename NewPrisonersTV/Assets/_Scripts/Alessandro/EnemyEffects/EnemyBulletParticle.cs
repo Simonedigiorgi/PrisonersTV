@@ -84,11 +84,12 @@ public class EnemyBulletParticle : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Player_1"))
                 {
-                    _CharacterController playerHit = hit.transform.GetComponent<_CharacterController>();                  
-
-                    bullets[i].remainingLifetime = 0;
-
-                    DamageDealer(playerHit);
+                    _CharacterController playerHit = hit.transform.GetComponent<_CharacterController>();
+                    if (!playerHit.isInDash)// deal damage only if the player is not dashing
+                    {
+                        bullets[i].remainingLifetime = 0;
+                        DamageDealer(playerHit);
+                    }
                 }
                 else if (canBounce)
                 {

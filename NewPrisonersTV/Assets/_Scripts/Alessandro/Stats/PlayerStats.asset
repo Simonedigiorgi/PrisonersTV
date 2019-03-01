@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joypadDeathZone: 0.2
   speed: 14
+  dashPower: 20
+  dashTimer: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 256

@@ -11,6 +11,8 @@ public class CharacterStats : ScriptableObject
     [Space(10)]
     public float joypadDeathZone = 0.2f;
     public float speed;
+    public float dashPower;
+    public float dashTimer;
     public LayerMask groundMask;                                               // Ground mask
     public float groundRadius;                                                 // Ground collider radius
     public float jump;                                                       // Player jump value

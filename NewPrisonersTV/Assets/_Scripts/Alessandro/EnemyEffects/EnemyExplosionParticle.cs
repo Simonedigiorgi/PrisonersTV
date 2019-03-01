@@ -41,11 +41,14 @@ public class EnemyExplosionParticle : MonoBehaviour
         for (int i = 0; i < colliders.Length; i++)
         {
             _CharacterController playerHit = colliders[i].GetComponent<_CharacterController>();
-            playerHit.currentLife -= damage;
-            if (playerHit.currentLife <= 0) 
-                playerHit.currentLife = 0;
-            GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
-            GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension
+            if (!playerHit.isInDash) // deal damage only if the player is not dashing
+            {
+                playerHit.currentLife -= damage;
+                if (playerHit.currentLife <= 0)
+                    playerHit.currentLife = 0;
+                GMController.instance.UI.UpdateLifeUI(playerHit.playerNumber); // update life on UI
+                GMController.instance.LowerTensionCheck(GMController.instance.tensionStats.playerHitPoints);// sub tension
+            }
         }
     }
 

@@ -37,7 +37,7 @@ public class EnemyBat : _EnemyController
     {
         // When player trigger an enemy
         if (collision.CompareTag("Player_1"))
-        {
+        {            
             DamagePlayer(collision);
         }
     }

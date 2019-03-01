@@ -372,7 +372,7 @@ public class EditInputManager : MonoBehaviour
         AddAxis(new InputAxis()
         {
             name = "KM_Start",
-            positiveButton = "enter",
+            positiveButton = "return",
             gravity = 1000,
             dead = 0.001f,
             sensitivity = 1000f,
