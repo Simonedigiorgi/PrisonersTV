@@ -23,5 +23,5 @@ MonoBehaviour:
   pauseInput: 5
   dodgeInput: 8
   headbuttInput: 9
-  moveArmWithRightStick: 1
+  moveArmWithRightStick: 0
   buttonDescription: []

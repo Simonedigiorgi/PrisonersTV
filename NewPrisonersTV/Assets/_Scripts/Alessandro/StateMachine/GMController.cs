@@ -60,6 +60,7 @@ public class GMController : MonoBehaviour
 
     [HideInInspector] public PlayerInfo[] playerInfo;                        // info on players in the  current scene  
     [HideInInspector] public Camera m_MainCamera;
+    [HideInInspector] public CameraViewPerspective camPerspective;
 
     // Needed for game mode setup ---------------------------------------
     [HideInInspector] public bool playerSetupDone = false;
@@ -255,7 +256,17 @@ public class GMController : MonoBehaviour
 
     private void Start()
     { 
-        m_MainCamera = Camera.main;        
+        m_MainCamera = Camera.main;
+        if (currentMode != GAMEMODE.Menu)
+        {
+            camPerspective = m_MainCamera.GetComponent<CameraViewPerspective>();
+            camPerspective.targets = new Transform[playerInfo.Length];
+            for (int i = 0; i < playerInfo.Length; i++)
+            {
+                camPerspective.targets[i] = playerInfo[i].PlayerController.playerT;
+            }
+            
+        }
     }
 
     private void Update()

@@ -46,8 +46,12 @@ namespace Character
         [HideInInspector] public float tensionUpTimer;                                              // when it reaches 0 will add movement points to tension
         [HideInInspector] public float tensionDownTimer;                                            // when it reaches 0 will sub movement points to tension
 
+        // aim variables
         Vector3 aimPosition;
-        float aimAngle;
+        float aimAngle;         // record the angle of the input
+        float aimAngleABS;      // record the absolute value of the angle
+        float sign;             // record the sign of the angle
+        float rotations;        // record the angle of rotations
 
         //---------------------------------------------------------------------------------------
         void Awake()
@@ -230,6 +234,45 @@ namespace Character
 
             playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, aimAngle));
         }
+        // 8-direction aim with controller
+        public void JoyRotationEightDir(string h, string v)
+        {
+            aimPosition = new Vector3(Input.GetAxisRaw(h), Input.GetAxisRaw(v), 0);
+
+            aimAngle = Mathf.Atan2(aimPosition.y, aimPosition.x) * Mathf.Rad2Deg;
+
+            rotations = 360 / 8;
+
+            if (aimAngle > 0) sign = 1; else sign = -1;
+            aimAngleABS = Mathf.Abs(aimAngle);
+
+            for (int i = 0; i <= 4; i++) 
+            {
+                if (aimAngleABS >= (rotations * i) && aimAngleABS <= ((rotations * i) + (rotations / 2)))  
+                {
+                    aimAngle = (rotations * i) * sign;
+                    break;
+                }
+                else if(aimAngleABS < (rotations * (i+1)))
+                { 
+                    aimAngle = (rotations * (i+1))* sign; 
+                    break;
+                }
+            }
+            // avoid strange animation blend
+            if (aimAngle == -180)
+                aimAngle = 180;
+            // blend animation
+            playerAnim.SetFloat("Arm", aimAngle);
+
+            // makes the arm face the players forward
+            if (aimAngle == 0 && facingRight)
+                aimAngle = 180;
+
+            Debug.Log(aimAngle);
+            playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, aimAngle));
+        }
+        // free aim with mouse
         public void MouseRotation(string h, string v)
         {
             aimPosition = Input.mousePosition - GMController.instance.m_MainCamera.WorldToScreenPoint(playerT.position);
@@ -274,16 +317,24 @@ namespace Character
                 // Enable The rotation of joystick
                 if (inputMapping.moveArmWithRightStick)
                 {
-                    JoyRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
+                    JoyRotationEightDir(inputMapping.RightHorizontal, inputMapping.RightVertical);
                 }
                 else if (!inputMapping.moveArmWithRightStick)
                 {
-                    JoyRotation(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
+                    JoyRotationEightDir(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
                 }
             }
             else
             {
-                MouseRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
+                // Enable The rotation of joystick
+                if (inputMapping.moveArmWithRightStick)
+                {
+                    MouseRotation(inputMapping.RightHorizontal, inputMapping.RightVertical);
+                }
+                else if (!inputMapping.moveArmWithRightStick)
+                {
+                    JoyRotationEightDir(inputMapping.LeftHorizontal, inputMapping.LeftVertical);
+                }               
             }
 
             if (hasWeapon)

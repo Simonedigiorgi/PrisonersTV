@@ -19,6 +19,12 @@ public class CameraView : MonoBehaviour
     float zoomSpeed = 20f;
 
     Camera cam;
+    Rect boundingBox;
+    Vector3 position;
+    float minX = Mathf.Infinity;
+    float maxX = Mathf.NegativeInfinity;
+    float minY = Mathf.Infinity;
+    float maxY = Mathf.NegativeInfinity;
 
     void Awake()
     {
@@ -26,9 +32,9 @@ public class CameraView : MonoBehaviour
         cam.orthographic = true;
     }
 
-    void LateUpdate()
+    void LateUpdate() 
     {
-        Rect boundingBox = CalculateTargetsBoundingBox();
+        boundingBox = CalculateTargetsBoundingBox();
         transform.position = CalculateCameraPosition(boundingBox);
         cam.orthographicSize = CalculateOrthographicSize(boundingBox);
 
@@ -43,21 +49,20 @@ public class CameraView : MonoBehaviour
     /// <returns>A Rect containing all the targets.</returns>
     Rect CalculateTargetsBoundingBox()
     {
-        float minX = Mathf.Infinity;
-        float maxX = Mathf.NegativeInfinity;
-        float minY = Mathf.Infinity;
-        float maxY = Mathf.NegativeInfinity;
+        minX = Mathf.Infinity;
+        maxX = Mathf.NegativeInfinity;
+        minY = Mathf.Infinity;
+        maxY = Mathf.NegativeInfinity;
 
-        foreach (Transform target in targets)
+        for (int i = 0; i < targets.Length; i++)
         {
-            Vector3 position = target.position;
+            position = targets[i].position;
 
             minX = Mathf.Min(minX, position.x);
             minY = Mathf.Min(minY, position.y);
             maxX = Mathf.Max(maxX, position.x);
             maxY = Mathf.Max(maxY, position.y);
-        }
-
+        }      
         return Rect.MinMaxRect(minX - boundingBoxPadding, maxY + boundingBoxPadding, maxX + boundingBoxPadding, minY - boundingBoxPadding);
     }
 
@@ -91,4 +96,5 @@ public class CameraView : MonoBehaviour
 
         return Mathf.Clamp(Mathf.Lerp(cam.orthographicSize, orthographicSize, Time.deltaTime * zoomSpeed), minimumOrthographicSize, Mathf.Infinity);
     }
+
 }
