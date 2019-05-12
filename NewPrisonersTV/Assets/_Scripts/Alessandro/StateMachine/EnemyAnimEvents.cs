@@ -12,4 +12,22 @@ public class EnemyAnimEvents : MonoBehaviour
         controller.explosionParticle.Explosion(controller.attackSpawn.position);
         controller.startDieCoroutine = true;
     }
+
+    public void Death()
+    {
+        controller.startDieCoroutine = true;
+    }
+
+    //public void StartAggro()
+    //{
+    //   controller.isAggroAnim = true;
+    //    Debug.Log("ENTER "+controller.gameObject.name);
+    //}
+
+    public void EndAggro()
+    {
+        controller.isAggroAnim = false;
+        Debug.Log("EXIT " + controller.gameObject.name);
+    }
+    
 }

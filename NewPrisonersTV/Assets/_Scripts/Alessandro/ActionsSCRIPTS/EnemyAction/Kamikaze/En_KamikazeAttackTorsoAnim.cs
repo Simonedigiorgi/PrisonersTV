@@ -15,7 +15,7 @@ namespace AI.Actions
 
         public void MoveAnimTorso(EnemiesAIStateController controller)
         {     
-            controller.m_EnemyController.enemyAnim.SetLayerWeight(1, 1);
+           // controller.m_EnemyController.enemyAnim.SetLayerWeight(1, 1);
             ParticleSystem.EmissionModule emission = controller.m_EnemyController.attackParticle.emission;
             emission.enabled = true;
         }

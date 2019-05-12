@@ -269,7 +269,6 @@ namespace Character
             if (aimAngle == 0 && facingRight)
                 aimAngle = 180;
 
-            Debug.Log(aimAngle);
             playerRightArm.transform.rotation = Quaternion.Euler(new Vector3(0, 0, aimAngle));
         }
         // free aim with mouse

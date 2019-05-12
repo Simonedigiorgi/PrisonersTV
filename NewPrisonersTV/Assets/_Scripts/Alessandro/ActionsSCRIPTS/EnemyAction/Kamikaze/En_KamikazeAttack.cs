@@ -15,14 +15,14 @@ namespace AI.Actions
 
         public void Attack(EnemiesAIStateController controller)
         {
-            if (controller.m_EnemyController.currentPathTimer <= 0)
+            if (controller.m_EnemyController.currentPathTimer <= 0 && controller.m_EnemyController.agent.enabled)
             {
                 controller.m_EnemyController.agent.destination = GMController.instance.playerInfo[controller.m_EnemyController.playerSeenIndex].Player.transform.position;
                 controller.m_EnemyController.currentPathTimer = controller.enemyStats.pathCheckFrequenzy;
             }
 
             if (controller.m_EnemyController.agent.isOnOffMeshLink)
-               controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
+                controller.m_EnemyController.agent.speed = controller.enemyStats.jumpSpeed;
             else
                 controller.m_EnemyController.agent.speed = controller.enemyStats.runSpeed;
             //---------------------------------------------------------------------------------------
@@ -34,12 +34,11 @@ namespace AI.Actions
             }
             // explosions timer
             controller.m_EnemyController.currentExplosionTimer -= Time.deltaTime;
-           
-            if (controller.m_EnemyController.currentExplosionTimer <= 0 )
+
+            if (controller.m_EnemyController.currentExplosionTimer <= 0)
             {
-                controller.m_EnemyController.canExplode = true;
+                controller.m_EnemyController.canExplode = true; 
             }
         }
-
     }
 }

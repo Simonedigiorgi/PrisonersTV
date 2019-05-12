@@ -9,19 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d32f7b855907d5f44b23c40be1ada07c, type: 3}
-  m_Name: KamikazePatrol
+  m_Name: KamikazeAggro
   m_EditorClassIdentifier: 
-  actions:
-  - {fileID: 11400000, guid: 5580def416d1a7640a870da1a0dba00c, type: 2}
-  - {fileID: 11400000, guid: 2eeb449110c49c647a4096259e0c41ed, type: 2}
-  - {fileID: 11400000, guid: 5916430f9feadd74db153ddd0e4663ed, type: 2}
-  - {fileID: 11400000, guid: 9fa9e1f47359b2e4a8122b9b7ea6f904, type: 2}
-  enterActions: []
-  exitActions: []
+  actions: []
+  enterActions:
+  - {fileID: 11400000, guid: df87d79a003c52e4ab6a5da0464a68c3, type: 2}
+  exitActions:
+  - {fileID: 11400000, guid: 18ae5d7da6407074ab6e1304d0966676, type: 2}
   transitions:
   - decision:
-    - {fileID: 11400000, guid: dae991fe7bb5af4438a8f21b3719f8d3, type: 2}
-    trueState: {fileID: 11400000, guid: 073864d50f6981644903a4ac79202eb7, type: 2}
+    - {fileID: 11400000, guid: 15413bb0c2ce2b044ae30197aba32766, type: 2}
+    trueState: {fileID: 11400000, guid: 64fa34f999df5ea41866c84da948e6fb, type: 2}
     falseState: {fileID: 11400000, guid: 20a79bef3092c654eb2910af9045a0a6, type: 2}
   - decision:
     - {fileID: 11400000, guid: fadca2222433f7747aa688b9fbd40739, type: 2}

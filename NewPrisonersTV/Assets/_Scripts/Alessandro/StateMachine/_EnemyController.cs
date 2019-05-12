@@ -47,6 +47,7 @@ namespace AI
         [HideInInspector] public int enemyOwnership;                           // number of player that last hit this enemy
         [HideInInspector] public bool isFlashing = false;
         [HideInInspector] public bool gotHit = false;
+        [HideInInspector] public bool isAggroAnim = false;
         //------------------------------------------------------------------
         [HideInInspector] public bool startDieCoroutine = false;                // starts the death coroutine if true
         [HideInInspector] public bool playerSeen = false;                       // true if a player is in sight
